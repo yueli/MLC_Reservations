@@ -136,7 +136,7 @@ public class DateTimeConverter {
 	
 	public static void main (String [] args){
 		DateTimeConverter dtc = new DateTimeConverter();
-		dtc.setDatetime("2009-09-22 0:00:00");
+		dtc.setDatetime("2009-09-22 10:00:00");
 		System.out.println("Print datetime: " + dtc.getDatetime());
 		System.out.println();
 		
