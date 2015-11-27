@@ -134,6 +134,9 @@ public class DateTimeConverter {
 		return currentTime;
 	}
 	
+	
+// Main method used for testing. Will output to console
+	
 	public static void main (String [] args){
 		DateTimeConverter dtc = new DateTimeConverter();
 		dtc.setDatetime("2009-09-22 10:00:00");
