@@ -125,7 +125,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @return current datetime
+	 * @return current datetime 
 	 */
 	public String datetimeStamp(){
 		Date stamp = new Date();
@@ -135,7 +135,7 @@ public class DateTimeConverter {
 	}
 	
 	
-// Main method used for testing. Will output to console
+// Main method used for testing. Will output to console.
 	
 	public static void main (String [] args){
 		DateTimeConverter dtc = new DateTimeConverter();
