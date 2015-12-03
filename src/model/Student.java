@@ -62,7 +62,9 @@ public class Student {
 		this.lname = lname;
 		this.lastLogin = lastLogin;
 	}
-
+	
+	// Accessors and Mutators
+	
 	/**
 	 * @return the studentID
 	 */

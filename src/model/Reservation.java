@@ -97,6 +97,8 @@ public class Reservation {
 		this.scheduleID = scheduleID;
 	}
 
+	// Accessors and Mutators
+	
 	/**
 	 * @return the primaryStudent
 	 */
