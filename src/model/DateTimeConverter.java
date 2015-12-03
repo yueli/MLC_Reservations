@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * @author Brian Olaogun
  * 
- * This method is used to convert a date or a datetime variable.
+ * This class is used to convert a date or a datetime variable.
  *
  */
 public class DateTimeConverter {
@@ -45,7 +45,41 @@ public class DateTimeConverter {
 // The methods below convert and format mysql date(time) for display in Java & HTML	
 	
 	
+	/**
+	 * 
+	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
+	 */
+	public String convertDate(){
+		
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd"); // used to convert String datetime to Simple Date Format
+			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert date to long format.**";
+		}
+	}
 	
+	/**
+	 * 
+	 * @param date
+	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
+	 */
+	public String convertDate(String date){
+		
+		this.datetime = date.trim(); // removes leading and trailing whitespace
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd"); // used to convert String datetime to Simple Date Format
+			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert date to long format.**";
+		}
+	}
 	
 	/**
 	 * 
@@ -60,7 +94,7 @@ public class DateTimeConverter {
 			return formatted.format(parsedDate); // return parsed date in String format
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return "**Error, unable to convert date.**";
+			return "**Error, unable to parse date.**";
 		}
 	}
 	
@@ -70,6 +104,7 @@ public class DateTimeConverter {
 	 * @return parsed Date from datetime in Month date, year format.
 	 */
 	public String parseDate(String datetime){
+		
 		this.datetime = datetime.trim(); // removes leading and trailing whitespace
 		try{
 			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format
@@ -78,7 +113,7 @@ public class DateTimeConverter {
 			return formatted.format(parsedDate); // return parsed date in String format
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return "**Error, unable to convert date.**";
+			return "**Error, unable to parse date.**";
 		}
 	}
 	
@@ -106,6 +141,7 @@ public class DateTimeConverter {
 	 * @return String: parsed time from datetime. Converted time from 24-hour format to 12-hour format.
 	 */
 	public String parsedTimeTo12(String datetime){
+		
 		this.datetime = datetime.trim(); // removes any leading or trailing whitespace
 		try {
 			SimpleDateFormat _24HourSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String time to 24-hour DateTeime
@@ -132,6 +168,7 @@ public class DateTimeConverter {
 	 * @return current datetime in mySQL Format
 	 */
 	public String datetimeStamp(){
+		
 		Date stamp = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //mySQL format
 		String currentDateTime = sdf.format(stamp);
@@ -142,6 +179,7 @@ public class DateTimeConverter {
 	 * @return date in mySQL format from MM/dd/yyyy format.
 	 */
 	public String slashDateConvert (){
+		
 		try {
 			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); // used to convert String time to 24-hour DateTeime
 	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); // used to convert 24-hour DateTime to 12-hour DateTime
@@ -160,6 +198,7 @@ public class DateTimeConverter {
 	 * @return date in mySQL format from MM/dd/yyyy format.
 	 */
 	public String slashDateConvert (String date){
+		
 		this.datetime = date.trim(); // removes leading and trailing whitespace
 		try {
 			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); // used to convert String time to 24-hour DateTeime
@@ -178,6 +217,7 @@ public class DateTimeConverter {
 	 * @return Inputted date + current timestamp (24 hr format) in mySQL format.
 	 */
 	public String slashDateTimeStamp (){
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 		Date time = new Date();
 		String inputtedDateTimeStamp = this.slashDateConvert(this.datetime) + " " + sdf.format(time);
@@ -190,6 +230,7 @@ public class DateTimeConverter {
 	 * @return Inputted date + current timestamp (24 hr format) in mySQL format
 	 */
 	public String slashDateTimeStamp (String date){
+		
 		this.datetime = date.trim(); // removes leading and trailing whitespace
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 		Date time = new Date();

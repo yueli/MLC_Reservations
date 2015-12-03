@@ -4,7 +4,7 @@
 package model;
 
 /**
- * @author Brian-MBP
+ * @author Brian Olaogun
  *
  */
 public class Email {
