@@ -254,6 +254,10 @@ public class DateTimeConverter {
 		System.out.println("Parse date: " + dtc.parseDate());
 		System.out.println("Current Datetime: " + dtc.datetimeStamp());
 		
+		System.out.println();
+		System.out.println("Inputted date: 2015-12-03");
+		System.out.println("Convert date from mySQL to Long format: " + dtc.convertDate("2015-12-03"));
+		
 		dtc.setDatetime("12/3/2015");
 		System.out.println();
 		System.out.println("Convert date from slashed to SQL format: " + dtc.slashDateConvert(dtc.getDatetime()) );
