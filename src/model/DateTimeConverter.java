@@ -246,7 +246,7 @@ public class DateTimeConverter {
 		System.out.println("*******DateTimeConverter.java*******");
 		System.out.println();
 		DateTimeConverter dtc = new DateTimeConverter();
-		dtc.setDatetime("2009-09-22 10:00:00");
+		dtc.setDatetime("2015-09-22 10:00:00");
 		System.out.println("Print datetime: " + dtc.getDatetime());
 		System.out.println();
 		
