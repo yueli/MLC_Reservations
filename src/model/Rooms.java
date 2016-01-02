@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * @author Brian Olaogun
+ */
 public class Rooms {
 	//Fields
 	private int roomID;

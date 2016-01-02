@@ -59,7 +59,7 @@ public class TimeConverter {
 
 		try {
 			SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm"); // used to convert String time to 24-hour DateTime
-	        SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a"); // used to convert 24-hour DateTime to 12-hour DateTime
+	        SimpleDateFormat _12HourSDF = new SimpleDateFormat("h:mm a"); // used to convert 24-hour DateTime to 12-hour DateTime
 	        Date _24HourDt = _24HourSDF.parse(this.time); // parse time from DateTime
 	        return _12HourSDF.format(_24HourDt); // returns time in 12-hour format
 
@@ -80,7 +80,7 @@ public class TimeConverter {
 
 		try {
 			SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm"); // used to convert String time to 24-hour DateTeime
-	        SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a"); // used to convert 24-hour DateTime to 12-hour DateTime
+	        SimpleDateFormat _12HourSDF = new SimpleDateFormat("h:mm a"); // used to convert 24-hour DateTime to 12-hour DateTime
 	        Date _24HourDt = _24HourSDF.parse(this.time); // parse time from DateTime
 	        return _12HourSDF.format(_24HourDt); // returns time in 12-hour format
 

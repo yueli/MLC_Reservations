@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<form name="test" class="test" action="Browse" method="post">
+		<input type="submit" name="submit" value ="GO" />
+	</form>
 </body>
 </html>

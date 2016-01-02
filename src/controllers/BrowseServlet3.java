@@ -10,27 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.BuildingSelectQueries;
-import helpers.FloorSelectQuery;
 import helpers.RoomsSelectQueries;
-import model.Message;
 
 /**
- * Servlet implementation class BrowseServlet
+ * Servlet implementation class BrowseServlet3
  */
-@WebServlet(
-		description = "Servlet for browse.jsp", 
-		urlPatterns = { 
-				"/BrowseServlet", 
-				"/Browse"
-		})
-public class BrowseServlet extends HttpServlet {
+@WebServlet({ "/BrowseServlet3", "/Browse3" })
+public class BrowseServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BrowseServlet() {
+    public BrowseServlet3() {
         super();
     }
 
@@ -46,21 +38,28 @@ public class BrowseServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		BuildingSelectQueries bsq = new BuildingSelectQueries("tomcatdb", "root", "");
-		bsq.doBuildingRead();
-		String buildings = bsq.getBuildingResults();
-
-
-		// set session attribute
-		session.setAttribute("buildings", buildings);
+		String floor = (String) session.getAttribute("floor");
+		String buildingSelected = (String) session.getAttribute("buildingSelected");
+		String floorSelected = (String) request.getParameter("floorList");
+		
+		RoomsSelectQueries rsq = new RoomsSelectQueries ("tomcatdb", "root", "");
+		System.out.println("#3 Building: " + buildingSelected);
+		System.out.println("#3 Floor: " + floorSelected);
+		rsq.doRoomRead(buildingSelected, floorSelected);
+		
+		
+		String table = rsq.getRoomsTable();
 		
 		// URL of the view to forward
 		String url = "/browse.jsp";
 		
+		// set session attribute
+		
+		session.setAttribute("table", table);
+		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
 	}
 
 }

@@ -10,28 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.BuildingSelectQueries;
 import helpers.FloorSelectQuery;
 import helpers.RoomsSelectQueries;
-import model.Message;
 
 /**
- * Servlet implementation class BrowseServlet
+ * Servlet implementation class BrowseServlet2
  */
-@WebServlet(
-		description = "Servlet for browse.jsp", 
-		urlPatterns = { 
-				"/BrowseServlet", 
-				"/Browse"
-		})
-public class BrowseServlet extends HttpServlet {
+@WebServlet({ "/BrowseServlet2", "/Browse2" })
+public class BrowseServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BrowseServlet() {
+    public BrowseServlet2() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -46,16 +40,21 @@ public class BrowseServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		BuildingSelectQueries bsq = new BuildingSelectQueries("tomcatdb", "root", "");
-		bsq.doBuildingRead();
-		String buildings = bsq.getBuildingResults();
-
-
-		// set session attribute
-		session.setAttribute("buildings", buildings);
+		String buildingSelected = (String) request.getParameter("buildingList");
+		String floorSelected = (String) request.getParameter("floorList");
+		
+		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
+		System.out.println("Building: " + buildingSelected);
+		fsq.doFloorRead(buildingSelected);
+		String floor = fsq.getFloorResults();
 		
 		// URL of the view to forward
 		String url = "/browse.jsp";
+		
+		// set session attribute
+		session.setAttribute("buildingSelected", buildingSelected);
+		session.setAttribute("floorSelected", floorSelected);
+		session.setAttribute("floor", floor);
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
