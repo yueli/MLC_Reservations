@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Building;
 import model.Rooms;
 import model.TimeConverter;
 
@@ -17,16 +16,15 @@ import model.TimeConverter;
  * @author Brian Olaogun
  *
  */
-public class RoomsSelectQueries {
+public class RoomsSelectQuery {
 	// initialize fields
 		private Connection connection;
 		private ResultSet results;
-		private ResultSet floorResults;
 		
 		/**
 		 * Default Constructor
 		 */
-		public RoomsSelectQueries(String dbName, String user, String pwd) {
+		public RoomsSelectQuery(String dbName, String user, String pwd) {
 			String url = "jdbc:mysql://localhost:3306/" + dbName;
 			
 			// set up the driver
@@ -60,7 +58,7 @@ public class RoomsSelectQueries {
 				this.results = ps.executeQuery();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Error in RoomSelectQueries.java: doRoomRead method. Please check connection or SQL statement.");
+				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
 			}
 		}
 		
@@ -73,13 +71,29 @@ public class RoomsSelectQueries {
 			
 			// Create an HTML table
 			String table = "";
-			table += "<table border=1>";
+			//table += "<table border=1>";
 			
+			table += "<div id='tabs'>";
+			table += "<ul>";
+			
+			int h = 0;
+			try {
+				while(this.results.next()){
+					Rooms rooms = new Rooms();
+					rooms.setRoomNumber(this.results.getInt("roomNumber"));
+					table += "<li><a href='#tabs-" + h + "'" + ">" + rooms.getRoomNumber() + "</a></li>";
+					h++;
+				}
+				
+				this.results.beforeFirst();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			table += "</ul>";
 			// Class to convert 24 hour time to 12 hour
 			TimeConverter tc = new TimeConverter();
-			
+			int j = 0;
 			try {
-				int j = 0;
 				while(this.results.next()){
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
@@ -87,10 +101,14 @@ public class RoomsSelectQueries {
 					
 					// TODO get results for reservation
 					
+					
 					// display results in a table
+					table += "<div id='tabs-" + j + "'" + ">";
+					
+					table += "<table border=1>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th COLSPAN=3 ALIGN=CENTER><h3>";
+					table += "<th id='header' COLSPAN=12 ALIGN=CENTER><h3>";
 					table += room.getRoomNumber();
 					table += "</h3></th>";
 					table += "</tr>";
@@ -113,14 +131,18 @@ public class RoomsSelectQueries {
 					
 					table += "</tr>";
 					table += "</tbody>";
+					
+					table += "</table>";
+					
+					table += "</div>";
 					j++;
 				}
-				table += "</table>";
+				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			//table += "</table>";
+			table += "</div>";
 			return table;
 		}
 }

@@ -56,6 +56,7 @@ public class FloorSelectQuery {
 	public String getFloorResults(){
 		// Create the String for HTML
 		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";
+		select += "<option></option>";
 		
 		// 
 		
@@ -64,11 +65,12 @@ public class FloorSelectQuery {
 				// place results in a building object
 				Rooms room = new Rooms();
 				room.setRoomFloor(Integer.parseInt(this.results.getString("roomFloor")));
-				
+			
 				// HTML for dropdown list
 				select += "<option value=" + "'" + room.getRoomFloor() + "'" + ">";
 				select += room.getRoomFloor();
 				select += "</option>";
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

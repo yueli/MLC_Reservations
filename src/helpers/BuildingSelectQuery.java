@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import model.Building;
 
-public class BuildingSelectQueries {
+public class BuildingSelectQuery {
 	// initialize fields
 	private Connection connection;
 	private ResultSet results;
@@ -19,7 +19,7 @@ public class BuildingSelectQueries {
 	 * @param user
 	 * @param pwd
 	 */
-	public BuildingSelectQueries(String dbName, String user, String pwd) {
+	public BuildingSelectQuery(String dbName, String user, String pwd) {
 		String url = "jdbc:mysql://localhost:3306/" + dbName;
 		
 		// set up the driver
@@ -71,15 +71,13 @@ public class BuildingSelectQueries {
 				
 				// HTML for dropdown list
 				if(this.results.getString(1) != null){
-					//System.out.println("result: " + this.results.getString(1));
 					select += "<option selected='selected' value=" + "'" + building.getBuildingName() + "'" + ">";
 					select += building.getBuildingName();
 					select += "</option>";
-				} else{ 
-				
-				select += "<option value=" + "'" + building.getBuildingName() + "'" + ">";
-				select += building.getBuildingName();
-				select += "</option>";
+				} else {
+					select += "<option value=" + "'" + building.getBuildingName() + "'" + ">";
+					select += building.getBuildingName();
+					select += "</option>";
 				}
 			}
 		} catch (SQLException e) {

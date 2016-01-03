@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.RoomsSelectQueries;
+import helpers.RoomsSelectQuery;
 
 /**
  * Servlet implementation class BrowseServlet3
@@ -38,11 +38,12 @@ public class BrowseServlet3 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		
 		String floor = (String) session.getAttribute("floor");
 		String buildingSelected = (String) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
-		RoomsSelectQueries rsq = new RoomsSelectQueries ("tomcatdb", "root", "");
+		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
 		System.out.println("#3 Building: " + buildingSelected);
 		System.out.println("#3 Floor: " + floorSelected);
 		rsq.doRoomRead(buildingSelected, floorSelected);
@@ -54,7 +55,8 @@ public class BrowseServlet3 extends HttpServlet {
 		String url = "/browse.jsp";
 		
 		// set session attribute
-		
+		session.setAttribute("floorSelected", floorSelected);
+		session.setAttribute("floor", floor);
 		session.setAttribute("table", table);
 		
 		// forward the request

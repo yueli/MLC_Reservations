@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.FloorSelectQuery;
-import helpers.RoomsSelectQueries;
 
 /**
  * Servlet implementation class BrowseServlet2
@@ -25,7 +24,7 @@ public class BrowseServlet2 extends HttpServlet {
      */
     public BrowseServlet2() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
