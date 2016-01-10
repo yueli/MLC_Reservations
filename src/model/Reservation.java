@@ -54,7 +54,6 @@ public class Reservation {
 	 */
 	public Reservation(Student primaryStudent, Student secondaryStudent, Rooms roomsID, String reserveStartDate,
 			String reserveEndDate, String reserveStartTime, int hourIncrement, int adminReserve) {
-		super();
 		this.primaryStudent = primaryStudent;
 		this.secondaryStudent = secondaryStudent;
 		this.roomsID = roomsID;
