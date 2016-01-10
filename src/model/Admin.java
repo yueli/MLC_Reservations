@@ -12,7 +12,7 @@ public class Admin {
 	
 	// Constructors
 	/**
-	 * No parameter constructor.
+	 * No parameter constructor...
 	 */
 	public Admin() {
 		this.adminID = 0;
