@@ -88,5 +88,36 @@ public class BuildingSelectQuery {
 		return select;
 	}
 	
+	public String getBuildingResults(String selected){
+		// Create the String for HTML
+		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
+		
+		// 
+		
+		try {
+			while(this.results.next()){
+				// place results in a building object
+				Building building = new Building();
+				building.setBuildingName(this.results.getString("buildingName"));
+				
+				// HTML for dropdown list
+				if(building.getBuildingName().equalsIgnoreCase(selected) && selected != null){
+					select += "<option selected='selected' value=" + "'" + building.getBuildingName() + "'" + ">";
+					select += building.getBuildingName();
+					select += "</option>";
+				} else {
+					select += "<option value=" + "'" + building.getBuildingName() + "'" + ">";
+					select += building.getBuildingName();
+					select += "</option>";
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		select += "</select>";
+		
+		return select;
+	}
+	
 	
 }

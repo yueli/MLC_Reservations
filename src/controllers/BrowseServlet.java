@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
-import helpers.FloorSelectQuery;
-import helpers.RoomsSelectQuery;
-import model.Message;
 
 /**
  * Servlet implementation class BrowseServlet

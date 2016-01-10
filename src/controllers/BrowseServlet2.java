@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.BuildingSelectQuery;
 import helpers.FloorSelectQuery;
 
 /**
@@ -39,8 +40,15 @@ public class BrowseServlet2 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		
 		String buildingSelected = (String) request.getParameter("buildingList");
 		String floorSelected = (String) request.getParameter("floorList");
+		
+		// TEST
+		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
+		bsq.doBuildingRead();
+		String buildings = bsq.getBuildingResults(buildingSelected);
+		// END TEST
 		
 		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
 		System.out.println("Building: " + buildingSelected);
@@ -51,6 +59,8 @@ public class BrowseServlet2 extends HttpServlet {
 		String url = "/browse.jsp";
 		
 		// set session attribute
+		session.setAttribute("buildings", buildings);
+		
 		session.setAttribute("buildingSelected", buildingSelected);
 		session.setAttribute("floorSelected", floorSelected);
 		session.setAttribute("floor", floor);
