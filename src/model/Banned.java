@@ -12,4 +12,7 @@ public class Banned {
 		public void gingerTest3(){
 			
 		}
+		public void gingerTest4(){
+			
+		}
 }
