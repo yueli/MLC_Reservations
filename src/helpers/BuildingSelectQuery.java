@@ -52,7 +52,7 @@ public class BuildingSelectQuery {
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in BrowseQueries.java: doBuildingRead method. Please check connection or SQL statement.");
+			System.out.println("Error in BuildingSelectQuery.java: doBuildingRead method. Please check connection or SQL statement.");
 		}
 		
 	}
@@ -60,9 +60,8 @@ public class BuildingSelectQuery {
 	public String getBuildingResults(){
 		// Create the String for HTML
 		String select = "<select id='buildingList' name='buildingList'>";
-		select += "<option></option>";
-		// 
 		
+		// HTML for dropdown list
 		try {
 			while(this.results.next()){
 				// place results in a building object
@@ -91,7 +90,7 @@ public class BuildingSelectQuery {
 	public String getBuildingResults(String selected){
 		// Create the String for HTML
 		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
-		select += "<option></option>";
+		//select += "<option></option>";
 		// HTML for dropdown list
 		try {
 			while(this.results.next()){

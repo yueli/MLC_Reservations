@@ -50,7 +50,7 @@ public class FloorSelectQuery {
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in RoomSelectQueries.java: doFloorRead method. Please check connection or SQL statement.");
+			System.out.println("Error in FloorSelectQuery.java: doFloorRead method. Please check connection or SQL statement.");
 		}
 	}
 	public String getFloorResults(){
@@ -83,7 +83,7 @@ public class FloorSelectQuery {
 	public String getFloorResults(String selected){
 		// Create the String for HTML
 		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";
-		select += "<option></option>";
+		//select += "<option></option>";
 		
 		// HTML for dropdown list
 		try {
