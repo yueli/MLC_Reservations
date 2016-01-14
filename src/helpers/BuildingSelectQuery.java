@@ -91,7 +91,7 @@ public class BuildingSelectQuery {
 	public String getBuildingResults(String selected){
 		// Create the String for HTML
 		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
-		
+		select += "<option></option>";
 		// HTML for dropdown list
 		try {
 			while(this.results.next()){
