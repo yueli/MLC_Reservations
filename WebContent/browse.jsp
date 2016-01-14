@@ -12,9 +12,6 @@
 		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
   		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
   		 <script>
-	  		$(document).ready(function () {
-	  		    $('table').accordion({header: '.room' });
-	  		});
 	  	    $(function() {
 	  	   		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
 	  	    	$( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );

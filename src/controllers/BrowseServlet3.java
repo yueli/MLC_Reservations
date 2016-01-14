@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.FloorSelectQuery;
 import helpers.RoomsSelectQuery;
 
 /**
@@ -39,10 +40,18 @@ public class BrowseServlet3 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		String floor = (String) session.getAttribute("floor");
+		//String floor = (String) session.getAttribute("floor");
 		String buildingSelected = (String) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
+		// TEST
+		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
+		System.out.println("Building - Browse 2: " + buildingSelected);
+		fsq.doFloorRead(buildingSelected);
+		String floor = fsq.getFloorResults(floorSelected);
+		
+		// END TEST
+	
 		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
 		System.out.println("#3 Building: " + buildingSelected);
 		System.out.println("#3 Floor: " + floorSelected);
@@ -56,7 +65,7 @@ public class BrowseServlet3 extends HttpServlet {
 		
 		// set session attribute
 		session.setAttribute("floorSelected", floorSelected);
-		session.setAttribute("floor", floor);
+		session.setAttribute("floor", floor); // TEST
 		session.setAttribute("table", table);
 		
 		// forward the request
