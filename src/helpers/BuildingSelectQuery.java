@@ -8,6 +8,11 @@ import java.sql.SQLException;
 
 import model.Building;
 
+/**
+ * @author Brian Olaogun
+ * Helper for the Student side of the website.
+ *
+ */
 public class BuildingSelectQuery {
 	// initialize fields
 	private Connection connection;
@@ -27,16 +32,12 @@ public class BuildingSelectQuery {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.connection = DriverManager.getConnection(url, user, pwd);
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -89,8 +90,8 @@ public class BuildingSelectQuery {
 	
 	public String getBuildingResults(String selected){
 		// Create the String for HTML
-		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
-		//select += "<option></option>";
+		String select = "<select id='buildingList' name='buildingList'>";
+		
 		// HTML for dropdown list
 		try {
 			while(this.results.next()){
