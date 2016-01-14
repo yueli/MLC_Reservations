@@ -59,8 +59,8 @@ public class BuildingSelectQuery {
 	
 	public String getBuildingResults(){
 		// Create the String for HTML
-		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
-		
+		String select = "<select id='buildingList' name='buildingList'>";
+		select += "<option></option>";
 		// 
 		
 		try {
@@ -92,8 +92,7 @@ public class BuildingSelectQuery {
 		// Create the String for HTML
 		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
 		
-		// 
-		
+		// HTML for dropdown list
 		try {
 			while(this.results.next()){
 				// place results in a building object
@@ -101,7 +100,7 @@ public class BuildingSelectQuery {
 				building.setBuildingName(this.results.getString("buildingName"));
 				
 				// HTML for dropdown list
-				if(building.getBuildingName().equalsIgnoreCase(selected) && selected != null){
+				if(building.getBuildingName().equals(selected)){
 					select += "<option selected='selected' value=" + "'" + building.getBuildingName() + "'" + ">";
 					select += building.getBuildingName();
 					select += "</option>";
@@ -110,7 +109,7 @@ public class BuildingSelectQuery {
 					select += building.getBuildingName();
 					select += "</option>";
 				}
-			}
+			} this.results.beforeFirst(); // resets the cursor to 0
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -79,4 +79,34 @@ public class FloorSelectQuery {
 		
 		return select;
 	}
+	
+	public String getFloorResults(String selected){
+		// Create the String for HTML
+		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";
+		select += "<option></option>";
+		
+		// HTML for dropdown list
+		try {
+			while(this.results.next()){
+				// place results in a Rooms object
+				Rooms room = new Rooms();
+				room.setRoomFloor(Integer.parseInt(this.results.getString("roomFloor")));
+				
+				if(room.getRoomFloor() == Integer.parseInt(selected)){
+					select += "<option selected='selected' value=" + "'" + room.getRoomFloor() + "'" + ">";
+					select += room.getRoomFloor();
+					select += "</option>";
+				} else {
+					select += "<option value=" + "'" + room.getRoomFloor() + "'" + ">";
+					select += room.getRoomFloor();
+					select += "</option>";
+				}	
+			} this.results.beforeFirst(); // resets the cursor to 0
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		select += "</select>";
+		
+		return select;
+	}
 }
