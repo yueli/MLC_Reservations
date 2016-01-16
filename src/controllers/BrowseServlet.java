@@ -52,7 +52,7 @@ public class BrowseServlet extends HttpServlet {
 		session.setAttribute("buildings", buildings);
 		
 		// URL of the view to forward
-		String url = "/browse.jsp";
+		String url = "/student/browse.jsp";
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
