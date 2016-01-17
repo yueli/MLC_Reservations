@@ -32,8 +32,5 @@
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
-		<form name="test" class="test" action="Browse" method="post">
-			<input type="submit" name="submit" value ="GO" />
-		</form>
 	</body>
 </html>
