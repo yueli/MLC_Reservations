@@ -22,6 +22,7 @@ public class FloorSelectQuery {
 	
 	public FloorSelectQuery(String dbName, String user, String pwd) {
 		String url = "jdbc:mysql://localhost:3306/" + dbName;
+
 		
 		// set up the driver
 		try {

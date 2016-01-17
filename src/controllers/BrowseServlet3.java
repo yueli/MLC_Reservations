@@ -61,7 +61,7 @@ public class BrowseServlet3 extends HttpServlet {
 		String table = rsq.getRoomsTable();
 		
 		// URL of the view to forward
-		String url = "/browse.jsp";
+		String url = "/student/browse.jsp";
 		
 		// set session attribute
 		session.setAttribute("floorSelected", floorSelected);

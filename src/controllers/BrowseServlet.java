@@ -47,12 +47,15 @@ public class BrowseServlet extends HttpServlet {
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
 
-
+	
+		System.out.println(bsq);
+		
+		
 		// set session attribute
 		session.setAttribute("buildings", buildings);
 		
 		// URL of the view to forward
-		String url = "/browse.jsp";
+		String url = "/student/browse.jsp";
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
