@@ -5,7 +5,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Home</title>
-		<link rel="stylesheet" type="text/css" href="styles.css">
+		<link rel="stylesheet" type="text/css" href="student/styles.css">
 		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
 	  	<script type="text/javascript" src="jquery/jquery-ui.js"></script>
 	  	<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
