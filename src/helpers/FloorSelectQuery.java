@@ -12,7 +12,8 @@ import java.sql.SQLException;
 import model.Rooms;
 
 /**
- * @author Brian
+ * @author Brian Olaogun
+ * Helper for the Student side of the website.
  *
  */
 public class FloorSelectQuery {
@@ -27,16 +28,12 @@ public class FloorSelectQuery {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.connection = DriverManager.getConnection(url, user, pwd);
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -50,7 +47,7 @@ public class FloorSelectQuery {
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in RoomSelectQueries.java: doFloorRead method. Please check connection or SQL statement.");
+			System.out.println("Error in FloorSelectQuery.java: doFloorRead method. Please check connection or SQL statement.");
 		}
 	}
 	public String getFloorResults(){
@@ -83,7 +80,7 @@ public class FloorSelectQuery {
 	public String getFloorResults(String selected){
 		// Create the String for HTML
 		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";
-		select += "<option></option>";
+		//select += "<option></option>";
 		
 		// HTML for dropdown list
 		try {
