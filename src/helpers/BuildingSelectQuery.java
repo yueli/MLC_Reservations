@@ -8,6 +8,11 @@ import java.sql.SQLException;
 
 import model.Building;
 
+/**
+ * @author Brian Olaogun
+ * Helper for the Student side of the website.
+ *
+ */
 public class BuildingSelectQuery {
 	// initialize fields
 	private Connection connection;
@@ -28,16 +33,12 @@ public class BuildingSelectQuery {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.connection = DriverManager.getConnection(url, user, pwd);
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -53,17 +54,16 @@ public class BuildingSelectQuery {
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in BrowseQueries.java: doBuildingRead method. Please check connection or SQL statement.");
+			System.out.println("Error in BuildingSelectQuery.java: doBuildingRead method. Please check connection or SQL statement.");
 		}
 		
 	}
 	
 	public String getBuildingResults(){
 		// Create the String for HTML
-		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
+		String select = "<select id='buildingList' name='buildingList'>";
 		
-		// 
-		
+		// HTML for dropdown list
 		try {
 			while(this.results.next()){
 				// place results in a building object
@@ -91,10 +91,9 @@ public class BuildingSelectQuery {
 	
 	public String getBuildingResults(String selected){
 		// Create the String for HTML
-		String select = "<select id='buildingList' name='buildingList' onchange='this.form.submit()'>";
+		String select = "<select id='buildingList' name='buildingList'>";
 		
-		// 
-		
+		// HTML for dropdown list
 		try {
 			while(this.results.next()){
 				// place results in a building object
@@ -102,7 +101,7 @@ public class BuildingSelectQuery {
 				building.setBuildingName(this.results.getString("buildingName"));
 				
 				// HTML for dropdown list
-				if(building.getBuildingName().equalsIgnoreCase(selected) && selected != null){
+				if(building.getBuildingName().equals(selected)){
 					select += "<option selected='selected' value=" + "'" + building.getBuildingName() + "'" + ">";
 					select += building.getBuildingName();
 					select += "</option>";
@@ -111,7 +110,7 @@ public class BuildingSelectQuery {
 					select += building.getBuildingName();
 					select += "</option>";
 				}
-			}
+			} this.results.beforeFirst(); // resets the cursor to 0
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
