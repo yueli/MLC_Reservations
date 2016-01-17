@@ -43,13 +43,10 @@ public class BrowseServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		
 		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
-
-	
-		System.out.println(bsq);
-		
 		
 		// set session attribute
 		session.setAttribute("buildings", buildings);

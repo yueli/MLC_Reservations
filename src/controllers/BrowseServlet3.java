@@ -44,13 +44,12 @@ public class BrowseServlet3 extends HttpServlet {
 		String buildingSelected = (String) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
-		// TEST
+	
 		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
 		System.out.println("Building - Browse 2: " + buildingSelected);
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults(floorSelected);
 		
-		// END TEST
 	
 		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
 		System.out.println("#3 Building: " + buildingSelected);
@@ -65,7 +64,7 @@ public class BrowseServlet3 extends HttpServlet {
 		
 		// set session attribute
 		session.setAttribute("floorSelected", floorSelected);
-		session.setAttribute("floor", floor); // TEST
+		session.setAttribute("floor", floor); 
 		session.setAttribute("table", table);
 		
 		// forward the request
