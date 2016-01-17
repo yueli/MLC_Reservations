@@ -47,7 +47,10 @@ public class BrowseServlet extends HttpServlet {
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
 
-
+	
+		System.out.println(bsq);
+		
+		
 		// set session attribute
 		session.setAttribute("buildings", buildings);
 		
