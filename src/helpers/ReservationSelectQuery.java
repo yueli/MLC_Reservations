@@ -66,6 +66,15 @@ public class ReservationSelectQuery {
 			} this.results.beforeFirst();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			if(connection != null){
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return results;

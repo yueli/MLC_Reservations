@@ -115,11 +115,11 @@ public class RoomsSelectQuery {
 						// get results for reservation
 						ReservationSelectQuery rsq = new ReservationSelectQuery("tomcatdb", "root", "");
 						
-						// get a current datetime and parse date
+						// class used to get the current datetime and parse date
 						DateTimeConverter dtc = new DateTimeConverter();
 						
 						// check to see if room is reserved at the current hour at the current date
-						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), tc.convertTimeTo12(timeBlock[i]), room.getRoomNumber());
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
 						
 						// check to see if result set is empty
@@ -137,24 +137,22 @@ public class RoomsSelectQuery {
 						// get results for reservation
 						ReservationSelectQuery rsq = new ReservationSelectQuery("tomcatdb", "root", "");
 						
-						// get a current datetime and parse date
+						// class used to get the current datetime and parse date
 						DateTimeConverter dtc = new DateTimeConverter();
 						
 						// check to see if room is reserved at the current hour at the current date
-						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), tc.convertTimeTo12(timeBlock[i]), room.getRoomNumber());
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
-						System.out.println("print out of Reservation String: " + reservation);
 						
 						// check to see if result set is empty
-						if(reservation.isEmpty()){
-							table += "<td id='green'>";
+						if(!reservation.isEmpty()){
+							table += "<td id='red'>";
 						} else {
 							table += "<td id='green'>";
 						}
 						table += tc.convertTimeTo12(timeBlock[i]);
 						table += "</td>";
 					}
-					
 					table += "</tr>";
 					table += "</tbody>";
 					
@@ -162,19 +160,9 @@ public class RoomsSelectQuery {
 					
 					table += "</div>";
 					j++;
-				}
-				
+				}	
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}finally {
-				if(connection != null){
-					try {
-						connection.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
 			}
 			//table += "</table>";
 			table += "</div>";

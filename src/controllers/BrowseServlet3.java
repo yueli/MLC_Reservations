@@ -46,14 +46,14 @@ public class BrowseServlet3 extends HttpServlet {
 		
 	
 		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
-		System.out.println("Building - Browse 2: " + buildingSelected);
+		//System.out.println("Building - Browse 2: " + buildingSelected);
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults(floorSelected);
 		
 	
 		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
-		System.out.println("#3 Building: " + buildingSelected);
-		System.out.println("#3 Floor: " + floorSelected);
+		//System.out.println("#3 Building: " + buildingSelected);
+		//System.out.println("#3 Floor: " + floorSelected);
 		rsq.doRoomRead(buildingSelected, floorSelected);
 		
 		

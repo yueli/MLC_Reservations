@@ -26,7 +26,6 @@ public class BuildingSelectQuery {
 	 */
 	public BuildingSelectQuery(String dbName, String user, String pwd) {
 		String url = "jdbc:mysql://localhost:3306/" + dbName;
-		System.out.println("****" + dbName);
 		
 		// set up the driver
 		try {
