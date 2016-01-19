@@ -39,17 +39,20 @@ public class BrowseServlet2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// create session object to store session variables
 		HttpSession session = request.getSession();
 		
+		// get request variables		
 		String buildingSelected = (String) request.getParameter("buildingList");
 		String floorSelected = (String) request.getParameter("floorList");
 		
+		// loads building list from db, create dropdown for list, and output as String
 		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults(buildingSelected);
-
+		
+		// loads floor list from db, create dropdown for list, and output as String
 		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
-		//System.out.println("Building - Browse 2: " + buildingSelected);
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults();
 		

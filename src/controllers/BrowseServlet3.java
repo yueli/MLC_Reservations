@@ -38,25 +38,21 @@ public class BrowseServlet3 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// create session object to store session variables
 		HttpSession session = request.getSession();
 		
-		//String floor = (String) session.getAttribute("floor");
+		// get session and request variables
 		String buildingSelected = (String) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
-	
+		// loads floor list from db, create dropdown for list, and output as String
 		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
-		//System.out.println("Building - Browse 2: " + buildingSelected);
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults(floorSelected);
 		
-	
+		// loads rooms from db, query reservation to get availability, outputs string table
 		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
-		//System.out.println("#3 Building: " + buildingSelected);
-		//System.out.println("#3 Floor: " + floorSelected);
 		rsq.doRoomRead(buildingSelected, floorSelected);
-		
-		
 		String table = rsq.getRoomsTable();
 		
 		// URL of the view to forward
