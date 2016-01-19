@@ -85,11 +85,42 @@ public class DateTimeConverter {
 	 * 
 	 * @return parsed Date from datetime in Month date, year format.
 	 */
-	public String parseDate(){
+	public String parseDateLong(){
 	
 		try{
 			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format 
 			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to parse date.**";
+		}
+	}
+	
+	/**
+	 * 
+	 * @param datetime 
+	 * @return parsed Date from datetime in Month date, year format.
+	 */
+	public String parseDateLong(String datetime){
+		
+		this.datetime = datetime.trim(); // removes leading and trailing whitespace
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format
+			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to parse date.**";
+		}
+	}
+	public String parseDate(){
+		
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format 
+			SimpleDateFormat formatted = new SimpleDateFormat("yyyy-MM-dd"); 
 			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
 			return formatted.format(parsedDate); // return parsed date in String format
 		} catch (ParseException e) {
@@ -108,7 +139,7 @@ public class DateTimeConverter {
 		this.datetime = datetime.trim(); // removes leading and trailing whitespace
 		try{
 			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format
-			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy"); // format date to ex. January 12, 2015
+			SimpleDateFormat formatted = new SimpleDateFormat("yyyy-MM-dd"); 
 			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
 			return formatted.format(parsedDate); // return parsed date in String format
 		} catch (ParseException e) {

@@ -57,7 +57,6 @@ public class BrowseServlet extends HttpServlet {
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
 	}
 
 }

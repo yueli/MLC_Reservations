@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.DateTimeConverter;
 import model.Rooms;
 import model.TimeConverter;
 
@@ -56,7 +57,7 @@ public class RoomsSelectQuery {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
-			}
+			} 
 		}
 		
 		
@@ -96,9 +97,6 @@ public class RoomsSelectQuery {
 					Rooms room = new Rooms();
 					room.setRoomNumber(this.results.getInt("roomNumber"));
 					
-					// TODO get results for reservation
-					
-					
 					// display results in a table
 					table += "<div id='tabs-" + j + "'" + ">";
 					
@@ -114,14 +112,45 @@ public class RoomsSelectQuery {
 					table += "<tbody class='subcategory'>";
 					table += "<tr>";
 					for(int i = 0; i < 12; i++){
-						table += "<td>";
+						// get results for reservation
+						ReservationSelectQuery rsq = new ReservationSelectQuery("tomcatdb", "root", "");
+						
+						// get a current datetime and parse date
+						DateTimeConverter dtc = new DateTimeConverter();
+						
+						// check to see if room is reserved at the current hour at the current date
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), tc.convertTimeTo12(timeBlock[i]), room.getRoomNumber());
+						String reservation = rsq.doReservationResults();
+						
+						// check to see if result set is empty
+						if(!reservation.isEmpty()){
+							table += "<td id='red'>";
+						} else {
+							table += "<td id='green'>";
+						}
 						table += tc.convertTimeTo12(timeBlock[i]);
 						table += "</td>";
 					}
 					table += "</tr>";
 					table += "<tr>";
 					for(int i = 12; i < timeBlock.length; i++){
-						table += "<td>";
+						// get results for reservation
+						ReservationSelectQuery rsq = new ReservationSelectQuery("tomcatdb", "root", "");
+						
+						// get a current datetime and parse date
+						DateTimeConverter dtc = new DateTimeConverter();
+						
+						// check to see if room is reserved at the current hour at the current date
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), tc.convertTimeTo12(timeBlock[i]), room.getRoomNumber());
+						String reservation = rsq.doReservationResults();
+						System.out.println("print out of Reservation String: " + reservation);
+						
+						// check to see if result set is empty
+						if(reservation.isEmpty()){
+							table += "<td id='green'>";
+						} else {
+							table += "<td id='green'>";
+						}
 						table += tc.convertTimeTo12(timeBlock[i]);
 						table += "</td>";
 					}
@@ -137,6 +166,15 @@ public class RoomsSelectQuery {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				if(connection != null){
+					try {
+						connection.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 			//table += "</table>";
 			table += "</div>";
