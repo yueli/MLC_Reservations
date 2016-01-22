@@ -125,10 +125,12 @@ public class RoomsSelectQuery {
 						// check to see if result set is empty
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
+							table += tc.convertTimeTo12(timeBlock[i]);
 						} else {
 							table += "<td id='green'>";
+							table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 						}
-						table += tc.convertTimeTo12(timeBlock[i]);
+					
 						table += "</td>";
 					}
 					table += "</tr>";
@@ -145,13 +147,22 @@ public class RoomsSelectQuery {
 						String reservation = rsq.doReservationResults();
 						
 						// check to see if result set is empty
+//						if(!reservation.isEmpty()){
+//							table += "<td id='red'>";
+//						} else {
+//							table += "<td id='green'>";
+//						}
+//						table += tc.convertTimeTo12(timeBlock[i]);
+//						table += "</td>";
+						// check to see if result set is empty
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
+							table += tc.convertTimeTo12(timeBlock[i]);
 						} else {
 							table += "<td id='green'>";
+							table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 						}
-						table += tc.convertTimeTo12(timeBlock[i]);
-						table += "</td>";
+						
 					}
 					table += "</tr>";
 					table += "</tbody>";

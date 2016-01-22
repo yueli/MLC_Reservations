@@ -45,6 +45,7 @@ public class BuildingSelectQuery {
 	
 
 	public void doBuildingRead(){
+		// TODO redo query to check if building is available at the current date.
 		String query = "SELECT buildingName FROM tomcatdb.Building";
 		
 		// securely run query
