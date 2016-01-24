@@ -38,26 +38,21 @@ public class BrowseServlet3 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// get current session
 		HttpSession session = request.getSession();
 		
-		//String floor = (String) session.getAttribute("floor");
+		// get session and request variables
 		String buildingSelected = (String) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
-		// TEST
+		// loads floor list from db, create dropdown for list, and output as String
 		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
-		System.out.println("Building - Browse 2: " + buildingSelected);
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults(floorSelected);
 		
-		// END TEST
-	
+		// loads rooms from db, query reservation to get availability, outputs string table
 		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
-		System.out.println("#3 Building: " + buildingSelected);
-		System.out.println("#3 Floor: " + floorSelected);
 		rsq.doRoomRead(buildingSelected, floorSelected);
-		
-		
 		String table = rsq.getRoomsTable();
 		
 		// URL of the view to forward
@@ -65,7 +60,8 @@ public class BrowseServlet3 extends HttpServlet {
 		
 		// set session attribute
 		session.setAttribute("floorSelected", floorSelected);
-		session.setAttribute("floor", floor); // TEST
+		session.setAttribute("building", buildingSelected);
+		session.setAttribute("floor", floor); 
 		session.setAttribute("table", table);
 		
 		// forward the request

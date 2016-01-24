@@ -26,9 +26,12 @@
 		        <li class="current-item"><a href="#">Home</a></li>
 		        <li><a href="Browse">Browse</a></li>
 		        <li><a href="#">Search</a></li>
-		        <li><a href="#">View & Cancel Reservations</a></li>
+		        <li><a href="#">View and Cancel Reservations</a></li>
 		        <li><a href="#">Check In</a></li>
 		        <li><a href="#">Logout</a></li>
+		        <li><a href="BanReadServlet">Admin Login</a></li>
+		        
+		        
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>

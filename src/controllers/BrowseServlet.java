@@ -42,14 +42,13 @@ public class BrowseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// get current session
 		HttpSession session = request.getSession();
+		
+		// loads building list from db, create dropdown for list, and output as String
 		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
-
-	
-		System.out.println(bsq);
-		
 		
 		// set session attribute
 		session.setAttribute("buildings", buildings);
@@ -60,7 +59,6 @@ public class BrowseServlet extends HttpServlet {
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
 	}
 
 }
