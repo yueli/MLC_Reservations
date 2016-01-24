@@ -38,7 +38,7 @@ public class BrowseServlet3 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// create session object to store session variables
+		// get current session
 		HttpSession session = request.getSession();
 		
 		// get session and request variables
@@ -60,6 +60,7 @@ public class BrowseServlet3 extends HttpServlet {
 		
 		// set session attribute
 		session.setAttribute("floorSelected", floorSelected);
+		session.setAttribute("building", buildingSelected);
 		session.setAttribute("floor", floor); 
 		session.setAttribute("table", table);
 		

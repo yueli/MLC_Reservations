@@ -38,23 +38,31 @@ public class BrowseReserveServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// get the current session
 		HttpSession session = request.getSession();
 		
+		// get parameters from request & session
 		String startTime = (String) request.getParameter("startTime");
 		String roomNumber = (String) request.getParameter("roomNumber");
 		String currentDate = (String) request.getParameter("currentDate");
+		String building = (String) session.getAttribute("building");
 		
 		// change date into long format
 		DateTimeConverter dtc = new DateTimeConverter();
+		currentDate += " 00:00:00"; // to make it a date time to parse into long format
 		currentDate = dtc.parseDateLong(currentDate);
+		
+		// TODO query to see if user has any reservations for current day
 		
 		// set session attributes
 		session.setAttribute("startTime", startTime);
 		session.setAttribute("roomNumber", roomNumber);
 		session.setAttribute("currentDate", currentDate);
+		session.setAttribute("building", building);
 		
-		// set the url
+		// set the forwarding url
 		String url = "student/reservation.jsp";
+		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
