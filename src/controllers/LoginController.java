@@ -40,9 +40,24 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-    	doGet(request, response);
+	/**
+	 * Process GET requests/responses (logout)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//User has clicked the logout link
+		session = request.getSession();
+
+		//check to make sure we've clicked link
+		if(request.getParameter("logout") !=null){
+
+			//logout and redirect to frontpage
+			logout();
+			url="student/login.jsp";
+		}
+
+		//forward our request along
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -94,5 +109,11 @@ public class LoginController extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
+	/**
+	 * Logs the user out
+	 */
+	public void logout() {
+		session.invalidate();
+	}
 
 }

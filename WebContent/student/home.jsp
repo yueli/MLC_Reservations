@@ -37,4 +37,9 @@
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
 	</body>
+	
+		<form name="Logout" action="LoginController" method="get">
+ 		<input type="submit" name = "logout" value="Logout">
+ 		</form>
+ 		
 </html>
