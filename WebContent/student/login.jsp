@@ -1,28 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
-<link type="text/css" rel="stylesheet" href="student/style.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>MLC Reservations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="styles.css" >
+
+<title>MLC Study Room Reservations</title>
 </head>
 <body>
- <h1>MLC Reservations</h1>
-
- <form name="loginForm" action="LoginServlet" method="post">
- 	<label>
- 	UGA MyID (this is your id and NOT the number from the back of your UGA ID Card):
- 	</label>
-     <input type="text" name="cardNumber" /><br />
-    <label>
- 	Password:
- 	</label>
-     <input type="text" name="password" /><br />
-     <input type="submit" name="submit" value="Login">
-  </form>
+<h1>MLC Study Room Reservations</h1>
 
 
-
+<form id="loginForm" action="LoginController" method="POST">
+	<h2>Log In</h2>
+	<input type="text" name="username" placeholder="Username" required size=35><br>
+	<input type="password" name="password" placeholder ="Password" required size=35><br>
+	<input type="submit" value="LoginController"><br>
+	${errorMessage}
+</form>
 </body>
 </html>

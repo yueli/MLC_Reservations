@@ -21,6 +21,7 @@
 		</script>
 	</head>
 	<body>
+	<h2>Welcome, ${user.userName}!</h2>
 		<nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
@@ -36,4 +37,9 @@
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
 	</body>
+	
+		<form name="Logout" action="LoginController" method="get">
+ 		<input type="submit" name = "logout" value="Logout">
+ 		</form>
+ 		
 </html>
