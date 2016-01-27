@@ -17,14 +17,22 @@
 		        <li><a href="#">Logout</a></li>
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
-		</nav>		
-		<form name="Browse_Reservation" action="Reservation" method="post">
-			<p>Reservation for room ${roomNumber} in ${building} on ${currentDate}
-			<p>Starting At: ${startTime}</p>
-			<p>Please Select Hour Increment:</p>
-			<p>Please enter email of secondary person:
-			<input type="text" name="secondary" required>
-			<input type="submit" value="Make Reservation">
-		</form>
+		</nav>
+		<div id="reservation_div">	
+			<form name="browse_reservation" id ="browse_reservation" action="Reservation" method="post">
+				<p>Please fill out additional information below to make a reservation</p>
+				<p>Reservation for ${currentDate}</p>
+				<p>Building:
+				<input type="text" name="building" id="building" value="${building}" disabled></p>				
+				<p>Room Number:  
+				<input type="text" name ="roomNumber" id="roomNumber" value="${roomNumber}" disabled></p>
+				<p>Starting at: 
+				<input type="text" name="startTime" id="startTime" value="${startTime}" disabled></p>
+				<p>Reservation Length:</p>
+				<p>Please enter email of secondary person:<br>
+				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
+				<input type="submit" value="Make Reservation">
+			</form>
+		</div>	
 	</body>
 </html>
