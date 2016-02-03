@@ -27,6 +27,7 @@ import javax.mail.internet.MimeMultipart;
 
 /**
  * @author Brian Olaogun
+ * source: https://en.wikipedia.org/wiki/JavaMail
  *
  */
 public class Email {
