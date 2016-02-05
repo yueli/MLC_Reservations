@@ -31,7 +31,15 @@ import javax.mail.internet.MimeMultipart;
  *
  */
 public class Email {
-	// Fields
+	// Fields for reservation confirmation email
+	private String primaryEmail;
+	private String secondaryEmail;
+	private String reserveDate;
+	private String startTime;
+	private String endTime;
+	private String building;
+	private String roomNumber;
+	
 	public void sendMail() {
 		 
         // SUBSTITUTE YOUR EMAIL ADDRESSES HERE!!!
@@ -80,17 +88,17 @@ public class Email {
             msg.setSentDate(new Date());
 
             // Set message content and send
-            setTextContent(msg);
-            msg.saveChanges();
-            bus.sendMessage(msg, address);
+//            setTextContent(msg);
+//            msg.saveChanges();
+//            bus.sendMessage(msg, address);
 
             setMultipartContent(msg);
             msg.saveChanges();
             bus.sendMessage(msg, address);
 
-            setFileAsAttachment(msg, "C:/WINDOWS/CLOUD.GIF");
-            msg.saveChanges();
-            bus.sendMessage(msg, address);
+//            setFileAsAttachment(msg, "C:/WINDOWS/CLOUD.GIF");
+//            msg.saveChanges();
+//            bus.sendMessage(msg, address);
 
             setHTMLContent(msg);
             msg.saveChanges();
