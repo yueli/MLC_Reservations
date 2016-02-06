@@ -7,44 +7,46 @@ html {
 	}
 
 table {
-  font-family: 'Arial';
-  margin: 5px auto;
-  border-collapse: collapse;
-  border: 1px solid #eee;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+  	font-family: 'Arial';
+  	margin: 5px auto;
+  	border-collapse: collapse;
+  	border: 1px solid #eee;
+  	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
 	}
 	
 table td:hover {
-  background: #f4f4f4;
+  	background: #f4f4f4;
 	}
 	
 table td:hover td {
-  color: #555;
+  	color: #555;
 	}
 	
 table th, table td {
-  color: #999;
-  border: 1px solid #eee;
-  padding: 7px 20px;
-  border-collapse: collapse;
+	color: #999;
+	border: 1px solid #eee;
+	padding: 7px 20px;
+	border-collapse: collapse;
 	}
 	
 table th {
-  background: #CC0000;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 22px;
-  text-align: center;
+	background: #CC0000;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 22px;
+	text-align: center;
 	}	
 
 .ui-tabs-vertical { 
 	width: 55em; 
 	}
+	
 .ui-tabs-vertical .ui-tabs-nav {
 	padding: .2em .1em .2em .2em; 
 	float: left; 
 	width: 12em; 
 	}
+	
 .ui-tabs-vertical .ui-tabs-nav li { 
 	clear: left; 
 	width: 100%; 
@@ -53,6 +55,7 @@ table th {
 	margin: 0 -1px .2em 0; 
 	background: #333332;
 	}
+	
 .ui-tabs-vertical .ui-tabs-nav li a {
 	display:block; 
 	color: rgba(249, 249, 249, .9);
@@ -63,19 +66,51 @@ table th {
     border-top: 1px solid rgba(255, 255, 255, .1);
     text-decoration: none;
 	}
+	
 .ui-tabs-vertical .ui-tabs-nav li a:hover{
     background: #CC0000;
     color: #FFF;
 	}
+	
 .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { 
 	padding-bottom: 0; 
 	padding-right: .1em; 
 	border-right-width: 1px; 
 	}
+	
 .ui-tabs-vertical .ui-tabs-panel { 
 	padding: 1em; 
 	float: right; 
 	width: 40em;
+	}
+	
+#red {
+	background: #fbcfd0;
+	color: #999;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
+
+#green{
+	background: #e3f2e0;
+	color: #999;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
+
+#green a {
+	text-decoration: none;
+	color: #555;
+	}
+
+#green:hover {
+  	background: #f4f4f4;
+	}
+	
+#green:hover td {
+  	color: #555;
 	}
 
 @media only screen and (max-width: 760px),
