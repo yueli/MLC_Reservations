@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import model.DateTimeConverter;
 import model.TimeConverter;
 
-
 /**
  * Servlet implementation class BrowseReserve
  */
@@ -57,7 +56,7 @@ public class BrowseReserveServlet extends HttpServlet {
 		// change time to 12 hour format
 		TimeConverter tc = new TimeConverter();
 		startTime = tc.convertTimeTo12(startTime);
-
+		
 		// TODO query to see if user has any reservations for current day
 		
 		// set session attributes

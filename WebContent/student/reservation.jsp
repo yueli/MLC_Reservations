@@ -33,5 +33,6 @@
 				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
 				<input type="submit" value="Make Reservation">
 			</form>
+		</div>	
 	</body>
 </html>
