@@ -12,16 +12,14 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+
 
 
 
@@ -32,21 +30,174 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Email {
 	// Fields for reservation confirmation email
-	private String primaryEmail;
-	private String secondaryEmail;
+	private String to;
+	private String cc;
 	private String reserveDate;
 	private String startTime;
 	private String endTime;
 	private String building;
 	private String roomNumber;
 	
-	public void sendMail() {
-		 
-        // SUBSTITUTE YOUR EMAIL ADDRESSES HERE!!!
-        String to = "example@email.com";
-        String from = "example@email.com";
-        // SUBSTITUTE YOUR ISP'S MAIL SERVER HERE!!!
-        String host = "smtpserver.yourisp.invalid";
+	// Constructors
+	/**
+	 * No parameter constructor
+	 */
+	public Email(){
+		this.to = "";
+		this.cc = "";
+		this.reserveDate = "";
+		this.startTime = "";
+		this.endTime = "";
+		this.building = "";
+		this.roomNumber = "";
+	}
+	
+	/**
+	 * 
+	 * @param to
+	 * @param cc
+	 * @param reserveDate
+	 * @param startTime
+	 * @param endTime
+	 * @param building
+	 * @param roomNumber
+	 */
+	public Email(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber){
+		this.to = to;
+		this.cc = cc;  
+		this.reserveDate = reserveDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.building = building;
+        this.roomNumber = roomNumber;
+	}
+
+	// Getters & Setters
+	/**
+	 * @return the to
+	 */
+	public String getTo() {
+		return to;
+	}
+
+	/**
+	 * @param to the to to set
+	 */
+	public void setTo(String to) {
+		this.to = to;
+	}
+
+	/**
+	 * @return the cc
+	 */
+	public String getCc() {
+		return cc;
+	}
+
+	/**
+	 * @param cc the cc to set
+	 */
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
+
+	/**
+	 * @return the reserveDate
+	 */
+	public String getReserveDate() {
+		return reserveDate;
+	}
+
+	/**
+	 * @param reserveDate the reserveDate to set
+	 */
+	public void setReserveDate(String reserveDate) {
+		this.reserveDate = reserveDate;
+	}
+
+	/**
+	 * @return the startTime
+	 */
+	public String getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * @param startTime the startTime to set
+	 */
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	/**
+	 * @return the endTime
+	 */
+	public String getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * @param endTime the endTime to set
+	 */
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	/**
+	 * @return the building
+	 */
+	public String getBuilding() {
+		return building;
+	}
+
+	/**
+	 * @param building the building to set
+	 */
+	public void setBuilding(String building) {
+		this.building = building;
+	}
+
+	/**
+	 * @return the roomNumber
+	 */
+	public String getRoomNumber() {
+		return roomNumber;
+	}
+
+	/**
+	 * @param roomNumber the roomNumber to set
+	 */
+	public void setRoomNumber(String roomNumber) {
+		this.roomNumber = roomNumber;
+	}
+	
+	// Email Methods
+	/**
+	 * 
+	 * @param to
+	 * @param cc
+	 * @param reserveDate
+	 * @param startTime
+	 * @param endTime
+	 * @param building
+	 * @param roomNumber
+	 * Send Email for reservation confirmation
+	 */
+	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber) {
+        // ROOM RESERVATION DETAILS
+        this.reserveDate = reserveDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.building = building;
+        this.roomNumber = roomNumber;
+		
+		// EMAIL ADDRESSES
+        this.cc = cc;
+        this.to = to;
+        String from = "example@email.com"; //TODO change from Email
+        
+        // MAIL SERVER
+        String host = "smtp.office365.com";
 
         // Create properties for the Session
         Properties props = new Properties();
@@ -54,11 +205,25 @@ public class Email {
         // If using static Transport.send(),
         // need to specify the mail server here
         props.put("mail.smtp.host", host);
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "25");
+        
         // To see what is going on behind the scene
         props.put("mail.debug", "true");
 
         // Get a session
-        Session session = Session.getInstance(props);
+        //Session session = Session.getInstance(props);
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+        		   //TODO Set Username & Password
+                   private String username = "";
+                   private String password = "";
+
+				protected PasswordAuthentication getPasswordAuthentication() {
+                      return new PasswordAuthentication(this.username, this.password);
+                   }
+       	});
 
         try {
             // Get a Transport object to send e-mail
@@ -77,32 +242,21 @@ public class Email {
             msg.setFrom(new InternetAddress(from));
             InternetAddress[] address = {new InternetAddress(to)};
             msg.setRecipients(Message.RecipientType.TO, address);
+            
             // Parse a comma-separated list of email addresses. Be strict.
+            InternetAddress[] address2 = {new InternetAddress(cc)};
             msg.setRecipients(Message.RecipientType.CC,
-                                InternetAddress.parse(to, true));
-            // Parse comma/space-separated list. Cut some slack.
-            msg.setRecipients(Message.RecipientType.BCC,
-                                InternetAddress.parse(to, false));
-
-            msg.setSubject("Test E-Mail through Java");
+                                InternetAddress.parse(cc, true));
+            
+            // Set the subject and date
+            msg.setSubject(getBuilding() + " Room Reservation");
             msg.setSentDate(new Date());
 
-            // Set message content and send
-//            setTextContent(msg);
-//            msg.saveChanges();
-//            bus.sendMessage(msg, address);
 
-            setMultipartContent(msg);
+            setHTMLContent(msg, getReserveDate(), getStartTime(), getEndTime(), getBuilding(), getRoomNumber());
             msg.saveChanges();
             bus.sendMessage(msg, address);
-
-//            setFileAsAttachment(msg, "C:/WINDOWS/CLOUD.GIF");
-//            msg.saveChanges();
-//            bus.sendMessage(msg, address);
-
-            setHTMLContent(msg);
-            msg.saveChanges();
-            bus.sendMessage(msg, address);
+            bus.sendMessage(msg, address2);
 
             bus.close();
 
@@ -110,6 +264,7 @@ public class Email {
         catch (MessagingException mex) {
             // Prints all nested (chained) exceptions as well
             mex.printStackTrace();
+            
             // How to access nested exceptions
             while (mex.getNextException() != null) {
                 // Get next exception in chain
@@ -121,75 +276,29 @@ public class Email {
         }
     }
 	
-	// A simple, single-part text/plain e-mail.
-    public static void setTextContent(Message msg) throws MessagingException {
-        // Set message content
-        String mytxt = "This is a test of sending a " +
-                        "plain text e-mail through Java.\n" +
-                        "Here is line 2.";
-        msg.setText(mytxt);
-
-        // Alternate form
-        msg.setContent(mytxt, "text/plain");
-
-    }
-
-    // A simple multipart/mixed e-mail. Both body parts are text/plain.
-    public static void setMultipartContent(Message msg) throws MessagingException {
-        // Create and fill first part
-        MimeBodyPart p1 = new MimeBodyPart();
-        p1.setText("This is part one of a test multipart e-mail.");
-
-        // Create and fill second part
-        MimeBodyPart p2 = new MimeBodyPart();
-        // Here is how to set a charset on textual content
-        p2.setText("This is the second part", "us-ascii");
-
-        // Create the Multipart.  Add BodyParts to it.
-        Multipart mp = new MimeMultipart();
-        mp.addBodyPart(p1);
-        mp.addBodyPart(p2);
-
-        // Set Multipart as the message's content
-        msg.setContent(mp);
-    }
-
-    // Set a file as an attachment.  Uses JAF FileDataSource.
-    public static void setFileAsAttachment(Message msg, String filename)
-             throws MessagingException {
-
-        // Create and fill first part
-        MimeBodyPart p1 = new MimeBodyPart();
-        p1.setText("This is part one of a test multipart e-mail." +
-                    "The second part is file as an attachment");
-
-        // Create second part
-        MimeBodyPart p2 = new MimeBodyPart();
-
-        // Put a file in the second part
-        FileDataSource fds = new FileDataSource(filename);
-        p2.setDataHandler(new DataHandler(fds));
-        p2.setFileName(fds.getName());
-
-        // Create the Multipart.  Add BodyParts to it.
-        Multipart mp = new MimeMultipart();
-        mp.addBodyPart(p1);
-        mp.addBodyPart(p2);
-
-        // Set Multipart as the message's content
-        msg.setContent(mp);
-    }
 
     // Set a single part html content.
     // Sending data of any type is similar.
-    public static void setHTMLContent(Message msg) throws MessagingException {
+	/**
+	 * 
+	 * @param msg
+	 * @param reserveDate
+	 * @param startTime
+	 * @param endTime
+	 * @param building
+	 * @param roomNumber
+	 * @throws MessagingException
+	 * Set the message of the email.  This is an HTML email message
+	 */
+    public static void setHTMLContent(Message msg, String reserveDate, String startTime, String endTime, String building, String roomNumber) throws MessagingException {
 
         String html = "<html><head><title>" +
                         msg.getSubject() +
                         "</title></head><body><h1>" +
                         msg.getSubject() +
-                        "</h1><p>This is a test of sending an HTML e-mail" +
-                        " through Java.</body></html>";
+                        "</h1><p style='font-size:120%'>Thanks for reserving a room at " + building + "! " +
+                        "Your reservation is set for room " + roomNumber + " on " + reserveDate + " from " + startTime + " to " + endTime + ". <br><br>" + 
+                        "To check-in, view, or cancel your reservation, please visit [insert website].</body></html>";
 
         // HTMLDataSource is a static nested class
         msg.setDataHandler(new DataHandler(new HTMLDataSource(html)));
@@ -225,4 +334,4 @@ public class Email {
         }
     }
 	 
-} //END
+} 
