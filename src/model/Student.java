@@ -1,12 +1,16 @@
 /**
  * 
  */
+
+
+// NOT SURE THIS IS BEING USED
+
 package model;
 
 public class Student {
 	// Fields
 	private int studentID;
-	private String myID;
+	private String loginName;
 	private String fname;
 	private String lname;
 	private String lastLogin;
@@ -17,7 +21,7 @@ public class Student {
 	 */
 	public Student() {
 		this.studentID = 0;
-		this.myID = null;
+		this.loginName = null;
 		this.fname = null;
 		this.lname = null;
 		this.lastLogin = null;
@@ -40,8 +44,8 @@ public class Student {
 	 * @param lname
 	 * @param lastLogin
 	 */
-	public Student(String myID, String fname, String lname, String lastLogin) {
-		this.myID = myID;
+	public Student(String loginName, String fname, String lname, String lastLogin) {
+		this.loginName = loginName;
 		this.fname = fname;
 		this.lname = lname;
 		this.lastLogin = lastLogin;
@@ -57,7 +61,7 @@ public class Student {
 	 */
 	public Student(int studentID, String myID, String fname, String lname, String lastLogin) {
 		this.studentID = studentID;
-		this.myID = myID;
+		this.loginName = loginName;
 		this.fname = fname;
 		this.lname = lname;
 		this.lastLogin = lastLogin;
@@ -82,16 +86,16 @@ public class Student {
 	/**
 	 * @return the myID
 	 */
-	public String getMyID() {
-		return myID;
-	}
+//	public String getMyID() {
+//		return myID;
+//	}
 
 	/**
 	 * @param myID the myID to set
 	 */
-	public void setMyID(String myID) {
-		this.myID = myID;
-	}
+//	public void setMyID(String myID) {
+//		this.myID = myID;
+//	}
 
 	/**
 	 * @return the fname
@@ -138,11 +142,11 @@ public class Student {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
-		return "Student [studentID=" + studentID + ", myID=" + myID + ", fname=" + fname + ", lname=" + lname
-				+ ", lastLogin=" + lastLogin + "]";
-	}
+	//@Override
+	//public String toString() {
+	//	return "Student [studentID=" + studentID + ", myID=" + myID + ", fname=" + fname + ", lname=" + lname
+	//			+ ", lastLogin=" + lastLogin + "]";
+	//}
 	
 	
 }

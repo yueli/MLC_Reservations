@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		url = "student/home.jsp";
+		url = "user/home.jsp";
 		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

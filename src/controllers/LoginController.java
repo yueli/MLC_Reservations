@@ -52,7 +52,7 @@ public class LoginController extends HttpServlet {
 
 			//logout and redirect to frontpage
 			logout();
-			url="student/login.jsp";
+			url="user/login.jsp";
 		}
 
 		//forward our request along
@@ -66,8 +66,8 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//doGet(request, response);
-		String errorMessage = "";
-		request.setAttribute("errorMessage", errorMessage);
+		String message = "";
+		request.setAttribute("message", message);
 
 		//get our current session
 		session = request.getSession();
@@ -80,29 +80,75 @@ public class LoginController extends HttpServlet {
 			PasswordService pws = new PasswordService();
 			String encryptedPass = pws.encrypt(password);
 			
-			//create a user helper class to make database calls, and call authenticate user method
-			UserHelper uh = new UserHelper();
-			User user = uh.authenticateUser(username, encryptedPass); //in UserHelper.java // AUTHENTICATION HARD CODED
-
-			//we've found a user that matches the credentials
-			//if(user != null){
+			//set up connection to the database
+			UserHelper uh = new UserHelper(); 
+			
+			//see if they are UGA affiliated
+			User loginUser = uh.authenticateUser(username, encryptedPass); //see if the person is UGA affiliated
+			//NOTE: the authenticate method will not return the user's record ID
+			
+			//student user will come back null if not authenticated and come back w/ data if authenticated
+			System.out.println("Login Controller returned from authentication studentUser.myID =  " + loginUser.getMyID());	
+			
+			if (loginUser.getMyID() != null){ //if a non-empty object sent back (has user data meaning they were authenticated)
+				// create a Student User object 
+				User user = new User();
+				
+				user.setMyID(loginUser.getMyID());
+				user.setUserFirstName(loginUser.getUserFirstName());
+				user.setUserLastName(loginUser.getUserLastName());
+				user.setUserEmail(loginUser.getUserEmail());
+				
+				message = "UGA person!!";
+							
+				
+				//check to see if user is in the student table, and if not add, and if so, set last login time
+		
+				boolean inTable = uh.inUserTable(user.getMyID());
+				System.out.println("Login Controller returned from inStudentTable " + inTable);				
+				
+				if (inTable){
+					//update the last login field
+					uh.updateLastLogin(user.getMyID());
+				}else{ //not in table
+					//add to user table //GINGER HERE 
+					uh.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
+				}
+				
+				//--------------------------------
+				//get the user record id to pass through sessions to make queries easier
+				int recordID = uh.getRecordID(user.getMyID());
+				System.out.println("Login Controller get user Record ID 1 " + recordID);
+				
+				user.setUserRecordID(recordID);
+				System.out.println("Login Controller get user Record ID 2 " + user.getUserRecordID());				
+				
+				//--------------------------------
+				
+				loginUser = null; //null out values in object since don't want the password to stick around
+				
 				//invalidate current session, then get new session for our user (combats: session hijacking)
 				session.invalidate();
 				session=request.getSession(true);
 				session.setAttribute("user", user);
-				System.out.println("LoginController just about to call login servlet");
-				url="/LoginServlet";
-	
-			//}
-			// user doesn't exist, redirect to previous page and show error
-			//else{ 
-				//errorMessage = "Error: Unrecognized Username or Password<br>Login attempts remaining: "+(3-(loginAttempts));
-				//request.setAttribute("errorMessage", errorMessage);
+				session.setAttribute("message", message);
 
+				System.out.println("****Login Controller MyID and first name " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
+				
+				url="user/home.jsp";
+			
+			}else{// user doesn't exist, redirect to previous page and show error
+			 
+				message = "Error: Not Valid UGA Credentials";
+				session.setAttribute("message", message);
+
+				System.out.println("Login Controller: user doesn't exist!");
 				//track login attempts (combats: brute force attacks)
 				//session.setAttribute("loginAttempts", loginAttempts++);
-				//url = "index.jsp";
-			//}
+				url = "user/login.jsp";
+			}
+			
+		
 		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -114,6 +160,7 @@ public class LoginController extends HttpServlet {
 	 */
 	public void logout() {
 		session.invalidate();
+		//MAY HAVE TO PUT IN CAS LOGING OUT??
 	}
 
 }
