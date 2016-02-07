@@ -9,6 +9,7 @@ package model;
  */
 public class Reservation {
 	// Fields
+	private int reserveID;
 	private Student primaryStudent;
 	private Student secondaryStudent;
 	private Admin adminID;
@@ -97,6 +98,20 @@ public class Reservation {
 	}
 
 	// Accessors and Mutators
+	/**
+	 * @return the reserveID
+	 */
+	public int getReserveID() {
+		return this.reserveID;
+	}
+	
+	/**
+	 * 
+	 * @param reserveID
+	 */
+	public void setReserveID(int reserveID) {
+		this.reserveID = reserveID;
+	}
 	
 	/**
 	 * @return the primaryStudent

@@ -4,21 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Home</title>
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
-	  	<script type="text/javascript" src="jquery/jquery-ui.js"></script>
-	  	<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
-		<script type="text/javascript">
-		(document).ready(function() {
-		    ('.toggle-nav').click(function(e) {
-		        (this).toggleClass('active');
-		        ('.menu ul').toggleClass('active');
-		 
-		        e.preventDefault();
-		    });
-		});
-		</script>
+		<title>Student Reservation</title>
 	</head>
 	<body>
 		<nav class="menu">
@@ -31,6 +17,14 @@
 		        <li><a href="#">Logout</a></li>
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
-		</nav>
+		</nav>		
+		<form name="Browse_Reservation" action="Reservation" method="post">
+			<p>Reservation for room ${roomNumber} in ${building} on ${currentDate}
+			<p>Starting At: ${startTime}</p>
+			<p>Please Select Hour Increment:</p>
+			<p>Please enter email of secondary person:
+			<input type="text" name="secondary" required>
+			<input type="submit" value="Make Reservation">
+		</form>
 	</body>
 </html>

@@ -42,7 +42,7 @@ public class FloorSelectQuery {
 	
 	public void doFloorRead(String building){
 		String query = "SELECT roomFloor FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingName = '" + building + "'" + " GROUP BY roomFloor ORDER BY roomFloor";
-		System.out.println(query);
+	
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			this.results = ps.executeQuery();
@@ -81,8 +81,7 @@ public class FloorSelectQuery {
 	public String getFloorResults(String selected){
 		// Create the String for HTML
 		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";
-		//select += "<option></option>";
-		
+	
 		// HTML for dropdown list
 		try {
 			while(this.results.next()){

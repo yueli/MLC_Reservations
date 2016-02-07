@@ -6,9 +6,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Browse</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="browse.css">
-		<link rel="stylesheet" type="text/css" href="styles.css">
-		<script src="browse.js"></script>
+		<link rel="stylesheet" type="text/css" href="student/browse.css">
+		<link rel="stylesheet" type="text/css" href="student/styles.css">
+		<script src="student/browse.js"></script>
 		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
   		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
   		 <script>
@@ -40,5 +40,7 @@
 			<p>${floor}</p>
 		</form>
 		<p>${table}</p>
+		
+
 	</body>
 </html>

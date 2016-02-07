@@ -26,7 +26,6 @@ public class BuildingSelectQuery {
 	 */
 	public BuildingSelectQuery(String dbName, String user, String pwd) {
 		String url = "jdbc:mysql://localhost:3306/" + dbName;
-
 		
 		// set up the driver
 		try {
@@ -46,7 +45,13 @@ public class BuildingSelectQuery {
 	
 
 	public void doBuildingRead(){
+		// TODO redo query to check if building is available at the current date.
 		String query = "SELECT buildingName FROM tomcatdb.Building";
+		
+		// actual query to use when there are building times.
+		// this query will need the current date and current time.
+		// also selected will be buildings that are online.
+		//String query = "SELECT tomcatdb.Building.buildingName FROM tomcatdb.Building, tomcatdb.BuildingSchedule, tomcatdb.Schedule WHERE tomcatdb.Building.buildingStatus = 1 AND tomcatdb.Building.buildingID = tomcatdb.BuildingSchedule.Building_buildingID AND tomcatdb.Schedule.scheduleID = tomcatdb.BuildingSchedule.Schedule_scheduleID AND tomcatdb.Schedule.startDate = '2016-01-23' AND ((tomcatdb.Schedule.startTime = '18:00:00') OR ('18:00:00' BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
 		
 		// securely run query
 		try {
