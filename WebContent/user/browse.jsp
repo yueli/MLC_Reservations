@@ -12,6 +12,9 @@
 		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
   		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
   		 <script>
+	  	  	function submitform() {
+	  	  		document.forms["fwdReserve"].sumbit();
+	  		}
 	  	    $(function() {
 	  	   		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
 	  	    	$( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
@@ -33,7 +36,7 @@
 		<form name="browseForm" action="Browse2" method="post">
 			<h2>Please Select Building</h2>
 			<p>${buildings}
-			<input name="buildingSubmit" type="submit" value="Ok"></p> 
+			<input name="enterBuilding" type="submit" value="Enter"></p> 
 		</form>
 		<form name="browseForm2" action="Browse3" method="post">
 			<h2>Please Select Floor</h2>

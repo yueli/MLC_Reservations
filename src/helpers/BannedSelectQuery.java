@@ -77,7 +77,7 @@ public class BannedSelectQuery {
 			try{
 				
 				
-				
+				table += "<tr><td><a href='ban'>Ban Someone</td></tr>";
 				table += "<tr><td>Ban#</td><td>Student ID</td><td>Admin ID</td><td>Ban Start</td><td>Ban End</td><td>Penalty Count</td><td>Description</td><td>Status</td></tr>";
 				while(results.next()){
 
@@ -97,7 +97,6 @@ public class BannedSelectQuery {
 					
 					table += "<td>";
 					table += ban.getBanID();
-					System.out.println(ban.getBanID());
 					table += "</td>";
 					table += "<td>";
 					table += ban.getStudentID();
@@ -120,7 +119,9 @@ public class BannedSelectQuery {
 					table += "<td>";
 					table += ban.getStatus();
 					table += "</td>";
-									
+					
+					table += "<td><a href=unban?banID=" + ban.getBanID() + ">Unban</a></td>";
+					
 					table += "</tr>";
 				}
 				table+="</table>";
@@ -130,8 +131,6 @@ public class BannedSelectQuery {
 				//System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
 				
 			}
-			
-			
 			System.out.println(table);
 			return table;
 		}
