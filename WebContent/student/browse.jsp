@@ -13,7 +13,7 @@
   		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
   		 <script>
 	  	  	function submitform() {
-	  	  		document.fwdReserve.submit();
+	  	  		document.forms["fwdReserve"].sumbit();
 	  		}
 	  	    $(function() {
 	  	   		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
