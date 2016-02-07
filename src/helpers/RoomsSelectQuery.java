@@ -136,7 +136,7 @@ public class RoomsSelectQuery {
 							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 							table += "</form> ";
 						}
-						
+
 						table += "</td>";
 					}
 					table += "</tr>";
