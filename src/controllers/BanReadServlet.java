@@ -28,7 +28,7 @@ public class BanReadServlet extends HttpServlet {
 
 		
 		//Create a Read helper object to perform query
-		BannedSelectQuery bsq = new BannedSelectQuery("tomcatdb", "root", "3755"); 
+		BannedSelectQuery bsq = new BannedSelectQuery("tomcatdb", "root", ""); 
 		bsq.doRead();
 		
 		//get the html table of banned users
