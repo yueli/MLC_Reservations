@@ -84,7 +84,7 @@ public class Reservation {
 	 * @param scheduleID
 	 */
 	public Reservation(User primaryUser, User secondaryUser, Admin adminID, Rooms roomsID,
-			String reserveStartDate, String reserveEndDate, String reserveStartTime, int hourIncrement,
+			String reserveStartDate, String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement,
 			int adminReserve, String reserveName, Building buidlingID, Schedule scheduleID) {
 		this.primaryUser = primaryUser;
 		this.secondaryUser = secondaryUser;
@@ -93,6 +93,7 @@ public class Reservation {
 		this.reserveStartDate = reserveStartDate;
 		this.reserveEndDate = reserveEndDate;
 		this.reserveStartTime = reserveStartTime;
+		this.reserveEndTime = reserveEndTime;
 		this.hourIncrement = hourIncrement;
 		this.adminReserve = adminReserve;
 		this.reserveName = reserveName;
