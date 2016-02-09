@@ -17,6 +17,7 @@ public class Reservation {
 	private String reserveStartDate;
 	private String reserveEndDate;
 	private String reserveStartTime;
+	private String reserveEndTime;
 	private int hourIncrement;
 	private int adminReserve;
 	private String reserveName;
@@ -35,6 +36,7 @@ public class Reservation {
 		this.reserveStartDate = null;
 		this.reserveEndDate = null;
 		this.reserveStartTime = null;
+		this.reserveEndTime = null;
 		this.hourIncrement = 0;
 		this.adminReserve = 0;
 		this.reserveName = null;
@@ -54,13 +56,14 @@ public class Reservation {
 	 * @param adminReserve
 	 */
 	public Reservation(User primaryUser, User secondaryUser, Rooms roomsID, String reserveStartDate,
-			String reserveEndDate, String reserveStartTime, int hourIncrement, int adminReserve) {
+			String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement, int adminReserve) {
 		this.primaryUser = primaryUser;
 		this.secondaryUser = secondaryUser;
 		this.roomsID = roomsID;
 		this.reserveStartDate = reserveStartDate;
 		this.reserveEndDate = reserveEndDate;
 		this.reserveStartTime = reserveStartTime;
+		this.reserveEndTime = reserveEndTime;
 		this.hourIncrement = hourIncrement;
 		this.adminReserve = adminReserve;
 	}
@@ -209,6 +212,20 @@ public class Reservation {
 	 */
 	public void setReserveStartTime(String reserveStartTime) {
 		this.reserveStartTime = reserveStartTime;
+	}
+
+	/**
+	 * @return the reserveEndTime
+	 */
+	public String getReserveEndTime() {
+		return reserveEndTime;
+	}
+
+	/**
+	 * @param reserveEndTime the reserveEndTime to set
+	 */
+	public void setReserveEndTime(String reserveEndTime) {
+		this.reserveEndTime = reserveEndTime;
 	}
 
 	/**
