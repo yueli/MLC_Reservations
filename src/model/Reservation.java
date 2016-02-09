@@ -10,8 +10,8 @@ package model;
 public class Reservation {
 	// Fields
 	private int reserveID;
-	private Student primaryStudent;
-	private Student secondaryStudent;
+	private User primaryUser;
+	private User secondaryUser;
 	private Admin adminID;
 	private Rooms roomsID;
 	private String reserveStartDate;
@@ -28,8 +28,8 @@ public class Reservation {
 	 * No parameter constructor
 	 */
 	public Reservation() {
-		this.primaryStudent = null;
-		this.secondaryStudent = null;
+		this.primaryUser = null;
+		this.secondaryUser = null;
 		this.adminID = null;
 		this.roomsID = null;
 		this.reserveStartDate = null;
@@ -44,8 +44,8 @@ public class Reservation {
 	
 	/**
 	 * 
-	 * @param primaryStudent
-	 * @param secondaryStudent
+	 * @param primaryUser
+	 * @param secondaryUser
 	 * @param roomsID
 	 * @param reserveStartDate
 	 * @param reserveEndDate
@@ -53,10 +53,10 @@ public class Reservation {
 	 * @param hourIncrement
 	 * @param adminReserve
 	 */
-	public Reservation(Student primaryStudent, Student secondaryStudent, Rooms roomsID, String reserveStartDate,
+	public Reservation(User primaryUser, User secondaryUser, Rooms roomsID, String reserveStartDate,
 			String reserveEndDate, String reserveStartTime, int hourIncrement, int adminReserve) {
-		this.primaryStudent = primaryStudent;
-		this.secondaryStudent = secondaryStudent;
+		this.primaryUser = primaryUser;
+		this.secondaryUser = secondaryUser;
 		this.roomsID = roomsID;
 		this.reserveStartDate = reserveStartDate;
 		this.reserveEndDate = reserveEndDate;
@@ -67,8 +67,8 @@ public class Reservation {
 	
 	/**
 	 * 
-	 * @param primaryStudent
-	 * @param secondaryStudent
+	 * @param primaryUser
+	 * @param secondaryUser
 	 * @param adminID
 	 * @param roomsID
 	 * @param reserveStartDate
@@ -80,11 +80,11 @@ public class Reservation {
 	 * @param buidlingID
 	 * @param scheduleID
 	 */
-	public Reservation(Student primaryStudent, Student secondaryStudent, Admin adminID, Rooms roomsID,
+	public Reservation(User primaryUser, User secondaryUser, Admin adminID, Rooms roomsID,
 			String reserveStartDate, String reserveEndDate, String reserveStartTime, int hourIncrement,
 			int adminReserve, String reserveName, Building buidlingID, Schedule scheduleID) {
-		this.primaryStudent = primaryStudent;
-		this.secondaryStudent = secondaryStudent;
+		this.primaryUser = primaryUser;
+		this.secondaryUser = secondaryUser;
 		this.adminID = adminID;
 		this.roomsID = roomsID;
 		this.reserveStartDate = reserveStartDate;
@@ -114,31 +114,31 @@ public class Reservation {
 	}
 	
 	/**
-	 * @return the primaryStudent
+	 * @return the primaryUser
 	 */
-	public Student getPrimaryStudent() {
-		return primaryStudent;
+	public User getPrimaryUser() {
+		return primaryUser;
 	}
 
 	/**
-	 * @param primaryStudent the primaryStudent to set
+	 * @param primaryUser the primaryUser to set
 	 */
-	public void setPrimaryStudent(Student primaryStudent) {
-		this.primaryStudent = primaryStudent;
+	public void setPrimaryUser(User primaryUser) {
+		this.primaryUser = primaryUser;
 	}
 
 	/**
-	 * @return the secondaryStudent
+	 * @return the secondaryUser
 	 */
-	public Student getSecondaryStudent() {
-		return secondaryStudent;
+	public User getSecondaryUser() {
+		return secondaryUser;
 	}
 
 	/**
-	 * @param secondaryStudent the secondaryStudent to set
+	 * @param secondaryUser the secondaryUser to set
 	 */
-	public void setSecondaryStudent(Student secondaryStudent) {
-		this.secondaryStudent = secondaryStudent;
+	public void setSecondaryUser(User secondaryUser) {
+		this.secondaryUser = secondaryUser;
 	}
 
 	/**
