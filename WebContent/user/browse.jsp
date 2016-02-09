@@ -6,14 +6,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Browse</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="student/browse.css">
-		<link rel="stylesheet" type="text/css" href="student/styles.css">
+		<link rel="stylesheet" type="text/css" href="user/browse.css">
+		<link rel="stylesheet" type="text/css" href="user/styles.css">
 		<script src="student/browse.js"></script>
 		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
   		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
   		 <script>
-	  	  	function submitform() {
-	  	  		document.forms["fwdReserve"].sumbit();
+	  	  	function submitform(i, room) {
+	  	  		var fwdInt = i;
+	  	  		var roomNumber = room;
+	  	  		document.getElementById("fwdReserve" + fwdInt + roomNumber).submit();	
 	  		}
 	  	    $(function() {
 	  	   		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
@@ -43,7 +45,5 @@
 			<p>${floor}</p>
 		</form>
 		<p>${table}</p>
-		
-
 	</body>
 </html>
