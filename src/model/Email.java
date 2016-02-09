@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * @author Brian Olaogun
- * source: https://en.wikipedia.org/wiki/JavaMail
+ * sample source code: https://en.wikipedia.org/wiki/JavaMail
  *
  */
 public class Email {
