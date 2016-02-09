@@ -1,5 +1,3 @@
-// MLC LOGIN SERVLET
-
 package controllers;
 
 import java.io.IOException;
@@ -10,20 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import helpers.UnbanUserQuery;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class UnbanUserServlet
  */
-@WebServlet(description = "Servlet that controls the display of the login page", urlPatterns = { "/LoginServlet" })
-public class LoginServlet extends HttpServlet {
+@WebServlet({ "/UnbanUserServlet", "/unban" })
+public class UnbanUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String url;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public UnbanUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +30,29 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
+		// TODO Auto-generated method stub
+		//?? response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		
+		
+		int banID = Integer.parseInt(request.getParameter("banID"));
+		UnbanUserQuery uuq = new UnbanUserQuery("tomcatdb", "root", "");
+		uuq.unbanUser(banID);
+		
+		
+		//Redirect to BanList
+		String url = "/banread";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		url = "user/home.jsp";
-		
-		//forward our request along
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
