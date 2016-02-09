@@ -128,13 +128,13 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						} else {
 							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve' action='Browse_Reservation' method='post'>";
+							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='Browse_Reservation' method='post'>";
 							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
 							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
 							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
-							table += "<a href='javascript: submitform()'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 							table += "</form> ";
+							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 						}
 
 						table += "</td>";
@@ -153,20 +153,18 @@ public class RoomsSelectQuery {
 						String reservation = rsq.doReservationResults();
 						
 						// check to see if result set is empty
-//						if(!reservation.isEmpty()){
-//							table += "<td id='red'>";
-//						} else {
-//							table += "<td id='green'>";
-//						}
-//						table += tc.convertTimeTo12(timeBlock[i]);
-//						table += "</td>";
-						// check to see if result set is empty
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
 						} else {
 							table += "<td id='green'>";
-							table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='Browse_Reservation' method='post'>";
+							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							table += "</form> ";
+							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 						}
 						
 					}
