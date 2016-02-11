@@ -53,7 +53,8 @@ public class UserHelper {
 			// set up the driver
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				this.connection = DriverManager.getConnection(url, "root", "");
+				this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
+				//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -233,10 +234,10 @@ public class UserHelper {
 		//and the room info for the reservation
 		// and the date is today or later (will have to deal with time later)
 		
-		String query = "SELECT * FROM tomcatdb.Reservation, tomcatdb.Rooms WHERE Reservation.Rooms_roomID = Rooms.roomID"
-				+ " AND (Reservation.primaryUser = '" + userRecordID + "' OR Reservation.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservation.free = 0"
-						+ " AND Reservation.reserveStartDate >= '" + currentDate + "'";
+		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms WHERE Reservations.Rooms_roomID = Rooms.roomID"
+				+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
+						+ " AND Reservations.free = 0"
+						+ " AND Reservations.reserveStartDate >= '" + currentDate + "'";
 		
 		System.out.println("uh list user resv query " + query);
 		
@@ -294,10 +295,10 @@ public class UserHelper {
 		//and the room info for the reservation
 		// and the date is today or later (will have to deal with time later)
 		
-		String query = "SELECT * FROM tomcatdb.Reservation, tomcatdb.Rooms WHERE Reservation.Rooms_roomID = Rooms.roomID"
-				+ " AND (Reservation.primaryUser = '" + userRecordID + "' OR Reservation.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservation.free = 0"
-						+ " AND Reservation.reserveStartDate >= '" + currentDate + "'";
+		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms WHERE Reservations.Rooms_roomID = Rooms.roomID"
+				+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
+						+ " AND Reservations.free = 0"
+						+ " AND Reservations.reserveStartDate >= '" + currentDate + "'";
 		
 		System.out.println("uh list user resv query " + query);
 		

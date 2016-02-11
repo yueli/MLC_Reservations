@@ -36,7 +36,7 @@ public class UnbanUserServlet extends HttpServlet {
 		
 		
 		int banID = Integer.parseInt(request.getParameter("banID"));
-		UnbanUserQuery uuq = new UnbanUserQuery("tomcatdb", "root", "");
+		UnbanUserQuery uuq = new UnbanUserQuery();
 		uuq.unbanUser(banID);
 		
 		

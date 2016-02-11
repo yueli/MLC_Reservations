@@ -10,13 +10,14 @@ public class ListUserReservationsQuery {
 	private ResultSet results;
 	
 
-	public ListUserReservationsQuery(String dbName, String uname, String pwd){
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
+	public ListUserReservationsQuery(){
+		String url = "jdbc:mysql://localhost:3306/" + "tomcatdb";
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, uname, pwd);
+			this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
+			//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

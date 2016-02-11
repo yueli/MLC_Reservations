@@ -25,13 +25,14 @@ public class ReservationSelectQuery {
 	/**
 	 * 
 	 */
-	public ReservationSelectQuery(String dbName, String user, String pwd) {
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
+	public ReservationSelectQuery() {
+		String url = "jdbc:mysql://localhost:3306/" + "tomcatdb";
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, user, pwd);
+			this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
+			//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
