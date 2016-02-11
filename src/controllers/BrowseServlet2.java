@@ -57,7 +57,7 @@ public class BrowseServlet2 extends HttpServlet {
 		String floor = fsq.getFloorResults();
 		
 		// URL of the view to forward
-		String url = "/student/browse.jsp";
+		String url = "/user/browse.jsp";
 		
 		// set session attribute
 		session.setAttribute("buildings", buildings); 

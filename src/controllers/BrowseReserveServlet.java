@@ -66,7 +66,7 @@ public class BrowseReserveServlet extends HttpServlet {
 		session.setAttribute("building", building);
 		
 		// set the forwarding url
-		String url = "student/reservation.jsp";
+		String url = "user/reservation.jsp";
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
