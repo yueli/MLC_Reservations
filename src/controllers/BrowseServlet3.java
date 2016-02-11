@@ -46,17 +46,17 @@ public class BrowseServlet3 extends HttpServlet {
 		String floorSelected = (String) request.getParameter("floorList");
 		
 		// loads floor list from db, create dropdown for list, and output as String
-		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
+		FloorSelectQuery fsq = new FloorSelectQuery();
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults(floorSelected);
 		
 		// loads rooms from db, query reservation to get availability, outputs string table
-		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
+		RoomsSelectQuery rsq = new RoomsSelectQuery ();
 		rsq.doRoomRead(buildingSelected, floorSelected);
 		String table = rsq.getRoomsTable();
 		
 		// URL of the view to forward
-		String url = "/student/browse.jsp";
+		String url = "/user/browse.jsp";
 		
 		// set session attribute
 		session.setAttribute("floorSelected", floorSelected);

@@ -64,7 +64,7 @@ public class BanUserServlet extends HttpServlet {
 		ban.setStatus(status);
 		
 		
-		BanUserQuery buq = new BanUserQuery("tomcatdb", "root", ""); 
+		BanUserQuery buq = new BanUserQuery(); 
 		buq.banUser(ban);
 		
 		String url = "/banread";

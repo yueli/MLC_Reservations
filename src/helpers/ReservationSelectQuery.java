@@ -25,13 +25,14 @@ public class ReservationSelectQuery {
 	/**
 	 * 
 	 */
-	public ReservationSelectQuery(String dbName, String user, String pwd) {
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
+	public ReservationSelectQuery() {
+		String url = "jdbc:mysql://localhost:3306/" + "tomcatdb";
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, user, pwd);
+			this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
+			//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -44,8 +45,8 @@ public class ReservationSelectQuery {
 	}
 	
 	public void doReservationRead(String currentDate, String time, int roomNumber){
-		String query = "SELECT Reservation.reserveID FROM tomcatdb.Reservation, tomcatdb.Rooms WHERE Reservation.reserveStartDate = '" + currentDate + "'" + "AND ((Reservation.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime AND reserveEndTime)) AND Rooms.roomID = Reservation.Rooms_roomID and Rooms.roomNumber = " + roomNumber;
-
+		String query = "SELECT Reservations.reserveID FROM tomcatdb.Reservations, tomcatdb.Rooms WHERE Reservations.reserveStartDate = '" + currentDate + "'" + "AND ((Reservations.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime AND reserveEndTime)) AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = " + roomNumber;
+		// TODO modify query to check if the room is free (the field in the db).
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
