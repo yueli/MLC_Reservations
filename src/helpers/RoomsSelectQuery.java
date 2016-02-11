@@ -170,9 +170,7 @@ public class RoomsSelectQuery {
 					}
 					table += "</tr>";
 					table += "</tbody>";
-					
 					table += "</table>";
-					
 					table += "</div>";
 					j++;
 				}	
