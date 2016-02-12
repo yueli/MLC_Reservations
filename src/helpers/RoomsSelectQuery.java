@@ -26,13 +26,14 @@ public class RoomsSelectQuery {
 		/**
 		 * Default Constructor
 		 */
-		public RoomsSelectQuery(String dbName, String user, String pwd) {
-			String url = "jdbc:mysql://localhost:3306/" + dbName;
+		public RoomsSelectQuery() {
+			String url = "jdbc:mysql://localhost:3306/" + "tomcatdb";
 	
 			// set up the driver
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				this.connection = DriverManager.getConnection(url, user, pwd);
+				this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
+				//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -113,7 +114,7 @@ public class RoomsSelectQuery {
 					table += "<tr>";
 					for(int i = 0; i < 12; i++){
 						// get results for reservation
-						ReservationSelectQuery rsq = new ReservationSelectQuery("tomcatdb", "root", "");
+						ReservationSelectQuery rsq = new ReservationSelectQuery();
 						
 						// class used to get the current datetime and parse date
 						DateTimeConverter dtc = new DateTimeConverter();
@@ -143,7 +144,7 @@ public class RoomsSelectQuery {
 					table += "<tr>";
 					for(int i = 12; i < timeBlock.length; i++){
 						// get results for reservation
-						ReservationSelectQuery rsq = new ReservationSelectQuery("tomcatdb", "root", "");
+						ReservationSelectQuery rsq = new ReservationSelectQuery();
 						
 						// class used to get the current datetime and parse date
 						DateTimeConverter dtc = new DateTimeConverter();
@@ -170,9 +171,7 @@ public class RoomsSelectQuery {
 					}
 					table += "</tr>";
 					table += "</tbody>";
-					
 					table += "</table>";
-					
 					table += "</div>";
 					j++;
 				}	

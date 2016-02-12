@@ -25,13 +25,21 @@ public class ListUserReservationsQuery {
 	private int reserveID;
 
 	public ListUserReservationsQuery(){
+<<<<<<< HEAD
 		
+=======
+>>>>>>> master
 		String url = "jdbc:mysql://localhost:3306/" + "tomcatdb";
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
+<<<<<<< HEAD
 			this.connection = DriverManager.getConnection(url, "root", "");
+=======
+			this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
+			//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
+>>>>>>> master
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
