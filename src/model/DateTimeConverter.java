@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package model;
 
@@ -9,7 +9,6 @@ import java.util.Date;
 
 /**
  * @author Brian Olaogun
- * 
  * This class is used to convert a date or a datetime variable.
  *
  */

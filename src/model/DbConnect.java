@@ -1,13 +1,16 @@
 /**
- * @author Brian Olaogun
- * Class used for SQL database connection
+ * 
  */
 package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+/**
+ * 
+ * @author Brian Olaogun
+ * Class used for SQL database connection
+ */
 public class DbConnect {
 	// Fields
 	private String url;

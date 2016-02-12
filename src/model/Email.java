@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package model;
 
@@ -25,8 +25,8 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * @author Brian Olaogun
+ * Class used to send confirmation emails.
  * sample source code: https://en.wikipedia.org/wiki/JavaMail
- *
  */
 public class Email {
 	// Fields for reservation confirmation email
