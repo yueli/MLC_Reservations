@@ -26,6 +26,13 @@ public class DbConnect {
 		this.password = "";
 	}
 	
+	/**
+	 * 
+	 * @param url
+	 * @param database
+	 * @param username
+	 * @param password
+	 */
 	public DbConnect(String url, String database, String username, String password){
 		this.url = url;
 		this.database = database;
