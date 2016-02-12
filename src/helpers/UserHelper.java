@@ -3,7 +3,6 @@
 package helpers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +14,7 @@ import java.util.Date;
 
 import org.apache.tomcat.jni.Time;
 
+import model.DbConnect;
 import model.Reservation;
 import model.User;
 
@@ -38,8 +38,8 @@ public class UserHelper {
 	public UserHelper() {
 /*		try {
 			//Set up connection
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/tomcatdb", "root", "");
+			// hard coded the connection in DbConnect class
+			this.connection = DbConnect.localCredentials();
 			
 			//NEED THIS CODE???
 			//Create the preparedstatement(s)
@@ -48,20 +48,17 @@ public class UserHelper {
 			System.out.println(e.getClass().getName() + ": " + e.getMessage());
 		}*/
 		
-			String url = "jdbc:mysql://localhost:3306/" + "tomcatdb";
 			
 			// set up the driver
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
-				//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
+				// hard coded the connection in DbConnect class
+				this.connection = DbConnect.localCredentials();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			

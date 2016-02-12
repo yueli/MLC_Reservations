@@ -1,9 +1,10 @@
 package helpers;
 
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import model.DbConnect;
 
 public class ListUserReservationsQuery {
 	private java.sql.Connection connection;
@@ -11,13 +12,12 @@ public class ListUserReservationsQuery {
 	
 
 	public ListUserReservationsQuery(){
-		String url = "jdbc:mysql://localhost:3306/" + "tomcatdb";
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, "root", ""); // credentials for Brian, Ginger, & Victoria for local server
-			//this.connection = DriverManager.getConnection(url, "tomcatuser", "bu11fr0g"); // credentials for dev server
+			// hard coded the connection in DbConnect class
+			this.connection = DbConnect.localCredentials();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -25,9 +25,6 @@ public class ListUserReservationsQuery {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
