@@ -14,6 +14,7 @@ import helpers.FloorSelectQuery;
 import helpers.RoomsSelectQuery;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseServlet3
  */
 @WebServlet({ "/BrowseServlet3", "/Browse3" })

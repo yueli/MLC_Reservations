@@ -14,6 +14,7 @@ import model.DateTimeConverter;
 import model.TimeConverter;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseReserve
  */
 @WebServlet({ "/BrowseReserve", "/BrowseReservation", "/Reservation", "/Browse_Reservation" })
