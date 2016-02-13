@@ -1,7 +1,3 @@
-//// LEFT OFF TUES EVENING w/ NOT DISPLAYING ALL RECORDS IN TABLE - OVERWRITING??
-// NOTE: BACK UP BEFORE MERGING
-// ALSO CHANGE all reservations obj to use user and not student
-// ALSO CHANGE resv end time to use the getEndTime method
 
 
 package helpers;
@@ -33,30 +29,18 @@ public class ListUserReservationsQuery {
 			// hard coded the connection in DbConnect class
 			this.connection = DbConnect.localCredentials();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
 	}
 
-/*	public void doGetStudentReservations(String currentDate, String time, int roomNumber){
-		String query = "SELECT Reservation.reserveID FROM tomcatdb.Reservation, tomcatdb.Rooms WHERE Reservation.reserveStartDate = '" + currentDate + "'" + "AND ((Reservation.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime AND reserveEndTime)) AND Rooms.roomID = Reservation.Rooms_roomID and Rooms.roomNumber = " + roomNumber;
-
-		// securely run query
-		try {
-			PreparedStatement ps = this.connection.prepareStatement(query);
-			this.results = ps.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
-		} 
-	}*/
 
 
 	public String ListUserReservations(int userRecordID){
@@ -65,7 +49,7 @@ public class ListUserReservationsQuery {
 		this.reserveID = 0;
 		String userPlace = ""; //either primary or secondary
 		
-		System.out.println("uh: list user reservations");   
+		System.out.println("list user reservations");   
 
 		//get today's date to list the reservations today or later
 		String currentDate = "";	
@@ -109,10 +93,11 @@ public class ListUserReservationsQuery {
 					
 					String currentHour = "";
 					
-					DateFormat timeFormat = new SimpleDateFormat("HH");
+					DateFormat hourFormat = new SimpleDateFormat("HH");
 					Date time = new Date();
-					currentHour = timeFormat.format(time);
-					System.out.println("List User Resv: current time = " + currentHour);
+					currentHour = hourFormat.format(time);
+					System.out.println("List User Resv: current hour = " + currentHour);
+					
 					
 					// start the table since we have at least one record
 					table = "<table>";
@@ -120,7 +105,7 @@ public class ListUserReservationsQuery {
 					table += "<td> Start Date</td>";
 					table += "<td> End Date</td>";
 					table += "<td> Start Time</td>";
-					table += "<td> End Time </td>"; //TODO
+					table += "<td> End Time </td>"; 
 					table += "<td> Building </td>";
 					table += "<td> Room Floor</td>";
 					table += "<td> Room Number</td>";
@@ -151,19 +136,14 @@ public class ListUserReservationsQuery {
 							userPlace = "Seconday User";
 						}
 						
-						
-						
-						
+	
 						resv.setReserveStartDate(this.results.getString("reserveStartDate"));
 						resv.setReserveEndDate(this.results.getString("reserveEndDate"));
 						System.out.println("In WHILE in List User Resv.java: reserve start date = " + resv.getReserveStartDate());
 						System.out.println("In WHILE in List User Resv.java: end date = " + resv.getReserveEndDate());
 						
-						resv.setReserveStartTime(this.results.getString("reserveStartTime"));
-						
-						//TODO???
-						//resv.setReserveEndTime(this.results.getString("reserveEndTime"));
-						String RESERVE_END_TIME = this.results.getString("reserveEndTime");
+						resv.setReserveStartTime(this.results.getString("reserveStartTime"));			
+						resv.setReserveEndTime(this.results.getString("reserveEndTime"));
 						
 						String building = this.results.getString("buildingName");
 						String roomFloor = this.results.getString("roomFloor");
@@ -172,6 +152,21 @@ public class ListUserReservationsQuery {
 						String resvStartDate = resv.getReserveStartDate();
 						System.out.println("List User Resv: 2 current date  = " + currentDate);
 						System.out.println("List User Resv: 2 start date  = " + resvStartDate);
+					
+						// add the fields to the string table that we need to display
+						// already know we want to display this reservation
+						// but check below on whether to have a 'cancel' button or a 'check-in' button
+						table += "<tr>";
+						table += "<td>" + resv.getReserveStartDate() + "</td>";
+						table += "<td>" + resv.getReserveEndDate() + "</td>";
+						table += "<td>" + resv.getReserveStartTime() + "</td>";
+						table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+						table += "<td>" + building + "</td>";
+						table += "<td>" + roomFloor + "</td>";
+						table += "<td>" + roomNumber + "</td>";
+						table += "<td>" + userPlace + "</td>";
+						
+					
 						
 						if (Objects.equals(resvStartDate, currentDate)) { // if this reservation is for today
 							System.out.println("In WHILE in List User Resv.java: resvStartDate = currentDate");
@@ -180,7 +175,7 @@ public class ListUserReservationsQuery {
 							
 							resv.setReserveStartTime(this.results.getString("reserveStartTime"));
 							
-							// grab the reservation's start time
+							// grab the reservation's start time's hour
 							String resvHour = resv.getReserveStartTime();
 							System.out.println("1 In WHILE in List User Resv.java: reserve start time = " + resvHour);
 							resvHour = resvHour.substring(0, 2);  		//need to grab just the hour
@@ -198,66 +193,57 @@ public class ListUserReservationsQuery {
 								System.out.println("5 In WHILE in List User Resv.java: current hour > resv hour " + this.results.getInt("reserveID"));
 								
 								
-							}else if (currentHourInt < resvHourInt){// if current hour > reservations hour
-								//else current hour < reservations hour - keep this record, will have a cancel button
+							}else if (currentHourInt < resvHourInt){
+								//keep this record, will have a cancel button
 								System.out.println("6 In WHILE in List User Resv.java: current hour < resv hour " + this.results.getInt("reserveID"));
 								
-								//add the fields to the string table that we need to display
-								table += "<tr>";
-								table += "<td>" + resv.getReserveStartDate() + "</td>";
-								table += "<td>" + resv.getReserveEndDate() + "</td>";
-								table += "<td>" + resv.getReserveStartTime() + "</td>";
-								table += "<td>" + RESERVE_END_TIME + "</td>"; //TODO
-								table += "<td>" + building + "</td>";
-								table += "<td>" + roomFloor + "</td>";
-								table += "<td>" + roomNumber + "</td>";
-								table += "<td>" + userPlace + "</td>";
-								table += "<td> CANCEL </td>";
-								table += "</tr>";
+								table += "<td> CANCEL </td>"; //TODO add link	
 								
 							}else {
-								// else current hour = reservations hour - keep this too, special and will have a check-in button
+								// else current hour = reservations hour - check to see if it is within the 
+								// check-in time (up to 10 minutes after the hour) and if it is, have CHECKIN button,
+								// else list but have no active button - maybe say "missed check-in time"
+								
 								System.out.println("7 In WHILE in List User Resv.java: current hour = resv hour " + this.results.getInt("reserveID"));
 								
-								//add the fields to the string table that we need to display
-								table += "<tr>";
-								table += "<td>" + resv.getReserveStartDate() + "</td>";
-								table += "<td>" + resv.getReserveEndDate() + "</td>";
-								table += "<td>" + resv.getReserveStartTime() + "</td>";
-								table += "<td>" + RESERVE_END_TIME + "</td>"; //TODO
-								table += "<td>" + building + "</td>";
-								table += "<td>" + roomFloor + "</td>";
-								table += "<td>" + roomNumber + "</td>";
-								table += "<td>" + userPlace + "</td>";
-								table += "<td> CHECK IN </td>";
-								table += "</tr>";
+								// we know the hours are the same, so check to see if the current minute
+								// is greater than 10 (check to see if it's past 10 minutes after the hour)
+								String currentMinute = "";
+								DateFormat minuteFormat = new SimpleDateFormat("mm");
+								Date minute = new Date();
+								currentMinute = minuteFormat.format(minute);
+								System.out.println("List User Resv: current minute = " + currentMinute);
+								
+								// convert minute to integer to see if more than 10
+								int currentMinuteInt = Integer.parseInt(currentMinute);
+								System.out.println("In WHILE in List User Resv.java: current hour INT = " + currentMinuteInt);	
+				
+								if (currentMinuteInt <= 10){
+									// it's not past 10 after the hour, so let them check-in
+									// display the check-in button that points to the check-in servlet
+									table += "<td> CHECK IN </td>"; //TODO add ink
+								
+								}else{
+									table += "<td> *Too late to check in* </td>";
+								}
+								
+								
 								
 							}
 								
 							
-						}else {// end if record's date = current date // reservation must be later than today
-							//add the fields to the string table that we need to display
-							table += "<tr>";
-							table += "<td>" + resv.getReserveStartDate() + "</td>";
-							table += "<td>" + resv.getReserveEndDate() + "</td>";
-							table += "<td>" + resv.getReserveStartTime() + "</td>";
-							table += "<td>" + RESERVE_END_TIME + "</td>"; //TODO
-							table += "<td>" + building + "</td>";
-							table += "<td>" + roomFloor + "</td>";
-							table += "<td>" + roomNumber + "</td>";
-							table += "<td>" + userPlace + "</td>";
-							table += "<td> CANCEL </td>";
-							table += "</tr>";
-							
+						}else {// end if record's date > current date 
+							table += "<td> CANCEL </td>";  //TODO add link
+						
 						}
 						
-
+						table += "</tr>"; //end this row for this reservation
 						
 					}// end while going through records returned
 					
 					table += "</table>";
 					
-					this.results.beforeFirst();
+					this.results.beforeFirst(); //reset pointer back to the beginning of the records returned just in case
 				
 				
 			}else{//no records returned
@@ -269,108 +255,13 @@ public class ListUserReservationsQuery {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("!!!!Error in List User Resv.java: get number of records. Query = " + query);
+			System.out.println("***Error in List User Resv.java: get number of records. Query = " + query);
 		}
 		
-		
-		return table;	
-		
-		
+		return table;	// may return records or an empty table
 	}
 	
-//-----------------------------------------------------------------------------------------	
-	//CHANGE THIS TO CREATE TABLES OF RECORDS!!!!!
-	// this method knows already that the user has records
-	// it gets all the reservations for this user and
-	// formats them into a table that is returned 
-	/*public String listUserReservations(int userRecordID) {
 
-		String table = "";
-		
-		this.numRecords = 0;
-		
-		System.out.println("uh: list user reservations");   
-
-		//get today's date to list the reservations today or later
-		String currentDate = "";	
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();	
-		currentDate = dateFormat.format(date);
-		
-		//get all reservations for today and forward where user is primary or secondary - can't search on time yet
-		// and the room is free (free = 0) ( which means they didn't fail to check into the room and they didn't cancel the reservation)
-		//and the room info for the reservation
-		// and the date is today or later (will have to deal with time later)
-		
-		String query = "SELECT * FROM tomcatdb.Reservation, tomcatdb.Rooms WHERE Reservation.Rooms_roomID = Rooms.roomID"
-				+ " AND (Reservation.primaryUser = '" + userRecordID + "' OR Reservation.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservation.free = 0"
-						+ " AND Reservation.reserveStartDate >= '" + currentDate + "'";
-		
-		System.out.println("uh list user resv query " + query);
-		
-		try {
-			PreparedStatement ps = this.connection.prepareStatement(query);
-		
-			//ps.executeQuery();
-			this.results= ps.executeQuery();
-			System.out.println("Success in UserHelper.java: list user reservations method. Query = " + query);
-			
-			if (!results.next() ) {
-				   System.out.println("no data");
-				   System.out.println("== 1 In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
-					
-			}
-			
-			//get returned date results, which may be more than just one record
-			// go through all the results returned, if any
-			
-			//MAY HAVE TO RESET pointer beforeFirst() 		
-			
-			while(this.results.next()){
-				
-				Reservation reservation = new Reservation();
-				reservation.setReserveID(this.results.getInt("reserveID"));
-				
-				this.numRecords = this.results.getInt("numRecords");
-				
-				System.out.println("==In UserHelper.java: list user reservations method: reserve ID from result = "+ reservation.getReserveID());
-				System.out.println("== 2 In UserHelper.java: list user reservations method: num recds = "+ this.numRecords);
-				
-				//product.setProd_id(this.results.getInt("prod_id"));
-				//product.setProd_name(this.results.getString("prod_name"));
-				//product.setProd_image_name(this.results.getString("prod_image_name"));
-				//product.setProd_price(this.results.getDouble("prod_price"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error in UserHelper.java: list user reservations method. Query = " + query);
-		}
-		
-
-
-		
-		//this.userRecordID = userRecordID;
-		
-		//recordID = results.getInt("userID");
-
-		// now get the reservations from the records returned that are now or later than the current time
-		// the start and end times stored in reservations always have 00 for seconds
-		
-		//get the current time this method is being called
-		
-		//may need later
-		String currentTime = "";
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-		Date time = new Date();
-		currentTime = timeFormat.format(time);
-		
-		System.out.println("uh list user resv current time " + currentTime);
-		
-		
-		return table;
-		
-	}*/
 }
 
 

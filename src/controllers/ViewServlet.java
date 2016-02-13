@@ -76,7 +76,7 @@ public class ViewServlet extends HttpServlet {
 			System.out.println("View Servlet: no records found");
 		}
 		else {
-			System.out.println("View Servlet: something in table " + table);
+			System.out.println("View Servlet: something in table ");
 			
 		}
 		

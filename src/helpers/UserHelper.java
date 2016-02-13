@@ -111,7 +111,7 @@ public class UserHelper {
 	
 	public boolean inUserTable(String myID){
 
-		System.out.println("**UserHelper inUserTable: myID = " + myID);
+		System.out.println("UserHelper inUserTable: myID = " + myID);
 		
 		String query = "SELECT * from tomcatdb.user WHERE myID = ?";
 		
@@ -128,14 +128,14 @@ public class UserHelper {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in UserHelper.java: inStudentTable method. Query = " + query);
+			System.out.println("****Error in UserHelper.java: inStudentTable method. Query = " + query);
 		}
 		
 		return false;
 	}
 
 	public void updateLastLogin(String myID) {
-		System.out.println("**UserHelper: updateLastLogin myID = " + myID);
+		System.out.println("UserHelper: updateLastLogin myID = " + myID);
 		String today = "";
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -157,7 +157,7 @@ public class UserHelper {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in UserHelper.java: updateLastLogin method. Query = " + query);
+			System.out.println("***Error in UserHelper.java: updateLastLogin method. Query = " + query);
 		}
 		
 	}
@@ -184,7 +184,7 @@ public class UserHelper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in UserHelper.java: insert into table method. Query = " + query);
+			System.out.println("***Error in UserHelper.java: insert into table method. Query = " + query);
 		}
 		
 	}
@@ -204,7 +204,7 @@ public class UserHelper {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		System.out.println("Error in UserHelper.java: get record ID method. Query = " + query);
+		System.out.println("***Error in UserHelper.java: get record ID method. Query = " + query);
 			}
 		
 		return recordID;
@@ -258,7 +258,7 @@ public class UserHelper {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in UserHelper.java: get number of records. Query = " + query);
+			System.out.println("***Error in UserHelper.java: get number of records. Query = " + query);
 		}
 		
 		
@@ -269,7 +269,7 @@ public class UserHelper {
 		
 	}
 	
-//-----------------------------------------------------------------------------------------	
+/*//-----------------------------------------------------------------------------------------	
 	//CHANGE THIS TO CREATE TABLES OF RECORDS!!!!!
 	// this method knows already that the user has records
 	// it gets all the reservations for this user and
@@ -313,7 +313,7 @@ public class UserHelper {
 			
 			if (!results.next() ) {
 				   System.out.println("no data");
-				   //System.out.println("== 1 In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
+				   //System.out.println("In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
 					
 			}
 			
@@ -327,7 +327,7 @@ public class UserHelper {
 				
 				//this.numRecords = this.results.getInt("numRecords");
 				
-				System.out.println("==In UserHelper.java: list user reservations method: reserve ID from result = "+ reservation.getReserveID());
+				System.out.println("In UserHelper.java: list user reservations method: reserve ID from result = "+ reservation.getReserveID());
 				//System.out.println("== 2 In UserHelper.java: list user reservations method: num recds = "+ this.numRecords);
 				
 				//product.setProd_id(this.results.getInt("prod_id"));
@@ -337,7 +337,7 @@ public class UserHelper {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in UserHelper.java: list user reservations method. Query = " + query);
+			System.out.println("***Error in UserHelper.java: list user reservations method. Query = " + query);
 		}
 		
 
@@ -353,15 +353,15 @@ public class UserHelper {
 		//get the current time this method is being called
 		
 		//may need later
-		/*String currentTime = "";
+		String currentTime = "";
 		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 		Date time = new Date();
 		currentTime = timeFormat.format(time);
 		
 		System.out.println("uh list user resv current time " + currentTime);
-		*/
+		
 		
 		return table;
 		
-	}
+	}*/
 }
