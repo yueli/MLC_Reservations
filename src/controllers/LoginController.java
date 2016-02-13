@@ -133,7 +133,7 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("user", user);
 				session.setAttribute("message", message);
 
-				System.out.println("****Login Controller MyID and first name " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
+				System.out.println("Login Controller MyID and first name " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
 				
 				url="user/home.jsp";
 			
