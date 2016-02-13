@@ -15,8 +15,6 @@ import javax.servlet.http.HttpSession;
 //import org.apache.tomcat.jni.User;
 import model.User;
 
-import helpers.ReservationSelectQuery;
-import helpers.UserHelper;
 import helpers.ListUserReservationsQuery;
 
 
@@ -63,26 +61,28 @@ public class ViewServlet extends HttpServlet {
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 			
-		UserHelper uh = new UserHelper();
+		ListUserReservationsQuery lurq = new ListUserReservationsQuery();
+		
 		System.out.println("View Servlet: just set up database connection");
 		
-		//see how many records the student has, and if none, set error message, and if has at least one, put reservations found in a table
-		
-		//get list of student's reservations
-		//uh.listUserReservations(user.getUserRecordID());  
+		//see how many records the student has, and if none, set error message, and if has at least one, 
+		//put reservations found in a table
 
 		//CREATE the methods getNumberRecords and listUserReservations
-		int numRecords = uh.getNumberRecords(user.getUserRecordID());
+		table = lurq.ListUserReservations(user.getUserRecordID());
 		
-		if (numRecords==0)	{
+		if (table == "")	{//if table is empty, no records found
 			message="No records returned";
+			System.out.println("View Servlet: no records found");
 		}
 		else {
-			table = uh.listUserReservations(user.getUserRecordID());
+			System.out.println("View Servlet: something in table " + table);
+			
 		}
 		
 		//forward our request along
 		request.setAttribute("user", user);
+		request.setAttribute("table", table);
 		url = "user/view.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
