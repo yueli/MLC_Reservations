@@ -26,7 +26,7 @@ public class FloorSelectQuery {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			// hard coded the connection in DbConnect class
-			this.connection = DbConnect.localCredentials();
+			this.connection = DbConnect.devCredentials();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

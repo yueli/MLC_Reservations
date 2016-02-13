@@ -14,6 +14,7 @@ import model.DateTimeConverter;
 import model.TimeConverter;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseReserve
  */
 @WebServlet({ "/BrowseReserve", "/BrowseReservation", "/Reservation", "/Browse_Reservation" })
@@ -50,8 +51,7 @@ public class BrowseReserveServlet extends HttpServlet {
 		
 		// change date into long format
 		DateTimeConverter dtc = new DateTimeConverter();
-		currentDate += " 00:00:00"; // to make it a date time to parse into long format
-		currentDate = dtc.parseDateLong(currentDate);
+		currentDate = dtc.convertDateLong(currentDate); // convert date to long format: ex. February 12, 2016
 		
 		// change time to 12 hour format
 		TimeConverter tc = new TimeConverter();

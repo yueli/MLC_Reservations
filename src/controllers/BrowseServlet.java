@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.BuildingSelectQuery;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseServlet
  */
 @WebServlet(

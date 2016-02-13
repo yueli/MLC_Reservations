@@ -1,13 +1,16 @@
 /**
- * @author Brian Olaogun
- * Class used for SQL database connection
+ * 
  */
 package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+/**
+ * 
+ * @author Brian Olaogun
+ * Class used for SQL database connection
+ */
 public class DbConnect {
 	// Fields
 	private String url;
@@ -23,6 +26,13 @@ public class DbConnect {
 		this.password = "";
 	}
 	
+	/**
+	 * 
+	 * @param url
+	 * @param database
+	 * @param username
+	 * @param password
+	 */
 	public DbConnect(String url, String database, String username, String password){
 		this.url = url;
 		this.database = database;
@@ -106,23 +116,8 @@ public class DbConnect {
 	 */
 	public static Connection devCredentials(){
 		String url = "jdbc:mysql://localhost:3306/tomcatdb";
-		String username = "tomcatuser";
-		String password = "bu11fr0g";
-		try {
-			return DriverManager.getConnection(url, username, password);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
-	
-	/**
-	 * 
-	 * @return Driver Manager used in connection assignment.  This contains the url, database, username, and password to connect to the SQL database.
-	 */
-	public static Connection localCredentials(){
-		String url = "jdbc:mysql://localhost:3306/tomcatdb";
+		//String username = "tomcatuser";
+		//String password = "bu11fr0g";
 		String username = "root";
 		String password = "";
 		try {
@@ -133,4 +128,5 @@ public class DbConnect {
 		return null;
 		
 	}
+	
 }
