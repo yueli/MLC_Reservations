@@ -111,7 +111,7 @@ public class LoginController extends HttpServlet {
 					//update the last login field
 					uh.updateLastLogin(user.getMyID());
 				}else{ //not in table
-					//add to user table //GINGER HERE 
+					//add to user table 
 					uh.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
 				}
 				
@@ -133,7 +133,7 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("user", user);
 				session.setAttribute("message", message);
 
-				System.out.println("****Login Controller MyID and first name " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
+				System.out.println("Login Controller MyID and first name " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
 				
 				url="user/home.jsp";
 			
