@@ -116,23 +116,8 @@ public class DbConnect {
 	 */
 	public static Connection devCredentials(){
 		String url = "jdbc:mysql://localhost:3306/tomcatdb";
-		String username = "tomcatuser";
-		String password = "bu11fr0g";
-		try {
-			return DriverManager.getConnection(url, username, password);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
-	
-	/**
-	 * 
-	 * @return Driver Manager used in connection assignment.  This contains the url, database, username, and password to connect to the SQL database.
-	 */
-	public static Connection localCredentials(){
-		String url = "jdbc:mysql://localhost:3306/tomcatdb";
+		//String username = "tomcatuser";
+		//String password = "bu11fr0g";
 		String username = "root";
 		String password = "";
 		try {
@@ -143,4 +128,5 @@ public class DbConnect {
 		return null;
 		
 	}
+	
 }
