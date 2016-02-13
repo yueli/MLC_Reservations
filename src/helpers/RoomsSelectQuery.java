@@ -110,7 +110,7 @@ public class RoomsSelectQuery {
 					table += "<tbody class='subcategory'>";
 					table += "<tr>";
 					for(int i = 0; i < 12; i++){
-						// get results for reservation
+						// get results for reservations
 						ReservationSelectQuery rsq = new ReservationSelectQuery();
 						
 						// class used to get the current datetime and parse date
