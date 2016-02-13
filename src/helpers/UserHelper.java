@@ -214,14 +214,13 @@ public class UserHelper {
 		
 	}
 	
-<<<<<<< HEAD
-=======
+
 	//WRITE THIS TO QUERY Reservations TABLE AND RETURN NUM RECDS FOUND
 	// this method is called to get the number of records a user has
 	public int getNumberRecords(int userRecordID){
 		
 		
-		this.numRecords = 0;
+		//this.numRecords = 0;
 		
 		System.out.println("uh: list user reservations");   
 
@@ -256,7 +255,7 @@ public class UserHelper {
 			
 			if (!results.next() ) {
 				   System.out.println("no data");
-				   System.out.println("== 1 In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
+				  // System.out.println("== 1 In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
 					
 			}
 			
@@ -282,7 +281,7 @@ public class UserHelper {
 
 		String table = "";
 		
-		this.numRecords = 0;
+		//this.numRecords = 0;
 		
 		System.out.println("uh: list user reservations");   
 
@@ -317,7 +316,7 @@ public class UserHelper {
 			
 			if (!results.next() ) {
 				   System.out.println("no data");
-				   System.out.println("== 1 In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
+				   //System.out.println("== 1 In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
 					
 			}
 			
@@ -329,10 +328,10 @@ public class UserHelper {
 				Reservation reservation = new Reservation();
 				reservation.setReserveID(this.results.getInt("reserveID"));
 				
-				this.numRecords = this.results.getInt("numRecords");
+				//this.numRecords = this.results.getInt("numRecords");
 				
 				System.out.println("==In UserHelper.java: list user reservations method: reserve ID from result = "+ reservation.getReserveID());
-				System.out.println("== 2 In UserHelper.java: list user reservations method: num recds = "+ this.numRecords);
+				//System.out.println("== 2 In UserHelper.java: list user reservations method: num recds = "+ this.numRecords);
 				
 				//product.setProd_id(this.results.getInt("prod_id"));
 				//product.setProd_name(this.results.getString("prod_name"));
@@ -368,5 +367,4 @@ public class UserHelper {
 		return table;
 		
 	}
->>>>>>> master
 }
