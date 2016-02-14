@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package model;
 
@@ -9,7 +9,6 @@ import java.util.Date;
 
 /**
  * @author Brian Olaogun
- * 
  * This class is used to convert a date or a datetime variable.
  *
  */
@@ -49,7 +48,7 @@ public class DateTimeConverter {
 	 * 
 	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
 	 */
-	public String convertDate(){
+	public String convertDateLong(){
 		
 		try{
 			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd"); // used to convert String datetime to Simple Date Format
@@ -67,7 +66,7 @@ public class DateTimeConverter {
 	 * @param date
 	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
 	 */
-	public String convertDate(String date){
+	public String convertDateLong(String date){
 		
 		this.datetime = date.trim(); // removes leading and trailing whitespace
 		try{
@@ -187,6 +186,37 @@ public class DateTimeConverter {
 		
 	}
 	
+	public String parsedTimeTo24(){
+		
+		this.datetime = datetime.trim(); // removes any leading or trailing whitespace
+		try {
+			SimpleDateFormat _24HourSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // format of datetime being parsed
+	        SimpleDateFormat _24HourSDF2 = new SimpleDateFormat("HH:mm:ss"); // format of parsed time
+	        Date _24HourDt = _24HourSDF.parse(this.datetime); // parse time from DateTime
+	        return _24HourSDF2.format(_24HourDt); // returns time in 24-hour format
+        
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert time.**";
+		}
+		
+	}
+	
+	public String parsedTimeTo24(String datetime){
+		
+		this.datetime = datetime.trim(); // removes any leading or trailing whitespace
+		try {
+			SimpleDateFormat _24HourSDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // format of datetime being parsed
+	        SimpleDateFormat _24HourSDF2 = new SimpleDateFormat("HH:mm:ss"); // format of parsed time
+	        Date _24HourDt = _24HourSDF.parse(this.datetime); // parse time from DateTime
+	        return _24HourSDF2.format(_24HourDt); // returns time in 24-hour format
+        
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert time.**";
+		}
+		
+	}
 	
 	
 	
@@ -201,7 +231,7 @@ public class DateTimeConverter {
 	public String datetimeStamp(){
 		
 		Date stamp = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //mySQL format
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //MySQL format
 		String currentDateTime = sdf.format(stamp);
 		return currentDateTime;
 	}
@@ -277,17 +307,18 @@ public class DateTimeConverter {
 		System.out.println("*******DateTimeConverter.java*******");
 		System.out.println();
 		DateTimeConverter dtc = new DateTimeConverter();
-		dtc.setDatetime("2015-09-22 10:00:00");
+		dtc.setDatetime("2015-09-22 20:00:00");
 		System.out.println("Print datetime: " + dtc.getDatetime());
 		System.out.println();
 		
-		System.out.println("Parse time: " + dtc.parsedTimeTo12());
+		System.out.println("Parse time 12 hour: " + dtc.parsedTimeTo12());
+		System.out.println("Parse time 24 hour: " + dtc.parsedTimeTo24());
 		System.out.println("Parse date: " + dtc.parseDate());
 		System.out.println("Current Datetime: " + dtc.datetimeStamp());
 		
 		System.out.println();
 		System.out.println("Inputted date: 2015-12-03");
-		System.out.println("Convert date from mySQL to Long format: " + dtc.convertDate("2015-12-03"));
+		System.out.println("Convert date from mySQL/dashed to Long format: " + dtc.convertDateLong("2015-12-03"));
 		
 		dtc.setDatetime("12/3/2015");
 		System.out.println();
