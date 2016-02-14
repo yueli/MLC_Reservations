@@ -72,17 +72,19 @@ public class ViewServlet extends HttpServlet {
 		table = lurq.ListUserReservations(user.getUserRecordID());
 		
 		if (table == "")	{//if table is empty, no records found
-			message="No records returned";
+			message="You have no current reservations.";
 			System.out.println("View Servlet: no records found");
 		}
 		else {
 			System.out.println("View Servlet: something in table ");
 			
 		}
+		//session.setAttribute("message", message);
 		
 		//forward our request along
 		request.setAttribute("user", user);
 		request.setAttribute("table", table);
+		request.setAttribute("message", message);
 		url = "user/view.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
