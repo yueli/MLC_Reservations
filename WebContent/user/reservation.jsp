@@ -28,7 +28,7 @@
 				<input type="text" name ="roomNumber" id="roomNumber" value="${roomNumber}" disabled></p>
 				<p>Starting at: 
 				<input type="text" name="startTime" id="startTime" value="${startTime}" disabled></p>
-				<p>Reservation Length:</p>
+				<p>Reservation Length:{incrementSelect}</p>
 				<p>Please enter email of secondary person:<br>
 				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
 				<input type="submit" value="Make Reservation">

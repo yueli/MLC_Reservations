@@ -42,8 +42,8 @@ public class ReservationSelectQuery {
 	}
 	
 	public void doReservationRead(String currentDate, String time, int roomNumber){
-		String query = "SELECT Reservations.reserveID FROM tomcatdb.Reservations, tomcatdb.Rooms WHERE Reservations.reserveStartDate = '" + currentDate + "'" + "AND ((Reservations.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime AND reserveEndTime)) AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = " + roomNumber;
-		// TODO modify query to check if the room is free (the field in the db).
+		String query = "SELECT Reservations.reserveID FROM tomcatdb.Reservations, tomcatdb.Rooms WHERE Reservations.reserveStartDate = '" + currentDate + "'" + "AND ((Reservations.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime AND reserveEndTime)) AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = " + roomNumber + " AND tomcatdb.Reservations.free = 'N'";
+		
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);

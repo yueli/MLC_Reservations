@@ -48,19 +48,19 @@ public class BuildingSelectQuery {
 		// query to use for testing
 		//String query = "SELECT buildingName FROM tomcatdb.Building";
 		
-		// actual query to use when there are times in tomcatdb.Schedule & entries in tomcatdb.BuildingSchedule.
+		// actual query to use when there are times in tomcatdb.Schedule.
 		DateTimeConverter dtc = new DateTimeConverter();
 		String currentDate = dtc.parseDate(dtc.datetimeStamp());
 		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp()); // time in 24 hour format
-		String query = "SELECT tomcatdb.Building.buildingName FROM tomcatdb.Building, tomcatdb.BuildingSchedule, tomcatdb.Schedule WHERE tomcatdb.Building.buildingStatus = 1 AND tomcatdb.Building.buildingID = tomcatdb.BuildingSchedule.Building_buildingID AND tomcatdb.Schedule.scheduleID = tomcatdb.BuildingSchedule.Schedule_scheduleID AND tomcatdb.Schedule.startDate = '" + currentDate + "'" + "AND ((tomcatdb.Schedule.startTime = '" + currentTime + "') OR ('" + currentTime + "' BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
-		
+		//String query = "SELECT tomcatdb.Building.buildingName FROM tomcatdb.Building, tomcatdb.BuildingSchedule, tomcatdb.Schedule WHERE tomcatdb.Building.buildingStatus = 1 AND tomcatdb.Building.buildingID = tomcatdb.BuildingSchedule.Building_buildingID AND tomcatdb.Schedule.scheduleID = tomcatdb.BuildingSchedule.Schedule_scheduleID AND tomcatdb.Schedule.startDate = '" + currentDate + "'" + "AND ((tomcatdb.Schedule.startTime = '" + currentTime + "') OR ('" + currentTime + "' BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
+		String query = "SELECT tomcatdb.Building.buildingName FROM tomcatdb.Building, tomcatdb.Schedule WHERE tomcatdb.Building.buildingStatus = 1 AND tomcatdb.Building.buildingID = tomcatdb.Schedule.Building_buildingID AND tomcatdb.Schedule.startDate = '" + currentDate + "'" + "AND ((tomcatdb.Schedule.startTime = '" + currentTime + "') OR ('" + currentTime + "' BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in BuildingSelectQuery.java: doBuildingRead method. Please check connection or SQL statement.");
+			System.out.println("Error in BuildingSelectQuery.java: doBuildingRead method. Please check connection or SQL statement: " + query);
 		}
 		
 	}
