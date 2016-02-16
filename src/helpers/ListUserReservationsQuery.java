@@ -175,6 +175,7 @@ public class ListUserReservationsQuery {
 
 									table = "<table>";
 									table += "<tr>";
+									table += "<td> Reservation ID</td>";
 									table += "<td> Start Date</td>";
 									table += "<td> End Date</td>";
 									table += "<td> Start Time</td>";
@@ -191,6 +192,7 @@ public class ListUserReservationsQuery {
 								
 								
 								table += "<tr>";
+								table += "<td>" + resv.getReserveID() + "</td>";
 								table += "<td>" + resv.getReserveStartDate() + "</td>";
 								table += "<td>" + resv.getReserveEndDate() + "</td>";
 								table += "<td>" + resv.getReserveStartTime() + "</td>";
@@ -200,8 +202,10 @@ public class ListUserReservationsQuery {
 								table += "<td>" + roomNumber + "</td>";
 								table += "<td>" + userPlace + "</td>";
 								
-				
-								table += "<td> CANCEL </td>"; //TODO add link	
+								table += "<td><form action='confirm' method = 'post'>" +
+										"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
+										"<input type='submit' value='Cancel Reservation'>" +
+										"</form></td>";			
 								
 							}else {// else current hour = reservations hour - check to see if it is within the 
 								
@@ -226,6 +230,7 @@ public class ListUserReservationsQuery {
 
 									table = "<table>";
 									table += "<tr>";
+									table += "<td> Reservation ID</td>";
 									table += "<td> Start Date</td>";
 									table += "<td> End Date</td>";
 									table += "<td> Start Time</td>";
@@ -243,6 +248,7 @@ public class ListUserReservationsQuery {
 								// already know we want to display this reservation
 								// but check below on whether to have a 'cancel' button or a 'check-in' button
 								table += "<tr>";
+								table += "<td>" + resv.getReserveID() + "</td>";
 								table += "<td>" + resv.getReserveStartDate() + "</td>";
 								table += "<td>" + resv.getReserveEndDate() + "</td>";
 								table += "<td>" + resv.getReserveStartTime() + "</td>";
@@ -270,6 +276,7 @@ public class ListUserReservationsQuery {
 
 								table = "<table>";
 								table += "<tr>";
+								table += "<td> Reservation ID</td>";
 								table += "<td> Start Date</td>";
 								table += "<td> End Date</td>";
 								table += "<td> Start Time</td>";
@@ -287,6 +294,7 @@ public class ListUserReservationsQuery {
 							// already know we want to display this reservation
 							// but check below on whether to have a 'cancel' button or a 'check-in' button
 							table += "<tr>";
+							table += "<td>" + resv.getReserveID() + "</td>";
 							table += "<td>" + resv.getReserveStartDate() + "</td>";
 							table += "<td>" + resv.getReserveEndDate() + "</td>";
 							table += "<td>" + resv.getReserveStartTime() + "</td>";
@@ -296,7 +304,10 @@ public class ListUserReservationsQuery {
 							table += "<td>" + roomNumber + "</td>";
 							table += "<td>" + userPlace + "</td>";
 							
-							table += "<td> CANCEL </td>";  //TODO add link
+							table += "<td><form action='CancelConfirmServlet' method = 'post'>" +
+									"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
+									"<input type='submit' value='Cancel Reservation'>" +
+									"</form></td>";			
 						
 						}
 						
@@ -325,6 +336,82 @@ public class ListUserReservationsQuery {
 		return table;	// may return records or an empty table
 	}
 	
+	public String GetUserReservation(int resv_id, int userRecdID){
+		String table = "";
+		
+		//String query = "SELECT * FROM tomcatdb.Reservations "
+			//		+ "WHERE Reservations.reserveID = '"
+				//	+ resv_id + "'";
+		
+		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
+				+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
+				+ "AND Rooms.Building_buildingID = Building.buildingID "
+				+ "AND Reservations.reserveID = '" + resv_id + "'";
+
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			this.results = ps.executeQuery();
+			this.results.next();
+			
+			this.reserveID = this.results.getInt("reserveID");	
+			System.out.println("List User Resv: get user resv reserve ID " + this.reserveID);
+			
+			
+			String resvStartDate = this.results.getString("reserveStartDate");
+			String resvEndDate = this.results.getString("reserveEndDate");
+			String resvStartTime = this.results.getString("reserveStartTime");			
+			String resvEndTime = this.results.getString("reserveEndTime");			
+			String building = this.results.getString("buildingName");
+			String roomFloor = this.results.getString("roomFloor");
+			String roomNumber = this.results.getString("roomNumber");
+
+			
+			String userPlace = "";
+			
+			//get whether they are primary or secondary - USE reservation resv later???						
+			if (userRecdID == this.results.getInt("primaryUser")){
+				userPlace = "Primary User";		
+			}else{	
+				userPlace = "Seconday User";
+			}
+			table = "<table>";
+			table += "<tr>";
+			table += "<td> Reservation ID</td>";
+			table += "<td> Start Date</td>";
+			table += "<td> End Date</td>";
+			table += "<td> Start Time</td>";
+			table += "<td> End Time </td>"; 
+			table += "<td> Building </td>";
+			table += "<td> Room Floor</td>";
+			table += "<td> Room Number</td>";
+			table += "<td> Primary/Secondary</td>";
+			table += "</tr>";
+			table += "<tr>";
+			table += "<td>" + resv_id + "</td>";
+			table += "<td>" + resvStartDate + "</td>";
+			table += "<td>" + resvEndDate + "</td>";	
+			table += "<td>" + resvStartTime + "</td>";
+			table += "<td>" + resvEndTime + "</td>";
+			table += "<td>" + building + "</td>";
+			table += "<td>" + roomFloor + "</td>";
+			table += "<td>" + roomNumber+ "</td>";
+			table += "<td>" + userPlace + "</td>";
+			
+			table += "<td><form action='CancelServlet' method = 'post'>" +
+					"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
+					"<input type='submit' value='Cancel Reservation'>" +
+					"</form></td>";	
+			
+			table += "</tr></table>";
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("***Error in List User Resv: get user reservation. Query = " + query);
+		}
+		return table;
+		
+		
+	}
 
 }
 
