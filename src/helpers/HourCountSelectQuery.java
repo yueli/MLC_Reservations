@@ -44,16 +44,16 @@ public class HourCountSelectQuery {
 	
 	public int incrementResult(){
 		int incrementSum = 0;
-		
+	
 		try {
-			while(this.results.next()){
-				String resultSet = this.results.getString("incrementSum");
-				if(resultSet.isEmpty()){ // if result is empty, this person has no reservations
-					incrementSum = 0;
-				} else {
-					incrementSum = Integer.parseInt(resultSet);
-				}
+			boolean resultSet = this.results.next();
+			
+			if(resultSet){
+				incrementSum = 0;
+			} else {
+				incrementSum = Integer.parseInt(this.results.getString("incrementSum"));;
 			}
+					
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
