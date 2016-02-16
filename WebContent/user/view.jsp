@@ -3,6 +3,7 @@
 
 <%
     String table = (String) request.getAttribute("table");
+	String message = (String) request.getAttribute("message");
 %> 
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,9 +19,11 @@
 <h2>Welcome, 
 	${user.userFirstName} 
 	${user.userLastName}
-	${user.userRecordID}!</h2>
-	
+	${user.userRecordID}!
+</h2>
+	<%= message %>
 	<%= table %>
+	
 	
 </body>
 </html>

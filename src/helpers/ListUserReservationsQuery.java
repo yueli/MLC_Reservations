@@ -66,12 +66,12 @@ public class ListUserReservationsQuery {
 		// and the room info for the reservation
 		// and the date is today or later (will have to deal with time later)
 		
-		String query = "SELECT * FROM tomcatdb.Reservation, tomcatdb.Rooms, tomcatdb.Building "
-						+ "WHERE Reservation.Rooms_roomID = Rooms.roomID "
+		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
+						+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
 						+ "AND Rooms.Building_buildingID = Building.buildingID "
-						+ " AND (Reservation.primaryUser = '" + userRecordID + "' OR Reservation.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservation.free = 0"
-						+ " AND Reservation.reserveStartDate >= '" + currentDate + "'"
+						+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
+						+ " AND Reservations.free = 0"
+						+ " AND Reservations.reserveStartDate >= '" + currentDate + "'"
 						+ " ORDER BY reserveStartDate, reserveStartTime";
 
 	
@@ -88,29 +88,17 @@ public class ListUserReservationsQuery {
 				System.out.println("Success in List User Resv.java: list user reservations method. ReserveID = " + this.reserveID);
 				
 					this.results.beforeFirst();
-
+					
+					boolean firstTime = true;
+					
 					//get current time to check to see if record is => current time
-					
 					String currentHour = "";
-					
 					DateFormat hourFormat = new SimpleDateFormat("HH");
 					Date time = new Date();
 					currentHour = hourFormat.format(time);
 					System.out.println("List User Resv: current hour = " + currentHour);
 					
 					
-					// start the table since we have at least one record
-					table = "<table>";
-					table += "<tr>";
-					table += "<td> Start Date</td>";
-					table += "<td> End Date</td>";
-					table += "<td> Start Time</td>";
-					table += "<td> End Time </td>"; 
-					table += "<td> Building </td>";
-					table += "<td> Room Floor</td>";
-					table += "<td> Room Number</td>";
-					table += "<td> Primary/Secondary</td>";
-					table += "</tr>";
 					
 					while(this.results.next()){ //go through all records returned
 						Reservation resv = new Reservation();
@@ -152,21 +140,7 @@ public class ListUserReservationsQuery {
 						String resvStartDate = resv.getReserveStartDate();
 						System.out.println("List User Resv: 2 current date  = " + currentDate);
 						System.out.println("List User Resv: 2 start date  = " + resvStartDate);
-					
-						// add the fields to the string table that we need to display
-						// already know we want to display this reservation
-						// but check below on whether to have a 'cancel' button or a 'check-in' button
-						table += "<tr>";
-						table += "<td>" + resv.getReserveStartDate() + "</td>";
-						table += "<td>" + resv.getReserveEndDate() + "</td>";
-						table += "<td>" + resv.getReserveStartTime() + "</td>";
-						table += "<td>" + resv.getReserveEndTime() + "</td>"; 
-						table += "<td>" + building + "</td>";
-						table += "<td>" + roomFloor + "</td>";
-						table += "<td>" + roomNumber + "</td>";
-						table += "<td>" + userPlace + "</td>";
-						
-					
+									
 						
 						if (Objects.equals(resvStartDate, currentDate)) { // if this reservation is for today
 							System.out.println("In WHILE in List User Resv.java: resvStartDate = currentDate");
@@ -177,7 +151,7 @@ public class ListUserReservationsQuery {
 							
 							// grab the reservation's start time's hour
 							String resvHour = resv.getReserveStartTime();
-							System.out.println("1 In WHILE in List User Resv.java: reserve start time = " + resvHour);
+							System.out.println("1 In WHILE in List User Resv.java: reserve start hour = " + resvHour);
 							resvHour = resvHour.substring(0, 2);  		//need to grab just the hour
 							System.out.println("2 In WHILE in List User Resv.java: reserve hour = " + resvHour);
 							
@@ -194,13 +168,47 @@ public class ListUserReservationsQuery {
 								
 								
 							}else if (currentHourInt < resvHourInt){
-								//keep this record, will have a cancel button
 								System.out.println("6 In WHILE in List User Resv.java: current hour < resv hour " + this.results.getInt("reserveID"));
+								//keep this record, will have a cancel button
 								
-								table += "<td> CANCEL </td>"; //TODO add link	
+								if (firstTime){
+
+									table = "<table>";
+									table += "<tr>";
+									table += "<td> Reservation ID</td>";
+									table += "<td> Start Date</td>";
+									table += "<td> End Date</td>";
+									table += "<td> Start Time</td>";
+									table += "<td> End Time </td>"; 
+									table += "<td> Building </td>";
+									table += "<td> Room Floor</td>";
+									table += "<td> Room Number</td>";
+									table += "<td> Primary/Secondary</td>";
+									table += "</tr>";
+									
+									firstTime = false;
+									
+								}
 								
-							}else {
-								// else current hour = reservations hour - check to see if it is within the 
+								
+								table += "<tr>";
+								table += "<td>" + resv.getReserveID() + "</td>";
+								table += "<td>" + resv.getReserveStartDate() + "</td>";
+								table += "<td>" + resv.getReserveEndDate() + "</td>";
+								table += "<td>" + resv.getReserveStartTime() + "</td>";
+								table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+								table += "<td>" + building + "</td>";
+								table += "<td>" + roomFloor + "</td>";
+								table += "<td>" + roomNumber + "</td>";
+								table += "<td>" + userPlace + "</td>";
+								
+								table += "<td><form action='confirm' method = 'post'>" +
+										"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
+										"<input type='submit' value='Cancel Reservation'>" +
+										"</form></td>";			
+								
+							}else {// else current hour = reservations hour - check to see if it is within the 
+								
 								// check-in time (up to 10 minutes after the hour) and if it is, have CHECKIN button,
 								// else list but have no active button - maybe say "missed check-in time"
 								
@@ -217,31 +225,98 @@ public class ListUserReservationsQuery {
 								// convert minute to integer to see if more than 10
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								System.out.println("In WHILE in List User Resv.java: current hour INT = " + currentMinuteInt);	
-				
+								
+								if (firstTime){
+
+									table = "<table>";
+									table += "<tr>";
+									table += "<td> Reservation ID</td>";
+									table += "<td> Start Date</td>";
+									table += "<td> End Date</td>";
+									table += "<td> Start Time</td>";
+									table += "<td> End Time </td>"; 
+									table += "<td> Building </td>";
+									table += "<td> Room Floor</td>";
+									table += "<td> Room Number</td>";
+									table += "<td> Primary/Secondary</td>";
+									table += "</tr>";
+									
+									firstTime = false;
+									
+								}
+								// add the fields to the string table that we need to display
+								// already know we want to display this reservation
+								// but check below on whether to have a 'cancel' button or a 'check-in' button
+								table += "<tr>";
+								table += "<td>" + resv.getReserveID() + "</td>";
+								table += "<td>" + resv.getReserveStartDate() + "</td>";
+								table += "<td>" + resv.getReserveEndDate() + "</td>";
+								table += "<td>" + resv.getReserveStartTime() + "</td>";
+								table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+								table += "<td>" + building + "</td>";
+								table += "<td>" + roomFloor + "</td>";
+								table += "<td>" + roomNumber + "</td>";
+								table += "<td>" + userPlace + "</td>";
+								
 								if (currentMinuteInt <= 10){
 									// it's not past 10 after the hour, so let them check-in
 									// display the check-in button that points to the check-in servlet
+									
 									table += "<td> CHECK IN </td>"; //TODO add ink
 								
 								}else{
 									table += "<td> *Too late to check in* </td>";
-								}
+								}	
 								
-								
-								
-							}
+							}//end current hour = resv hour
 								
 							
 						}else {// end if record's date > current date 
-							table += "<td> CANCEL </td>";  //TODO add link
+							if (firstTime){
+
+								table = "<table>";
+								table += "<tr>";
+								table += "<td> Reservation ID</td>";
+								table += "<td> Start Date</td>";
+								table += "<td> End Date</td>";
+								table += "<td> Start Time</td>";
+								table += "<td> End Time </td>"; 
+								table += "<td> Building </td>";
+								table += "<td> Room Floor</td>";
+								table += "<td> Room Number</td>";
+								table += "<td> Primary/Secondary</td>";
+								table += "</tr>";
+								
+								firstTime = false;
+								
+							}
+							// add the fields to the string table that we need to display
+							// already know we want to display this reservation
+							// but check below on whether to have a 'cancel' button or a 'check-in' button
+							table += "<tr>";
+							table += "<td>" + resv.getReserveID() + "</td>";
+							table += "<td>" + resv.getReserveStartDate() + "</td>";
+							table += "<td>" + resv.getReserveEndDate() + "</td>";
+							table += "<td>" + resv.getReserveStartTime() + "</td>";
+							table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+							table += "<td>" + building + "</td>";
+							table += "<td>" + roomFloor + "</td>";
+							table += "<td>" + roomNumber + "</td>";
+							table += "<td>" + userPlace + "</td>";
+							
+							table += "<td><form action='CancelConfirmServlet' method = 'post'>" +
+									"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
+									"<input type='submit' value='Cancel Reservation'>" +
+									"</form></td>";			
 						
 						}
 						
 						table += "</tr>"; //end this row for this reservation
 						
 					}// end while going through records returned
-					
-					table += "</table>";
+					if (!firstTime){ //headers written to table, so close table
+						table += "</table>";
+					}
 					
 					this.results.beforeFirst(); //reset pointer back to the beginning of the records returned just in case
 				
@@ -255,12 +330,88 @@ public class ListUserReservationsQuery {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("***Error in List User Resv.java: get number of records. Query = " + query);
+			System.out.println("***Error in List User Resv.java: get records. Query = " + query);
 		}
 		
 		return table;	// may return records or an empty table
 	}
 	
+	public String GetUserReservation(int resv_id, int userRecdID){
+		String table = "";
+		
+		//String query = "SELECT * FROM tomcatdb.Reservations "
+			//		+ "WHERE Reservations.reserveID = '"
+				//	+ resv_id + "'";
+		
+		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
+				+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
+				+ "AND Rooms.Building_buildingID = Building.buildingID "
+				+ "AND Reservations.reserveID = '" + resv_id + "'";
+
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			this.results = ps.executeQuery();
+			this.results.next();
+			
+			this.reserveID = this.results.getInt("reserveID");	
+			System.out.println("List User Resv: get user resv reserve ID " + this.reserveID);
+			
+			
+			String resvStartDate = this.results.getString("reserveStartDate");
+			String resvEndDate = this.results.getString("reserveEndDate");
+			String resvStartTime = this.results.getString("reserveStartTime");			
+			String resvEndTime = this.results.getString("reserveEndTime");			
+			String building = this.results.getString("buildingName");
+			String roomFloor = this.results.getString("roomFloor");
+			String roomNumber = this.results.getString("roomNumber");
+
+			
+			String userPlace = "";
+			
+			//get whether they are primary or secondary - USE reservation resv later???						
+			if (userRecdID == this.results.getInt("primaryUser")){
+				userPlace = "Primary User";		
+			}else{	
+				userPlace = "Seconday User";
+			}
+			table = "<table>";
+			table += "<tr>";
+			table += "<td> Reservation ID</td>";
+			table += "<td> Start Date</td>";
+			table += "<td> End Date</td>";
+			table += "<td> Start Time</td>";
+			table += "<td> End Time </td>"; 
+			table += "<td> Building </td>";
+			table += "<td> Room Floor</td>";
+			table += "<td> Room Number</td>";
+			table += "<td> Primary/Secondary</td>";
+			table += "</tr>";
+			table += "<tr>";
+			table += "<td>" + resv_id + "</td>";
+			table += "<td>" + resvStartDate + "</td>";
+			table += "<td>" + resvEndDate + "</td>";	
+			table += "<td>" + resvStartTime + "</td>";
+			table += "<td>" + resvEndTime + "</td>";
+			table += "<td>" + building + "</td>";
+			table += "<td>" + roomFloor + "</td>";
+			table += "<td>" + roomNumber+ "</td>";
+			table += "<td>" + userPlace + "</td>";
+			
+			table += "<td><form action='CancelServlet' method = 'post'>" +
+					"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
+					"<input type='submit' value='Cancel Reservation'>" +
+					"</form></td>";	
+			
+			table += "</tr></table>";
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("***Error in List User Resv: get user reservation. Query = " + query);
+		}
+		return table;
+		
+		
+	}
 
 }
 
