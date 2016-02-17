@@ -70,7 +70,7 @@ public class ListUserReservationsQuery {
 						+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
 						+ "AND Rooms.Building_buildingID = Building.buildingID "
 						+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservations.free = 0"
+						+ " AND Reservations.free = 'N' "
 						+ " AND Reservations.reserveStartDate >= '" + currentDate + "'"
 						+ " ORDER BY reserveStartDate, reserveStartTime";
 
@@ -222,9 +222,14 @@ public class ListUserReservationsQuery {
 								currentMinute = minuteFormat.format(minute);
 								System.out.println("List User Resv: current minute = " + currentMinute);
 								
+								
 								// convert minute to integer to see if more than 10
 								int currentMinuteInt = Integer.parseInt(currentMinute);
-								System.out.println("In WHILE in List User Resv.java: current hour INT = " + currentMinuteInt);	
+								
+								//TAKE THIS OUT AFTER TESTING !!!!!
+								currentMinuteInt = 2; //!!!!!!!!!!!
+										
+								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
 								if (firstTime){
 
@@ -396,10 +401,14 @@ public class ListUserReservationsQuery {
 			table += "<td>" + roomFloor + "</td>";
 			table += "<td>" + roomNumber+ "</td>";
 			table += "<td>" + userPlace + "</td>";
-			
-			table += "<td><form action='CancelServlet' method = 'post'>" +
+			table += "</tr>";
+			table += "<tr><td><form action='CancelServlet' method = 'post'>" +
 					"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
 					"<input type='submit' value='Cancel Reservation'>" +
+					"</form></td>";	
+			
+			table += "<td><form action='ViewServlet' method = 'post'>" +
+					"<input type='submit' value='Go back to viewing reservations'>" +
 					"</form></td>";	
 			
 			table += "</tr></table>";
