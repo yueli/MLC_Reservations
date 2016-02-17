@@ -75,7 +75,7 @@ public class BrowseReserveServlet extends HttpServlet {
 			url = "user/reservation.jsp";
 		} else if (incrementSum >= 2){ // either 2 1-hour reservations or 1 2-hour reservation was made
 			// user has at 2 hour max for the day
-			url = "user/home.jsp";
+			url = "user/home.jsp"; // TODO change this because it shouldn't be this page
 		} else {
 			
 		}

@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -332,6 +334,17 @@ public class Email {
         public String getName() {
             return "JAF text/html dataSource to send e-mail only";
         }
+        
+        /**
+         * 
+         * @param emailStr
+         * @return makes sure that emails entered follow the pattern listed below.
+         */
+    	public static boolean isEmail(String emailStr) {
+    		Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = emailRegex.matcher(emailStr);
+    		return matcher.find();
+    	}
     }
 	 
 } 

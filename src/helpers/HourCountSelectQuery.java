@@ -48,9 +48,9 @@ public class HourCountSelectQuery {
 		try {
 			boolean resultSet = this.results.next();
 			
-			if(resultSet){
+			if(resultSet){ // if result set is empty
 				incrementSum = 0;
-			} else {
+			} else { // if user has a reservation or reservations
 				incrementSum = Integer.parseInt(this.results.getString("incrementSum"));;
 			}
 					
