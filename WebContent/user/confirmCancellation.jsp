@@ -17,6 +17,8 @@
 		${user.userLastName}
 	</h1>
 	
+	<p>Are you sure you want to cancel this reservation?</p>
+	
 	<br />
 	<%= table %>
 

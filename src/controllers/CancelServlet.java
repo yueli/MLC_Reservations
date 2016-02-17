@@ -52,8 +52,8 @@ public class CancelServlet extends HttpServlet {
 		
 		//HERE = 02-13-16 SAT NIGHT 12:30am
 		// PUT SOMETHING HERE TO SET FREE to Y/1 FOR THIS RECORD SINCE HAVE THE RESV ID
-		//CancelQuery cq = new CancelQuery();
-		//cq.cancelReservation(reservation.getReserveID());
+		CancelQuery cq = new CancelQuery();
+		cq.cancelReservation(reservation.getReserveID());
 		
 		// cancel reservation, then go back to the view servlet to get 
 		// the user's reservations to list again
