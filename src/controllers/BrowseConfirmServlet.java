@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.DateTimeConverter;
+import model.Email;
 
 /**
  * Servlet implementation class BrowseConfirmServlet
@@ -47,6 +48,8 @@ public class BrowseConfirmServlet extends HttpServlet {
 		// get roomID from roomNumber
 		
 		// get buildingID from buildingName
+		
+		// verify inputted email
 		
 		
 		String free = "N";
