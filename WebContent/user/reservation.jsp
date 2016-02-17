@@ -19,8 +19,9 @@
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
 		<div id="reservation_div">	
-			<form name="browse_reservation" id ="browse_reservation" action="Reservation" method="post">
+			<form name="browse_reservation" id ="browse_reservation" action="BrowseConfirm" method="post">
 				<p>Please fill out additional information below to make a reservation</p>
+				<p>${msg}</p>
 				<p>Reservation for ${currentDate}</p>
 				<p>Building:
 				<input type="text" name="building" id="building" value="${building}" disabled></p>				

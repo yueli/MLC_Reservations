@@ -1,8 +1,8 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import model.DateTimeConverter;
 import model.Email;
+import model.Reservation;
 
 /**
  * Servlet implementation class BrowseConfirmServlet
@@ -39,24 +40,45 @@ public class BrowseConfirmServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		
 		String startTime = (String) session.getAttribute("startTime");
 		String roomNumber = (String) session.getAttribute("roomNumber");
-		String building = (String) session.getAttribute("building");
+		String buildingName = (String) session.getAttribute("building");
 		String hourIncrement = (String) request.getParameter("incrementSel");
 		String secondaryEmail = (String) request.getParameter("secondary");
 		
+		String url = "";
+		String msg = "";
 		// get roomID from roomNumber
 		
 		// get buildingID from buildingName
 		
-		// verify inputted email
-		
+		// verify inputed email
+		if(!Email.isEmail(secondaryEmail)){
+			msg = "Please enter a valid email";
+			url = "user/reservation.jsp";
+		}
 		
 		String free = "N";
+		
+		// make a reservation
+		Reservation reservation = new Reservation();
+		
 		// get current date and time
 		DateTimeConverter dtc = new DateTimeConverter();
 		String currentDate = dtc.parseDate(dtc.datetimeStamp());
 		
+		// set session attributes
+		session.setAttribute("startTime", startTime);
+		session.setAttribute("roomNumber", roomNumber);
+		session.setAttribute("building", buildingName);
+		session.setAttribute("hourIncrement", hourIncrement);
+		session.setAttribute("secondaryEmail", secondaryEmail);
+		session.setAttribute("msg", msg);
+		
+		// forward the request
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 	}
 
 }
