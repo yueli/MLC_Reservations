@@ -36,18 +36,6 @@ public class UserHelper {
 	 * Constructor which makes a connection
 	 */
 	public UserHelper() {
-/*		try {
-			//Set up connection
-			// hard coded the connection in DbConnect class
-			this.connection = DbConnect.localCredentials();
-			
-			//NEED THIS CODE???
-			//Create the preparedstatement(s)
-			authenticateUserStatement = conn.prepareStatement("select * from user where username=? and password=?");
-		} catch (Exception e) {
-			System.out.println(e.getClass().getName() + ": " + e.getMessage());
-		}*/
-		
 			
 			// set up the driver
 			try {
@@ -269,99 +257,36 @@ public class UserHelper {
 		
 	}
 	
-/*//-----------------------------------------------------------------------------------------	
-	//CHANGE THIS TO CREATE TABLES OF RECORDS!!!!!
-	// this method knows already that the user has records
-	// it gets all the reservations for this user and
-	// formats them into a table that is returned 
-	public String listUserReservations(int userRecordID) {
+	public boolean alreadyBanned(int userID){
 
-		String table = "";
+		System.out.println("UserHelper inBannedTable: myID = " + userID);
 		
-		//this.numRecords = 0;
+		String query = "SELECT * from tomcatdb.banned WHERE User_userID = ? "
+					+ "AND banEnd IS NULL "
+					+ "AND status = ? "
+					+ "AND penaltyCount > ? "
+					+ "LIMIT 1";
 		
-		System.out.println("uh: list user reservations");   
-
-		//get today's date to list the reservations today or later
-		String currentDate = "";	
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();	
-		currentDate = dateFormat.format(date);
-		
-		//get all reservations for today and forward where user is primary or secondary - can't search on time yet
-		// and the room is free (free = 0) ( which means they didn't fail to check into the room and they didn't cancel the reservation)
-		//and the room info for the reservation
-		// and the date is today or later (will have to deal with time later)
-		
-		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms WHERE Reservations.Rooms_roomID = Rooms.roomID"
-				+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservations.free = 0"
-						+ " AND Reservations.reserveStartDate >= '" + currentDate + "'";
-		
-		System.out.println("uh list user resv query " + query);
-		
+		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-		
-			//ps.executeQuery();
-			this.results= ps.executeQuery();
-			System.out.println("Success in UserHelper.java: list user reservations method. Query = " + query);
+			ps.setInt(1, userID);
+			ps.setInt(2, 1);
+			ps.setInt(3, 1);
 			
-			//get returned results, which may be more than just one records
-			// go through all the results returned, if any
-			
-			
-			if (!results.next() ) {
-				   System.out.println("no data");
-				   //System.out.println("In UserHelper.java: list user reservations method: num recds should be 0 = "+ this.numRecords);
-					
+			this.results = ps.executeQuery();
+			if (this.results.next()) {
+				return true; //they are already banned for this current period
+			}else{
+				return false; //they have not been banned
 			}
 			
-			
-			//MAY HAVE TO RESET pointer beforeFirst() 		
-			
-			while(this.results.next()){
-				
-				Reservation reservation = new Reservation();
-				reservation.setReserveID(this.results.getInt("reserveID"));
-				
-				//this.numRecords = this.results.getInt("numRecords");
-				
-				System.out.println("In UserHelper.java: list user reservations method: reserve ID from result = "+ reservation.getReserveID());
-				//System.out.println("== 2 In UserHelper.java: list user reservations method: num recds = "+ this.numRecords);
-				
-				//product.setProd_id(this.results.getInt("prod_id"));
-				//product.setProd_name(this.results.getString("prod_name"));
-				//product.setProd_image_name(this.results.getString("prod_image_name"));
-				//product.setProd_price(this.results.getDouble("prod_price"));
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("***Error in UserHelper.java: list user reservations method. Query = " + query);
+			System.out.println("****Error in UserHelper.java: already Banned method. Query = " + query);
 		}
 		
-
-
-		
-		//this.userRecordID = userRecordID;
-		
-		//recordID = results.getInt("userID");
-
-		// now get the reservations from the records returned that are now or later than the current time
-		// the start and end times stored in reservations always have 00 for seconds
-		
-		//get the current time this method is being called
-		
-		//may need later
-		String currentTime = "";
-		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-		Date time = new Date();
-		currentTime = timeFormat.format(time);
-		
-		System.out.println("uh list user resv current time " + currentTime);
-		
-		
-		return table;
-		
-	}*/
+		return false;
+	}
+	
 }
