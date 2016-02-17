@@ -99,43 +99,68 @@ public class LoginController extends HttpServlet {
 				user.setUserLastName(loginUser.getUserLastName());
 				user.setUserEmail(loginUser.getUserEmail());
 				
-				message = "UGA person!!";
-							
+				message = "UGA person!!"; //for testing
 				
-				//check to see if user is in the student table, and if not add, and if so, set last login time
+				//----------------
+				// once this person is authenticated as being UGA affiliated, check to is they have been banned
+				// and if so, send them to the banned page to let them know and to have them log out
+				
 		
-				boolean inTable = uh.inUserTable(user.getMyID());
-				System.out.println("Login Controller returned from inStudentTable " + inTable);				
-				
-				if (inTable){
-					//update the last login field
-					uh.updateLastLogin(user.getMyID());
-				}else{ //not in table
-					//add to user table 
-					uh.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
-				}
-				
-				//--------------------------------
-				//get the user record id to pass through sessions to make queries easier
-				int recordID = uh.getRecordID(user.getMyID());
-				System.out.println("Login Controller get user Record ID 1 " + recordID);
-				
-				user.setUserRecordID(recordID);
-				System.out.println("Login Controller get user Record ID 2 " + user.getUserRecordID());				
-				
-				//--------------------------------
-				
-				loginUser = null; //null out values in object since don't want the password to stick around
-				
-				//invalidate current session, then get new session for our user (combats: session hijacking)
-				session.invalidate();
-				session=request.getSession(true);
-				session.setAttribute("user", user);
-				session.setAttribute("message", message);
+					//---------------
+					//check to see if user is in the users table, and if not add, and if so, set last login time
+			
+					boolean inTable = uh.inUserTable(user.getMyID());
+					System.out.println("Login Controller returned from inUserTable " + inTable);				
+					
+					if (inTable){
+					
+						
+						//--------------------------------
+						//get the user record id to pass through sessions to make queries easier
+						int recordID = uh.getRecordID(user.getMyID());
+						user.setUserRecordID(recordID);
+						System.out.println("Login Controller get user Record ID 1 " + recordID);
+						
+						if(uh.alreadyBanned(user.getUserRecordID())) {
+							// since they have already been banned, send them to a page telling them 
+							
+							session.setAttribute("user", user);
+							System.out.println("Login Controller already banned! " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
+							
+							url="user/bannedUser.jsp";
+							//forward our request along
+							RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+							dispatcher.forward(request, response);
+							
+						}else{
+							//they have not been banned for this period, so update the last time they logged in
+							uh.updateLastLogin(user.getMyID());	//update the last login field
+						}
+						
+					}else{ //not in user table, so add them
+						uh.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
+					}
+					
+					
+					
+					
+					System.out.println("Login Controller get user Record ID 2 " + user.getUserRecordID());				
+					
+					//--------------------------------
+					
+					loginUser = null; //null out values in object since don't want the password to stick around
+					
+					//invalidate current session, then get new session for our user (combats: session hijacking)
+					session.invalidate();
+					session=request.getSession(true);
+					session.setAttribute("user", user);
+					session.setAttribute("message", message);
 
-				System.out.println("Login Controller MyID and first name " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
+					System.out.println("Login Controller MyID and first name " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
+					
+					url="user/home.jsp";
 				
-				url="user/home.jsp";
+				
 			
 			}else{// user doesn't exist, redirect to previous page and show error
 			 
@@ -143,12 +168,10 @@ public class LoginController extends HttpServlet {
 				session.setAttribute("message", message);
 
 				System.out.println("Login Controller: user doesn't exist!");
-				//track login attempts (combats: brute force attacks)
-				//session.setAttribute("loginAttempts", loginAttempts++);
+
 				url = "user/login.jsp";
 			}
-			
-		
+				
 		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
