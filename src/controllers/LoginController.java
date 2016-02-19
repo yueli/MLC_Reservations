@@ -26,8 +26,7 @@ public class LoginController extends HttpServlet {
 	
 	private HttpSession session; 
 	private String url;
-	private int loginAttempts;
-
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -87,7 +86,7 @@ public class LoginController extends HttpServlet {
 			User loginUser = uh.authenticateUser(username, encryptedPass); //see if the person is UGA affiliated
 			//NOTE: the authenticate method will not return the user's record ID
 			
-			//student user will come back null if not authenticated and come back w/ data if authenticated
+			//user will come back null if not authenticated and come back w/ data if authenticated
 			System.out.println("Login Controller returned from authentication studentUser.myID =  " + loginUser.getMyID());	
 			
 			if (loginUser.getMyID() != null){ //if a non-empty object sent back (has user data meaning they were authenticated)
@@ -109,6 +108,9 @@ public class LoginController extends HttpServlet {
 					//---------------
 					//check to see if user is in the users table, and if not add, and if so, set last login time
 			
+					 //will set this to send to method to check the user table
+					
+				 
 					boolean inTable = uh.inUserTable(user.getMyID());
 					System.out.println("Login Controller returned from inUserTable " + inTable);				
 					
