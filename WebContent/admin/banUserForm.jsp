@@ -9,7 +9,9 @@
 <body>
 
 
-<form name="addBan" action=addBan method=get>
+<p>
+<input type="submit" name="submit" value="Ban">
+</p><form name="addBan" action=addBan method=get>
 
 <!-- Get banID -->
 
@@ -35,9 +37,7 @@ Reason for ban:<input type=text name=banReason value=""/></br>
 
 <!-- Set Status to 1 -->
 
-<p>
-<input type=submit name=submit value='Ban'>
-</p>
+
 
 </form>
 

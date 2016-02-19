@@ -36,6 +36,7 @@
 		        <li><a href="#">Check In</a></li>
 		        <li><a href="#">Logout</a></li>
 		        <li><a href="BanReadServlet">Admin Login</a></li>
+		        <li><a href="BuildingListServlet">Building Login</a></li>
 		        
 		        
 		    </ul>
