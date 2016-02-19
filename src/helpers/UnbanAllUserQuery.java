@@ -8,13 +8,12 @@ import java.util.Calendar;
 
 
 
-
 /**
  * @author Ronnie Xu
  * Helper for the Admin side of the website.
  **/
 
-public class UnbanUserQuery {
+public class UnbanAllUserQuery {
 	
 	private Connection connection;
 
@@ -24,7 +23,7 @@ public class UnbanUserQuery {
 	 * @param user
 	 * @param pwd
 	 */
-	public UnbanUserQuery(String dbName, String user, String pwd) {
+	public UnbanAllUserQuery(String dbName, String user, String pwd) {
 		String url = "jdbc:mysql://localhost:3306/" + dbName;
 		
 		// set up the driver
@@ -43,12 +42,12 @@ public class UnbanUserQuery {
 		
 	}
 	
-	public void unbanUser(int banID){
+	public void unbanUser(){
 		//Set Date to CurrentTime
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		
 
-		String query = "UPDATE tomcatdb.banned SET banEnd='"+ date + "', status=0 WHERE bannedID="+banID+"";
+		String query = "UPDATE tomcatdb.banned SET banEnd='"+ date + "', status=0 WHERE status=1";
 		
 
 		

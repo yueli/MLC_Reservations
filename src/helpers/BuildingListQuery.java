@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Banned;
+
+import model.Building;
 
 
 /**
@@ -15,7 +16,7 @@ import model.Banned;
  *
  */
 
-public class BannedSelectQuery {
+public class BuildingListQuery {
 	
 		private Connection connection;
 		private ResultSet results;
@@ -26,7 +27,7 @@ public class BannedSelectQuery {
 		 * @param user
 		 * @param pwd
 		 */
-		public BannedSelectQuery(String dbName, String user, String pwd) {
+		public BuildingListQuery(String dbName, String user, String pwd) {
 			String url = "jdbc:mysql://localhost:3306/" + dbName;
 			
 			// set up the driver
@@ -49,7 +50,7 @@ public class BannedSelectQuery {
 
 		public void doRead(){
 
-			String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
+			String query = "SELECT building.buildingID, building.buildingName, building.buildingStatus, building.buildingCalName, building.buildingCalUrl, building.Admin_adminID FROM building";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
@@ -77,54 +78,51 @@ public class BannedSelectQuery {
 			try{
 				
 				
-				table += "<tr><td><a href='/admin/ban.jsp'>Ban Someone</td>";
-				table += "<td><a href=unbanall><button type='submit' value='Unban All'>Unban</button></a></td></tr>";
+				table += "<tr><u><a href='buildingform'>Add Building Form</a></u></tr>";
 				
-				table += "<tr><td>Ban#</td><td>Student ID</td><td>Admin ID</td><td>Ban Start</td><td>Ban End</td><td>Penalty Count</td><td>Description</td><td>Status</td></tr>";
+				table += "<tr><td>Building ID#</td><td>Building Name</td><td>Building Status</td><td>Building Cal Name</td><td>Building Cal URL</td></tr>";
 				while(results.next()){
 
 					
 					
-					Banned ban = new Banned();
-					ban.setBanID(results.getInt("bannedID"));
-					ban.setStudentID(results.getInt("Student_studentID"));
-					ban.setAdminID(results.getInt("Admin_adminID"));
-					ban.setBanStart(results.getString("banStart"));
-					ban.setBanEnd(this.results.getString("banEnd"));
-					ban.setPenaltyCount(results.getInt("penaltyCount"));
-					ban.setDescription(results.getString("description"));
-					ban.setStatus(results.getInt("status"));
+					Building building = new Building();
+					
+					building.setBuildingID(results.getInt("buildingID"));
+					building.setBuildingName(results.getString("buildingName"));
+					building.setBuildingStatus(results.getInt("buildingStatus"));
+					building.setBuildingCalName(results.getString("buildingCalName"));
+					building.setBuildingCalUrl(results.getString("buildingCalUrl"));
+					//building.setAdmin(results.getString("admin"));
+					
+		
+		
 					
 					//show only banned
 					
 					table += "<tr>";
 					
 					table += "<td>";
-					table += ban.getBanID();
+					table += building.getBuildingID();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getStudentID();
+					table += building.getBuildingName();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getAdminID();
+					table += building.getBuildingStatus();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getBanStart();
+					table += building.getBuildingCalName();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getBanEnd();
+					table += building.getBuildingCalUrl();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getPenaltyCount();
+					table += "admin?";
 					table += "</td>";
-					table += "<td>";
-					table += ban.getDescription();
-					table += "</td>";
-					table += "<td>";
-					table += ban.getStatus();
-					table += "</td>";
+	
+	
 					
-					table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
+					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button type='submit' value='Edit'>Edit</button></a></td>";
 	
 					
 					table += "</tr>";
