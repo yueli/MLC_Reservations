@@ -37,8 +37,8 @@ public class FloorSelectQuery {
 		
 	}
 	
-	public void doFloorRead(String building){
-		String query = "SELECT roomFloor FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingName = '" + building + "'" + " GROUP BY roomFloor ORDER BY roomFloor";
+	public void doFloorRead(int building){
+		String query = "SELECT roomFloor FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingID = '" + building + "'" + " GROUP BY roomFloor ORDER BY roomFloor";
 	
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);

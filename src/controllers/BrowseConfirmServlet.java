@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Building;
 import model.DateTimeConverter;
 import model.Email;
 import model.Reservation;
+import model.User;
 
 /**
  * Servlet implementation class BrowseConfirmServlet
@@ -43,30 +45,38 @@ public class BrowseConfirmServlet extends HttpServlet {
 		
 		String startTime = (String) session.getAttribute("startTime");
 		String roomNumber = (String) session.getAttribute("roomNumber");
-		String buildingName = (String) session.getAttribute("building");
-		String hourIncrement = (String) request.getParameter("incrementSel");
+		String currentDate = (String) session.getAttribute("currentDate");
+		String buildingName = (String) session.getAttribute("buildingName");
+		int buildingID = (Integer) session.getAttribute("buildingID");
+		User user = (User) session.getAttribute("user");
+		String hourIncrement = (String) request.getParameter("userIncrementSelected");
 		String secondaryEmail = (String) request.getParameter("secondary");
 		
+		// error/validation message and forwarding url
 		String url = "";
 		String msg = "";
 		// get roomID from roomNumber
 		
-		// get buildingID from buildingName
 		
 		// verify inputed email
 		if(!Email.isEmail(secondaryEmail)){
 			msg = "Please enter a valid email";
 			url = "user/reservation.jsp";
 		}
-		
-		String free = "N";
-		
+		//-----------------------//
 		// make a reservation
-		Reservation reservation = new Reservation();
+		//-----------------------//
+		String free = "N";
+		String endTime = DateTimeConverter.addTime(startTime, hourIncrement);
+		String primaryUser = Integer.toString(user.getUserRecordID());
+		// Reservation reservation = new Reservation(primaryUser, secondaryUser, roomsID, currentDate, currentDate, startTime, endTime, hourIncrement, buildingID, free);
 		
-		// get current date and time
-		DateTimeConverter dtc = new DateTimeConverter();
-		String currentDate = dtc.parseDate(dtc.datetimeStamp());
+		// send confirmation email
+		Email email = new Email();
+		String primaryEmail = user.getUserEmail();
+		email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime, endTime, buildingName, roomNumber);
+		
+		
 		
 		// set session attributes
 		session.setAttribute("startTime", startTime);

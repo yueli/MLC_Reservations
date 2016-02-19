@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.BuildingSelectQuery;
 import helpers.HourCountSelectQuery;
 import model.DateTimeConverter;
 import model.TimeConverter;
@@ -46,22 +47,29 @@ public class BrowseReserveServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		// get parameters from request & session
+		String roomID = (String) request.getParameter("roomID");
 		String startTime = (String) request.getParameter("startTime");
 		String roomNumber = (String) request.getParameter("roomNumber");
 		String currentDate = (String) request.getParameter("currentDate");
-		String building = (String) session.getAttribute("building");
+		int buildingID = (Integer) session.getAttribute("building");
 		
 		// get user info from session
 		User user = (User) session.getAttribute("user");
 		int userID = user.getUserRecordID();
 		
+		// get the buinding name from ID
+		BuildingSelectQuery bsq = new BuildingSelectQuery();
+		String buildingName = bsq.buildingName(buildingID);
+		
+		//------------------------------------------------------------------//
 		// Check to see if user has reservations. Get sum of hour increment.
+		//------------------------------------------------------------------//
 		HourCountSelectQuery hcsq = new HourCountSelectQuery();
 		hcsq.doIncrementRead(userID);
 		int incrementSum = hcsq.incrementResult();
 		
 		// build select
-		String incrementSelect = "<select id='incrementSel' name='incrementSel'>";
+		String incrementSelect = "<select id='userIncrementSelected' name='userIncrementSelected'>";
 		
 		// set the forwarding url
 		String url = "";
@@ -82,19 +90,20 @@ public class BrowseReserveServlet extends HttpServlet {
 		
 		// change date into long format
 		DateTimeConverter dtc = new DateTimeConverter();
-		currentDate = dtc.convertDateLong(currentDate); // convert date to long format: ex. February 12, 2016
+		String currentDateLong = dtc.convertDateLong(currentDate); // convert date to long format: ex. February 12, 2016
 		
 		// change time to 12 hour format
 		TimeConverter tc = new TimeConverter();
 		startTime = tc.convertTimeTo12(startTime);
 		
-		// TODO query to see if user has any reservations for current day
-		
 		// set session attributes
+		session.setAttribute("roomID", roomID);
 		session.setAttribute("startTime", startTime);
 		session.setAttribute("roomNumber", roomNumber);
 		session.setAttribute("currentDate", currentDate);
-		session.setAttribute("building", building);
+		session.setAttribute("currentDate", currentDateLong);
+		session.setAttribute("buidlingID", buildingID);
+		session.setAttribute("buildingName", buildingName);
 		session.setAttribute("incrementSelect", incrementSelect);
 		
 		

@@ -44,9 +44,9 @@ public class RoomsSelectQuery {
 		}
 		
 		
-		public void doRoomRead(String building, String floor){
+		public void doRoomRead(int building, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
-			String query = "SELECT roomNumber FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingName = '" + building + "'" + " AND tomcatdb.Rooms.roomStatus = 1 AND tomcatdb.Rooms.roomFloor = '" + floor + "'" + " ORDER BY roomNumber";
+			String query = "SELECT roomID, roomNumber FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingID = '" + building + "'" + " AND tomcatdb.Rooms.roomStatus = 1 AND tomcatdb.Rooms.roomFloor = '" + floor + "'" + " ORDER BY roomNumber";
 
 			// securely run query
 			try {
@@ -93,6 +93,7 @@ public class RoomsSelectQuery {
 				while(this.results.next()){
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
+					room.setRoomID(this.results.getInt("roomID")); // TODO
 					room.setRoomNumber(this.results.getInt("roomNumber"));
 					
 					// display results in a table
@@ -127,6 +128,7 @@ public class RoomsSelectQuery {
 						} else {
 							table += "<td id='green'>";
 							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='Browse_Reservation' method='post'>";
+							table += "<input type='hidden' name='roomID' value'" + room.getRoomID() + "'>";
 							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
 							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
 							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
@@ -157,6 +159,7 @@ public class RoomsSelectQuery {
 						} else {
 							table += "<td id='green'>";
 							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='Browse_Reservation' method='post'>";
+							table += "<input type='hidden' name='roomID' value'" + room.getRoomID() + "'>";
 							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
 							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
 							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";

@@ -43,7 +43,7 @@ public class BrowseServlet3 extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		// get session and request variables
-		String buildingSelected = (String) session.getAttribute("buildingSelected");
+		int buildingSelected = (Integer) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
 		// loads floor list from db, create dropdown for list, and output as String

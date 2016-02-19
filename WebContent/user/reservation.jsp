@@ -24,7 +24,7 @@
 				<p>${msg}</p>
 				<p>Reservation for ${currentDate}</p>
 				<p>Building:
-				<input type="text" name="building" id="building" value="${building}" disabled></p>				
+				<input type="text" name="building" id="building" value="${buildingName}" disabled></p>				
 				<p>Room Number:  
 				<input type="text" name ="roomNumber" id="roomNumber" value="${roomNumber}" disabled></p>
 				<p>Starting at: 
