@@ -14,6 +14,7 @@ import java.util.Date;
 
 import org.apache.tomcat.jni.Time;
 
+import model.AdminUser;
 import model.DbConnect;
 import model.Reservation;
 import model.User;
@@ -53,7 +54,7 @@ public class UserHelper {
 	}
 	
 	/**
-	 * Authenticates a user in the database.
+	 * Authenticates a user 
 	 * @return A user object if successful, null if unsuccessful.
 	 */
 	public User authenticateUser(String myID, String encryptedPass) {
@@ -98,15 +99,15 @@ public class UserHelper {
 	}
 	
 	public boolean inUserTable(String myID){
-
+		
+		
 		System.out.println("UserHelper inUserTable: myID = " + myID);
 		
-		String query = "SELECT * from tomcatdb.user WHERE myID = ?";
+		String query = "SELECT * from tomcatdb.User WHERE myID = myID";
 		
-		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-			ps.setString(1, myID);
+
 			this.results = ps.executeQuery();
 			if (this.results.next()) {//the myID is already being used
 				return true;
@@ -287,6 +288,93 @@ public class UserHelper {
 		}
 		
 		return false;
+	}
+
+
+	/**
+	 * Authenticates an admin user 
+	 * @return An admin user object if successful, null if unsuccessful.
+	 */
+	public AdminUser authenticateAdminUser(String myID, String encryptedPass) {
+		AdminUser adminUser = new AdminUser(); //set to null to return null in case not authenticated
+	
+		boolean valid = false; //assume not valid
+
+		//--------------------------------------------
+		//TODO
+		// call some authentication server/code to check if UGA student w/ login name and password
+		// send it myID and loginPassword
+		// get back first name, last name, and email back from authentication server
+		// returns w/ data or null
+		//--------------------------------------------
+		
+		//purely for testing, set the valid to true until authentication in place
+		valid = true;
+		//valid = false;
+		
+		String adminUserMyID = "ganix";
+		
+		
+		//if true, set user object info and return login user data
+		if (valid){
+			
+			adminUser.setAdminMyID(adminUserMyID);
+			System.out.println("UserHelper: auth in valid if userMyID = " + adminUserMyID);
+		}		
+
+		return adminUser; //will be null if user wasn't valid
+	}
+	
+	public boolean inAdminUserTable(String myID){
+		
+		
+		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' AND adminStatus = 1 LIMIT 1";
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+
+			this.results = ps.executeQuery();
+			if (this.results.next()) {
+				return true;
+			}else{
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("****Error in UserHelper.java: inAdminUserTable method. Query = " + query);
+		}
+		
+		return false;
+	}
+	
+	public AdminUser getAdminInfo(String myID) {
+		
+		AdminUser adminUser = new AdminUser();
+		
+		String query = "SELECT * FROM tomcatdb.Admin WHERE adminMyID = '" + myID + "' LIMIT 1";
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+
+			this.results = ps.executeQuery();
+			this.results.next();
+			
+			adminUser.setAdminID(results.getInt("adminID"));
+			adminUser.setAdminFirstName(results.getString("fname"));
+			adminUser.setAdminLastName(results.getString("lname"));
+			adminUser.setAdminRole(results.getString("role"));
+			adminUser.setAdminStatus(results.getInt("adminStatus"));
+			adminUser.setCantBeDeleted(results.getInt("cantBeDeleted"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("****Error in UserHelper.java: get admin info method. Query = " + query);
+		}
+		
+		
+		return adminUser;
+		
 	}
 	
 }
