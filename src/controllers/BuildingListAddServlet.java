@@ -38,7 +38,7 @@ public class BuildingListAddServlet extends HttpServlet {
 		//Get Data from Form
 		
 		
-		BuildingListAddQuery blaq = new  BuildingListAddQuery("tomcatdb", "root", "");
+		BuildingListAddQuery blaq = new  BuildingListAddQuery();
 	
 		
 		//WORKING HERE...

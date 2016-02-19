@@ -29,8 +29,7 @@ public class BuildingSelectQuery {
 	
 		// set up the driver
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			
+			Class.forName("com.mysql.jdbc.Driver").newInstance();	
 			// hard coded the connection in DbConnect class
 			this.connection = DbConnect.devCredentials();
 		} catch (InstantiationException e) {

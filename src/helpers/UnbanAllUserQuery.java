@@ -1,10 +1,11 @@
 package helpers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Calendar;
+
+import model.DbConnect;
 
 
 
@@ -23,22 +24,20 @@ public class UnbanAllUserQuery {
 	 * @param user
 	 * @param pwd
 	 */
-	public UnbanAllUserQuery(String dbName, String user, String pwd) {
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
+	public UnbanAllUserQuery() {
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, user, pwd);
+			// hard coded the connection in DbConnect class
+			this.connection = DbConnect.devCredentials();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} 
 		
 	}
 	

@@ -11,9 +11,6 @@ import java.util.Date;
 import java.util.Objects;
 
 import model.Reservation;
-import model.Rooms;
-import model.User;
-
 import model.DbConnect;
 
 public class ListUserReservationsQuery {

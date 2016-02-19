@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import helpers.UserHelper;
 import model.AdminUser;
 import model.PasswordService;
-import model.User;
 
 /**
  * Servlet implementation class LoginController

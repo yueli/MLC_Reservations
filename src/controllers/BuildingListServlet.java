@@ -35,7 +35,7 @@ public class BuildingListServlet extends HttpServlet {
 		//Create a Read helper object to perform query
 		
 		
-		BuildingListQuery blq = new BuildingListQuery("tomcatdb", "root", "");
+		BuildingListQuery blq = new BuildingListQuery();
 		blq.doRead();
 		
 		//get the html table of banned users

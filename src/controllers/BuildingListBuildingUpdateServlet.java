@@ -48,7 +48,7 @@ public class BuildingListBuildingUpdateServlet extends HttpServlet {
 		 building.setBuildingCalName(request.getParameter("buildingCalName"));
 		 building.setBuildingCalUrl(request.getParameter("buildingCalUrl"));
 		 
-		 BuildingListUpdateQuery bluq = new BuildingListUpdateQuery("tomcatdb", "root", "");
+		 BuildingListUpdateQuery bluq = new BuildingListUpdateQuery();
 		 bluq.doUpdate(building);
 		 
 		 

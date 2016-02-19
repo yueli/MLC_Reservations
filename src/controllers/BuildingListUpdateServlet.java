@@ -41,7 +41,7 @@ public class BuildingListUpdateServlet extends HttpServlet {
 		
 		int buildingID = Integer.parseInt(request.getParameter("buildingID"));
 		
-		BuildingListSelectQuery blsq = new BuildingListSelectQuery("tomcatdb", "root", "");
+		BuildingListSelectQuery blsq = new BuildingListSelectQuery();
 		
 		blsq.doRead(buildingID);
 		

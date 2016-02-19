@@ -36,7 +36,7 @@ public class UnbanAllUserServlet extends HttpServlet {
 		
 		
 
-		UnbanAllUserQuery uuq = new UnbanAllUserQuery("tomcatdb", "root", "");
+		UnbanAllUserQuery uuq = new UnbanAllUserQuery();
 		uuq.unbanUser();
 		
 		
