@@ -91,8 +91,16 @@ table th {
   	padding: 7px 20px;
   	border-collapse: collapse;
 	}
+	
+#gray {
+	background: #c9c9c9;
+	color: #999;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
 
-#green{
+#green {
 	background: #e3f2e0;
 	color: #999;
  	border: 1px solid #d8d8dd;

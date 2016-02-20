@@ -44,7 +44,7 @@ public class BrowseServlet2 extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		// get request variables		
-		String buildingSelected = (String) request.getParameter("buildingList");
+		int buildingSelected = Integer.parseInt(request.getParameter("buildingList"));
 		String floorSelected = (String) request.getParameter("floorList");
 		
 		// loads building list from db, create dropdown for list, and output as String
