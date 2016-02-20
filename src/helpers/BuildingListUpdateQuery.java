@@ -2,21 +2,15 @@ package helpers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Calendar;
 
+import java.sql.SQLException;
+
+import model.Building;
 import model.DbConnect;
 
-
-
-/**
- * @author Ronnie Xu
- * Helper for the Admin side of the website.
- **/
-
-public class UnbanUserQuery {
-	
+public class BuildingListUpdateQuery {
 	private Connection connection;
+
 
 	/**
 	 * 
@@ -24,7 +18,7 @@ public class UnbanUserQuery {
 	 * @param user
 	 * @param pwd
 	 */
-	public UnbanUserQuery() {
+	public BuildingListUpdateQuery() {
 		
 		// set up the driver
 		try {
@@ -37,32 +31,32 @@ public class UnbanUserQuery {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 	}
 	
-	public void unbanUser(int banID){
-		//Set Date to CurrentTime
-		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+	
+	
+	public void doUpdate(Building building){
 		
+		
+		
+		String query = "UPDATE tomcatdb.building SET buildingName='"+building.getBuildingName()+"', buildingCalName='"+building.getBuildingCalName()+"', buildingCalUrl='"+building.getBuildingCalUrl()+"', Admin_adminID=1 WHERE buildingID="+building.getBuildingID()+";";
 
-		String query = "UPDATE tomcatdb.banned SET banEnd='"+ date + "', status=0 WHERE bannedID="+banID+"";
-		
-
-		
+		// securely run query
 		try {
-			PreparedStatement ps = connection.prepareStatement(query);
-
-
-			
+			PreparedStatement ps = this.connection.prepareStatement(query);
 			ps.executeUpdate();
 			
+			
+			
+		
+			
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
+			System.out.println("Please check connection or SQL statement.");
+		} 
 	}
 
 }

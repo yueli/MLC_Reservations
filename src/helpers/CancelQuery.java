@@ -3,23 +3,13 @@
 package helpers;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
 
-import model.Reservation;
-import model.Rooms;
-import model.User;
 
 import model.DbConnect;
 
 public class CancelQuery {
 	private java.sql.Connection connection;
-	private ResultSet results;
-	private int reserveID;
 
 	public CancelQuery(){
 		
