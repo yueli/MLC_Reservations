@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Building;
+import helpers.ReservationInsertQuery;
 import model.DateTimeConverter;
 import model.Email;
 import model.Reservation;
+import model.TimeConverter;
 import model.User;
 
 /**
@@ -44,19 +45,18 @@ public class BrowseConfirmServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String startTime = (String) session.getAttribute("startTime");
+		int roomID = Integer.parseInt((String) session.getAttribute("roomID"));
 		String roomNumber = (String) session.getAttribute("roomNumber");
 		String currentDate = (String) session.getAttribute("currentDate");
 		String buildingName = (String) session.getAttribute("buildingName");
 		int buildingID = (Integer) session.getAttribute("buildingID");
 		User user = (User) session.getAttribute("user");
-		String hourIncrement = (String) request.getParameter("userIncrementSelected");
+		int hourIncrement = Integer.parseInt(request.getParameter("userIncrementSelected"));
 		String secondaryEmail = (String) request.getParameter("secondary");
 		
-		// error/validation message and forwarding url
+		// initialize message and forwarding URL
 		String url = "";
 		String msg = "";
-		// get roomID from roomNumber
-		
 		
 		// verify inputed email
 		if(!Email.isEmail(secondaryEmail)){
@@ -66,17 +66,31 @@ public class BrowseConfirmServlet extends HttpServlet {
 		//-----------------------//
 		// make a reservation
 		//-----------------------//
-		String free = "N";
+		String free = "N"; // room is not free
+		
+		// convert time to 24-hour format + get the end time
+		TimeConverter tc = new TimeConverter();
+		startTime = tc.convertTimeTo24(startTime);
 		String endTime = DateTimeConverter.addTime(startTime, hourIncrement);
-		String primaryUser = Integer.toString(user.getUserRecordID());
-		// Reservation reservation = new Reservation(primaryUser, secondaryUser, roomsID, currentDate, currentDate, startTime, endTime, hourIncrement, buildingID, free);
+		
+		// user information
+		int primaryUser = user.getUserRecordID();
+		int secondaryUser = 1; // TODO temp for testing
+		
+		// create reservation object to insert in query
+		Reservation reservation = new Reservation(primaryUser, secondaryUser, roomID, currentDate, currentDate, startTime, endTime, hourIncrement, buildingID, free);
+		ReservationInsertQuery riq = new ReservationInsertQuery();
+		riq.doReservationInsert(reservation);
 		
 		// send confirmation email
 		Email email = new Email();
 		String primaryEmail = user.getUserEmail();
 		email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime, endTime, buildingName, roomNumber);
 		
-		
+		// set success message and forwarding URL
+		msg = "You have successfully made a reservation.  "
+				+ "You should receive a confirmation email shortly";
+		url = "user/confirmation.jsp";
 		
 		// set session attributes
 		session.setAttribute("startTime", startTime);

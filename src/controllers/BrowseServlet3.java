@@ -46,12 +46,12 @@ public class BrowseServlet3 extends HttpServlet {
 		int buildingSelected = (Integer) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
-		// loads floor list from db, create dropdown for list, and output as String
+		// loads floor list from database, create dropdown for list, and output as String
 		FloorSelectQuery fsq = new FloorSelectQuery();
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults(floorSelected);
 		
-		// loads rooms from db, query reservation to get availability, outputs string table
+		// loads rooms from database, query reservation to get availability, outputs string table
 		RoomsSelectQuery rsq = new RoomsSelectQuery ();
 		rsq.doRoomRead(buildingSelected, floorSelected);
 		String table = rsq.getRoomsTable();

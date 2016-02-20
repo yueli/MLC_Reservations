@@ -29,7 +29,7 @@
 		        <li class="current-item"><a href="#">Home</a></li>
 		        <li><a href="Browse">Browse</a></li>
 		        <li><a href="#">Search</a></li>
-		        <li><a href="#">View & Cancel Reservations</a></li>
+		        <li><a href="ViewServlet">View & Cancel Reservations</a></li>
 		        <li><a href="#">Check In</a></li>
 		        <li><a href="#">Logout</a></li>
 		    </ul>
@@ -44,6 +44,7 @@
 			<h2>Please Select Floor</h2>
 			<p>${floor}</p>
 		</form>
+		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
 	</body>
 </html>

@@ -235,16 +235,15 @@ public class DateTimeConverter {
 	 * @param hourIncrement
 	 * @return endTime
 	 */
-	public static String addTime(String reserveStartTime, String hourIncrement){
+	public static String addTime(String reserveStartTime, int hourIncrement){
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 		
 		try {
 			// convert start time to date.  Convert increment to integer
 			Date startTime = df.parse(reserveStartTime);
-			int increment = Integer.parseInt(hourIncrement);
 			
 			// convert hour increment to seconds and add it to the start time
-			Date add = new Date(startTime.getTime() + increment *(3600*1000));
+			Date add = new Date(startTime.getTime() + hourIncrement *(3600*1000));
 			
 			// format to get time only
 			String endTime = df.format(add);
@@ -270,7 +269,7 @@ public class DateTimeConverter {
 		System.out.println("Parse date: " + dtc.parseDate());
 		System.out.println("Current Datetime: " + dtc.datetimeStamp());
 		
-		System.out.println("TESTING ADD TIME METHOD: " + DateTimeConverter.addTime("23:00:00", "1"));
+		System.out.println("TESTING ADD TIME METHOD: " + DateTimeConverter.addTime("23:00:00", 1));
 	
 		
 	}

@@ -35,18 +35,13 @@
 		        <li><a href="ViewServlet">View and Cancel Reservations</a></li>
 		        <li><a href="#">Check In</a></li>
 		        <li><a href="#">Logout</a></li>
-		        <li><a href="BanReadServlet">Admin Login</a></li>
-		        
-		        
+		        <li><a href="BanReadServlet">Admin Login</a></li>  
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
-
-		
 		</nav>
-	</body>
 	
 		<form name="Logout" action="LoginController" method="get">
- 		<input type="submit" name = "logout" value="Logout">
+ 			<input type="submit" name = "logout" value="Logout">
  		</form>
- 		
+ 	</body>
 </html>

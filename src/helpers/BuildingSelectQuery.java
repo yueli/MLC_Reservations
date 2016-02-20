@@ -130,6 +130,7 @@ public class BuildingSelectQuery {
 	
 	public String buildingName(int buildingID){
 		String buildingName = "";
+		doBuildingRead();
 		try {
 			while(this.results.next()){
 				Building building = new Building();

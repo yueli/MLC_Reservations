@@ -46,14 +46,17 @@ public class HourCountSelectQuery {
 		int incrementSum = 0;
 	
 		try {
-			boolean resultSet = this.results.next();
-			
-			if(resultSet){ // if result set is empty
-				incrementSum = 0;
-			} else { // if user has a reservation or reservations
-				incrementSum = Integer.parseInt(this.results.getString("incrementSum"));;
+		
+			if (!this.results.next()) {
+				  incrementSum = 0;
+			} else {
+				  //display results
+				  do {
+				    incrementSum = this.results.getInt(1);
+				    return incrementSum;
+				  } while (this.results.next());
 			}
-					
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

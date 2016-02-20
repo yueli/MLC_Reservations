@@ -57,7 +57,7 @@ public class BrowseReserveServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		int userID = user.getUserRecordID();
 		
-		// get the buinding name from ID
+		// get the building name from ID
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		String buildingName = bsq.buildingName(buildingID);
 		
@@ -67,25 +67,36 @@ public class BrowseReserveServlet extends HttpServlet {
 		HourCountSelectQuery hcsq = new HourCountSelectQuery();
 		hcsq.doIncrementRead(userID);
 		int incrementSum = hcsq.incrementResult();
+		System.out.println("PRINT OF THE HOUR INCREMENT SUM: " + incrementSum);
 		
-		// build select
+		// build HTML select
 		String incrementSelect = "<select id='userIncrementSelected' name='userIncrementSelected'>";
 		
-		// set the forwarding url
+		// set message and the forwarding URL
+		String msg = "";
 		String url = "";
 		
-		if (incrementSum == 0){ // 0 = no reservations made
+		if (incrementSum == 0){ 
+			// 0 = no reservations made
 			incrementSelect += "<option value='1'>1</option>";
 			incrementSelect += "<option value='2'>2</option></select>";
 			url = "user/reservation.jsp";
-		} else if (incrementSum == 1){ // only 1 1-hour reservation was made
+			
+		} else if (incrementSum == 1){ 
+			// only 1 1-hour reservation was made
 			incrementSelect += "<option value='1'>1</option></select>";
 			url = "user/reservation.jsp";
-		} else if (incrementSum >= 2){ // either 2 1-hour reservations or 1 2-hour reservation was made
-			// user has at 2 hour max for the day
-			url = "user/home.jsp"; // TODO change this because it shouldn't be this page
-		} else {
 			
+		} else if (incrementSum >= 2){ 
+			// either 2 1-hour reservations or 1 2-hour reservation was made
+			// user has reached 2 hour max for the day
+			msg = "You have exceeded the maximum hours (2) for reservations for today.  "
+					+ "To make a reservation for another time for today, please cancel one of your current reservations first.";
+			url = "user/browse.jsp"; 
+			
+		} else {
+			// I'll fix this later
+			// It works though *shrugs*
 		}
 		
 		// change date into long format
@@ -97,12 +108,13 @@ public class BrowseReserveServlet extends HttpServlet {
 		startTime = tc.convertTimeTo12(startTime);
 		
 		// set session attributes
+		session.setAttribute("msg", msg);
 		session.setAttribute("roomID", roomID);
 		session.setAttribute("startTime", startTime);
 		session.setAttribute("roomNumber", roomNumber);
 		session.setAttribute("currentDate", currentDate);
-		session.setAttribute("currentDate", currentDateLong);
-		session.setAttribute("buidlingID", buildingID);
+		session.setAttribute("currentDateLong", currentDateLong);
+		session.setAttribute("buildingID", buildingID);
 		session.setAttribute("buildingName", buildingName);
 		session.setAttribute("incrementSelect", incrementSelect);
 		
