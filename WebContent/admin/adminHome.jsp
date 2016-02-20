@@ -27,7 +27,7 @@
 		<p>Here are your options:
 			blah blah blah </p>
 			
-		<form name="Logout" action="LoginController" method="get">
+		<form name="Logout" action="AdminLoginController" method="get">
  		<input type="submit" name = "logout" value="Logout">
  		</form>
  		

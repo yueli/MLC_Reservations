@@ -44,12 +44,10 @@ public class AdminLoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doPost(request, response);
-		
 		//User has clicked the logout link
-		//session = request.getSession();
+		session = request.getSession();
 
-/*		//check to make sure we've clicked link
+		//check to make sure we've clicked link
 		if(request.getParameter("logout") !=null){
 
 			//logout and redirect to frontpage
@@ -59,7 +57,7 @@ public class AdminLoginController extends HttpServlet {
 
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);*/
+		dispatcher.forward(request, response);
 	}
 
 	/**
