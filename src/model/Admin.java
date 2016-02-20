@@ -146,7 +146,7 @@ public class Admin {
 	public void setAdminStatus(int adminStatus) {
 		this.adminStatus = adminStatus;
 	}
-
+	
 	/**
 	 * @return the cantBeDeleted
 	 */

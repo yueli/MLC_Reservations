@@ -14,7 +14,7 @@ import java.util.Date;
 
 import org.apache.tomcat.jni.Time;
 
-import model.AdminUser;
+import model.Admin;
 import model.DbConnect;
 import model.Reservation;
 import model.User;
@@ -295,8 +295,8 @@ public class UserHelper {
 	 * Authenticates an admin user 
 	 * @return An admin user object if successful, null if unsuccessful.
 	 */
-	public AdminUser authenticateAdminUser(String myID, String encryptedPass) {
-		AdminUser adminUser = new AdminUser(); //set to null to return null in case not authenticated
+	public Admin authenticateAdminUser(String myID, String encryptedPass) {
+		Admin adminUser = new Admin(); //set to null to return null in case not authenticated
 	
 		boolean valid = false; //assume not valid
 
@@ -348,9 +348,9 @@ public class UserHelper {
 		return false;
 	}
 	
-	public AdminUser getAdminInfo(String myID) {
+	public Admin getAdminInfo(String myID) {
 		
-		AdminUser adminUser = new AdminUser();
+		Admin adminUser = new Admin();
 		
 		String query = "SELECT * FROM tomcatdb.Admin WHERE adminMyID = '" + myID + "' LIMIT 1";
 		
@@ -361,9 +361,9 @@ public class UserHelper {
 			this.results.next();
 			
 			adminUser.setAdminID(results.getInt("adminID"));
-			adminUser.setAdminFirstName(results.getString("fname"));
-			adminUser.setAdminLastName(results.getString("lname"));
-			adminUser.setAdminRole(results.getString("role"));
+			adminUser.setFname(results.getString("fname"));
+			adminUser.setLname(results.getString("lname"));
+			adminUser.setRole(results.getString("role"));
 			adminUser.setAdminStatus(results.getInt("adminStatus"));
 			adminUser.setCantBeDeleted(results.getInt("cantBeDeleted"));
 			

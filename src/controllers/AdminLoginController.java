@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.UserHelper;
-import model.AdminUser;
+import model.Admin;
 import model.PasswordService;
 import model.User;
 
@@ -87,7 +87,7 @@ public class AdminLoginController extends HttpServlet {
 			UserHelper uh = new UserHelper(); 
 			
 			//see if they are UGA affiliated
-			AdminUser loginUser = uh.authenticateAdminUser(username, encryptedPass); //see if the person is UGA affiliated
+			Admin loginUser = uh.authenticateAdminUser(username, encryptedPass); //see if the person is UGA affiliated
 			// the only thing returned in the AdminUser object is their MyID or null
 			
 			//user will come back null if not authenticated and come back w/ data if authenticated
@@ -104,14 +104,18 @@ public class AdminLoginController extends HttpServlet {
 				if (inTable){
 
 					message = "You are an active admin!!"; //for testing
+					System.out.println("Admin Login Controller in if inTable 1 ");	
 					
-					AdminUser adminUser = new AdminUser(); // create the admin user object to pass forward
-					adminUser.setAdminMyID(loginUser.getAdminMyID());				
+					Admin adminUser = new Admin(); // create the admin user object to pass forward
+					adminUser.setAdminMyID(loginUser.getAdminMyID());		
 					
-					//HERE THU NIGHT
+					System.out.println("Admin Login Controller in if inTable 2 ");
+					
 					// get the rest of the data from the Admin (users) table to add to object
 					adminUser = uh.getAdminInfo(adminUser.getAdminMyID());
 								
+					System.out.println("Admin Login Controller in if inTable 3 ");
+					
 					//send to admin home page
 					loginUser = null; //null out values in object since don't want the password to stick around
 					
