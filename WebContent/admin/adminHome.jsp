@@ -14,9 +14,9 @@
 		${message}
 		adminID = ${adminUser.adminID }
 		my id = ${adminUser.adminMyID}
-		first name = ${adminUser.adminFirstName}
-		last name = ${adminUser.adminLastName}
-		role = ${adminUser.adminRole}
+		first name = ${adminUser.fname}
+		last name = ${adminUser.lname}
+		role = ${adminUser.role}
 		status = ${adminUser.adminStatus}
 		can't be deleted = ${adminUser.cantBeDeleted}
 		
