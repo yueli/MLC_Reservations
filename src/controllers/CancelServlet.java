@@ -1,5 +1,3 @@
-/* MLC View Servlet */
-
 package controllers;
 
 import java.io.IOException;
@@ -12,31 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//import org.apache.tomcat.jni.User;
+import helpers.CancelQuery;
+import model.Reservation;
 import model.User;
 
-import helpers.ListUserReservationsQuery;
-
-
 /**
- * Servlet implementation class ViewServlet
+ * Servlet implementation class CancelServlet
  */
-@WebServlet(
-		description = "lists the reservations for a student", 
-		urlPatterns = { 
-				"/ViewServlet", 
-				"/View"
-		})
-public class ViewServlet extends HttpServlet {
+@WebServlet("/CancelServlet")
+public class CancelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session; 
 	private String url;
 
-	//private String MyID;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewServlet() {
+    public CancelServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,8 +35,7 @@ public class ViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		this.doPost(request, response);
+		doPost(request, response);
 	}
 
 	/**
@@ -54,37 +43,26 @@ public class ViewServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String message = " ";
-		String table = "";
-		
 		//get our current session
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
-			
-		ListUserReservationsQuery lurq = new ListUserReservationsQuery();
 		
-		System.out.println("View Servlet: just set up database connection");
+		Reservation reservation = new Reservation();
+		reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
 		
-		//see how many records the student has, and if none, set error message, and if has at least one, 
-		//put reservations found in a table
-
-		table = lurq.ListUserReservations(user.getUserRecordID());
+		//HERE = 02-13-16 SAT NIGHT 12:30am
+		// PUT SOMETHING HERE TO SET FREE to Y/1 FOR THIS RECORD SINCE HAVE THE RESV ID
+		CancelQuery cq = new CancelQuery();
+		cq.cancelReservation(reservation.getReserveID());
 		
-		if (table == "")	{//if table is empty, no records found
-			message="You have no current reservations.";
-			System.out.println("View Servlet: no records found");
-		}
-		else {
-			System.out.println("View Servlet: something in table ");
-			
-		}
-		//session.setAttribute("message", message);
+		// cancel reservation, then go back to the view servlet to get 
+		// the user's reservations to list again
 		
 		//forward our request along
 		request.setAttribute("user", user);
-		request.setAttribute("table", table);
-		request.setAttribute("message", message);
-		url = "user/view.jsp";	
+			
+		url = "ViewServlet";
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}
