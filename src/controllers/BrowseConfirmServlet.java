@@ -90,7 +90,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 		// set success message and forwarding URL
 		msg = "You have successfully made a reservation.  "
 				+ "You should receive a confirmation email shortly";
-		url = "user/confirmation.jsp";
+		url = "user/reservationConfirmation.jsp";
 		
 		// set session attributes
 		session.setAttribute("startTime", startTime);
