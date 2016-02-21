@@ -17,7 +17,7 @@ import helpers.RoomsSelectQuery;
  * @author Brian Olaogun
  * Servlet implementation class BrowseServlet3
  */
-@WebServlet({ "/BrowseServlet3", "/Browse3" })
+@WebServlet({ "/BrowseServlet3", "/Browse3", "/BrowseRooms" })
 public class BrowseServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

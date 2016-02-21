@@ -35,12 +35,12 @@
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
-		<form name="browseForm" action="Browse2" method="post">
+		<form name="browseForm" action="BrowseFloors" method="post">
 			<h2>Please Select Building</h2>
 			<p>${buildings}
 			<input name="enterBuilding" type="submit" value="Enter"></p> 
 		</form>
-		<form name="browseForm2" action="Browse3" method="post">
+		<form name="browseForm2" action="BrowseRooms" method="post">
 			<h2>Please Select Floor</h2>
 			<p>${floor}</p>
 		</form>

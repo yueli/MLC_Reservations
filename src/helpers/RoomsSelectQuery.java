@@ -182,7 +182,7 @@ public class RoomsSelectQuery {
 						// if result set IS empty, then there IS NOT a reservation at that time
 						} else {
 							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='Browse_Reservation' method='post'>";
+							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
 							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
 							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
 							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
@@ -193,6 +193,24 @@ public class RoomsSelectQuery {
 						}
 						
 					}
+					table += "</tr>";
+					table += "</tbody>";
+					table += "</table>";
+					// Key for rooms table
+					table += "<br><br><br>";
+					table += "<table>";
+					table += "<tbody class='room'>";
+					table += "<tr>";
+					table += "<th id='header' COLSPAN=3 ALIGN=CENTER><h3>";
+					table += "Key";
+					table += "</h3></th>";
+					table += "</tr>";
+					table += "</tbody>";
+					table += "<tbody class='subcategory'>";
+					table += "<tr>";
+					table += "<td id='gray'>" + "Time Unavailable" + "</td>";
+					table += "<td id='red'>" + "Time Reserved" + "</td>";
+					table += "<td id='green'>" + "Time Available" + "</td>";
 					table += "</tr>";
 					table += "</tbody>";
 					table += "</table>";

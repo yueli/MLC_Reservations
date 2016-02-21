@@ -20,7 +20,7 @@ import model.User;
 /**
  * Servlet implementation class BrowseConfirmServlet
  */
-@WebServlet({ "/BrowseConfirmServlet", "/BrowseConfirm" })
+@WebServlet({ "/BrowseConfirmation", "/BrowseConfirm" })
 public class BrowseConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
