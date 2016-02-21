@@ -17,7 +17,7 @@ import helpers.FloorSelectQuery;
  * @author Brian Olaogun
  * Servlet implementation class BrowseServlet2
  */
-@WebServlet({ "/BrowseServlet2", "/Browse2" })
+@WebServlet({ "/BrowseServlet2", "/Browse2", "/BrowseFloors" })
 public class BrowseServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

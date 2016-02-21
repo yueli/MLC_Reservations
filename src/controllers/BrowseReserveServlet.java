@@ -20,7 +20,7 @@ import model.User;
  * @author Brian Olaogun
  * Servlet implementation class BrowseReserve
  */
-@WebServlet({ "/BrowseReserve", "/BrowseReservation", "/Reservation", "/Browse_Reservation" })
+@WebServlet({ "/BrowseReserve", "/BrowseReservation" })
 public class BrowseReserveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
