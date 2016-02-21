@@ -1,3 +1,3 @@
 # MLC_Reservations
 
-MIT Capstone Project - MLC Study Room Reservations Website
+MIT Capstone Project - Study Room Reservations Website
