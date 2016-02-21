@@ -125,7 +125,7 @@ public class RoomsSelectQuery {
 						String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
 						int currentHour = Integer.parseInt(currentTime.substring(0, Math.min(currentTime.length(), 2)));
 						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
-						System.out.println("PRINT of CURRENT HOUR: " + currentHour + " PRINT OF TIMEBLOCK HOUR: " + reserveHour);
+						//System.out.println("PRINT of CURRENT HOUR: " + currentHour + " PRINT OF TIMEBLOCK HOUR: " + reserveHour);
 						
 						// if result set IS NOT empty, then there IS a reservation at that time
 						if(!reservation.isEmpty()){
