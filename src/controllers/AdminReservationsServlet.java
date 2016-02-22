@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class AdminReservations
  */
 @WebServlet({ "/AdminReservations", "/admin-reservations" })
-public class AdminReservations extends HttpServlet {
+public class AdminReservationsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminReservations() {
+    public AdminReservationsServlet() {
         super();
 
     }
