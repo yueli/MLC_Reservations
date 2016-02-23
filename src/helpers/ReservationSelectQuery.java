@@ -4,11 +4,11 @@
 package helpers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.DbConnect;
 import model.Reservation;
 
 /**
@@ -25,27 +25,29 @@ public class ReservationSelectQuery {
 	/**
 	 * 
 	 */
-	public ReservationSelectQuery(String dbName, String user, String pwd) {
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
-		
+	public ReservationSelectQuery() {
+
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, user, pwd);
+			// hard coded the connection in DbConnect class
+			this.connection = DbConnect.devCredentials();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 	
 	public void doReservationRead(String currentDate, String time, int roomNumber){
-		String query = "SELECT Reservation.reserveID FROM tomcatdb.Reservation, tomcatdb.Rooms WHERE Reservation.reserveStartDate = '" + currentDate + "'" + "AND ((Reservation.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime AND reserveEndTime)) AND Rooms.roomID = Reservation.Rooms_roomID and Rooms.roomNumber = " + roomNumber;
-
+		String query = "SELECT Reservations.reserveID FROM tomcatdb.Reservations, "
+				+ "tomcatdb.Rooms WHERE Reservations.reserveStartDate = '" + currentDate + "'" + "AND "
+						+ "((Reservations.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime "
+								+ "AND reserveEndTime)) AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = " + roomNumber + " "
+										+ "AND tomcatdb.Reservations.free = 'N'";
+		
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -71,7 +73,6 @@ public class ReservationSelectQuery {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

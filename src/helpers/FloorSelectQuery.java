@@ -4,11 +4,12 @@
 package helpers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import model.DbConnect;
 import model.Rooms;
 
 /**
@@ -20,28 +21,25 @@ public class FloorSelectQuery {
 	private Connection connection;
 	private ResultSet results;
 	
-	public FloorSelectQuery(String dbName, String user, String pwd) {
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
-
+	public FloorSelectQuery() {
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, user, pwd);
+			// hard coded the connection in DbConnect class
+			this.connection = DbConnect.devCredentials();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} 
 		
 	}
 	
-	public void doFloorRead(String building){
-		String query = "SELECT roomFloor FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingName = '" + building + "'" + " GROUP BY roomFloor ORDER BY roomFloor";
+	public void doFloorRead(int building){
+		String query = "SELECT roomFloor FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingID = '" + building + "'" + " GROUP BY roomFloor ORDER BY roomFloor";
 	
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -76,6 +74,18 @@ public class FloorSelectQuery {
 		select += "</select>";
 		
 		return select;
+	}
+	
+	public ArrayList<String> getFloorResultsArray(){
+		ArrayList<String> floor = new ArrayList<String>();;
+			try {
+				while(this.results.next()){
+					floor.add(this.results.getString("roomFloor"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return floor;
 	}
 	
 	public String getFloorResults(String selected){

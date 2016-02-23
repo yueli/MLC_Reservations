@@ -14,9 +14,10 @@ import helpers.BuildingSelectQuery;
 import helpers.FloorSelectQuery;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseServlet2
  */
-@WebServlet({ "/BrowseServlet2", "/Browse2" })
+@WebServlet({ "/BrowseServlet2", "/Browse2", "/BrowseFloors" })
 public class BrowseServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,21 +44,21 @@ public class BrowseServlet2 extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		// get request variables		
-		String buildingSelected = (String) request.getParameter("buildingList");
+		int buildingSelected = Integer.parseInt(request.getParameter("buildingList"));
 		String floorSelected = (String) request.getParameter("floorList");
 		
 		// loads building list from db, create dropdown for list, and output as String
-		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
+		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults(buildingSelected);
 		
 		// loads floor list from db, create dropdown for list, and output as String
-		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
+		FloorSelectQuery fsq = new FloorSelectQuery();
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults();
 		
 		// URL of the view to forward
-		String url = "/student/browse.jsp";
+		String url = "/user/browse.jsp";
 		
 		// set session attribute
 		session.setAttribute("buildings", buildings); 

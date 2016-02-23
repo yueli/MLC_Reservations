@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.BuildingSelectQuery;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseServlet
  */
 @WebServlet(
@@ -46,7 +47,7 @@ public class BrowseServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		// loads building list from db, create dropdown for list, and output as String
-		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
+		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
 		
@@ -54,7 +55,7 @@ public class BrowseServlet extends HttpServlet {
 		session.setAttribute("buildings", buildings);
 		
 		// URL of the view to forward
-		String url = "/student/browse.jsp";
+		String url = "/user/browse.jsp";
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

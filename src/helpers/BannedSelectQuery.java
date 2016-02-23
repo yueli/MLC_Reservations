@@ -1,12 +1,12 @@
 package helpers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.Banned;
+import model.DbConnect;
 
 
 /**
@@ -26,20 +26,18 @@ public class BannedSelectQuery {
 		 * @param user
 		 * @param pwd
 		 */
-		public BannedSelectQuery(String dbName, String user, String pwd) {
-			String url = "jdbc:mysql://localhost:3306/" + dbName;
-			
+		public BannedSelectQuery() {
+	
 			// set up the driver
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
-				this.connection = DriverManager.getConnection(url, user, pwd);
+				// hard coded the connection in DbConnect class
+				this.connection = DbConnect.devCredentials();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			
@@ -77,7 +75,9 @@ public class BannedSelectQuery {
 			try{
 				
 				
-				table += "<tr><td><a href='ban'>Ban Someone</td></tr>";
+				table += "<tr><td><a href='/admin/ban.jsp'>Ban Someone</td>";
+				table += "<td><a href=unbanall><button type='submit' value='Unban All'>Unban</button></a></td></tr>";
+				
 				table += "<tr><td>Ban#</td><td>Student ID</td><td>Admin ID</td><td>Ban Start</td><td>Ban End</td><td>Penalty Count</td><td>Description</td><td>Status</td></tr>";
 				while(results.next()){
 
@@ -92,6 +92,8 @@ public class BannedSelectQuery {
 					ban.setPenaltyCount(results.getInt("penaltyCount"));
 					ban.setDescription(results.getString("description"));
 					ban.setStatus(results.getInt("status"));
+					
+					//show only banned
 					
 					table += "<tr>";
 					
@@ -120,7 +122,8 @@ public class BannedSelectQuery {
 					table += ban.getStatus();
 					table += "</td>";
 					
-					table += "<td><a href=unban?banID=" + ban.getBanID() + ">Unban</a></td>";
+					table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
+	
 					
 					table += "</tr>";
 				}
@@ -131,7 +134,7 @@ public class BannedSelectQuery {
 				//System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
 				
 			}
-			System.out.println(table);
+			
 			return table;
 		}
 		

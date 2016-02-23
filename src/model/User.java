@@ -1,103 +1,87 @@
-//MLC USER MODEL
-
-/**
- * 
- */
 package model;
 
 public class User {
 
-	private int id;
-	private String loginName;
-	private String password;
-	private String userName;
+	private int userRecordID;
+	private String myID;
+	private String userFirstName;
+	private String userLastName;
 	private String userEmail;
+	
 	/**
 	 * 
+	 * @return userRecordID
 	 */
-	public User() {
-		// TODO Auto-generated constructor stub
+	public int getUserRecordID() {
+		return userRecordID;
 	}
-
-	public User(int id, String loginName, String password, String userName, String email) {
-		this.id = id;
-		this.loginName = loginName;
-		this.password = password;
-		this.userName = userName;
-		this.userEmail = email;
+	
+	public void setUserRecordID(int userRecordID) {
+		this.userRecordID = userRecordID;
 	}
-
-
+	
 	/**
-	 * @return the id
+	 * 
+	 * @return myID
 	 */
-	public int getId() {
-		return id;
+	public String getMyID() {
+		return myID;
 	}
-
+	
 	/**
-	 * @param id the id to set
+	 * 
+	 * @param myID
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setMyID(String myID) {
+		this.myID = myID;
 	}
-
+	
 	/**
-	 * @return the loginName
+	 * 
+	 * @return userFirstName
 	 */
-	public String getLoginName() {
-		return loginName;
+	public String getUserFirstName() {
+		return userFirstName;
 	}
-
+	
 	/**
-	 * @param username the username to set
+	 * 
+	 * @param userFirstName
 	 */
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUserFirstName(String userFirstName) {
+		this.userFirstName = userFirstName;
 	}
-
+	
 	/**
-	 * @return the password
+	 * 
+	 * @return userLastName
 	 */
-	public String getPassword() {
-		return password;
+	public String getUserLastName() {
+		return userLastName;
 	}
-
+	
 	/**
-	 * @param password the password to set
+	 * 
+	 * @param userLastName
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserLastName(String userLastName) {
+		this.userLastName = userLastName;
 	}
-
+	
 	/**
-	 * @return the user_name
-	 */
-	public String getUserName() {
-		return userName;
-	}
-
-	/**
-	 * @param user_name the user_name to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-
-	/**
-	 * @return the user_email
+	 * 
+	 * @return userEmail
 	 */
 	public String getUserEmail() {
 		return userEmail;
 	}
-
-	/**
-	 * @param user_email the user_email to set
-	 */
+	
+	 /**
+	  * 
+	  * @param userEmail
+	  */
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
 	
 }
-
