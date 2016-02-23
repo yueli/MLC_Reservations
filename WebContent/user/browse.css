@@ -34,62 +34,86 @@ table th {
 	color: #fff;
 	text-transform: uppercase;
 	font-size: 20px;
-	height: 16px;
 	padding: 0px 0px;
 	text-align: center;
 	border: 1px solid #eee;
 	border-collapse: collapse;
-	overflow: hidden;
-	}	
+	
+	}
 
-.ui-tabs-vertical { 
-	width: 55em; 
-	}
-	
-.ui-tabs-vertical .ui-tabs-nav {
-	padding: .2em .1em .2em .2em; 
-	float: left; 
-	width: 12em; 
-	}
-	
-.ui-tabs-vertical .ui-tabs-nav li { 
-	clear: left; 
-	width: 100%; 
-	border-bottom-width: 1px !important; 
-	border-right-width: 0 !important; 
-	margin: 0 -1px .2em 0; 
+/* FOR HORIZONTAL TABS - Currently in use */
+.ui-tabs {
+	position: relative; /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+	padding: .2em; 
+	height: 10px;
+}
+.ui-tabs .ui-tabs-nav {
+	margin: 0;
+	text-align: center;
+	padding: .2em .2em 0; 
+}
+.ui-tabs .ui-tabs-nav li {
+	/*list-style: none;
+	float: none !important;
+	position: relative;
+	margin: 1px .2em 0 0;
+	border-bottom-width: 0;
+	padding: 0;  */
+	display:inline-block; 
+	list-style: none;
+	color: rgba(249, 249, 249, .9);
+	top: 0;
+	margin: 1px .2em 0 0;
+	white-space: nowrap;
+	/*text-decoration: none;
+	transition: color .5s, background .5s, height .5s;
+	padding: 5px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-top: 1px solid rgba(255, 255, 255, .1);*/
 	background: #333332;
-	}
-	
-.ui-tabs-vertical .ui-tabs-nav li a {
-	display:block; 
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	display:inline-block; 
 	color: rgba(249, 249, 249, .9);
 	text-decoration: none;
 	transition: color .5s, background .5s, height .5s;
 	padding: 15px 30px;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
     border-top: 1px solid rgba(255, 255, 255, .1);
-    text-decoration: none;
 	}
-	
-.ui-tabs-vertical .ui-tabs-nav li a:hover{
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+	/*float: left;*/
+	padding: .5em 1em;
+	padding-bottom: 10px;
+	text-decoration: none;
+}
+.ui-tabs .ui-tabs-nav li a:hover{
     background: #CC0000;
     color: #FFF;
 	}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+	margin-bottom: -1px;
+	padding-bottom: 10px;
 	
-.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { 
-	padding-bottom: 0; 
-	padding-right: .1em; 
-	border-right-width: 1px; 
-	}
-	
-.ui-tabs-vertical .ui-tabs-panel { 
-	padding: 1em; 
-	float: right; 
-	width: 40em;
-	}
-	
-#red {
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,
+.ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor {
+	cursor: text;
+}
+.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
+	cursor: pointer;
+}
+.ui-tabs .ui-tabs-panel {
+	display: block;
+	border-width: 0;
+	padding: 1em 1.4em;
+	background: none;
+}
+
+/* used for table cell colors in browse reservations: */
+#red { /* room reserved at time listed */
 	background: #fbcfd0;
 	color: #999;
  	border: 1px solid #d8d8dd;
@@ -97,7 +121,7 @@ table th {
   	border-collapse: collapse;
 	}
 	
-#gray {
+#gray { /* room unavailable at time listed */
 	background: #c9c9c9;
 	color: #999;
  	border: 1px solid #d8d8dd;
@@ -105,7 +129,7 @@ table th {
   	border-collapse: collapse;
 	}
 
-#green {
+#green { /* room available at time listed */
 	background: #e3f2e0;
 	color: #999;
  	border: 1px solid #d8d8dd;
@@ -125,7 +149,8 @@ table th {
 #green:hover td {
   	color: #555;
 	}
-
+	
+/* CSS FOR RESPONSIVE TABLES */
 @media only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 

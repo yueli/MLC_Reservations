@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="user/browse.css">
 		<link rel="stylesheet" type="text/css" href="user/styles.css">
-		<script src="student/browse.js"></script>
+		<script src="user/browse.js"></script>
 		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
   		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
   		 <script>
@@ -17,10 +17,14 @@
 	  	  		var roomNumber = room;
 	  	  		document.getElementById("fwdReserve" + fwdInt + roomNumber).submit();	
 	  		}
+	  	  	/*
 	  	    $(function() {
 	  	   		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
 	  	    	$( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
-	  	  	});
+	  	  	}); */
+	  	  $(function() {
+	  	    $( "#tabs" ).tabs();
+	  	  });
   		</script>
 	</head>
 	<body>

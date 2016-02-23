@@ -7,6 +7,14 @@
 		<title>Reservations</title>
 	</head>
 	<body>
-		
+		<form name="adminReserveForm" action="BrowseFloors" method="post">
+			<h2>Please Select a Building</h2>
+			<p>${buildings}
+			<input name="enterBuilding" type="submit" value="Enter"></p> 
+		</form>
+		<form name="adminReserveForm2" action="BrowseRooms" method="post">
+			<h2>Floor</h2>
+			<p>${floor}</p>
+		</form>
 	</body>
 </html>

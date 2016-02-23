@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
+import helpers.FloorSelectQuery;
 import model.Admin;
 
 /**
- * Servlet implementation class AdminReservations
+ * Servlet implementation class AdminReservationsServlet2
  */
-@WebServlet({ "/AdminReservations", "/admin-reservations" })
-public class AdminReservationsServlet extends HttpServlet {
+@WebServlet({ "/AdminReservationsServlet2", "/admin-reservations?building" })
+public class AdminReservationsServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminReservationsServlet() {
+    public AdminReservationsServlet2() {
         super();
-
     }
 
 	/**
@@ -56,18 +56,27 @@ public class AdminReservationsServlet extends HttpServlet {
 				     // VIEW FOR ADMIN
 				//---------------------------//
 				
-				// loads building list from database, create dropdown for list, and output as String
+				// get request variables		
+				int buildingSelected = Integer.parseInt(request.getParameter("buildingList"));
+				String floorSelected = (String) request.getParameter("floorList");
+				
+				// loads building list from db, create dropdown for list, and output as String
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				bsq.doBuildingRead();
-				String buildings = bsq.getBuildingResults();
+				String buildings = bsq.getBuildingResults(buildingSelected);
 				
 				
+
 				
 				// forwarding URL
 				url = "admin/reservations.jsp";
 				
-				// set session attributes
-				session.setAttribute("buildings", buildings);
+				// set session attribute
+				session.setAttribute("buildings", buildings); 
+				session.setAttribute("buildingSelected", buildingSelected);
+				session.setAttribute("floorSelected", floorSelected);
+				//session.setAttribute("floor", floor);
+				
 			} else { 
 				//---------------------------//
 				     // VIEW FOR CLERK
