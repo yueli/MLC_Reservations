@@ -6,10 +6,18 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Admin Home</title>
-		<link rel="stylesheet" type="text/css" href="user/styles.css">
+		<link rel="stylesheet" type="text/css" href="global.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+		<script> 
+			$(function() {
+				$("#header").load("header.html"); 
+				$("#footer").load("footer.html"); 
+			});
+		</script> 
 	</head>
 	<body>
-	<h2>MLC Reservations Administration</h2>
+		<div id="header"></div>
+		<h2>MLC Reservations Administration</h2>
 	
 		${message}
 		adminID = ${adminUser.adminID }
@@ -28,10 +36,10 @@
 			blah blah blah </p>
 			
 		<form name="Logout" action="AdminLoginController" method="get">
- 		<input type="submit" name = "logout" value="Logout">
+ 			<input type="submit" name = "logout" value="Logout">
  		</form>
  		
-		
+		<div id="footer"></div>
 	</body>
 
 </html>
