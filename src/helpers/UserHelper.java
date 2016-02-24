@@ -203,8 +203,6 @@ public class UserHelper {
 		
 		
 		//this.numRecords = 0;
-		
-		System.out.println("uh: list user reservations");   
 
 		//get today's date to list the reservations today or later
 		String currentDate = "";	

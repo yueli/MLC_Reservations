@@ -265,6 +265,10 @@ public class ListUserReservationsQuery {
 									// display the check-in button that points to the check-in servlet
 									
 									table += "<td> CHECK IN </td>"; //TODO add ink
+									//table += "<tr><td><form action='?????' method = 'post'>" +
+									//		"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
+									//		"<input type='submit' value='Check In'>" +
+									//		"</form></td>";	
 								
 								}else{
 									table += "<td> *Too late to check in* </td>";
