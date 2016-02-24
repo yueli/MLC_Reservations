@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" class=" js no-touch cssanimations"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Title -->
+        <title>MLC Reservation System</title>
+        <!-- Meta -->
+        
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <!-- Favicon -->
+        <link href="favicon.ico" rel="shortcut icon">
+        <!-- Bootstrap Core CSS -->
+        <link rel="stylesheet" href="assets/css/bootstrap.css">
+        <!-- Template CSS -->
+        <link rel="stylesheet" href="assets/css/animate.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.css">
+        <link rel="stylesheet" href="assets/css/nexus.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <!-- Google Fonts-->
+        <link href="assets/css" rel="stylesheet" type="text/css">
+        <link href="assets/css(1)" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+    <div class="slicknav_menu hidden-lg"><a href="index.html" aria-haspopup="true" tabindex="0" 
+    class="slicknav_btn slicknav_collapsed" style="outline: none;"><span class="slicknav_menutxt">MENU</span>
+    	<span class="slicknav_icon"><span class="slicknav_icon-bar"></span>
+    	<span class="slicknav_icon-bar"></span>
+   		 <span class="slicknav_icon-bar"></span></span></a>
+    	<ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
+                                        <li>
+                                            <a href="index.html" class="fa-home" role="menuitem" tabindex="-1">Home</a>
+                                        </li>
+                                        <li><a href="user/browse.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-coffee">Browse</span>
+                                            </a>
+                                        </li>
+                                        <li class="slicknav_collapsed slicknav_parent"><a href="user/search.js" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-search">Search</span>
+                                            </a>
+                                        </li>
+                                        <li class="slicknav_collapsed slicknav_parent"><a href="user/reservation.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-calendar">View &amp; Cancel Reservations</span>
+                                            </a>
+                                        </li>
+                                        <li class="slicknav_collapsed slicknav_parent"><a href="user/checkin.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-check">Check In</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="user/logout.jsp" class="fa-ban" role="menuitem" tabindex="-1">Logout</a>
+                                        </li>
+                                    </ul></div>
+        <div id="body_bg">
+            <div id="pre_header" class="container">
+                <div class="row margin-top-10 visible-lg">
+                    <div class="col-md-6">
+                        <p>
+                            <strong>Phone:</strong>(706) 542-7000</p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p>
+                            <strong>Address:</strong>48 Baxter Street Building 0081 Athens, GA 30602</p>
+                    </div>
+                </div>
+            </div>
+            <div class="primary-container-group">
+                <!-- Background -->
+                <div class="primary-container-background">
+                    <div class="primary-container"></div>
+                    <div class="clearfix"></div>
+                </div>
+                <!--End Background -->
+                <div class="primary-container">
+                    <div id="header-sticky-wrapper" class="sticky-wrapper" style="height: 85px;"><div id="header" class="container">
+                        <div class="row">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="index.html" title="">
+                                    <img src="assets/img/UGA$!logo.png" alt="Logo">
+                                </a>
+                            </div>
+                            <!-- End Logo -->
+                            
+                        </div>
+                    </div></div>
+                    <!-- Top Menu -->
+                    <div id="hornav-sticky-wrapper" class="sticky-wrapper" style="height: 49px;"><div id="hornav" class="container no-padding">
+                        <div class="row">
+                            <div class="col-md-12 no-padding">
+                                <div class="pull-right visible-lg">
+                                    <ul id="hornavmenu" class="nav navbar-nav">
+                                        <li>
+                                            <a href="index.html">Home</a>
+                                        </li>
+                                        <li>
+                                            <a href="Browse">Browse</a>
+                                        </li>
+                                        <li>
+                                            <a href="search.jsp">Search</a>
+                                        </li>
+                                        <li>
+                                            <a href="ViewServlet">View & Cancel Reservations</a>
+                                        </li>
+                                        <li>
+                                            <a href="checkin.jsp">Check In</a>
+                                        </li>
+                                        <li>
+                                            <a href="logout.jsp">Logout</a>
+                                        </li>
+                                      </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div></div>
+                    <!-- End Top Menu -->
+                    <!-- === END HEADER === -->
+                    <!-- === BEGIN CONTENT === -->
+                    <div id="content">
+                        <div class="container no-padding">
+                            <div class="row">
+                                <!-- Carousel Slideshow -->
+                                <div id="carousel-example" class="carousel slide" data-ride="carousel">
+                                    <!-- Carousel Indicators -->
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example" data-slide-to="0" class=""></li>
+                                        <li data-target="#carousel-example" data-slide-to="1" class="active"></li>
+                                        <li data-target="#carousel-example" data-slide-to="2" class=""></li>
+                                        <li data-target="#carousel-example" data-slide-to="3" class=""></li>
+                                    </ol>
+                                    <div class="clearfix"></div>
+                                    <!-- End Carousel Indicators -->
+                                    <!-- Carousel Images -->
+                                    <div class="carousel-inner">
+                                        <div class="item">
+                                            <img src="assets/img/fillers/mlc1.jpg">
+                                        </div>
+                                        <div class="item active">
+                                            <img src="assets/img/fillers/mlc2.jpg">
+                                        </div>
+                                        <div class="item">
+                                            <img src="assets/img/fillers/mlc3.jpg">
+                                        </div>
+                                        <div class="item">
+                                            <img src="assets/img/fillers/mlc4.jpg">
+                                        </div>
+                                    </div>
+                                    <!-- End Carousel Images -->
+                                    <!--  
+                                    <!-- Carousel Controls -->
+                                    <a class="left carousel-control" href="index.html#carousel-example" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="index.html#carousel-example" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                    <!-- End Carousel Controls -->
+                    
+                                </div>
+                                <!-- End Carousel Slideshow -->
+                            </div>
+                        </div>
+                        <div class="container background-gray-lighter">
+                            <div class="row">
+                                <h2 class="animate fadeIn text-center margin-top-50 animated">Welcome to the UGA Reservation System</h2>
+                                <h4 class="animate fadeIn text-center margin-top-10 animated">Student View</h4>
+                                <hr class="margin-top-15">
+                                <p class="animate fadeIn text-center animated">This website will enable you to reserve a room in the Zell B. Miller Learning Center for study purposes or group meetings.</p>
+                                <p class="text-center animate fadeInUp margin-bottom-50 animated">
+                                    <button type="button" class="btn btn-lg btn-red" href="reservation.jsp">Reserve a Room</button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row margin-vert-30">
+                                <!-- Main Column -->
+                                <div class="col-md-9">
+                                    <img class="visible-lg animate fadeInUp animated" style="bottom: -50px; position: relative; left: 85px; margin-top: -20px;" src="assets/img/mlc_head_terrace_unoccupied.jpg" alt="">
+                                </div>
+                                <!-- End Main Column -->
+                                <!-- Side Column -->
+                                <div class="col-md-3">
+                                    <h3 class="title">Hours</h3>
+                                    <h6 style="margin: 0;">Sunday – Thursday</h6>
+                                    <h4 style="margin: 0;">7:00 am - 11:00 pm</h4>
+                                    <p>
+                                        <small>*Subject to change given holidays or special events</small>
+                                    </p>
+                                    <hr>
+                                    <h6 style="margin: 0;">Saturday</h6>
+                                    <h4 style="margin: 0;">7:00 am - 6:00 pm</h4>
+                                    <p>
+                                        <small>*Subject to change given holidays or special events</small>
+                                    </p>
+                                    <hr>
+                                    <h6 style="margin: 0;">Finals Schedule</h6>
+                                    <h4 style="margin: 0;">24 Hours</h4>
+                                    
+                                    <hr>
+                                    <h6 style="margin: 0;">Spring Break</h6>
+                                    <h4 style="margin: 0;">7:00 am – 5:00 pm</h4>
+                                    
+                                    <hr>
+                                </div>
+                                <!-- End Side Column -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- === END CONTENT === -->
+            <!-- === BEGIN FOOTER === -->
+            <div id="base">
+                <div class="container padding-vert-30 margin-top-40">
+                    <div class="row">
+                        <!-- Helpful Links -->
+                        <div class="col-md-6 margin-bottom-20">
+                            <h3 class="margin-bottom-10">Helpful Links</h3>
+                            <ul class="menu">
+                                <li>
+                                    <a href="http://www.uga.edu/">UGA Main Website</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.mlc.uga.edu/">MLC Website</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.eits.uga.edu/">EITS</a>
+                                </li>
+                                
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- End Helpful Links -->
+                        <!-- Contact Details -->
+                        <div class="col-md-5 margin-bottom-20">
+                            <h3 class="margin-bottom-10">Contact</h3>
+                            <p>
+                                <span class="fa-phone">Telephone:</span>(706) 542-7000<br>
+                                <span class="fa-envelope">Email:</span>
+                                <a href="mailto:mlc@uga.edu">mlc@uga.edu</a>
+                                <br>
+                                <span class="fa-link">Website:</span>
+                                <a href="http://www.mlc.uga.edu/">www.mlc.uga.edu</a>
+                            </p>
+                            <p>Zell B. Miller Learning Center<br>48 Baxter Street<br>Building 0081<br>Athens, GA 30602</p>
+                        </div>
+                        <!-- End Contact Details -->
+                      
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Menu -->
+            <div id="footer">
+                <div class="container">
+                    <div class="row">
+                        <div id="copyright" class="col-md-4">
+                            <p>(c) 2016 Zell B. Miller Learning Center</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- End Footer Menu -->
+            <!-- JS -->
+            <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+            <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="assets/js/scripts.js"></script>
+            <!-- Isotope - Portfolio Sorting -->
+            <script type="text/javascript" src="assets/js/jquery.isotope.js"></script>
+            <!-- Mobile Menu - Slicknav -->
+            <script type="text/javascript" src="assets/js/jquery.slicknav.js"></script>
+            <!-- Animate on Scroll-->
+            <script type="text/javascript" src="assets/js/jquery.visible.js" charset="utf-8"></script>
+            <!-- Sticky Div -->
+            <script type="text/javascript" src="assets/js/jquery.sticky.js" charset="utf-8"></script>
+            <!-- Slimbox2-->
+            <script type="text/javascript" src="assets/js/slimbox2.js" charset="utf-8"></script>
+            <!-- Modernizr -->
+            <script src="assets/js/modernizr.custom.js" type="text/javascript"></script>
+            <!-- End JS -->
+    
+
+<!-- === END FOOTER === --></div><div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="file:///Users/victoria.chambers/Downloads/enlighten/HTML/index.html#"></a><a id="lbNextLink" href="file:///Users/victoria.chambers/Downloads/enlighten/HTML/index.html#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="file:///Users/victoria.chambers/Downloads/enlighten/HTML/index.html#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>
