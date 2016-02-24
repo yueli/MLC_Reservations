@@ -44,9 +44,11 @@ public class RoomsSelectQuery {
 		}
 		
 		
-		public void doRoomRead(String building, String floor){
+		public void doRoomRead(int building, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
-			String query = "SELECT roomNumber FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingName = '" + building + "'" + " AND tomcatdb.Rooms.roomStatus = 1 AND tomcatdb.Rooms.roomFloor = '" + floor + "'" + " ORDER BY roomNumber";
+			String query = "SELECT roomID, roomNumber FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = "
+					+ "tomcatdb.Building.buildingID AND tomcatdb.Building.buildingID = '" + building + "'" + " AND tomcatdb.Rooms.roomStatus = 1 "
+							+ "AND tomcatdb.Rooms.roomFloor = '" + floor + "'" + " ORDER BY roomNumber";
 
 			// securely run query
 			try {
@@ -54,7 +56,7 @@ public class RoomsSelectQuery {
 				this.results = ps.executeQuery();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
+				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement: " + query);
 			} 
 		}
 		
@@ -67,12 +69,11 @@ public class RoomsSelectQuery {
 			
 			// Create an HTML table
 			String table = "";
-			//table += "<table border=1>";
 			
 			table += "<div id='tabs'>";
 			table += "<ul>";
 			
-			int h = 0;
+			int h = 0; // used for jQuery tabs creation
 			try {
 				while(this.results.next()){
 					Rooms rooms = new Rooms();
@@ -88,16 +89,16 @@ public class RoomsSelectQuery {
 			table += "</ul>";
 			// Class to convert 24 hour time to 12 hour
 			TimeConverter tc = new TimeConverter();
-			int j = 0;
+			int j = 0; // used for jQuery tabs creation
 			try {
 				while(this.results.next()){
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
+					room.setRoomID(this.results.getInt("roomID")); // TODO
 					room.setRoomNumber(this.results.getInt("roomNumber"));
 					
 					// display results in a table
 					table += "<div id='tabs-" + j + "'" + ">";
-					
 					table += "<table border=1>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
@@ -120,13 +121,26 @@ public class RoomsSelectQuery {
 						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
 						
-						// check to see if result set is empty
+						// used for hour comparison
+						String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+						int currentHour = Integer.parseInt(currentTime.substring(0, Math.min(currentTime.length(), 2)));
+						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
+						//System.out.println("PRINT of CURRENT HOUR: " + currentHour + " PRINT OF TIMEBLOCK HOUR: " + reserveHour);
+						
+						// if result set IS NOT empty, then there IS a reservation at that time
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
+						// compare the current hour with the hour of the reservation
+						// user can only make a reservation for current hour and beyond for the day
+						} else if (reserveHour < currentHour){
+							table += "<td id='gray'>";
+							table += tc.convertTimeTo12(timeBlock[i]);
+						// if result set IS empty, then there IS NOT a reservation at that time
 						} else {
 							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='Browse_Reservation' method='post'>";
+							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
 							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
 							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
 							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
@@ -150,13 +164,26 @@ public class RoomsSelectQuery {
 						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
 						
-						// check to see if result set is empty
+						// used for hour comparison
+						String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+						int currentHour = Integer.parseInt(currentTime.substring(0, Math.min(currentTime.length(), 2)));
+						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
+						//System.out.println("@PRINT of CURRENT HOUR: " + currentHour + " PRINT OF TIMEBLOCK HOUR: " + reserveHour);
+						
+						// if result set IS NOT empty, then there IS a reservation at that time
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
+						// compare the current hour with the hour of the reservation
+						// user can only make a reservation for current hour and beyond for the day
+						}else if (reserveHour < currentHour){
+							table += "<td id='gray'>";
+							table += tc.convertTimeTo12(timeBlock[i]);
+						// if result set IS empty, then there IS NOT a reservation at that time
 						} else {
 							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='Browse_Reservation' method='post'>";
+							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
 							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
 							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
 							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
@@ -169,13 +196,30 @@ public class RoomsSelectQuery {
 					table += "</tr>";
 					table += "</tbody>";
 					table += "</table>";
+					// Key for rooms table
+					table += "<br><br><br>";
+					table += "<table>";
+					table += "<tbody class='room'>";
+					table += "<tr>";
+					table += "<th id='header' COLSPAN=3 ALIGN=CENTER><h3>";
+					table += "Key";
+					table += "</h3></th>";
+					table += "</tr>";
+					table += "</tbody>";
+					table += "<tbody class='subcategory'>";
+					table += "<tr>";
+					table += "<td id='gray'>" + "Time Unavailable" + "</td>";
+					table += "<td id='red'>" + "Time Reserved" + "</td>";
+					table += "<td id='green'>" + "Time Available" + "</td>";
+					table += "</tr>";
+					table += "</tbody>";
+					table += "</table>";
 					table += "</div>";
-					j++;
+					j++; // used for jQuery tabs creation
 				}	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			//table += "</table>";
 			table += "</div>";
 			return table;
 		}

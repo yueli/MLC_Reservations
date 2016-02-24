@@ -6,23 +6,29 @@
 	String message = (String) request.getAttribute("message");
 %> 
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" type="text/css" href="WEB-INF/global.css">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>View Reservations Home Page</title>
-</head>
-<body>
-
-<h1>View Home Page</h1>
-<h2>Reservations for: 
-	${user.userFirstName} 
-	${user.userLastName}
-</h2>
-	<%= message %>
-	<%= table %>
-	
-	
-</body>
+	<head>
+		<link rel="stylesheet" type="text/css" href="WEB-INF/global.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>View Reservations Home Page</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+		<script> 
+			$(function() {
+				$("#header").load("header.html"); 
+				$("#footer").load("footer.html"); 
+			});
+		</script> 
+	</head>
+	<body>
+		<div id="header"></div>
+		<h1>View Home Page</h1>
+		<h2>Reservations for: 
+			${user.userFirstName} 
+			${user.userLastName}
+		</h2>
+			<%= message %>
+			<%= table %>
+		<div id="footer"></div>
+	</body>
 </html>

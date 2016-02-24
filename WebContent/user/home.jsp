@@ -6,22 +6,17 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Home</title>
-		<link rel="stylesheet" type="text/css" href="user/styles.css">
-		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
-	  	<script type="text/javascript" src="jquery/jquery-ui.js"></script>
-	  	<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
-		<script type="text/javascript">
-		(document).ready(function() {
-		    ('.toggle-nav').click(function(e) {
-		        (this).toggleClass('active');
-		        ('.menu ul').toggleClass('active');
-		 
-		        e.preventDefault();
-		    });
-		});
-		</script>
+		<link rel="stylesheet" type="text/css" href="global.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+		<script> 
+			$(function() {
+				$("#header").load("header.html"); 
+				$("#footer").load("footer.html"); 
+			});
+		</script> 
 	</head>
 	<body>
+	<div id="header"></div>
 	<h2>Welcome, 
 	${user.userFirstName}
 	${user.userLastName},
@@ -37,17 +32,13 @@
 		        <li><a href="#">Logout</a></li>
 		        <li><a href="BanReadServlet">Admin Login</a></li>
 		        <li><a href="BuildingListServlet">Building Login</a></li>
-		        
-		        
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
-
-		
 		</nav>
-	</body>
 	
 		<form name="Logout" action="LoginController" method="get">
- 		<input type="submit" name = "logout" value="Logout">
+ 			<input type="submit" name = "logout" value="Logout">
  		</form>
- 		
+ 		<div id="footer"></div>
+ 	</body>
 </html>

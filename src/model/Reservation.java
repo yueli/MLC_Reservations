@@ -10,38 +10,37 @@ package model;
 public class Reservation {
 	// Fields
 	private int reserveID;
-	private User primaryUser;
-	private User secondaryUser;
-	private Admin adminID;
-	private Rooms roomsID;
+	private int primaryUser;
+	private int secondaryUser;
+	private int adminID;
+	private int roomsID;
 	private String reserveStartDate;
 	private String reserveEndDate;
 	private String reserveStartTime;
 	private String reserveEndTime;
 	private int hourIncrement;
-	private int adminReserve;
 	private String reserveName;
-	private Building buidlingID;
-	private Schedule scheduleID;
+	private int buildingID;
+	private String free;
 	
 	// Constructors 
 	/**
 	 * No parameter constructor
 	 */
 	public Reservation() {
-		this.primaryUser = null;
-		this.secondaryUser = null;
-		this.adminID = null;
-		this.roomsID = null;
+		this.primaryUser = 0;
+		this.secondaryUser = 0;
+		this.adminID = 0;
+		this.roomsID = 0;
 		this.reserveStartDate = null;
 		this.reserveEndDate = null;
 		this.reserveStartTime = null;
 		this.reserveEndTime = null;
 		this.hourIncrement = 0;
-		this.adminReserve = 0;
 		this.reserveName = null;
-		this.buidlingID = null;
-		this.scheduleID = null;
+		this.buildingID = 0;
+		this.free = null;
+		
 	}
 	
 	/**
@@ -53,10 +52,11 @@ public class Reservation {
 	 * @param reserveEndDate
 	 * @param reserveStartTime
 	 * @param hourIncrement
-	 * @param adminReserve
+	 * @param buildingID
+	 * @param free
 	 */
-	public Reservation(User primaryUser, User secondaryUser, Rooms roomsID, String reserveStartDate,
-			String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement, int adminReserve) {
+	public Reservation(int primaryUser, int secondaryUser, int roomsID, String reserveStartDate,
+			String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement, int buildingID, String free) {
 		this.primaryUser = primaryUser;
 		this.secondaryUser = secondaryUser;
 		this.roomsID = roomsID;
@@ -65,7 +65,8 @@ public class Reservation {
 		this.reserveStartTime = reserveStartTime;
 		this.reserveEndTime = reserveEndTime;
 		this.hourIncrement = hourIncrement;
-		this.adminReserve = adminReserve;
+		this.buildingID = buildingID;
+		this.free = free;
 	}
 	
 	/**
@@ -78,14 +79,12 @@ public class Reservation {
 	 * @param reserveEndDate
 	 * @param reserveStartTime
 	 * @param hourIncrement
-	 * @param adminReserve
 	 * @param reserveName
-	 * @param buidlingID
-	 * @param scheduleID
+	 * @param buildingID
 	 */
-	public Reservation(User primaryUser, User secondaryUser, Admin adminID, Rooms roomsID,
+	public Reservation(int primaryUser, int secondaryUser, int adminID, int roomsID,
 			String reserveStartDate, String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement,
-			int adminReserve, String reserveName, Building buidlingID, Schedule scheduleID) {
+			String reserveName, int buildingID, String free) {
 		this.primaryUser = primaryUser;
 		this.secondaryUser = secondaryUser;
 		this.adminID = adminID;
@@ -95,10 +94,10 @@ public class Reservation {
 		this.reserveStartTime = reserveStartTime;
 		this.reserveEndTime = reserveEndTime;
 		this.hourIncrement = hourIncrement;
-		this.adminReserve = adminReserve;
 		this.reserveName = reserveName;
-		this.buidlingID = buidlingID;
-		this.scheduleID = scheduleID;
+		this.buildingID = buildingID;
+		this.free = free;
+		
 	}
 
 	// Accessors and Mutators
@@ -120,56 +119,56 @@ public class Reservation {
 	/**
 	 * @return the primaryUser
 	 */
-	public User getPrimaryUser() {
+	public int getPrimaryUser() {
 		return primaryUser;
 	}
 
 	/**
 	 * @param primaryUser the primaryUser to set
 	 */
-	public void setPrimaryUser(User primaryUser) {
+	public void setPrimaryUser(int primaryUser) {
 		this.primaryUser = primaryUser;
 	}
 
 	/**
 	 * @return the secondaryUser
 	 */
-	public User getSecondaryUser() {
+	public int getSecondaryUser() {
 		return secondaryUser;
 	}
 
 	/**
 	 * @param secondaryUser the secondaryUser to set
 	 */
-	public void setSecondaryUser(User secondaryUser) {
+	public void setSecondaryUser(int secondaryUser) {
 		this.secondaryUser = secondaryUser;
 	}
 
 	/**
 	 * @return the adminID
 	 */
-	public Admin getAdminID() {
+	public int getAdminID() {
 		return adminID;
 	}
 
 	/**
 	 * @param adminID the adminID to set
 	 */
-	public void setAdminID(Admin adminID) {
+	public void setAdminID(int adminID) {
 		this.adminID = adminID;
 	}
 
 	/**
 	 * @return the roomsID
 	 */
-	public Rooms getRoomsID() {
+	public int getRoomsID() {
 		return roomsID;
 	}
 
 	/**
 	 * @param roomsID the roomsID to set
 	 */
-	public void setRoomsID(Rooms roomsID) {
+	public void setRoomsID(int roomsID) {
 		this.roomsID = roomsID;
 	}
 
@@ -244,20 +243,6 @@ public class Reservation {
 	}
 
 	/**
-	 * @return the adminReserve
-	 */
-	public int getAdminReserve() {
-		return adminReserve;
-	}
-
-	/**
-	 * @param adminReserve the adminReserve to set
-	 */
-	public void setAdminReserve(int adminReserve) {
-		this.adminReserve = adminReserve;
-	}
-
-	/**
 	 * @return the reserveName
 	 */
 	public String getReserveName() {
@@ -272,32 +257,32 @@ public class Reservation {
 	}
 
 	/**
-	 * @return the buidlingID
+	 * @return the buildingID
 	 */
-	public Building getBuidlingID() {
-		return buidlingID;
+	public int getbuildingID() {
+		return buildingID;
 	}
 
 	/**
-	 * @param buidlingID the buidlingID to set
+	 * @param buildingID the buildingID to set
 	 */
-	public void setBuidlingID(Building buidlingID) {
-		this.buidlingID = buidlingID;
+	public void setbuildingID(int buildingID) {
+		this.buildingID = buildingID;
 	}
 
 	/**
-	 * @return the scheduleID
+	 * @return the free
 	 */
-	public Schedule getScheduleID() {
-		return scheduleID;
+	public String getFree() {
+		return free;
 	}
 
 	/**
-	 * @param scheduleID the scheduleID to set
+	 * @param free the free to set
 	 */
-	public void setScheduleID(Schedule scheduleID) {
-		this.scheduleID = scheduleID;
+	public void setFree(String free) {
+		this.free = free;
 	}
-	
+
 	
 }
