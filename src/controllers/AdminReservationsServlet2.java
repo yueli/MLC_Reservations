@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
-import helpers.FloorSelectQuery;
 import model.Admin;
 
 /**
@@ -58,7 +57,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				
 				// get request variables		
 				int buildingSelected = Integer.parseInt(request.getParameter("buildingList"));
-				String floorSelected = (String) request.getParameter("floorList");
+				//String floorSelected = (String) request.getParameter("floorList");
 				
 				// loads building list from db, create dropdown for list, and output as String
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -74,7 +73,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				// set session attribute
 				session.setAttribute("buildings", buildings); 
 				session.setAttribute("buildingSelected", buildingSelected);
-				session.setAttribute("floorSelected", floorSelected);
+				//session.setAttribute("floorSelected", floorSelected);
 				//session.setAttribute("floor", floor);
 				
 			} else { 
