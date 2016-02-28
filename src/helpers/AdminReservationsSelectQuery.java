@@ -42,7 +42,7 @@ public class AdminReservationsSelectQuery {
 	 * @param currentDate
 	 * @param time
 	 */
-	public void doReservationRead(String currentDate, String time){
+	public void doReservationRead(String currentDate){
 		
 		// The query below pulls shows the primary & secondary's myID
 		// TODO add the current date / date range of current date - 2 weeks from current date.
