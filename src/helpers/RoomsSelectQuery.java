@@ -102,9 +102,7 @@ public class RoomsSelectQuery {
 					table += "<table border=1>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th id='header' COLSPAN=12 ALIGN=CENTER><h3>";
-					table += room.getRoomNumber();
-					table += "</h3></th>";
+					table += "<th COLSPAN=12 ALIGN=CENTER>" + room.getRoomNumber() + "</th>";
 					table += "</tr>";
 					table += "</tbody>";
 					
@@ -200,7 +198,7 @@ public class RoomsSelectQuery {
 					table += "<table>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th id='header' COLSPAN=3 ALIGN=CENTER><h3>";
+					table += "<th COLSPAN=3 ALIGN=CENTER><h3>";
 					table += "Key";
 					table += "</h3></th>";
 					table += "</tr>";

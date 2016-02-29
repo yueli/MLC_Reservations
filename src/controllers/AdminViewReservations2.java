@@ -54,7 +54,7 @@ public class AdminViewReservations2 extends HttpServlet {
 		
 		// query building
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
-		bsq.doBuildingRead();
+		bsq.doAdminBuildingRead();
 		String buildings = bsq.getBuildingResults(bldg);
 		
 		// query reservations

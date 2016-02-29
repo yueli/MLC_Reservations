@@ -22,11 +22,14 @@
 	  	   		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
 	  	    	$( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
 	  	  	}); */
-	  	  $(function() {
-	  	    $( "#tabs" ).tabs();
-	  		$("#header").load("header.html"); 
-	  		$("#footer").load("footer.html"); 
-	  	});
+	  
+		  	  $(function() {
+			  		$("#header").load("header.html"); 
+			  		$("#footer").load("footer.html"); 
+			  	});
+		  	  $(function() {
+			  	    $( "#tabs" ).tabs();
+			  	});
   		</script>
 	</head>
 	<body>
@@ -43,7 +46,7 @@
 		</form>
 		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
-		<br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		<div id="footer"></div>
 	</body>
 </html>

@@ -60,12 +60,13 @@ public class AdminViewReservations extends HttpServlet {
 		if (inputtedDate != null){
 			currentDate = inputtedDate;
 		}
+		
 		// Transform current date for display
 		String currentDateLong = dtc.convertDateLong(currentDate);
 		
 		// query building
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
-		bsq.doBuildingRead();
+		bsq.doAdminBuildingRead();
 		String buildings = bsq.getBuildingResults(bldg);
 		
 		// query reservations

@@ -125,7 +125,7 @@ public class AdminReservationsSelectQuery {
 		String table = "";
 		try {
 			table += "<table border=1>";
-			table += "<thead>";
+			table += "<tbody class='room'>";
 			table += "<tr>";
 			table += "<th ALIGN=CENTER>MyID </th>";
 			table += "<th ALIGN=CENTER>First</th>";
@@ -137,7 +137,7 @@ public class AdminReservationsSelectQuery {
 			table += "<th ALIGN=CENTER>End Time</th>";
 			table += "<th ALIGN=CENTER>Hours</th>";
 			table += "</tr>";
-			table += "</thead>";
+			table += "</tbody>";
 			table += "<tbody>";
 			while(this.results2.next()){
 				Admin admin = new Admin();
@@ -180,7 +180,7 @@ public class AdminReservationsSelectQuery {
 		String table = "";
 		try {
 			table += "<table border=1>";
-			table += "<thead>";
+			table += "<tbody class='room'>";
 			table += "<tr>";
 			table += "<th ALIGN=CENTER>Primary </th>";
 			table += "<th ALIGN=CENTER>Secondary</th>";
@@ -190,7 +190,7 @@ public class AdminReservationsSelectQuery {
 			table += "<th ALIGN=CENTER>End Time</th>";
 			table += "<th ALIGN=CENTER>Hours</th>";
 			table += "</tr>";
-			table += "</thead>";
+			table += "</tbody";
 			table += "<tbody>";
 			while(this.results.next()){
 				User primary = new User();
