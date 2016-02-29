@@ -52,7 +52,7 @@ public class AdminReservationsSelectQuery {
 	 * @param currentDate
 	 * @param time
 	 */
-	public void doUserReservationRead(String currentDate){
+	public void doUserReservationRead(int buildingID, String currentDate){
 		
 		// The query below pulls shows the primary & secondary's myID
 		// TODO add the current date / date range of current date - 2 weeks from current date.
@@ -65,7 +65,7 @@ public class AdminReservationsSelectQuery {
 				+ "tomcatdb.Reservations.reserveEndTime, "
 				+ "tomcatdb.Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.User AS a, tomcatdb.User AS b "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = 1 "
+				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = '" + buildingID + "' "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.primaryUser = a.userID "
 				+ "AND tomcatdb.Reservations.secondaryUser = b.userID "
@@ -79,12 +79,13 @@ public class AdminReservationsSelectQuery {
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			this.results = ps.executeQuery();
+			System.out.println("User Query: " + query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in AdminReservationsSelectQuery.java: doUserReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
-	public void doAdminReservationRead(String currentDate){
+	public void doAdminReservationRead(int buildingID, String currentDate){
 		
 		// The query below pulls shows the primary & secondary's myID
 		// TODO add the current date / date range of current date - 2 weeks from current date.
@@ -99,10 +100,10 @@ public class AdminReservationsSelectQuery {
 				+ "tomcatdb.Reservations.reserveEndTime, "
 				+ "tomcatdb.Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.Admin "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = 1 "
+				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = '" + buildingID + "' "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.Admin_adminID = tomcatdb.Admin.adminID "
-				+ "AND tomcatdb.Reservations.reserveStartDate = curdate() "
+				+ "AND tomcatdb.Reservations.reserveStartDate = '" + currentDate + "' "
 				+ "ORDER BY tomcatdb.Rooms.roomNumber, "
 				+ "tomcatdb.Reservations.reserveStartDate, "
 				+ "tomcatdb.Reservations.reserveStartTime DESC";
@@ -110,6 +111,7 @@ public class AdminReservationsSelectQuery {
 		try {
 			PreparedStatement ps = this.connection2.prepareStatement(query);
 			this.results2 = ps.executeQuery();
+			System.out.println("Admin Query: " + query);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in AdminReservationsSelectQuery.java: doAdminReservationRead method. Please check connection or SQL statement: " + query);

@@ -15,17 +15,16 @@ import helpers.BuildingSelectQuery;
 import model.DateTimeConverter;
 
 /**
- * Servlet implementation class AdminViewReservations
- * 
+ * Servlet implementation class AdminViewReservations2
  */
-@WebServlet({ "/AdminViewReservations", "/view-reservations" })
-public class AdminViewReservations extends HttpServlet {
+@WebServlet({ "/AdminViewReservations2", "/view-reservations?building?date" })
+public class AdminViewReservations2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminViewReservations() {
+    public AdminViewReservations2() {
         super();
     }
 
@@ -41,26 +40,16 @@ public class AdminViewReservations extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String buildingList = request.getParameter("buildingList");
-		
-		// set building & check if building is selected by user
-		int bldg = 1;
-		if (buildingList != null){ // if selected, get value & transform into integer
-			bldg = Integer.parseInt(buildingList);
-		}
-		System.out.println(bldg);
-		
-		// get the current date
-		DateTimeConverter dtc = new DateTimeConverter();
-		String currentDate = dtc.parseDate(dtc.datetimeStamp());
-		System.out.println(currentDate);
-		
-		// get the inputed date
+		// get session variables
+		int bldg = (Integer) session.getAttribute("bldg");
+		String currentDate = (String) session.getAttribute("currentDate");
 		String inputtedDate = request.getParameter("datepicker");
+		
 		if (inputtedDate != null){
 			currentDate = inputtedDate;
 		}
-		// Transform current date for display
+		// transform date into long format for displaying
+		DateTimeConverter dtc = new DateTimeConverter();
 		String currentDateLong = dtc.convertDateLong(currentDate);
 		
 		// query building
@@ -90,6 +79,7 @@ public class AdminViewReservations extends HttpServlet {
 		// forward the URL
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+		
 	}
 
 }

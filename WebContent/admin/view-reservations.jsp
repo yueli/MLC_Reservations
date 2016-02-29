@@ -42,16 +42,16 @@
 		<div id="header"></div>
 			<br><br><br><br><br>
 			<div id="search-container">
-				<form name="adminViewForm" action="" method="post">
+				<form name="adminViewForm" action="view-reservations?building?date" method="post">
 					<p>Building ${buildings}<input name="enterBuilding" type="submit" value="Enter"></p>
 				</form>
-				<form name="adminViewForm2" action="" method="post">
-					<p>Date <input type="text" id="datepicker"><input name="dateSort" type="submit" value="Enter"></p>
+				<form name="adminViewForm2" action="view-reservations?building?date" method="post">
+					<p>Date <input type="text" name="datepicker" id="datepicker"><input name="dateSort" type="submit" value="Enter"></p>
 				</form>
 			</div>
-			<h2>Admin Reservations</h2>
+			<h2>Admin Reservations for ${currentDateLong}</h2>
 			<p>${adminReservations}</p>
-			<h2>Student Reservations</h2>
+			<h2>Student Reservations for ${currentDateLong}</h2>
 			<p>${userReservations}</p>
 			<br><br><br><br>
 		<div id="footer"></div>
