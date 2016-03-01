@@ -55,7 +55,6 @@ public class UserHelper {
 	 */
 	public User authenticateUser(String myID, String encryptedPass) {
 		User su = new User(); //set to null to return null in case not authenticated
-		//su = null; ///GINGER HERE UNCOMMENTED THIS
 		
 		System.out.println("UserHelper: authentication myID = " + myID); //MyID the student logged in with
 		
@@ -78,8 +77,9 @@ public class UserHelper {
 		String studentUserLastName = "Nix";
 		String userEmail = "ganix@uga.edu";
 		
-		System.out.println("UserHelper: auth userMyID = " + studentUserMyID);
-		
+		studentUserMyID = myID;
+		System.out.println("UserHelper: studetUserMyID= " + studentUserMyID);
+			
 		//if true, set user object info and return login user data
 		if (valid){
 			//User su = new User(); //GINGER UNCOMMENTED THIS
@@ -90,7 +90,7 @@ public class UserHelper {
 			su.setUserEmail(userEmail);	
 			System.out.println("UserHelper: auth in valid if userMyID = " + studentUserMyID);
 		}		
-		System.out.println("UserHelper: auth su = " + su);
+
 		return su; //will be null if user wasn't valid
 	}
 	
@@ -174,29 +174,35 @@ public class UserHelper {
 		
 	}
 	
-	
+//--------------------------------------------------------------------	
 	public int getRecordID(String myID){
 		int recordID = 0;
-		String query = "SELECT userID FROM tomcatdb.User WHERE myID = '" + myID + "'";
+		String query = "SELECT userID FROM tomcatdb.User WHERE myID = '" + myID + "' LIMIT 1";
+		System.out.println("UserHelper: myID = " + myID);
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 	
-			ps.executeQuery();
-			System.out.println("Success in UserHelper.java: get record ID method. Query = " + query);
+			this.results = ps.executeQuery();
+			
+			this.results.next();
 			
 			recordID = results.getInt("userID");
+			System.out.println("Success in UserHelper.java: get record ID method. Query = " + query);
+			
 
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		System.out.println("***Error in UserHelper.java: get record ID method. Query = " + query);
-			}
+			System.out.println("***Error in UserHelper.java: get record ID method. Query = " + query);
+		}
 		
 		return recordID;
 		
 	}
 	
-
+	//--------------------------------------------------------------------	
+	
 	//WRITE THIS TO QUERY Reservations TABLE AND RETURN NUM RECDS FOUND
 	// this method is called to get the number of records a user has
 	public int getNumberRecords(int userRecordID){
