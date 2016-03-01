@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Reservation Confirmation</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+<<<<<<< HEAD
 	<script> 
 
 	$(function() {
@@ -16,6 +17,17 @@
 	</head>
 	<body>
 	<div id="header"></div>
+=======
+		<script> 
+			$(function() {
+				$("#header").load("header.html"); 
+				$("#footer").load("footer.html"); 
+			});
+		</script>
+	</head>
+	<body>
+		<div id="header"></div>
+>>>>>>> origin/master
 		<nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
@@ -27,6 +39,7 @@
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
+		
 		<p>${msg}</p>
 		<div id="footer"></div>
 	</body>

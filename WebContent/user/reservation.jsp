@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Student Reservation</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+<<<<<<< HEAD
 <script> 
 
 	$(function() {
@@ -18,6 +19,18 @@
 	<div id="header" style="z-index:1;"></div>
 	<div class="clearfix"></div>
 	<!-- <nav class="menu">
+=======
+		<script> 
+			$(function() {
+				$("#header").load("header.html"); 
+				$("#footer").load("footer.html"); 
+			});
+		</script> 
+	</head>
+	<body>
+		<div id="header"></div>
+		<nav class="menu">
+>>>>>>> origin/master
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
 		        <li><a href="Browse">Browse</a></li>
@@ -48,10 +61,13 @@
 				<input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
 			</form>
 		</div>	
+<<<<<<< HEAD
 		</div>
 		</div>
 		<div class="clearfix"></div>
 		
+=======
+>>>>>>> origin/master
 		<div id="footer"></div>
 	</body>
 </html>
