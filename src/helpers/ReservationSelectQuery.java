@@ -54,7 +54,7 @@ public class ReservationSelectQuery {
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
+			System.out.println("Error in ReservationSelectQuery.java: doReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
 	

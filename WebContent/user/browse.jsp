@@ -7,8 +7,8 @@
 		<title>Browse</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="user/browse.css">
-		<link rel="stylesheet" type="text/css" href="user/styles.css">
 		<script src="user/browse.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
   		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
   		 <script>
@@ -24,10 +24,22 @@
 	  	  	}); */
 	  	  $(function() {
 	  	    $( "#tabs" ).tabs();
-	  	  });
+	  		$("#header").load("header.html"); 
+	  		$("#footer").load("footer.html"); 
+	  	});
   		</script>
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+<script> 
+
+	$(function() {
+		$("#header").load("userheader.html"); 
+		$("#footer").load("footer.html"); 
+	});
+</script> 
 	</head>
 	<body>
+<<<<<<< HEAD
+	<div id="header"></div>
 		<nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
@@ -39,6 +51,9 @@
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
+=======
+		<div id="header"></div>
+>>>>>>> origin/master
 		<form name="browseForm" action="BrowseFloors" method="post">
 			<h2>Please Select Building</h2>
 			<p>${buildings}
@@ -50,5 +65,6 @@
 		</form>
 		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
+		<div id="footer"></div>
 	</body>
 </html>
