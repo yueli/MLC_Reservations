@@ -26,8 +26,17 @@
 	  	    $( "#tabs" ).tabs();
 	  	  });
   		</script>
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+<script> 
+
+	$(function() {
+		$("#header").load("userheader.html"); 
+		$("#footer").load("footer.html"); 
+	});
+</script> 
 	</head>
 	<body>
+	<div id="header"></div>
 		<nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
@@ -50,5 +59,6 @@
 		</form>
 		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
+		<div id="footer"></div>
 	</body>
 </html>
