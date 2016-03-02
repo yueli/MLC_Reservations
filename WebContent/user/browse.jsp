@@ -9,8 +9,9 @@
 		<link rel="stylesheet" type="text/css" href="user/browse.css">
 		<script src="user/browse.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
-	 		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
+		<!-- script type="text/javascript" src="jquery/jquery-1.10.2.js"></script-->
+	 	<!-- script type="text/javascript" src="jquery/jquery-ui.js"></script -->
+	 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	 		 <script>
 	  	  	function submitform(i, room) {
 	  	  		var fwdInt = i;
