@@ -7,15 +7,15 @@
 		<title>Reservation Confirmation</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
-			$(function() {
-				$("#header").load("header.html"); 
-				$("#footer").load("footer.html"); 
-			});
-		</script>
+		$(function() {
+			$("#header").load("./userheader.html"); 
+			$("#footer").load("../footer.html"); 
+		});
+		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
-		<nav class="menu">
+	<div id="header"></div>
+		<!--  nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
 		        <li><a href="Browse">Browse</a></li>
@@ -25,8 +25,7 @@
 		        <li><a href="#">Logout</a></li>
 		    </ul>
 		    <a class="toggle-nav" href="#">&#9776;</a>
-		</nav>
-		
+		</nav-->	
 		<p>${msg}</p>
 		<div id="footer"></div>
 	</body>

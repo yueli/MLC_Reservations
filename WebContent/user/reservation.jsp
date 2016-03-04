@@ -7,15 +7,17 @@
 		<title>Student Reservation</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
+		
 			$(function() {
-				$("#header").load("header.html"); 
-				$("#footer").load("footer.html"); 
+				$("#header").load("./userheader.html"); 
+				$("#footer").load("../footer.html"); 
 			});
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
-		<nav class="menu">
+	<div id="header" style="z-index:1;"></div>
+	<div class="clearfix"></div>
+	<!-- <nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
 		        <li><a href="Browse">Browse</a></li>
@@ -24,8 +26,10 @@
 		        <li><a href="#">Check In</a></li>
 		        <li><a href="#">Logout</a></li>
 		    </ul>
-		    <a class="toggle-nav" href="#">&#9776;</a>
-		</nav>
+		    <a class="toggle-nav" href="#">&#9776;</a> 
+		</nav> -->
+		<div id="container margin-vert-60" style="z-index:1;" >
+		<div class="row text-center">
 		<div id="reservation_div">	
 			<form name="browse_reservation" id ="browse_reservation" action="BrowseConfirmation" method="post">
 				<p>Please fill out additional information below to make a reservation</p>
@@ -40,9 +44,12 @@
 				<p>Reservation Length: ${incrementSelect}</p>
 				<p>Please enter email of secondary person:<br>
 				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
-				<input type="submit" value="Make Reservation">
+				<input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
 			</form>
 		</div>	
+		</div>
+		</div>
+		<div class="clearfix"></div>
 		<div id="footer"></div>
 	</body>
 </html>
