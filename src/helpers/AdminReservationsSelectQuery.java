@@ -12,6 +12,7 @@ import model.Admin;
 import model.DateTimeConverter;
 import model.DbConnect;
 import model.Reservation;
+import model.Rooms;
 import model.TimeConverter;
 import model.User;
 
@@ -104,7 +105,7 @@ public class AdminReservationsSelectQuery {
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.Admin_adminID = tomcatdb.Admin.adminID "
 				+ "AND tomcatdb.Reservations.reserveStartDate = '" + currentDate + "' "
-				+ "ORDER BY tomcatdb.Rooms.roomNumber, "
+				+ "ORDER BY tomcatdb.Rooms.roomNumber ASC, "
 				+ "tomcatdb.Reservations.reserveStartDate, "
 				+ "tomcatdb.Reservations.reserveStartTime DESC";
 		// securely run query
@@ -127,6 +128,7 @@ public class AdminReservationsSelectQuery {
 			table += "<table border=1>";
 			table += "<tbody class='room'>";
 			table += "<tr>";
+			table += "<th ALIGN=CENTER>Room Number </th>";
 			table += "<th ALIGN=CENTER>MyID </th>";
 			table += "<th ALIGN=CENTER>First</th>";
 			table += "<th ALIGN=CENTER>Last</th>";
@@ -142,20 +144,25 @@ public class AdminReservationsSelectQuery {
 			while(this.results2.next()){
 				Admin admin = new Admin();
 				Reservation reservation = new Reservation();
+				Rooms room = new Rooms();
 				
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
 				
+
 				admin.setAdminMyID(this.results2.getString("adminMyID"));
 				admin.setFname(this.results2.getString("fname"));
 				admin.setLname(this.results2.getString("lname"));
 				reservation.setReserveName(this.results2.getString("reserveName"));
+				room.setRoomNumber(Integer.parseInt(this.results2.getString("roomNumber")));
 				reservation.setReserveStartDate(this.results2.getString("reserveStartDate"));
 				reservation.setReserveEndDate(this.results2.getString("reserveEndDate"));
 				reservation.setReserveStartTime(this.results2.getString("reserveStartTime"));
 				reservation.setReserveEndTime(this.results2.getString("reserveEndTime"));
 				reservation.setHourIncrement(this.results2.getInt("hourIncrement"));
+				
 				table += "<tr>";
+				table += "<td>" + room.getRoomNumber() + "</td>";
 				table += "<td>" + admin.getAdminMyID() + "</td>";
 				table += "<td>" + admin.getFname() + "</td>";
 				table += "<td>" + admin.getLname() + "</td>";
@@ -179,27 +186,31 @@ public class AdminReservationsSelectQuery {
 	public String doUserReservationResults(){
 		String table = "";
 		try {
-			table += "<table border=1>";
-			table += "<tbody class='room'>";
+			table += "<table id='user-table' class='display'>";
+			table += "<thead>";
 			table += "<tr>";
-			table += "<th ALIGN=CENTER>Primary </th>";
-			table += "<th ALIGN=CENTER>Secondary</th>";
-			table += "<th ALIGN=CENTER>Start Date</th>";
-			table += "<th ALIGN=CENTER>End Date</th>";
-			table += "<th ALIGN=CENTER>Start Time</th>";
-			table += "<th ALIGN=CENTER>End Time</th>";
-			table += "<th ALIGN=CENTER>Hours</th>";
+			table += "<th>Room Number </th>";
+			table += "<th>Primary </th>";
+			table += "<th>Secondary</th>";
+			table += "<th>Start Date</th>";
+			table += "<th>End Date</th>";
+			table += "<th>Start Time</th>";
+			table += "<th>End Time</th>";
+			table += "<th>Hours</th>";
 			table += "</tr>";
-			table += "</tbody";
+			table += "</thead";
 			table += "<tbody>";
+			int j = 0;
 			while(this.results.next()){
 				User primary = new User();
 				User secondary = new User();
 				Reservation reservation = new Reservation();
+				Rooms room = new Rooms();
 				
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
 				
+				room.setRoomNumber(Integer.parseInt(this.results.getString("roomNumber")));
 				primary.setMyID(this.results.getString("primary"));
 				secondary.setMyID(this.results.getString("secondary"));
 				reservation.setReserveStartDate(this.results.getString("reserveStartDate"));
@@ -207,7 +218,9 @@ public class AdminReservationsSelectQuery {
 				reservation.setReserveStartTime(this.results.getString("reserveStartTime"));
 				reservation.setReserveEndTime(this.results.getString("reserveEndTime"));
 				reservation.setHourIncrement(this.results.getInt("hourIncrement"));
+				
 				table += "<tr>";
+				table += "<td>" + room.getRoomNumber() + "</td>";
 				table += "<td>" + primary.getMyID() + "</td>";
 				table += "<td>" + secondary.getMyID() + "</td>";
 				table += "<td>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
@@ -216,9 +229,12 @@ public class AdminReservationsSelectQuery {
 				table += "<td>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
 				table += "<td>" + reservation.getHourIncrement() + "</td>";
 				table += "</tr>";
+				j++;
 			} this.results.beforeFirst(); 
 			table += "</tbody>";
 			table += "</table>";
+			table += "<div class='pagination pagination-centered'></div>";
+			table += "<div class='paging'></div>";
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
