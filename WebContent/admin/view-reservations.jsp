@@ -21,17 +21,21 @@
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
         
 		<script> 
+			// used to load header and footer html
 			$(function() {
 				$("#header").load("user/userheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
+			// jQuery for datepicker plugin
 			$(function() {
 			    $( "#datepicker" ).datepicker({ minDate: -1, maxDate: +14, dateFormat: "yy-mm-dd" });
 			 });
-			// jQuery for Datatable plugin
+			// jQuery for Datatable plugin for pagination
 			$(document).ready( function () {
-    			$('#user-table').DataTable();
+				$('table.display').DataTable();
+  
 			});
+		
 			
 		</script> 
 	</head>
@@ -46,12 +50,14 @@
 					<p>Date <input type="text" name="datepicker" id="datepicker"><input name="dateSort" type="submit" value="Enter"></p>
 				</form>
 			</div>
+			<div>
 			<h2>Admin Reservations for ${currentDateLong}</h2>
 			<p>${adminReservations}</p>
+			</div>
 			<h2>Student Reservations for ${currentDateLong}</h2>
 			<p>${userReservations}</p>
 			<br><br><br><br>
 		
-		<!-- div id="footer"></div-->
+		<!--  div id="footer"></div-->
 	</body>
 </html>

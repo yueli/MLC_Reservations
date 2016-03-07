@@ -125,21 +125,21 @@ public class AdminReservationsSelectQuery {
 	public String doAdminReservationResults(){
 		String table = "";
 		try {
-			table += "<table border=1>";
-			table += "<tbody class='room'>";
+			table += "<table id='' class='display'>";
+			table += "<thead>";
 			table += "<tr>";
-			table += "<th ALIGN=CENTER>Room Number </th>";
-			table += "<th ALIGN=CENTER>MyID </th>";
-			table += "<th ALIGN=CENTER>First</th>";
-			table += "<th ALIGN=CENTER>Last</th>";
-			table += "<th ALIGN=CENTER>Reserve Name</th>";
-			table += "<th ALIGN=CENTER>Start Date</th>";
-			table += "<th ALIGN=CENTER>End Date</th>";
-			table += "<th ALIGN=CENTER>Start Time</th>";
-			table += "<th ALIGN=CENTER>End Time</th>";
-			table += "<th ALIGN=CENTER>Hours</th>";
+			table += "<th>Room Number </th>";
+			table += "<th>MyID </th>";
+			table += "<th>First</th>";
+			table += "<th>Last</th>";
+			table += "<th>Reserve Name</th>";
+			table += "<th>Start Date</th>";
+			table += "<th>End Date</th>";
+			table += "<th>Start Time</th>";
+			table += "<th>End Time</th>";
+			table += "<th>Hours</th>";
 			table += "</tr>";
-			table += "</tbody>";
+			table += "</thead>";
 			table += "<tbody>";
 			while(this.results2.next()){
 				Admin admin = new Admin();
@@ -163,14 +163,14 @@ public class AdminReservationsSelectQuery {
 				
 				table += "<tr>";
 				table += "<td>" + room.getRoomNumber() + "</td>";
-				table += "<td>" + admin.getAdminMyID() + "</td>";
-				table += "<td>" + admin.getFname() + "</td>";
-				table += "<td>" + admin.getLname() + "</td>";
-				table += "<td>" + reservation.getReserveName() + "</td>";
+				table += "<td data-search='" + admin.getAdminID() + "'>" + admin.getAdminMyID() + "</td>";
+				table += "<td data-search='" + admin.getFname() + "'>" + admin.getFname() + "</td>";
+				table += "<td data-search='" + admin.getLname() + "'>" + admin.getLname() + "</td>";
+				table += "<td data-search='" + reservation.getReserveName() + "'>" + reservation.getReserveName() + "</td>";
 				table += "<td>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
 				table += "<td>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
-				table += "<td>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
-				table += "<td>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
+				table += "<td data-order='" + reservation.getReserveStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
+				table += "<td data-order='" + reservation.getReserveEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
 				table += "<td>" + reservation.getHourIncrement() + "</td>";
 				table += "</tr>";
 			} this.results2.beforeFirst();
@@ -179,14 +179,14 @@ public class AdminReservationsSelectQuery {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-		
+		System.out.println(table);
 		return table;
 	}
 	// TODO fix result set for admin
 	public String doUserReservationResults(){
 		String table = "";
 		try {
-			table += "<table id='user-table' class='display'>";
+			table += "<table id='' class='display'>";
 			table += "<thead>";
 			table += "<tr>";
 			table += "<th>Room Number </th>";
@@ -198,15 +198,18 @@ public class AdminReservationsSelectQuery {
 			table += "<th>End Time</th>";
 			table += "<th>Hours</th>";
 			table += "</tr>";
-			table += "</thead";
+			table += "</thead>";
 			table += "<tbody>";
-			int j = 0;
+			
 			while(this.results.next()){
 				User primary = new User();
 				User secondary = new User();
 				Reservation reservation = new Reservation();
 				Rooms room = new Rooms();
 				
+				// used to format date
+				// being used to convert time from 24-hour to 12-hour
+				// used to convert date from yyyy-MM-dd to Month day, year format.
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
 				
@@ -220,21 +223,19 @@ public class AdminReservationsSelectQuery {
 				reservation.setHourIncrement(this.results.getInt("hourIncrement"));
 				
 				table += "<tr>";
-				table += "<td>" + room.getRoomNumber() + "</td>";
-				table += "<td>" + primary.getMyID() + "</td>";
-				table += "<td>" + secondary.getMyID() + "</td>";
-				table += "<td>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
-				table += "<td>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
-				table += "<td>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
-				table += "<td>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
+				table += "<td data-search='" + room.getRoomNumber() + "'>" + room.getRoomNumber() + "</td>";
+				table += "<td data-search='" + primary.getMyID() + "'>" + primary.getMyID() + "</td>";
+				table += "<td data-search='" + secondary.getMyID() + "'>" + secondary.getMyID() + "</td>";
+				table += "<td data-search='" + reservation.getReserveStartDate()+ "'>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
+				table += "<td data-search='" + reservation.getReserveEndDate() + "'>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
+				table += "<td data-order='" + reservation.getReserveStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
+				table += "<td data-order='" + reservation.getReserveEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
 				table += "<td>" + reservation.getHourIncrement() + "</td>";
 				table += "</tr>";
-				j++;
+			
 			} this.results.beforeFirst(); 
 			table += "</tbody>";
 			table += "</table>";
-			table += "<div class='pagination pagination-centered'></div>";
-			table += "<div class='paging'></div>";
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
