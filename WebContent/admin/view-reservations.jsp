@@ -7,7 +7,7 @@
 		<title>Reservations</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-		<script type="text/javascript" charset="utf8" src="jquery/DataTables/datatables.js"></script>
+		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
 		
 		<!-- Meta -->
         
@@ -18,7 +18,7 @@
         <!-- Template CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="user/browse.css">
- 		<link rel="stylesheet" type="text/css" href="jquery/DataTables/datatables.css">
+ 		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
         
 		<script> 
 			$(function() {
