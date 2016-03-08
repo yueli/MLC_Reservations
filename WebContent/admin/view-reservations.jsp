@@ -40,7 +40,7 @@
 		</script> 
 	</head>
 	<body>
-		<!--  div id="header"></div-->
+		<div id="header"></div>
 			<br><br><br><br><br>
 			<div id="search-container">
 				<form name="adminViewForm" action="view-reservations?building?date" method="post">
@@ -58,6 +58,6 @@
 			<p>${userReservations}</p>
 			<br><br><br><br>
 		
-		<!--  div id="footer"></div-->
+		<div id="footer"></div>
 	</body>
 </html>
