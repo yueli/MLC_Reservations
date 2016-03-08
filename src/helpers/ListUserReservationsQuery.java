@@ -63,13 +63,13 @@ public class ListUserReservationsQuery {
 		// and the room info for the reservation
 		// and the date is today or later (will have to deal with time later)
 		
-		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
-						+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
-						+ "AND Rooms.Building_buildingID = Building.buildingID "
-						+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservations.free = 'N' "
-						+ " AND Reservations.reserveStartDate >= '" + currentDate + "'"
-						+ " ORDER BY reserveStartDate, reserveStartTime";
+		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building"
+					+ " WHERE Reservations.Rooms_roomID = Rooms.roomID"
+					+ " AND Rooms.Building_buildingID = Building.buildingID"
+					+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
+					+ " AND Reservations.free = 'N' "
+					+ " AND Reservations.reserveStartDate >= '" + currentDate + "'"
+					+ " ORDER BY reserveStartDate, reserveStartTime";
 
 	
 		System.out.println("list user resv list user resv query " + query);
@@ -224,10 +224,11 @@ public class ListUserReservationsQuery {
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								
 								//TAKE THIS OUT AFTER TESTING !!!!!
-								currentMinuteInt = 2; //!!!!!!!!!!!
+								//currentMinuteInt = 2; //!!!!!!!!!!!
 										
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
+								// if this is the first time around, print out the table headers
 								if (firstTime){
 
 									table = "<table>";
@@ -342,6 +343,8 @@ public class ListUserReservationsQuery {
 		return table;	// may return records or an empty table
 	}
 	
+	
+	// CHANGE THIS!!! WRONG!!!!
 	public String GetUserReservation(int resv_id, int userRecdID){
 		String table = "";
 		

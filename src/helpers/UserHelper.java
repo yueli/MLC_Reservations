@@ -96,24 +96,30 @@ public class UserHelper {
 	
 	public boolean inUserTable(String myID){
 		
-		
 		System.out.println("UserHelper inUserTable: myID = " + myID);
 		
-		String query = "SELECT * from tomcatdb.User WHERE myID = myID";
+		String query = "SELECT * from tomcatdb.User WHERE myID = '" + myID + "' LIMIT 1";
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 
 			this.results = ps.executeQuery();
-			if (this.results.next()) {//the myID is already being used
+			
+
+			boolean results = this.results.next();
+			System.out.println("User Helper: in user table: results found " + results + " query = " + query);
+			
+			if (results) {//the myID is in the user table
+				System.out.println("User Helper: in user table: results found TRUE");
 				return true;
 			}else{
+				System.out.println("User Helper: in user table: results found FALSE");
 				return false;
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("****Error in UserHelper.java: inStudentTable method. Query = " + query);
+			System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
 		}
 		
 		return false;

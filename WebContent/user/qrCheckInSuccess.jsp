@@ -4,17 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>QR Confirmation</title>
+<title>QR Reservation Check In Success</title>
 </head>
 <body>
 
-<h3>QR Confirmation</h3>
-<p>Are you sure you want
-Building: <b><%= request.getParameter("building") %></b> <br />
-Floor: <b><%= request.getParameter("floor") %></b><br />
-Room: <b><%= request.getParameter("room") %></b><br />
+<h3>QR Reservation Check In Success</h3>
 
-Building: <% session.getAttribute("building"); %>
+<p> ${message}</p>
+
 
 </body>
 </html>
