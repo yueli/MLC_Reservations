@@ -43,46 +43,58 @@ public class BuildingListQuery {
 			} 
 			
 		}
-		
+		// table has ben rec in another sch that nw has access to
+		// f.aid has updated refs to the new location.
+		// moved from main nw sch as a way to
+		// limit the # direct edit tables to narrow down the crashing issues nw has experienced.
 		
 
 		public void doRead(){
 
-			String query = "SELECT building.buildingID, building.buildingName, building.buildingStatus, building.buildingCalName, building.buildingCalUrl, building.Admin_adminID FROM building";
+			String query = "SELECT building.buildingID, "
+					+ "building.buildingName, "
+					+ "building.buildingStatus, "
+					+ "building.buildingCalName, "
+					+ "building.buildingCalUrl, "
+					+ "building.Admin_adminID "
+					+ "FROM building";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
-				results = ps.executeQuery();
-				
-				
-				
-			
-				
+				this.results = ps.executeQuery();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
+				System.out.println("Error in BuildingListQuery.java: doRoom method. Please check connection or SQL statement: " + query);
 			} 
 		}
 		
 		
 		
 		public String getHTMLTable(){ 
-			//Return table of banned students
+			//Return table of buildings
 			
-			String table = "<table>";
-			
-		
-			try{
-				
-				
-				table += "<tr><u><a href='buildingform'>Add Building Form</a></u></tr>";
-				
-				table += "<tr><td>Building ID#</td><td>Building Name</td><td>Building Status</td><td>Building Cal Name</td><td>Building Cal URL</td></tr>";
+			String table = "";
+				  
+			try {
+				table += "<table id='' class='display'>";
+				table += "<thead>"
+						+ "<tr>"
+						+ "<th>Building ID#</th>"
+						+ "<th>Building Name</th>"
+						+ "<th>Building Status</th>"
+						+ "<th>Building Cal Name</th>"
+						+ "<th>Building Cal URL</th>"
+						+ "<th></th>"
+						+ "<th></th>"
+						+ "<th></th>"
+						+ "</tr>"
+						+ "</thead>"
+						+ "<tbody>";
 				while(results.next()){
 
 					
-					
+					String status = "";
 					Building building = new Building();
 					
 					building.setBuildingID(results.getInt("buildingID"));
@@ -93,20 +105,22 @@ public class BuildingListQuery {
 					//building.setAdmin(results.getString("admin"));
 					
 		
-		
-					
-					//show only banned
-					
+					// html table for building list
 					table += "<tr>";
-					
-					table += "<td>";
+					table += "<td data-order='" + building.getBuildingID() + "'>";
 					table += building.getBuildingID();
 					table += "</td>";
-					table += "<td>";
+					table += "<td data-search='" + building.getBuildingName() + "'>";
 					table += building.getBuildingName();
 					table += "</td>";
-					table += "<td>";
-					table += building.getBuildingStatus();
+					if (building.getBuildingStatus() == 1){
+						status = "Online";
+					} else {
+						status = "Offline";
+					}	
+					table += "<td data-filter='" + status + "'>";
+					//table += building.getBuildingStatus();
+					table += status;
 					table += "</td>";
 					table += "<td>";
 					table += building.getBuildingCalName();
@@ -117,20 +131,17 @@ public class BuildingListQuery {
 					table += "<td>";
 					table += "admin?";
 					table += "</td>";
-	
-	
 					
-					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button type='submit' value='Edit'>Edit</button></a></td>";
-	
+					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button type='submit' value='Edit'>Edit Building</button></a></td>";
+					table += "<td><a href=schedule?buildingID=" + building.getBuildingID() + "> <button type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
 					
 					table += "</tr>";
 				}
-				table+="</table>";
+				table += "</tbody>";
+				table += "</table>";
 			}
 			catch(SQLException e) {
-				e.printStackTrace();
-				//System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
-				
+				e.printStackTrace();	
 			}
 			
 			return table;
