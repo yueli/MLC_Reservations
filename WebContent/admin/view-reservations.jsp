@@ -35,8 +35,6 @@
 				$('table.display').DataTable();
   
 			});
-		
-			
 		</script> 
 	</head>
 	<body>

@@ -133,7 +133,7 @@ public class BuildingListQuery {
 					table += "</td>";
 					
 					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button type='submit' value='Edit'>Edit Building</button></a></td>";
-					table += "<td><a href=schedule?buildingID=" + building.getBuildingID() + "> <button type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
+					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
 					
 					table += "</tr>";
 				}
