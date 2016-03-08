@@ -14,6 +14,7 @@ public class Building {
 	private String buildingCalName;
 	private String buildingCalUrl;
 	private Admin admin = new Admin();
+	private String buildingQRName; //Ginger added this for QR checking in - needed on the url sent to QR login to check reservation
 	
 	/**
 	 * 
@@ -153,6 +154,14 @@ public class Building {
 	 */
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
+	}
+
+	public String getBuildingQRName() {
+		return buildingQRName;
+	}
+
+	public void setBuildingQRName(String buildingQRName) {
+		this.buildingQRName = buildingQRName;
 	}
 	
 }
