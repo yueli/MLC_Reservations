@@ -19,7 +19,7 @@ import helpers.BuildingSelectQuery;
 @WebServlet({ "/AdminScheduleEditServlet", "/Schedule" })
 public class AdminScheduleEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    HttpSession session;
+    private HttpSession session;
     /**
      * @see HttpServlet#HttpServlet()
      */

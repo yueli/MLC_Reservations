@@ -40,7 +40,8 @@ public class AdminScheduleSelectQuery {
 	}
 	
 	public void doRead(String buildingID){
-		String query = "SELECT tomcatdb.Building.buildingName, "
+		String query = "SELECT tomcatdb.Schedule.scheduleID, "
+				+ "tomcatdb.Building.buildingName, "
 				+ "tomcatdb.Building.buildingID, "
 				+ "tomcatdb.Schedule.startDate, "
 				+ "tomcatdb.Schedule.endDate, "
@@ -50,7 +51,8 @@ public class AdminScheduleSelectQuery {
 				+ "tomcatdb.Schedule.createdBy "
 				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
 				+ "WHERE tomcatdb.Schedule.Building_buildingID = tomcatdb.Building.buildingID "
-				+ "AND tomcatdb.Schedule.Building_buildingID ='" + buildingID + "'";
+				+ "AND tomcatdb.Schedule.Building_buildingID ='" + buildingID + "' "
+				+ "ORDER BY tomcatdb.Schedule.startDate DESC";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -65,7 +67,7 @@ public class AdminScheduleSelectQuery {
 	public String listSchedule(){
 		String table = "";
 		try {
-			table += "<table id='' class='display'>";
+			table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 			table += "<thead>";
 			table += "<tr>";
 			table += "<th></th>";
@@ -75,6 +77,7 @@ public class AdminScheduleSelectQuery {
 			table += "<th>End Time</th>";
 			table += "<th>Summary</th>";
 			table += "<th>Created By</th>";
+			table += "<th></th>";
 			table += "</tr>";
 			table += "</thead>";
 			table += "<tbody>";
@@ -82,6 +85,7 @@ public class AdminScheduleSelectQuery {
 			while (this.results.next()){
 				// place query results in schedule and building objects
 				Schedule schedule = new Schedule();
+				schedule.setScheduleID(this.results.getInt("scheduleID"));
 				schedule.setBuildingID(this.results.getInt("buildingID"));
 				schedule.setStartDate(this.results.getString("startDate"));
 				schedule.setEndDate(this.results.getString("endDate"));
@@ -105,6 +109,19 @@ public class AdminScheduleSelectQuery {
 				table += "<td data-order='" + schedule.getEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(schedule.getEndTime()) + "</td>";
 				table += "<td data-search='" + schedule.getSummary() + "'>" + schedule.getSummary() + "</td>";
 				table += "<td data-search='" + schedule.getCreatedBy() + "'>" + schedule.getCreatedBy() + "</td>";
+				table += "<td>";
+				table += "<form name='schedule' id='schedule" + j + "' action='schedule-edit' method='post'>";
+				table += "<input type='hidden' name='scheduleID' value='" + schedule.getScheduleID() + "'>";
+				table += "<input type='hidden' name='buildingName' value='" + building.getBuildingName() + "'>";
+				table += "<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>";
+				table += "<input type='hidden' name='startTime' value='" + schedule.getStartTime() + "'>";
+				table += "<input type='hidden' name='endTime' value='" + schedule.getEndTime() + "'>";
+				table += "<input type='hidden' name='startDate' value='" + schedule.getStartDate() + "'>";
+				table += "<input type='hidden' name='endDate' value='" + schedule.getEndDate() + "'>";
+				table += "<input type='hidden' name='summary' value='" + schedule.getSummary() + "'>";
+				table += "<input type='hidden' name='createdBy' value='" + schedule.getCreatedBy() + "'>";
+				table += "<input type='submit' value='Edit'>";
+				table += "</td>";
 				table += "</tr>";
 				j++;
 			}

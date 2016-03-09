@@ -19,7 +19,7 @@
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="user/browse.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
-        
+        <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js">
 		<script> 
 			// used to load header and footer html
 			$(function() {

@@ -8,7 +8,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
-		
+		<script type="text/javascript" charset="utf8" src="jquery/DataTables/dataTables.material.js"></script>
 		<!-- Meta -->
         
         <meta name="description" content="">
@@ -19,7 +19,8 @@
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="user/browse.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
-        
+        <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.material.css">
+		
 		<script> 
 			// used to load header and footer html
 			$(function() {
@@ -48,14 +49,23 @@
 			});
 			// jQuery for Datatable plugin for pagination, sort, and search
 			$(document).ready( function () {
-				$('table.display').DataTable();
+				$('table.mdl-data-table').DataTable( {
+					columnDefs: [
+				             {
+				                 targets: [ 0, 1, 2 ],
+				                 className: 'mdl-data-table__cell--non-numeric'
+				             }
+				         ]
+				});
 			});
 		</script> 
 	</head>
 	<body>
 		<div id="header"></div>
 		<form name="BuildingSelect" action="Schedule" method="post">
-			<p>${buildings}<input name="enterBuilding" type="submit" value="Enter"></p>
+			<p>${buildings}
+			<label for="from">From </label><input type="text" id="from" name="from"><label for="to">To</label><input type="text" id="to" name="to">
+			<input name="enterBuilding" type="submit" value="Enter"></p>
 		</form>
 		<p>${schedule}</p>
 		<div id="footer"></div>
