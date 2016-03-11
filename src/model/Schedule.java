@@ -20,6 +20,17 @@ public class Schedule {
 	public Schedule(){
 		
 	}
+	
+	public Schedule(int scheduleID, String startDate, String endDate,
+			String startTime, String endTime, String summary, String createdBy){
+		this.scheduleID = scheduleID;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.summary = summary;
+		this.createdBy = createdBy;
+	}
 
 	/**
 	 * @return the scheduleID

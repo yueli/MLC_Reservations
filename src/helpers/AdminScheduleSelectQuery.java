@@ -39,23 +39,54 @@ public class AdminScheduleSelectQuery {
 		}
 	}
 	
-	public void doRead(String buildingID){
+	public void doRead(String buildingID, String to, String from){
+		DateTimeConverter dtc = new DateTimeConverter();
+		String currentDate = dtc.parseDate(dtc.datetimeStamp());
+		
 		String query = "SELECT tomcatdb.Schedule.scheduleID, "
 				+ "tomcatdb.Building.buildingName, "
 				+ "tomcatdb.Building.buildingID, "
 				+ "tomcatdb.Schedule.startDate, "
 				+ "tomcatdb.Schedule.endDate, "
-				+ "tomcatdb.Schedule.startTime, "
+				+ "tomcatdb.Schedule.startTime, " 
 				+ "tomcatdb.Schedule.endTime, "
 				+ "tomcatdb.Schedule.summary, "
 				+ "tomcatdb.Schedule.createdBy "
 				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
 				+ "WHERE tomcatdb.Schedule.Building_buildingID = tomcatdb.Building.buildingID "
-				+ "AND tomcatdb.Schedule.Building_buildingID ='" + buildingID + "' "
-				+ "ORDER BY tomcatdb.Schedule.startDate DESC";
+				+ "AND tomcatdb.Schedule.Building_buildingID = '" + buildingID + "' ";
+		
+		// if both a to and from value is entered, from - to range.
+		if(to != null && from != null && !to.isEmpty() && !from.isEmpty()){
+			to = dtc.slashDateConvert(to);
+			from = dtc.slashDateConvert(from);
+			query += "AND ((tomcatdb.Schedule.startDate = '" + from + "') "
+			      + "OR (tomcatdb.Schedule.startDate BETWEEN '" + from + "' AND '" + to + "')) "
+				  + "ORDER BY tomcatdb.Schedule.startDate ASC";
+			
+			// if to value isn't null, query range from current date to "to" date entered.
+		} else if (to != null && !to.isEmpty()){
+			to = dtc.slashDateConvert(to);
+			query += "AND ((tomcatdb.Schedule.startDate = '" + currentDate + "') "
+				  + "OR (tomcatdb.Schedule.startDate BETWEEN '" + currentDate + "' AND '" + to + "')) "
+			      + "ORDER BY tomcatdb.Schedule.startDate ASC";
+			
+			// if from date is entered, query from "from" date to end of result set.
+		} else if (from != null && !from.isEmpty()){
+			from = dtc.slashDateConvert(from);  
+			query += "AND tomcatdb.Schedule.startDate >= '" + from + "' "
+				  + "ORDER BY tomcatdb.Schedule.startDate ASC";
+			
+			// for all other values.
+		} else {
+			  query += "AND tomcatdb.Schedule.startDate >= '" + currentDate + "' "
+					+ "ORDER BY tomcatdb.Schedule.startDate ASC";
+		}
+		
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			System.out.println(query);
 			this.results = ps.executeQuery();
 			
 		} catch (SQLException e) {
@@ -121,10 +152,11 @@ public class AdminScheduleSelectQuery {
 				table += "<input type='hidden' name='summary' value='" + schedule.getSummary() + "'>";
 				table += "<input type='hidden' name='createdBy' value='" + schedule.getCreatedBy() + "'>";
 				table += "<input type='submit' value='Edit'>";
+				table += "</form>";
 				table += "</td>";
 				table += "</tr>";
 				j++;
-			}
+			} 
 			table += "</tbody>";
 			table += "</table>";
 		} catch (SQLException e){

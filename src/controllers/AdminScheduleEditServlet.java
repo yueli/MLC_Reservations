@@ -46,11 +46,14 @@ public class AdminScheduleEditServlet extends HttpServlet {
 		String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the dropdown list
 		String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
 		
+		String to = request.getParameter("to");
+		String from = request.getParameter("from");
+		System.out.println();
 		String url = "";
 		
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		// if there is no buildingID from request, then display building dropdown
-		if (buildingID == null){
+		if (buildingID == null || buildingID.equals("0")){
 			buildingID = "1";
 			int bldg = Integer.parseInt(buildingID);
 			// query building
@@ -71,7 +74,7 @@ public class AdminScheduleEditServlet extends HttpServlet {
 		
 		// query the database to get
 		AdminScheduleSelectQuery ssq = new AdminScheduleSelectQuery();
-		ssq.doRead(buildingID);
+		ssq.doRead(buildingID, to, from);
 		String schedule = ssq.listSchedule();
 		
 		// set session and request variables

@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.AdminScheduleUpdateQuery;
+import model.Schedule;
+import model.TimeConverter;
+
 /**
  * Servlet implementation class AdminScheduleEditServlet2
  */
@@ -38,11 +42,15 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession();
+		System.out.println(request.getRequestURI());
 		String url = "";
 		String msg = "";
 		
+		TimeConverter tc = new TimeConverter();
+		
 		// values passed from schedule.jsp/AdminScheduleSelectQuery
 		String scheduleID = request.getParameter("scheduleID");
+		System.out.println("ScheduleID: " +  scheduleID);
 		String buildingName = request.getParameter("buildingName");
 		String buildingID = request.getParameter("buildingID");
 		String startTime = request.getParameter("startTime");
@@ -59,35 +67,54 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 		String summaryEdit  = request.getParameter("summaryEdit");
 		
 		
-		if (buildingName != null &&
-				buildingID != null &&
-				startTime != null &&
-				endTime != null &&
-				startDate != null &&
-				endDate != null &&
-				summary != null &&
-				createdBy != null &&
-				scheduleID != null){
+		// null check for variables coming in from Admin Schedule Edit Servlet & schedule-edit.jsp
+		if (buildingName != null && buildingID != null && startTime != null && 
+				endTime != null && startDate != null && endDate != null &&
+				summary != null && createdBy != null &&
+				scheduleID != null || startDateEdit != null && startTimeEdit != null && 
+				endTimeEdit != null && summaryEdit != null){
 			
-			if (startDateEdit != null){
+			// forward to edit the schedule 
+			url = "admin/schedule-edit.jsp";
+			
+			// null check for variables coming in from schedule-edit.jsp (admin edited variables)
+			if (startDateEdit != null && startTimeEdit != null && endTimeEdit != null && summaryEdit != null){
+				// get scheduleID from session
+				scheduleID = (String) session.getAttribute("scheduleID");
+				
+				// place variables from jsp (user altered) into standard variables
 				// the start and end date have to be the same
 				startDate = startDateEdit;
 				endDate = startDateEdit;
-			}
-			if (startTimeEdit != null){
+				
+				// convert from 24-hour time
+				startTimeEdit = tc.convertTimeTo24(startTimeEdit);
 				startTime = startTimeEdit;
-				createdBy = "admin"; // notate that admin made a change in database
-			}
-			if (endTimeEdit != null){
-				endTime = startTimeEdit;
-				createdBy = "admin"; // notate that admin made a change in database
-			}
-			if (summaryEdit != null){
+			
+				// convert to 24-hour time
+				endTimeEdit = tc.convertTimeTo24(endTimeEdit);
+				endTime = endTimeEdit;
+				
 				summary = summaryEdit;
 				createdBy = "admin"; // notate that admin made a change in database
+				
+				msg = "Successfully edited";
+				
+				// Update Schedule edits into database
+				int scheduleInt = Integer.parseInt(scheduleID);
+				Schedule schedule = new Schedule(scheduleInt, startDate, endDate,
+						startTime, endTime, summary, createdBy);
+				AdminScheduleUpdateQuery suq = new AdminScheduleUpdateQuery();
+				suq.doScheduleUpdate(schedule);
+				
+				url = "Schedule";
+			} else {
+				//msg = "All values must be entered.";
+				url = "admin/schedule-edit.jsp";
 			}
-	
+			System.out.println("Print of: " + startDate + " " + tc.convertTimeTo12(startTime) + " " + tc.convertTimeTo12(endTime) + " " + summary);
 			this.session.setAttribute("msg", msg);
+			this.session.setAttribute("tc", tc);
 			this.session.setAttribute("scheduleID", scheduleID);
 			this.session.setAttribute("buildingName", buildingName);
 			this.session.setAttribute("buildingID", buildingID);
@@ -97,9 +124,9 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 			this.session.setAttribute("endDate", endDate);
 			this.session.setAttribute("summary", summary);
 			this.session.setAttribute("createdBy", createdBy);
-			url = "admin/schedule-edit.jsp";
+			
 		} else {
-			// send back to schedule list
+			// send back to schedule list (Admin Schedule Edit Servlet)
 			url = "Schedule";
 		}
 		

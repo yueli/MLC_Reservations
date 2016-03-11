@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Edit Building Schedule</title>
+		<title>Building Schedule</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
@@ -62,9 +62,10 @@
 	</head>
 	<body>
 		<div id="header"></div>
+		<h2>${msg}</h2>
 		<form name="BuildingSelect" action="Schedule" method="post">
 			<p>${buildings}
-			<label for="from">From </label><input type="text" id="from" name="from"><label for="to">To</label><input type="text" id="to" name="to">
+			<label for="from">From </label> <input type="text" id="from" name="from" placeholder="mm/dd/yyyy"> <label for="to">To </label> <input type="text" id="to" name="to" placeholder="mm/dd/yyyy">
 			<input name="enterBuilding" type="submit" value="Enter"></p>
 		</form>
 		<p>${schedule}</p>
