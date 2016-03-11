@@ -50,8 +50,6 @@ public class CancelServlet extends HttpServlet {
 		Reservation reservation = new Reservation();
 		reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
 		
-		//HERE = 02-13-16 SAT NIGHT 12:30am
-		// PUT SOMETHING HERE TO SET FREE to Y/1 FOR THIS RECORD SINCE HAVE THE RESV ID
 		CancelQuery cq = new CancelQuery();
 		cq.cancelReservation(reservation.getReserveID());
 		
