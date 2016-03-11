@@ -217,6 +217,43 @@ public class DateTimeConverter {
 		}
 		
 	}
+	/**
+	 * 
+	 * @return date in mySQL format from MM/dd/yyyy format.
+	 */
+	public String slashDateConvert (){
+		
+		try {
+			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); // used to convert String time to 24-hour DateTeime
+	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); // used to convert 24-hour DateTime to 12-hour DateTime
+	        Date d = slashedFormat.parse(this.datetime); // changes from string to date object
+	        return dashedFormat.format(d); // returns date in SQL format
+	        
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert slashed date format to SQL format.**";
+		}
+	}
+	
+	/**
+	 * 
+	 * @param date in MM/dd/yyyy format
+	 * @return date in mySQL format from MM/dd/yyyy format.
+	 */
+	public String slashDateConvert (String date){
+		
+		this.datetime = date.trim(); // removes leading and trailing whitespace
+		try {
+			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); // used to convert String time to 24-hour DateTeime
+	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); // used to convert 24-hour DateTime to 12-hour DateTime
+	        Date d = slashedFormat.parse(this.datetime); // changes from string to date object
+	        return dashedFormat.format(d); // returns date in SQL format
+	        
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert slashed date format to SQL format.**";
+		}
+	}
 	
 	/**
 	 * 

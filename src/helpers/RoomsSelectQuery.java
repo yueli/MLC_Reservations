@@ -102,9 +102,7 @@ public class RoomsSelectQuery {
 					table += "<table border=1>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th id='header' COLSPAN=12 ALIGN=CENTER><h3>";
-					table += room.getRoomNumber();
-					table += "</h3></th>";
+					table += "<th COLSPAN=12 ALIGN=CENTER>" + room.getRoomNumber() + "</th>";
 					table += "</tr>";
 					table += "</tbody>";
 					
@@ -125,7 +123,6 @@ public class RoomsSelectQuery {
 						String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
 						int currentHour = Integer.parseInt(currentTime.substring(0, Math.min(currentTime.length(), 2)));
 						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
-						//System.out.println("PRINT of CURRENT HOUR: " + currentHour + " PRINT OF TIMEBLOCK HOUR: " + reserveHour);
 						
 						// if result set IS NOT empty, then there IS a reservation at that time
 						if(!reservation.isEmpty()){
@@ -168,7 +165,6 @@ public class RoomsSelectQuery {
 						String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
 						int currentHour = Integer.parseInt(currentTime.substring(0, Math.min(currentTime.length(), 2)));
 						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
-						//System.out.println("@PRINT of CURRENT HOUR: " + currentHour + " PRINT OF TIMEBLOCK HOUR: " + reserveHour);
 						
 						// if result set IS NOT empty, then there IS a reservation at that time
 						if(!reservation.isEmpty()){
@@ -196,12 +192,13 @@ public class RoomsSelectQuery {
 					table += "</tr>";
 					table += "</tbody>";
 					table += "</table>";
+					
 					// Key for rooms table
 					table += "<br><br><br>";
 					table += "<table>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th id='header' COLSPAN=3 ALIGN=CENTER><h3>";
+					table += "<th COLSPAN=3 ALIGN=CENTER><h3>";
 					table += "Key";
 					table += "</h3></th>";
 					table += "</tr>";

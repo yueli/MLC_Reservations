@@ -10,7 +10,7 @@
 		<script src="user/browse.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	 		 <script>
+	 	<script>
 	  	  	function submitform(i, room) {
 	  	  		var fwdInt = i;
 	  	  		var roomNumber = room;
@@ -27,6 +27,7 @@
 	</head>
 	<body>
 		<div id="header"></div>
+		<br><br><br><br>
 		<form name="browseForm" action="BrowseFloors" method="post">
 			<h2>Please Select Building</h2>
 			<p>${buildings}
@@ -38,6 +39,7 @@
 		</form>
 		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		<div id="footer"></div>
 	</body>
 </html>
