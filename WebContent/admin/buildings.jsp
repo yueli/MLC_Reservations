@@ -3,33 +3,6 @@
    
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Buildings & Rooms</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
-		<script> 
-			$(function() {
-				$("#header").load("./adminheader.html"); 
-				$("#footer").load("../footer.html"); 
-			});
-		</script>
-</head>
-<body>
-<div id="header"></div>
-<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-<div align="center">
-<%=table %>
-</div>
-<div id="footer"></div>
-</body>
-=======
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Buildings</title>
@@ -44,8 +17,8 @@
 		        
 		<script> 
 			$(function() {
-				$("#header").load("header.html"); 
-				$("#footer").load("footer.html"); 
+				$("#header").load("./adminheader.html"); 
+				$("#footer").load("../footer.html"); 
 			});
 			// jQuery for Datatable plugin for pagination
 			$(document).ready( function () {
@@ -56,12 +29,19 @@
 		</script> 
 	</head>
 	<body>
-	<div id="header"></div>
-	<a href='buildingform'>Add Building</a>
-	
-	<p>${table}</p>
-	
-	<div id="footer"></div>
+		<div id="header"></div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<div align="center">
+		<a href='buildingform'>Add Building</a>
+		
+		<p>${table}</p>
+		</div>
+		<div id="footer"></div>
 	</body>
->>>>>>> origin/master
 </html>
