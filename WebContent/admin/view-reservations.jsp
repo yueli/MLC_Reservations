@@ -23,7 +23,7 @@
 		<script> 
 			// used to load header and footer html
 			$(function() {
-				$("#header").load("user/userheader.html"); 
+				$("#header").load("./adminheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 			// jQuery for datepicker plugin
