@@ -5,11 +5,15 @@ package model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author Brian Olaogun
- * This class is used to convert a date or a datetime variable.
+ * This class is used to convert/parse/transform a date or time from a datetime variable or date variable.
  *
  */
 public class DateTimeConverter {
@@ -268,9 +272,66 @@ public class DateTimeConverter {
 	}
 	/**
 	 * 
+	 * @param stringStartDate
+	 * @param stringEndDate
+	 * @return an arraylist of all dates in range of start date and end date inclusive.
+	 */
+	public List<String> dateRangeList(String stringStartDate, String stringEndDate){
+		// convert string date to date object
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		List<String> dates = new ArrayList<String>();
+		
+		Date startdate;
+		Date enddate;
+		
+		try {
+			startdate = format.parse(stringStartDate);
+			enddate = format.parse(stringEndDate);
+			
+			
+		    Calendar calendar = new GregorianCalendar();
+		    calendar.setTime(startdate);
+
+		    while (calendar.getTime().getTime() <= enddate.getTime())
+		    {
+		        Date result = calendar.getTime();
+		        String sqlFormattedResult = sqlFormat.format(result); 
+		        dates.add(sqlFormattedResult);
+		        calendar.add(Calendar.DATE, 1);
+		    }
+		    return dates;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("DateTimeConverter.dateRangeList - Error printing date range: " + dates);
+		}
+		return null;
+	}
+	/**
+	 * 
+	 * @param stringStartTime
+	 * @param stringEndTime
+	 * @param hourIncrement
+	 * @return
+	 */
+	public List<String> timeRangeList (String stringStartTime, String stringEndTime, String hourIncrement){
+		TimeConverter tc = new TimeConverter();
+		
+		// if time is not in 24-hour format
+		stringStartTime = tc.convertTimeTo24(stringStartTime);
+		stringEndTime = tc.convertTimeTo24(stringEndTime);
+		
+		
+		return null;
+	}
+	
+	/**
+	 * 
 	 * @param startTime
 	 * @param hourIncrement
 	 * @return endTime
+	 * This method is used to add an hour increment to a starting time probably in the most complicated way.
 	 */
 	public static String addTime(String reserveStartTime, int hourIncrement){
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -282,8 +343,12 @@ public class DateTimeConverter {
 			// convert hour increment to seconds and add it to the start time
 			Date add = new Date(startTime.getTime() + hourIncrement *(3600*1000));
 			
-			// format to get time only
+			// format to get time only.  The result is the endTime
+			// if endTime is 00:00:00, change end time to 23:59:59.
 			String endTime = df.format(add);
+			if(endTime.equals("0:00") || endTime.equals("00:00") || endTime.equals("00:00:00") || endTime.equals("0:00:00")){
+				endTime = "23:59:59";
+			}
 			return endTime;
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -308,6 +373,10 @@ public class DateTimeConverter {
 		
 		System.out.println("TESTING ADD TIME METHOD: " + DateTimeConverter.addTime("23:00:00", 1));
 	
-		
+		List<String> dates = dtc.dateRangeList("02/27/2016", "03/16/2016");
+		for(int i=0; i<dates.size(); i++){
+		    String date = dates.get(i);
+		    System.out.println(" Date is ..." + date);
+		}
 	}
 }
