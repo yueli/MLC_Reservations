@@ -27,7 +27,13 @@
 	</head>
 	<body>
 		<div id="header"></div>
-		<br><br><br><br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 		<form name="browseForm" action="BrowseFloors" method="post">
 			<h2>Please Select Building</h2>
 			<p>${buildings}

@@ -5,18 +5,27 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Admin Home</title>
+		<title>Home</title>
 		<link rel="stylesheet" type="text/css" href="global.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
-			$(function() {
-				$("#header").load("header.html"); 
-				$("#footer").load("footer.html"); 
-			});
+
+	$(function() {
+		$("#header").load("./adminheader.html"); 
+		$("#footer").load("../footer.html"); 
+	});
 		</script> 
 	</head>
 	<body>
 		<div id="header"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div align="center">
 		<h2>MLC Reservations Administration</h2>
 	
 		${message}
@@ -36,8 +45,9 @@
 			blah blah blah </p>
 			
 		<form name="Logout" action="AdminLoginController" method="get">
- 			<input type="submit" name = "logout" value="Logout">
+ 			<input class="btn btn-lg btn-red" type="submit" name = "logout" value="Logout">
  		</form>
+ 		</div>
  		
 		<div id="footer"></div>
 	</body>
