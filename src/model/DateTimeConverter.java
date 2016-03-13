@@ -281,6 +281,8 @@ public class DateTimeConverter {
 		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
+		List<String> dates = new ArrayList<String>();
+		
 		Date startdate;
 		Date enddate;
 		
@@ -288,7 +290,7 @@ public class DateTimeConverter {
 			startdate = format.parse(stringStartDate);
 			enddate = format.parse(stringEndDate);
 			
-			List<String> dates = new ArrayList<String>();
+			
 		    Calendar calendar = new GregorianCalendar();
 		    calendar.setTime(startdate);
 
@@ -301,12 +303,18 @@ public class DateTimeConverter {
 		    }
 		    return dates;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("DateTimeConverter.dateRangeList - Error printing date range: " + dates);
 		}
 		return null;
 	}
-	
+	/**
+	 * 
+	 * @param stringStartTime
+	 * @param stringEndTime
+	 * @param hourIncrement
+	 * @return
+	 */
 	public List<String> timeRangeList (String stringStartTime, String stringEndTime, String hourIncrement){
 		TimeConverter tc = new TimeConverter();
 		
