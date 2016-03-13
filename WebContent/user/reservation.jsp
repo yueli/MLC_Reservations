@@ -12,6 +12,10 @@
 				$("#header").load("./userheader.html"); 
 				$("#footer").load("../footer.html"); 
 			});
+			// function for back button
+			function goBack() {
+			    window.history.back();
+			}
 		</script> 
 	</head>
 	<body>
@@ -40,7 +44,7 @@
 				<p>Reservation Length: ${incrementSelect}</p>
 				<p>Please enter email of secondary person:<br>
 				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
-				<input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
+				<button onclick="goBack()">Go Back</button><input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
 			</form>
 		</div>	
 		</div>

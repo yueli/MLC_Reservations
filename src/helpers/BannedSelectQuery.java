@@ -47,7 +47,7 @@ public class BannedSelectQuery {
 
 		public void doRead(){
 
-			String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
+			String query = "SELECT banned.bannedID, banned.User_userID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
@@ -60,7 +60,7 @@ public class BannedSelectQuery {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
+				System.out.println("Error in BannedSelectQuery.java: getHTMLTable method. Please check connection or SQL statement: " + query);
 			} 
 		}
 		
@@ -85,7 +85,7 @@ public class BannedSelectQuery {
 					
 					Banned ban = new Banned();
 					ban.setBanID(results.getInt("bannedID"));
-					ban.setStudentID(results.getInt("Student_studentID"));
+					ban.setStudentID(results.getInt("User_userID"));
 					ban.setAdminID(results.getInt("Admin_adminID"));
 					ban.setBanStart(results.getString("banStart"));
 					ban.setBanEnd(this.results.getString("banEnd"));
@@ -131,7 +131,7 @@ public class BannedSelectQuery {
 			}
 			catch(SQLException e) {
 				e.printStackTrace();
-				//System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
+				//System.out.println("Error in BannedSelectQuery.java: getHTMLTable method. Please check connection or SQL statement: " + query);
 				
 			}
 			
