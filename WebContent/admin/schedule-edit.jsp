@@ -26,7 +26,7 @@
 	<script>
 		// used to load header and footer html
 		$(function() {
-			$("#header").load("header.html"); 
+			$("#header").load("./adminheader.html"); 
 			$("#footer").load("footer.html"); 
 		});
 		// function for back button
