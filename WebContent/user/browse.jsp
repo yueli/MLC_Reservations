@@ -40,6 +40,13 @@
 	<body>
 <<<<<<< HEAD
 	<div id="header"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>

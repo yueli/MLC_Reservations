@@ -13,7 +13,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>View Reservations Home Page</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD-->
 	<script> 
 
 	$(function() {
@@ -24,7 +24,14 @@
 	</head>
 	<body>
 	<div id="header"></div>
-=======
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
 		<script> 
 			$(function() {
 				$("#header").load("header.html"); 
@@ -34,7 +41,7 @@
 	</head>
 	<body>
 		<div id="header"></div>
->>>>>>> origin/master
+<!-- >>>>>>>> origin/master-->
 		<h1>View Home Page</h1>
 		<h2>Reservations for: 
 			${user.userFirstName} 
