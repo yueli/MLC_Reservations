@@ -11,10 +11,9 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <session-config>
-    <session-timeout>10</session-timeout> 
+    <session-timeout>10</session-timeout>
   </session-config>
-  
-  <!-- CAS CONFIGURATION -->
+   <!-- CAS CONFIGURATION -->
  <?ignore 
   <filter>
   	<filter-name>CAS Authentication Filter</filter-name>

@@ -63,13 +63,13 @@ public class ListUserReservationsQuery {
 		// and the room info for the reservation
 		// and the date is today or later (will have to deal with time later)
 		
-		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
-						+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
-						+ "AND Rooms.Building_buildingID = Building.buildingID "
-						+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
-						+ " AND Reservations.free = 'N' "
-						+ " AND Reservations.reserveStartDate >= '" + currentDate + "'"
-						+ " ORDER BY reserveStartDate, reserveStartTime";
+		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building"
+					+ " WHERE Reservations.Rooms_roomID = Rooms.roomID"
+					+ " AND Rooms.Building_buildingID = Building.buildingID"
+					+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
+					+ " AND Reservations.free = 'N' "
+					+ " AND Reservations.reserveStartDate >= '" + currentDate + "'"
+					+ " ORDER BY reserveStartDate, reserveStartTime";
 
 	
 		System.out.println("list user resv list user resv query " + query);
@@ -224,10 +224,11 @@ public class ListUserReservationsQuery {
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								
 								//TAKE THIS OUT AFTER TESTING !!!!!
-								currentMinuteInt = 2; //!!!!!!!!!!!
+								//currentMinuteInt = 2; //!!!!!!!!!!!
 										
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
+								// if this is the first time around, print out the table headers
 								if (firstTime){
 
 									table = "<table>";
@@ -265,6 +266,10 @@ public class ListUserReservationsQuery {
 									// display the check-in button that points to the check-in servlet
 									
 									table += "<td> CHECK IN </td>"; //TODO add ink
+									//table += "<tr><td><form action='?????' method = 'post'>" +
+									//		"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
+									//		"<input type='submit' value='Check In'>" +
+									//		"</form></td>";	
 								
 								}else{
 									table += "<td> *Too late to check in* </td>";
@@ -338,6 +343,8 @@ public class ListUserReservationsQuery {
 		return table;	// may return records or an empty table
 	}
 	
+	
+	// CHANGE THIS!!! WRONG!!!!
 	public String GetUserReservation(int resv_id, int userRecdID){
 		String table = "";
 		

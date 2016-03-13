@@ -16,6 +16,13 @@
 	</head>
 	<body>
 		<div id="header"></div>
+		<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<h1>MLC Study Room Reservations</h1>
 		
 			${message}

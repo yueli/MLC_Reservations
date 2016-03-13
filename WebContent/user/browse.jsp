@@ -9,37 +9,33 @@
 		<link rel="stylesheet" type="text/css" href="user/browse.css">
 		<script src="user/browse.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<script type="text/javascript" src="jquery/jquery-1.10.2.js"></script>
-  		<script type="text/javascript" src="jquery/jquery-ui.js"></script>
-  		 <script>
+	 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	 	<script>
 	  	  	function submitform(i, room) {
 	  	  		var fwdInt = i;
 	  	  		var roomNumber = room;
 	  	  		document.getElementById("fwdReserve" + fwdInt + roomNumber).submit();	
 	  		}
-	  	  	/*
 	  	    $(function() {
-	  	   		$( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
-	  	    	$( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
-	  	  	}); */
-	  	  $(function() {
-	  	    $( "#tabs" ).tabs();
-	  		$("#header").load("header.html"); 
-	  		$("#footer").load("footer.html"); 
-	  	});
-  		</script>
-  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
-<script> 
-
-	$(function() {
-		$("#header").load("userheader.html"); 
-		$("#footer").load("footer.html"); 
-	});
-</script> 
+	  	        $( "#tabs" ).tabs();
+	  	    });
+			$(function() {
+				$("#header").load("userheader.html"); 
+				$("#footer").load("footer.html"); 
+			});
+		</script> 
 	</head>
 	<body>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<div id="header"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<nav class="menu">
 		    <ul class="active">
 		        <li class="current-item"><a href="#">Home</a></li>
@@ -52,8 +48,10 @@
 		    <a class="toggle-nav" href="#">&#9776;</a>
 		</nav>
 =======
-		<div id="header"></div>
+=======
 >>>>>>> origin/master
+		<div id="header"></div>
+		<br><br><br><br>
 		<form name="browseForm" action="BrowseFloors" method="post">
 			<h2>Please Select Building</h2>
 			<p>${buildings}
@@ -65,6 +63,7 @@
 		</form>
 		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		<div id="footer"></div>
 	</body>
 </html>

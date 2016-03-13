@@ -7,14 +7,22 @@
 		<title>Reservations</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
+
 			$(function() {
-				$("#header").load("header.html"); 
-				$("#footer").load("footer.html"); 
+				$("#header").load("./adminheader.html"); 
+				$("#footer").load("../footer.html"); 
 			});
-		</script> 
+		</script>
 	</head>
 	<body>
 		<div id="header"></div>
+		<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<div id="footer"></div>
 	</body>
 </html>
