@@ -55,7 +55,6 @@ public class UserHelper {
 	 */
 	public User authenticateUser(String myID, String encryptedPass) {
 		User su = new User(); //set to null to return null in case not authenticated
-		//su = null; ///GINGER HERE UNCOMMENTED THIS
 		
 		System.out.println("UserHelper: authentication myID = " + myID); //MyID the student logged in with
 		
@@ -78,8 +77,9 @@ public class UserHelper {
 		String studentUserLastName = "Nix";
 		String userEmail = "ganix@uga.edu";
 		
-		System.out.println("UserHelper: auth userMyID = " + studentUserMyID);
-		
+		studentUserMyID = myID;
+		System.out.println("UserHelper: studetUserMyID= " + studentUserMyID);
+			
 		//if true, set user object info and return login user data
 		if (valid){
 			//User su = new User(); //GINGER UNCOMMENTED THIS
@@ -90,30 +90,36 @@ public class UserHelper {
 			su.setUserEmail(userEmail);	
 			System.out.println("UserHelper: auth in valid if userMyID = " + studentUserMyID);
 		}		
-		System.out.println("UserHelper: auth su = " + su);
+
 		return su; //will be null if user wasn't valid
 	}
 	
 	public boolean inUserTable(String myID){
 		
-		
 		System.out.println("UserHelper inUserTable: myID = " + myID);
 		
-		String query = "SELECT * from tomcatdb.User WHERE myID = myID";
+		String query = "SELECT * from tomcatdb.User WHERE myID = '" + myID + "' LIMIT 1";
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 
 			this.results = ps.executeQuery();
-			if (this.results.next()) {//the myID is already being used
+			
+
+			boolean results = this.results.next();
+			System.out.println("User Helper: in user table: results found " + results + " query = " + query);
+			
+			if (results) {//the myID is in the user table
+				System.out.println("User Helper: in user table: results found TRUE");
 				return true;
 			}else{
+				System.out.println("User Helper: in user table: results found FALSE");
 				return false;
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("****Error in UserHelper.java: inStudentTable method. Query = " + query);
+			System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
 		}
 		
 		return false;
@@ -174,37 +180,41 @@ public class UserHelper {
 		
 	}
 	
-	
+//--------------------------------------------------------------------	
 	public int getRecordID(String myID){
 		int recordID = 0;
-		String query = "SELECT userID FROM tomcatdb.User WHERE myID = '" + myID + "'";
+		String query = "SELECT userID FROM tomcatdb.User WHERE myID = '" + myID + "' LIMIT 1";
+		System.out.println("UserHelper: myID = " + myID);
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 	
-			ps.executeQuery();
-			System.out.println("Success in UserHelper.java: get record ID method. Query = " + query);
+			this.results = ps.executeQuery();
+			
+			this.results.next();
 			
 			recordID = results.getInt("userID");
+			System.out.println("Success in UserHelper.java: get record ID method. Query = " + query);
+			
 
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		System.out.println("***Error in UserHelper.java: get record ID method. Query = " + query);
-			}
+			System.out.println("***Error in UserHelper.java: get record ID method. Query = " + query);
+		}
 		
 		return recordID;
 		
 	}
 	
-
+	//--------------------------------------------------------------------	
+	
 	//WRITE THIS TO QUERY Reservations TABLE AND RETURN NUM RECDS FOUND
 	// this method is called to get the number of records a user has
 	public int getNumberRecords(int userRecordID){
 		
 		
 		//this.numRecords = 0;
-		
-		System.out.println("uh: list user reservations");   
 
 		//get today's date to list the reservations today or later
 		String currentDate = "";	
