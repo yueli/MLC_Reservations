@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import sun.misc.BASE64Encoder;
 
 /**
- * This class converts plaintext password to a SHA256 hash.
+ * This class converts plain-text password to a SHA256 hash.
  * 
  */
 public final class PasswordService {
