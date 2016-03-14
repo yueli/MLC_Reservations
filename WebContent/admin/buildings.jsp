@@ -18,7 +18,7 @@
 		        
 		<script> 
 			$(function() {
-				$("#header").load("admin/adminheader.html"); 
+				$("#header1").load("admin/adminheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 			// jQuery for Datatable plugin for pagination
@@ -30,7 +30,7 @@
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<br>
 		<br>
 		<br>

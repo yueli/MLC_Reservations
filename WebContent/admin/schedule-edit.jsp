@@ -26,7 +26,7 @@
 	<script>
 		// used to load header and footer html
 		$(function() {
-			$("#header").load("./adminheader.html"); 
+			$("#header1").load("./adminheader.html"); 
 			$("#footer").load("footer.html"); 
 		});
 		// function for back button
@@ -45,7 +45,7 @@
 	</script>
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<h2>${msg}</h2>
 		<form name="scheduleEdit" id="scheduleEdit" method="post" action="schedule-edit">
 			<h2>Edit schedule entry #${scheduleID} for ${buildingName}</h2>
