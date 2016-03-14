@@ -6,8 +6,8 @@ package model;
 public class Rooms {
 	//Fields
 	private int roomID;
-	private Admin admin;
-	private Building building;
+	private int admin;
+	private int building;
 	private int roomNumber;
 	private int roomFloor;
 	private int roomStatus;
@@ -15,15 +15,15 @@ public class Rooms {
 	
 	//Constructors
 	/**
-	 * @param roomID
-	 * @param adminID
-	 * @param buildingID
-	 * @param roomNumber
-	 * @param roomFloor
-	 * @param roomStatus
-	 * @param qrUrl
+	 * @param roomID int room primary key
+	 * @param adminID int admin foreign key
+	 * @param buildingID int building ID foreign key
+	 * @param roomNumber int room number
+	 * @param roomFloor int room floor
+	 * @param roomStatus int status - whether a room is online or not
+	 * @param qrUrl the String url for the qr code
 	 */
-	public Rooms(int roomID, Admin adminID, Building buildingID, int roomNumber, int roomFloor, int roomStatus,
+	public Rooms(int roomID, int adminID, int buildingID, int roomNumber, int roomFloor, int roomStatus,
 			String qrUrl) {
 		this.roomID = roomID;
 		this.admin = adminID;
@@ -35,12 +35,12 @@ public class Rooms {
 	}
 
 	/**
-	 * @param buildingID
-	 * @param roomNumber
-	 * @param roomFloor
-	 * @param roomStatus
+	 * @param buildingID int building ID of the building
+	 * @param roomNumber int room number
+	 * @param roomFloor int floor number
+	 * @param roomStatus in status - whether the room is online or not.
 	 */
-	public Rooms(Building buildingID, int roomNumber, int roomFloor, int roomStatus) {
+	public Rooms(int buildingID, int roomNumber, int roomFloor, int roomStatus) {
 		this.building = buildingID;
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
@@ -51,13 +51,7 @@ public class Rooms {
 	 *  No parameter constructor
 	 */
 	public Rooms() {
-		this.roomID = 0;
-		this.admin = new Admin();
-		this.building = new Building();
-		this.roomNumber = 0;
-		this.roomFloor = 0;
-		this.roomStatus = 0;
-		this.qrUrl = "";
+		
 	}
 
 	// Getters and Setters
@@ -78,28 +72,28 @@ public class Rooms {
 	/**
 	 * @return the adminID
 	 */
-	public Admin getAdminID() {
+	public int getAdminID() {
 		return admin;
 	}
 
 	/**
 	 * @param adminID the adminID to set
 	 */
-	public void setAdminID(Admin adminID) {
+	public void setAdminID(int adminID) {
 		this.admin = adminID;
 	}
 
 	/**
 	 * @return the buildingID
 	 */
-	public Building getBuildingID() {
+	public int getBuildingID() {
 		return building;
 	}
 
 	/**
 	 * @param buildingID the buildingID to set
 	 */
-	public void setBuildingID(Building buildingID) {
+	public void setBuildingID(int buildingID) {
 		this.building = buildingID;
 	}
 

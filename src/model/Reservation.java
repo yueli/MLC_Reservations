@@ -45,15 +45,16 @@ public class Reservation {
 	
 	/**
 	 * 
-	 * @param primaryUser
-	 * @param secondaryUser
-	 * @param roomsID
-	 * @param reserveStartDate
-	 * @param reserveEndDate
-	 * @param reserveStartTime
-	 * @param hourIncrement
-	 * @param buildingID
-	 * @param free
+	 * @param primaryUser int primary user ID
+	 * @param secondaryUser int secondary user ID
+	 * @param roomsID int roomID foreign key
+	 * @param reserveStartDate String start date of reservation
+	 * @param reserveEndDate String end date of reservation
+	 * @param reserveStartTime String start time of reservation
+	 * @param reserveEndTime String end time of reservation
+	 * @param hourIncrement int how long the reservation is
+	 * @param buildingID int building ID foreign key
+	 * @param free whether the room is free or not
 	 */
 	public Reservation(int primaryUser, int secondaryUser, int roomsID, String reserveStartDate,
 			String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement, int buildingID, String free) {
@@ -71,16 +72,18 @@ public class Reservation {
 	
 	/**
 	 * 
-	 * @param primaryUser
-	 * @param secondaryUser
-	 * @param adminID
-	 * @param roomsID
-	 * @param reserveStartDate
-	 * @param reserveEndDate
-	 * @param reserveStartTime
-	 * @param hourIncrement
-	 * @param reserveName
-	 * @param buildingID
+	 * @param primaryUser int primary user ID
+	 * @param secondaryUser int secondary user ID
+	 * @param adminID ID of admin who made a reservation
+	 * @param roomsID int roomID foreign key
+	 * @param reserveStartDate String start date of reservation
+	 * @param reserveEndDate String end date of reservation
+	 * @param reserveStartTime String start time of reservation
+	 * @param reserveEndTime String end time of reservation
+	 * @param hourIncrement int how long the reservation is
+	 * @param reserveName String the name of the reservation - for admin reservations only
+	 * @param buildingID int building ID foreign key
+	 * @param free whether the room has been reserved or not. value is Y/N
 	 */
 	public Reservation(int primaryUser, int secondaryUser, int adminID, int roomsID,
 			String reserveStartDate, String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement,
@@ -110,7 +113,7 @@ public class Reservation {
 	
 	/**
 	 * 
-	 * @param reserveID
+	 * @param reserveID set reservation ID
 	 */
 	public void setReserveID(int reserveID) {
 		this.reserveID = reserveID;

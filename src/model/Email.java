@@ -56,13 +56,13 @@ public class Email {
 	
 	/**
 	 * 
-	 * @param to
-	 * @param cc
-	 * @param reserveDate
-	 * @param startTime
-	 * @param endTime
-	 * @param building
-	 * @param roomNumber
+	 * @param to sendee 
+	 * @param cc copy other sendees
+	 * @param reserveDate reservation start date
+	 * @param startTime reservation start time
+	 * @param endTime reservation end time
+	 * @param building the name of the building where the reservation is made
+	 * @param roomNumber room number
 	 */
 	public Email(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber){
 		this.to = to;
@@ -176,13 +176,13 @@ public class Email {
 	// Email Methods
 	/**
 	 * 
-	 * @param to
-	 * @param cc
-	 * @param reserveDate
-	 * @param startTime
-	 * @param endTime
-	 * @param building
-	 * @param roomNumber
+	 * @param to sendee 
+	 * @param cc copy other sendees
+	 * @param reserveDate reservation start date
+	 * @param startTime reservation start time
+	 * @param endTime reservation end time
+	 * @param building the name of the building where the reservation is made
+	 * @param roomNumber room number
 	 * Send Email for reservation confirmation
 	 */
 	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber) {
@@ -283,13 +283,13 @@ public class Email {
     // Sending data of any type is similar.
 	/**
 	 * 
-	 * @param msg
-	 * @param reserveDate
-	 * @param startTime
-	 * @param endTime
-	 * @param building
-	 * @param roomNumber
-	 * @throws MessagingException
+	 * @param msg email message contents
+	 * @param reserveDate start date of the reservation
+	 * @param startTime reservation start time
+	 * @param endTime reservation end time
+	 * @param building the building where the reservation was made
+	 * @param roomNumber room number
+	 * @throws MessagingException error in sending message
 	 * Set the message of the email.  This is an HTML email message
 	 */
     public static void setHTMLContent(Message msg, String reserveDate, String startTime, String endTime, String building, String roomNumber) throws MessagingException {
@@ -340,7 +340,7 @@ public class Email {
     
     /**
      * 
-     * @param emailStr
+     * @param emailStr email address
      * @return makes sure that emails entered follow the pattern listed below.
      */
 	public static boolean isEmail(String emailStr) {

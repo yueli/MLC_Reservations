@@ -50,6 +50,9 @@ public class UserHelper {
 	}
 	
 	/**
+	 * 
+	 * @param myID user myID
+	 * @param encryptedPass encrypted password
 	 * Authenticates a user 
 	 * @return A user object if successful, null if unsuccessful.
 	 */
@@ -298,7 +301,10 @@ public class UserHelper {
 
 
 	/**
-	 * Authenticates an admin user 
+	 * 
+	 * @param myID user myID
+	 * @param encryptedPass encrypted password
+	 *  Authenticates an admin user 
 	 * @return An admin user object if successful, null if unsuccessful.
 	 */
 	public Admin authenticateAdminUser(String myID, String encryptedPass) {

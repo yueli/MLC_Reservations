@@ -15,9 +15,7 @@ public class BuildingListSelectQuery {
 
 	/**
 	 * 
-	 * @param dbName
-	 * @param user
-	 * @param pwd
+	 * Connect to database.  This is hard coded in DBConnect.java
 	 */
 	public BuildingListSelectQuery() {
 		

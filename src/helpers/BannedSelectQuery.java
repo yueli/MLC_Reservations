@@ -23,9 +23,7 @@ public class BannedSelectQuery {
 
 		/**
 		 * 
-		 * @param dbName
-		 * @param user
-		 * @param pwd
+		 * Database connection.  Hard coded in DbConnect.java
 		 */
 		public BannedSelectQuery() {
 	

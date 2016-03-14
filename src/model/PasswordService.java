@@ -12,7 +12,10 @@ import sun.misc.BASE64Encoder;
  */
 public final class PasswordService {
 
-	/**Encrypt string pass to a hashed SHA256 encrypted version
+	/**
+	 * Encrypt string pass to a hashed SHA256 encrypted version
+	 * @param pass String password to encrypt
+	 * @return password hash/encryption
 	 */
 	public String encrypt(String pass) {
 		MessageDigest md = null;
