@@ -30,7 +30,7 @@ public class User {
 	
 	/**
 	 * 
-	 * @param myID
+	 * @param myID String ID to set
 	 */
 	public void setMyID(String myID) {
 		this.myID = myID;
@@ -46,7 +46,7 @@ public class User {
 	
 	/**
 	 * 
-	 * @param userFirstName
+	 * @param userFirstName String first name to set
 	 */
 	public void setUserFirstName(String userFirstName) {
 		this.userFirstName = userFirstName;
@@ -62,7 +62,7 @@ public class User {
 	
 	/**
 	 * 
-	 * @param userLastName
+	 * @param userLastName String last name to set
 	 */
 	public void setUserLastName(String userLastName) {
 		this.userLastName = userLastName;
@@ -78,7 +78,7 @@ public class User {
 	
 	 /**
 	  * 
-	  * @param userEmail
+	  * @param userEmail String email to set
 	  */
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;

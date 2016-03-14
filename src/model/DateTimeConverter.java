@@ -67,7 +67,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param date
+	 * @param date String date
 	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
 	 */
 	public String convertDateLong(String date){
@@ -103,7 +103,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param datetime 
+	 * @param datetime String date time
 	 * @return parsed Date from datetime in Month date, year format.
 	 */
 	public String parseDateLong(String datetime){
@@ -137,7 +137,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param datetime
+	 * @param datetime String date Time
 	 * @return String datetime in long date format (Month dd, yyyy) with 12-hour time
 	 */
 	public String dateTimeTo12Long(String datetime){
@@ -173,7 +173,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param datetime 
+	 * @param datetime String Date Time
 	 * @return parsed Date from datetime in Month date, year format.
 	 */
 	public String parseDate(String datetime){
@@ -210,7 +210,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param time
+	 * @param datetime String datetime
 	 * @return String: parsed time from datetime. Converted time from 24-hour format to 12-hour format.
 	 */
 	public String parsedTimeTo12(String datetime){
@@ -228,7 +228,10 @@ public class DateTimeConverter {
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @return parses the time from a date time string.  The date time should be already in 24-hour format.
+	 */
 	public String parsedTimeTo24(){
 		
 		this.datetime = datetime.trim(); // removes any leading or trailing whitespace
@@ -244,7 +247,11 @@ public class DateTimeConverter {
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @param datetime String date time
+	 * @return parses the time from a date time string.  The date time should be already in 24-hour format.
+	 */
 	public String parsedTimeTo24(String datetime){
 		
 		this.datetime = datetime.trim(); // removes any leading or trailing whitespace
@@ -311,8 +318,8 @@ public class DateTimeConverter {
 	}
 	/**
 	 * 
-	 * @param stringStartDate
-	 * @param stringEndDate
+	 * @param stringStartDate String start date
+	 * @param stringEndDate String end date
 	 * @return an arraylist of all dates in range of start date and end date inclusive.
 	 */
 	public List<String> dateRangeList(String stringStartDate, String stringEndDate){
@@ -349,12 +356,12 @@ public class DateTimeConverter {
 	}
 	/**
 	 * 
-	 * @param stringStartTime
-	 * @param stringEndTime
-	 * @param hourIncrement
-	 * @return
+	 * @param stringStartTime String starting time
+	 * @param stringEndTime String ending time
+	 * @param hourIncrement int hour increment - how long
+	 * @return String array list of all values inclusive between start time and end time
 	 */
-	public List<String> timeRangeList (String stringStartTime, String stringEndTime, String hourIncrement){
+	public List<String> timeRangeList (String stringStartTime, String stringEndTime, int hourIncrement){
 		TimeConverter tc = new TimeConverter();
 		
 		// if time is not in 24-hour format
@@ -367,9 +374,9 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param startTime
-	 * @param hourIncrement
-	 * @return endTime
+	 * @param reserveStartTime start time
+	 * @param hourIncrement the number to add to the start time
+	 * @return endTime the result of adding the hour increment and the time
 	 * This method is used to add an hour increment to a starting time probably in the most complicated way.
 	 */
 	public static String addTime(String reserveStartTime, int hourIncrement){

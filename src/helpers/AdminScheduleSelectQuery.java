@@ -40,7 +40,7 @@ public class AdminScheduleSelectQuery {
 	}
 	/**
 	 * Run the query with the following parameters
-	 * @param buildingID
+	 * @param buildingID String buildingID primary key
 	 * @param to (end date)
 	 * @param from (start Date)
 	 */

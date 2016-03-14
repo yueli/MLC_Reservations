@@ -49,9 +49,8 @@ public class AdminReservationsSelectQuery {
 		}
 	}
 	/**
-	 * 
-	 * @param currentDate
-	 * @param time
+	 * @param buildingID the primary key ID of the building
+	 * @param currentDate String date in sql format
 	 */
 	public void doUserReservationRead(int buildingID, String currentDate){
 		
@@ -86,6 +85,11 @@ public class AdminReservationsSelectQuery {
 			System.out.println("Error in AdminReservationsSelectQuery.java: doUserReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
+	/**
+	 * 
+	 * @param buildingID int buildingID primary key
+	 * @param currentDate String date in sql format
+	 */
 	public void doAdminReservationRead(int buildingID, String currentDate){
 		
 		// The query below pulls shows the primary & secondary's myID
@@ -182,7 +186,10 @@ public class AdminReservationsSelectQuery {
 		System.out.println(table);
 		return table;
 	}
-	// TODO fix result set for admin
+	/**
+	 * 
+	 * @return String HTML table with query resultset
+	 */
 	public String doUserReservationResults(){
 		String table = "";
 		try {

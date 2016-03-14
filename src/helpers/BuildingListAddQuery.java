@@ -17,9 +17,7 @@ public class BuildingListAddQuery {
 
 	/**
 	 * 
-	 * @param dbName
-	 * @param user
-	 * @param pwd
+	 * Connect to database.  This is hard coded in DBConnect.java
 	 */
 	public BuildingListAddQuery() {
 		
