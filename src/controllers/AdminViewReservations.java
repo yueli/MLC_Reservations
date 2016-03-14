@@ -73,6 +73,7 @@ public class AdminViewReservations extends HttpServlet {
 		AdminReservationsSelectQuery arsq = new AdminReservationsSelectQuery();
 		arsq.doUserReservationRead(bldg, currentDate); 
 		arsq.doAdminReservationRead(bldg, currentDate);
+		
 		// contains the html table with the query results
 		String userReservations = arsq.doUserReservationResults();
 		String adminReservations = arsq.doAdminReservationResults();

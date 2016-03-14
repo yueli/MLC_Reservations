@@ -12,13 +12,13 @@
 		<script> 
 
 			$(function() {
-				$("#header").load("./adminheader.html"); 
+				$("#header1").load("./adminheader.html"); 
 				$("#footer").load("../footer.html"); 
 			});
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<br>
 	<br>
 	<br>

@@ -119,6 +119,45 @@ public class DateTimeConverter {
 			return "**Error, unable to parse date.**";
 		}
 	}
+	/**
+	 * 
+	 * @return String datetime in long date format (Month dd, yyyy) with 12-hour time
+	 */
+	public String dateTimeTo12Long(){
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format
+			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy hh:mm a"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert datetime to long format.**";
+		}
+	}
+	
+	/**
+	 * 
+	 * @param datetime
+	 * @return String datetime in long date format (Month dd, yyyy) with 12-hour time
+	 */
+	public String dateTimeTo12Long(String datetime){
+		
+		this.datetime = datetime.trim(); // removes leading and trailing whitespace
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format
+			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy hh:mm a"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert datetime to long format.**";
+		}
+	}
+	
+	/**
+	 * 
+	 * @return parsed date from a datetime string
+	 */
 	public String parseDate(){
 		
 		try{
@@ -372,7 +411,7 @@ public class DateTimeConverter {
 		System.out.println("Current Datetime: " + dtc.datetimeStamp());
 		
 		System.out.println("TESTING ADD TIME METHOD: " + DateTimeConverter.addTime("23:00:00", 1));
-	
+		System.out.println("LONG FORMAT of 2015-09-22 20:00:00 = " + dtc.dateTimeTo12Long("2015-09-22 20:00:00"));
 		List<String> dates = dtc.dateRangeList("02/27/2016", "03/16/2016");
 		for(int i=0; i<dates.size(); i++){
 		    String date = dates.get(i);

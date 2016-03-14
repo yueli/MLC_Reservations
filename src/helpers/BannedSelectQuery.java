@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.Banned;
+import model.DateTimeConverter;
 import model.DbConnect;
 
 
@@ -47,7 +48,7 @@ public class BannedSelectQuery {
 
 		public void doRead(){
 
-			String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
+			String query = "SELECT banned.bannedID, banned.User_userID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
@@ -60,7 +61,7 @@ public class BannedSelectQuery {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
+				System.out.println("Error in BannedSelectQuery.java: getHTMLTable method. Please check connection or SQL statement: " + query);
 			} 
 		}
 		
@@ -69,23 +70,33 @@ public class BannedSelectQuery {
 		public String getHTMLTable(){ 
 			//Return table of banned students
 			
-			String table = "<table>";
+			String table = "";
 			
 		
-			try{
+			try {
+				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 				
-				
-				table += "<tr><td><a href='/admin/ban.jsp'>Ban Someone</td>";
-				table += "<td><a href=unbanall><button type='submit' value='Unban All'>Unban</button></a></td></tr>";
-				
-				table += "<tr><td>Ban#</td><td>Student ID</td><td>Admin ID</td><td>Ban Start</td><td>Ban End</td><td>Penalty Count</td><td>Description</td><td>Status</td></tr>";
+				table += "<thead>";
+				table += "<tr>"
+						+ "<th>Ban#</th>"
+						+ "<th>Student ID</th>"
+						+ "<th>Admin ID</th>"
+						+ "<th>Ban Start</th>"
+						+ "<th>Ban End</th>"
+						+ "<th>Penalty Count</th>"
+						+ "<th>Description</th>"
+						+ "<th>Status</th>"
+						+ "<th></th>"
+						+ "</tr>";
+				table += "</thead>";
+				table += "<tbody>";
 				while(results.next()){
 
-					
+					DateTimeConverter dtc = new DateTimeConverter();
 					
 					Banned ban = new Banned();
 					ban.setBanID(results.getInt("bannedID"));
-					ban.setStudentID(results.getInt("Student_studentID"));
+					ban.setStudentID(results.getInt("User_userID"));
 					ban.setAdminID(results.getInt("Admin_adminID"));
 					ban.setBanStart(results.getString("banStart"));
 					ban.setBanEnd(this.results.getString("banEnd"));
@@ -107,10 +118,19 @@ public class BannedSelectQuery {
 					table += ban.getAdminID();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getBanStart();
+					table += dtc.dateTimeTo12Long(ban.getBanStart());
 					table += "</td>";
 					table += "<td>";
-					table += ban.getBanEnd();
+					// check to see if end date time string is empty or null
+					// if its not, then convert to easier display
+					// if empty or null, show blank in table (instead of "null")
+					if (ban.getBanEnd() != null && !ban.getBanEnd().isEmpty()){
+						// converts sql format to format thats easier to read.
+						table += dtc.dateTimeTo12Long(ban.getBanEnd());
+					} else {
+						// show a blank instead of null in the table
+						table += "";
+					}
 					table += "</td>";
 					table += "<td>";
 					table += ban.getPenaltyCount();
@@ -127,11 +147,12 @@ public class BannedSelectQuery {
 					
 					table += "</tr>";
 				}
-				table+="</table>";
+				table += "</tbody>";
+				table += "</table>";
 			}
 			catch(SQLException e) {
 				e.printStackTrace();
-				//System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
+				System.out.println("Error in BannedSelectQuery.java: getHTMLTable method. Please check connection or SQL statement.");
 				
 			}
 			
