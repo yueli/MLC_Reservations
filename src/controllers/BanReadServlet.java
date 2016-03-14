@@ -37,7 +37,7 @@ public class BanReadServlet extends HttpServlet {
 		//dispatch to the admin view
 		request.setAttribute("table", table);
 		
-		String url = "/admin/admin.jsp";
+		String url = "/admin/banList.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
