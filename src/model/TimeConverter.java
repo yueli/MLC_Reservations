@@ -8,11 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ *
+ * This class will be used to convert time from 24 hour format to 12 hour format. This class will also be used to convert from 12 hour format to 24 hour format.
  * @author Brian Olaogun
- *
- * This class will be used to convert time from 24 hour format to 12 hour format.
- * This class will also be used to convert from 12 hour format to 24 hour format.
- *
  */
 public class TimeConverter {
 	// Fields

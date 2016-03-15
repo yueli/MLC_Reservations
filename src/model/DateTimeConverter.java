@@ -12,8 +12,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
- * @author Brian Olaogun
  * This class is used to convert/parse/transform a date or time from a datetime variable or date variable.
+ * @author Brian Olaogun
  *
  */
 public class DateTimeConverter {
