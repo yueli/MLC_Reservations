@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.ReservationInsertQuery;
+import helpers.UserHelper;
 import model.DateTimeConverter;
 import model.Email;
 import model.Reservation;
@@ -50,21 +51,26 @@ public class BrowseConfirmServlet extends HttpServlet {
 		String currentDate = (String) session.getAttribute("currentDate");
 		String buildingName = (String) session.getAttribute("buildingName");
 		int buildingID = (Integer) session.getAttribute("buildingID");
-		User user = (User) session.getAttribute("user");
+		User primaryUser = (User) session.getAttribute("user");
 		int hourIncrement = Integer.parseInt(request.getParameter("userIncrementSelected"));
-		String secondaryEmail = (String) request.getParameter("secondary");
+		String secondaryMyID = (String) request.getParameter("secondary");
+		
+		UserHelper uh = new UserHelper();
 		
 		// initialize message and forwarding URL
 		String url = "";
 		String msg = "";
 		
-		// verify inputed email
-		if(!Email.isEmail(secondaryEmail)){
-			msg = "Please enter a valid email";
+		// verify inputed secondary user ID
+		if(!uh.inUserTable(secondaryMyID)){
+			msg = "Please have " + secondaryMyID + " login once into the application. "
+					+ "Logging in once serves as a form of user registration. Once " + secondaryMyID 
+					+ " has logged in once, you can add them to any future reservation. ";
 			url = "user/reservation.jsp";
 		}
+		
 		//-----------------------//
-		// make a reservation
+		  // MAKE A RESERVATION
 		//-----------------------//
 		String free = "N"; // room is not free
 		
@@ -73,18 +79,31 @@ public class BrowseConfirmServlet extends HttpServlet {
 		startTime = tc.convertTimeTo24(startTime);
 		String endTime = DateTimeConverter.addTime(startTime, hourIncrement);
 		
-		// user information
-		int primaryUser = user.getUserRecordID();
-		int secondaryUser = 1; // TODO temp for testing
+		//--- user information ---//
+		       // primary user
+		int primaryUserID = primaryUser.getUserRecordID();
+		
+		      // secondary user
+		User secondaryUser = uh.getUserInfo(secondaryMyID);
+		int secondaryUserID = secondaryUser.getUserRecordID();
+		
+		
 		
 		// create reservation object to insert in query
-		Reservation reservation = new Reservation(primaryUser, secondaryUser, roomID, currentDate, currentDate, startTime, endTime, hourIncrement, buildingID, free);
+		Reservation reservation = new Reservation(primaryUserID, secondaryUserID, roomID, currentDate, currentDate, startTime, endTime, hourIncrement, buildingID, free);
 		ReservationInsertQuery riq = new ReservationInsertQuery();
 		riq.doReservationInsert(reservation);
 		
 		// send confirmation email
+		String primaryEmail = primaryUser.getUserEmail();
+		String secondaryEmail;
+		if(secondaryUser.getUserEmail() == null && secondaryUser.getUserEmail().isEmpty()){
+			secondaryEmail = secondaryMyID + "@uga.edu";
+		} else {
+			secondaryEmail = secondaryUser.getUserEmail();
+		}
+		
 		Email email = new Email();
-		String primaryEmail = user.getUserEmail();
 		email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime, endTime, buildingName, roomNumber);
 		
 		// set success message and forwarding URL
