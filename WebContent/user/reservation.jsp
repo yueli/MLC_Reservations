@@ -42,7 +42,7 @@
 				<p>Starting at: 
 				<input type="text" name="startTime" id="startTime" value="${startTime}" disabled></p>
 				<p>Reservation Length: ${incrementSelect}</p>
-				<p>Please enter email of secondary person:<br>
+				<p>Please enter myID of secondary person:<br>
 				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
 				<button onclick="goBack()">Go Back</button><input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
 			</form>
