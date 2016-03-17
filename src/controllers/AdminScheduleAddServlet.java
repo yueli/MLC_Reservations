@@ -1,11 +1,14 @@
 package controllers;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class AdminScheduleAddServlet
@@ -13,29 +16,42 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet({ "/AdminScheduleAddServlet", "/new-schedule" })
 public class AdminScheduleAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private HttpSession session;
+    private String url;
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AdminScheduleAddServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		this.session = request.getSession();
+		if(this.session != null){
+			// TODO Your functions here
+			
+		} else {
+			// go back to login
+			this.session.invalidate();
+			url = "[insert login controller or login url here";
+		}
+		
+		// forward the request
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 	}
+	
 
 }
