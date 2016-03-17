@@ -65,11 +65,11 @@ public class AdminReservationsSelectQuery {
 				+ "tomcatdb.Reservations.reserveEndTime, "
 				+ "tomcatdb.Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.User AS a, tomcatdb.User AS b "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = '" + buildingID + "' "
+				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = ? "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.primaryUser = a.userID "
 				+ "AND tomcatdb.Reservations.secondaryUser = b.userID "
-				+ "AND tomcatdb.Reservations.reserveStartDate = '" + currentDate + "' "
+				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
 				+ "AND tomcatdb.Reservations.free = 'N' "
 				+ "ORDER BY tomcatdb.Rooms.roomNumber, "
 				+ "tomcatdb.Reservations.reserveStartDate, "
@@ -78,8 +78,11 @@ public class AdminReservationsSelectQuery {
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, buildingID);
+			ps.setString(2, currentDate);
+			
 			this.results = ps.executeQuery();
-			System.out.println("User Query: " + query);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in AdminReservationsSelectQuery.java: doUserReservationRead method. Please check connection or SQL statement: " + query);
@@ -105,18 +108,21 @@ public class AdminReservationsSelectQuery {
 				+ "tomcatdb.Reservations.reserveEndTime, "
 				+ "tomcatdb.Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.Admin "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = '" + buildingID + "' "
+				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = ? "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.Admin_adminID = tomcatdb.Admin.adminID "
-				+ "AND tomcatdb.Reservations.reserveStartDate = '" + currentDate + "' "
+				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
 				+ "ORDER BY tomcatdb.Rooms.roomNumber ASC, "
 				+ "tomcatdb.Reservations.reserveStartDate, "
 				+ "tomcatdb.Reservations.reserveStartTime DESC";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection2.prepareStatement(query);
+			ps.setInt(1, buildingID);
+			ps.setString(2, currentDate);
+			
 			this.results2 = ps.executeQuery();
-			System.out.println("Admin Query: " + query);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in AdminReservationsSelectQuery.java: doAdminReservationRead method. Please check connection or SQL statement: " + query);

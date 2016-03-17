@@ -46,13 +46,21 @@ public class RoomsSelectQuery {
 		
 		public void doRoomRead(int building, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
-			String query = "SELECT roomID, roomNumber FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = "
-					+ "tomcatdb.Building.buildingID AND tomcatdb.Building.buildingID = '" + building + "'" + " AND tomcatdb.Rooms.roomStatus = 1 "
-							+ "AND tomcatdb.Rooms.roomFloor = '" + floor + "'" + " ORDER BY roomNumber";
+			String query = "SELECT roomID, roomNumber "
+					+ "FROM tomcatdb.Rooms, tomcatdb.Building "
+					+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
+					+ "AND tomcatdb.Building.buildingID = ? "
+					+ "AND tomcatdb.Rooms.roomStatus = ? "
+					+ "AND tomcatdb.Rooms.roomFloor = ? "
+					+ "ORDER BY roomNumber";
 
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, building);
+				ps.setString(2, "1");
+				ps.setString(3, floor);
+				
 				this.results = ps.executeQuery();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -61,7 +69,23 @@ public class RoomsSelectQuery {
 		}
 		
 		
-		
+		/**
+		 * This method constructs the tables that you see in browse-reservations.
+		 * Here I create the structure for the jQuery tabs for the rooms
+		 * Each tab will show the table/availability schedule for the selected room number.
+		 * To show the times, I created a string table block that is used in the loop to query if a room is available at the time
+		 * if the room is unavailable, the cell will have an ID of red
+		 * if the room is available, the cell will have and ID of green
+		 * if the time select (in the loop) is less than the current time, the cell ID is gray.
+		 * If it is 11 minutes past current time, the cell will have in ID of yellow.
+		 * Yellow means that the room was reserved but is now open for everyone (without a reservation)
+		 * Gray means that time has past so you can reserve a room at that time
+		 * information is sent via hidden forms to make a Browse Reserve Servlet 
+		 * uses Date Time Converter and Time converter classes to convert, parse, of format date or times
+		 * a key table is at the bottom of each schedule table in the tabs.
+		 * 
+		 * @return String HTML table
+		 */
 		public String getRoomsTable(){
 			// create the times to display in a table.  
 			String[] timeBlock = {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", 

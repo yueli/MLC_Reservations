@@ -24,7 +24,7 @@ import model.User;
 @WebServlet({ "/BrowseConfirmation", "/BrowseConfirm" })
 public class BrowseConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private HttpSession session;   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,8 +43,9 @@ public class BrowseConfirmServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		this.session = request.getSession();
 		
+		// get request and session parameters/attributes
 		String startTime = (String) session.getAttribute("startTime");
 		int roomID = Integer.parseInt((String) session.getAttribute("roomID"));
 		String roomNumber = (String) session.getAttribute("roomNumber");
@@ -55,12 +56,19 @@ public class BrowseConfirmServlet extends HttpServlet {
 		int hourIncrement = Integer.parseInt(request.getParameter("userIncrementSelected"));
 		String secondaryMyID = (String) request.getParameter("secondary");
 		
+		// user helper used to get user information
 		UserHelper uh = new UserHelper();
 		
 		// initialize message and forwarding URL
 		String url = "";
 		String msg = "";
 		
+		// secondary user ID check
+		if(primaryUser.getMyID() == secondaryMyID){
+			msg = "You cannot enter your MyID as a secondary ID. "
+					+ "Please Enter a MyID other than your own. ";
+			url = "user/reservation.jsp";
+		}
 		// verify inputed secondary user ID
 		if(!uh.inUserTable(secondaryMyID)){
 			msg = "Please have " + secondaryMyID + " login once into the application. "
@@ -77,7 +85,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 		// convert time to 24-hour format + get the end time
 		TimeConverter tc = new TimeConverter();
 		startTime = tc.convertTimeTo24(startTime);
-		String endTime = DateTimeConverter.addTime(startTime, hourIncrement);
+		String endTime = DateTimeConverter.addTime(startTime, hourIncrement); // adding time and hour increment together to get end time
 		
 		//--- user information ---//
 		       // primary user
@@ -97,12 +105,16 @@ public class BrowseConfirmServlet extends HttpServlet {
 		// send confirmation email
 		String primaryEmail = primaryUser.getUserEmail();
 		String secondaryEmail;
+		
+		// make sure an email exists in our local database for secondary user. 
+		// if not, use MyID@uga.edu as email.
 		if(secondaryUser.getUserEmail() == null && secondaryUser.getUserEmail().isEmpty()){
 			secondaryEmail = secondaryMyID + "@uga.edu";
 		} else {
 			secondaryEmail = secondaryUser.getUserEmail();
 		}
 		
+		// class used to send email
 		Email email = new Email();
 		email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime, endTime, buildingName, roomNumber);
 		

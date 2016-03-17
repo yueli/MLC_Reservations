@@ -42,15 +42,22 @@ public class ReservationSelectQuery {
 	}
 	
 	public void doReservationRead(String currentDate, String time, int roomNumber){
-		String query = "SELECT Reservations.reserveID FROM tomcatdb.Reservations, "
-				+ "tomcatdb.Rooms WHERE Reservations.reserveStartDate = '" + currentDate + "'" + "AND "
-						+ "((Reservations.reserveStartTime = '" + time + "') OR ('" + time + "' BETWEEN reserveStartTime "
-								+ "AND reserveEndTime)) AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = " + roomNumber + " "
-										+ "AND tomcatdb.Reservations.free = 'N'";
+		String query = "SELECT Reservations.reserveID "
+				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
+				        + "WHERE Reservations.reserveStartDate = ? "
+				       	+ "AND ((Reservations.reserveStartTime = ?) OR (? BETWEEN reserveStartTime AND reserveEndTime)) "
+				       	+ "AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = ? "
+						+ "AND tomcatdb.Reservations.free = ?";
 		
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, currentDate);
+			ps.setString(2, time);
+			ps.setString(3, time);
+			ps.setInt(4, roomNumber);
+			ps.setString(5, "N");
+			
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -30,11 +30,22 @@ public class HourCountSelectQuery {
 	
 	public void doIncrementRead(int userID){
 		DateTimeConverter dtc = new DateTimeConverter();
-		
 		String currentDate = dtc.parseDate(dtc.datetimeStamp());
-		String query = "SELECT SUM(tomcatdb.Reservations.hourIncrement) as incrementSum FROM tomcatdb.User, tomcatdb.Reservations WHERE tomcatdb.Reservations.primaryUser = tomcatdb.User.userID AND tomcatdb.Reservations.primaryUser = " + userID + " AND tomcatdb.Reservations.reserveStartDate = '" + currentDate + "' AND tomcatdb.Reservations.reserveEndDate = '" + currentDate + "' AND tomcatdb.Reservations.free = 'N'";
+		
+		String query = "SELECT SUM(tomcatdb.Reservations.hourIncrement) as incrementSum "
+				+ "FROM tomcatdb.User, tomcatdb.Reservations "
+				+ "WHERE tomcatdb.Reservations.primaryUser = tomcatdb.User.userID "
+				+ "AND tomcatdb.Reservations.primaryUser = ? "
+				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
+				+ "AND tomcatdb.Reservations.reserveEndDate = ? "
+				+ "AND tomcatdb.Reservations.free = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, userID);
+			ps.setString(2, currentDate);
+			ps.setString(3, currentDate);
+			ps.setString(4, "N");
+			
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
