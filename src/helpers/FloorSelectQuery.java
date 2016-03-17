@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import model.DbConnect;
 import model.Rooms;
@@ -39,10 +38,17 @@ public class FloorSelectQuery {
 	}
 	
 	public void doFloorRead(int building){
-		String query = "SELECT roomFloor FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingID = '" + building + "'" + " GROUP BY roomFloor ORDER BY roomFloor";
+		String query = "SELECT roomFloor "
+				+ "FROM tomcatdb.Rooms, tomcatdb.Building "
+				+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
+				+ "AND tomcatdb.Building.buildingID = ? " 
+				+ "GROUP BY roomFloor "
+				+ "ORDER BY roomFloor";
 	
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, building);
+			
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -76,17 +82,6 @@ public class FloorSelectQuery {
 		return select;
 	}
 	
-	public ArrayList<String> getFloorResultsArray(){
-		ArrayList<String> floor = new ArrayList<String>();;
-			try {
-				while(this.results.next()){
-					floor.add(this.results.getString("roomFloor"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		return floor;
-	}
 	
 	public String getFloorResults(String selected){
 		// Create the String for HTML

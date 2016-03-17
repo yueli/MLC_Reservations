@@ -53,14 +53,17 @@ public class BuildingSelectQuery {
 		String query = "SELECT tomcatdb.Building.buildingID, "
 				+ "tomcatdb.Building.buildingName "
 				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
-				+ "WHERE tomcatdb.Building.buildingStatus = 1 "
+				+ "WHERE tomcatdb.Building.buildingStatus = ? "
 				+ "AND tomcatdb.Building.buildingID = tomcatdb.Schedule.Building_buildingID "
-				+ "AND tomcatdb.Schedule.startDate = '" + currentDate + "'" + " "
-				+ "AND ((tomcatdb.Schedule.startTime = '" + currentTime + "') OR ('" + currentTime + "' "
-				+ "BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
+				+ "AND tomcatdb.Schedule.startDate = ? "
+				+ "AND ((tomcatdb.Schedule.startTime = ?) OR (? BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, "1");
+			ps.setString(2, currentDate);
+			ps.setString(3, currentTime);
+			ps.setString(4, currentTime);
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -77,10 +80,12 @@ public class BuildingSelectQuery {
 		String query = "SELECT tomcatdb.Building.buildingID, "
 				+ "tomcatdb.Building.buildingName "
 				+ "FROM tomcatdb.Building "
-				+ "WHERE tomcatdb.Building.buildingStatus = 1 ";
+				+ "WHERE tomcatdb.Building.buildingStatus = ? ";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, "1");
+			
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
