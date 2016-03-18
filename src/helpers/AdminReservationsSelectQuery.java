@@ -164,7 +164,7 @@ public class AdminReservationsSelectQuery {
 				admin.setFname(this.results2.getString("fname"));
 				admin.setLname(this.results2.getString("lname"));
 				reservation.setReserveName(this.results2.getString("reserveName"));
-				room.setRoomNumber(Integer.parseInt(this.results2.getString("roomNumber")));
+				room.setRoomNumber(this.results2.getString("roomNumber"));
 				reservation.setReserveStartDate(this.results2.getString("reserveStartDate"));
 				reservation.setReserveEndDate(this.results2.getString("reserveEndDate"));
 				reservation.setReserveStartTime(this.results2.getString("reserveStartTime"));
@@ -226,7 +226,7 @@ public class AdminReservationsSelectQuery {
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
 				
-				room.setRoomNumber(Integer.parseInt(this.results.getString("roomNumber")));
+				room.setRoomNumber(this.results.getString("roomNumber"));
 				primary.setMyID(this.results.getString("primary"));
 				secondary.setMyID(this.results.getString("secondary"));
 				reservation.setReserveStartDate(this.results.getString("reserveStartDate"));

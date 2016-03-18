@@ -41,7 +41,7 @@ public class ReservationSelectQuery {
 		}
 	}
 	
-	public void doReservationRead(String currentDate, String time, int roomNumber){
+	public void doReservationRead(String currentDate, String startTime, String roomNumber){
 		String query = "SELECT Reservations.reserveID "
 				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
 				        + "WHERE Reservations.reserveStartDate = ? "
@@ -53,9 +53,9 @@ public class ReservationSelectQuery {
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			ps.setString(1, currentDate);
-			ps.setString(2, time);
-			ps.setString(3, time);
-			ps.setInt(4, roomNumber);
+			ps.setString(2, startTime);
+			ps.setString(3, startTime);
+			ps.setString(4, roomNumber);
 			ps.setString(5, "N");
 			
 			this.results = ps.executeQuery();

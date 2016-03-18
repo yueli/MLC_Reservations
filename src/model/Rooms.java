@@ -8,7 +8,7 @@ public class Rooms {
 	private int roomID;
 	private int admin;
 	private int building;
-	private int roomNumber;
+	private String roomNumber;
 	private int roomFloor;
 	private int roomStatus;
 	private String qrUrl;
@@ -23,7 +23,7 @@ public class Rooms {
 	 * @param roomStatus int status - whether a room is online or not
 	 * @param qrUrl the String url for the qr code
 	 */
-	public Rooms(int roomID, int adminID, int buildingID, int roomNumber, int roomFloor, int roomStatus,
+	public Rooms(int roomID, int adminID, int buildingID, String roomNumber, int roomFloor, int roomStatus,
 			String qrUrl) {
 		this.roomID = roomID;
 		this.admin = adminID;
@@ -40,7 +40,7 @@ public class Rooms {
 	 * @param roomFloor int floor number
 	 * @param roomStatus in status - whether the room is online or not.
 	 */
-	public Rooms(int buildingID, int roomNumber, int roomFloor, int roomStatus) {
+	public Rooms(int buildingID, String roomNumber, int roomFloor, int roomStatus) {
 		this.building = buildingID;
 		this.roomNumber = roomNumber;
 		this.roomFloor = roomFloor;
@@ -100,14 +100,14 @@ public class Rooms {
 	/**
 	 * @return the roomNumber
 	 */
-	public int getRoomNumber() {
+	public String getRoomNumber() {
 		return roomNumber;
 	}
 
 	/**
 	 * @param roomNumber the roomNumber to set
 	 */
-	public void setRoomNumber(int roomNumber) {
+	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
 	}
 
