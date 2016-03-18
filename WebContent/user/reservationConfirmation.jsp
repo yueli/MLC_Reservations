@@ -8,8 +8,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script> 
 			$(function() {
-				$("#header").load("./userheader.html"); 
-				$("#footer").load("../footer.html"); 
+				$("#header").load("user/userheader.html"); 
+				$("#footer").load("footer.html"); 
 			});
 		</script> 
 	</head>

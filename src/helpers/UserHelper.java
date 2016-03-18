@@ -391,18 +391,21 @@ public class UserHelper {
 	
 	public User getUserInfo(String myID){
 		User user = new User();
-		String query = "SELECT * FROM tomcatdb.User WHERE userID = '" + myID + "' LIMIT 1";
+		String query = "SELECT * FROM tomcatdb.User WHERE myID = ? LIMIT 1";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-
+			ps.setString(1, myID);
+			
 			this.results = ps.executeQuery();
-			this.results.next();
-			user.setUserRecordID(this.results.getInt("userID"));
-			user.setMyID(this.results.getString("myID"));
-			user.setUserEmail(this.results.getString("email"));
-			user.setUserFirstName(this.results.getString("fname"));
-			user.setUserLastName(this.results.getString("lname"));
-			user.setLastLogin(this.results.getString("lastLogin"));
+			while(this.results.next()){
+				user.setUserRecordID(this.results.getInt("userID"));
+				user.setMyID(this.results.getString("myID"));
+				user.setUserEmail(this.results.getString("email"));
+				user.setUserFirstName(this.results.getString("fname"));
+				user.setUserLastName(this.results.getString("lname"));
+				user.setLastLogin(this.results.getString("lastLogin"));
+			}
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

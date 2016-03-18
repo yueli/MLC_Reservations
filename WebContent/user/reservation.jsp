@@ -9,8 +9,8 @@
 		<script> 
 		
 			$(function() {
-				$("#header").load("./userheader.html"); 
-				$("#footer").load("../footer.html"); 
+				$("#header1").load("user/userheader.html"); 
+				$("#footer").load("footer.html"); 
 			});
 			// function for back button
 			function goBack() {
@@ -19,7 +19,7 @@
 		</script> 
 	</head>
 	<body>
-		<div id="header" style="z-index:1;"></div>
+		<div id="header1" style="z-index:1;"></div>
 		<br>
 		<br>
 		<br>
@@ -43,7 +43,7 @@
 				<input type="text" name="startTime" id="startTime" value="${startTime}" disabled></p>
 				<p>Reservation Length: ${incrementSelect}</p>
 				<p>Please enter myID of secondary person:<br>
-				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
+				<input type="text" name="secondary" id="secondary" placeholder="MyID" required></p>
 				<button onclick="goBack()">Go Back</button><input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
 			</form>
 		</div>	

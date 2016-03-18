@@ -101,7 +101,7 @@ public class RoomsSelectQuery {
 			try {
 				while(this.results.next()){
 					Rooms rooms = new Rooms();
-					rooms.setRoomNumber(this.results.getInt("roomNumber"));
+					rooms.setRoomNumber(this.results.getString("roomNumber"));
 					table += "<li><a href='#tabs-" + h + "'" + ">" + rooms.getRoomNumber() + "</a></li>";
 					h++;
 				}
@@ -119,7 +119,7 @@ public class RoomsSelectQuery {
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
 					room.setRoomID(this.results.getInt("roomID")); // TODO
-					room.setRoomNumber(this.results.getInt("roomNumber"));
+					room.setRoomNumber(this.results.getString("roomNumber"));
 					
 					// display results in a table
 					table += "<div id='tabs-" + j + "'" + ">";

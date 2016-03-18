@@ -20,13 +20,13 @@
 	  	        $( "#tabs" ).tabs();
 	  	    });
 			$(function() {
-				$("#header").load("userheader.html"); 
+				$("#header1").load("user/userheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<br>
 		<br>
 		<br>
