@@ -219,7 +219,7 @@ public class Email {
                 new javax.mail.Authenticator() {
         		   //TODO Set Username & Password
                    private String username = "study.room.reserve@gmail.com";
-                   private String password = "mlcreservations";
+                   private String password = "";
 
 				protected PasswordAuthentication getPasswordAuthentication() {
                       return new PasswordAuthentication(this.username, this.password);
