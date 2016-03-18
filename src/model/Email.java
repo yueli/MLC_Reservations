@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -199,7 +197,8 @@ public class Email {
         String from = "example@email.com"; //TODO change from Email
         
         // MAIL SERVER
-        String host = "smtp.office365.com";
+       // String host = "smtp.office365.com";
+        String host = "smtp.gmail.com";
 
         // Create properties for the Session
         Properties props = new Properties();
@@ -209,7 +208,7 @@ public class Email {
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.port", "25");
+        props.put("mail.smtp.port", "587");
         
         // To see what is going on behind the scene
         props.put("mail.debug", "true");
@@ -219,8 +218,8 @@ public class Email {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
         		   //TODO Set Username & Password
-                   private String username = "";
-                   private String password = "";
+                   private String username = "study.room.reserve@gmail.com";
+                   private String password = "mlcreservations";
 
 				protected PasswordAuthentication getPasswordAuthentication() {
                       return new PasswordAuthentication(this.username, this.password);
@@ -293,13 +292,14 @@ public class Email {
 	 * Set the message of the email.  This is an HTML email message
 	 */
     public static void setHTMLContent(Message msg, String reserveDate, String startTime, String endTime, String building, String roomNumber) throws MessagingException {
-
+    	DateTimeConverter dtc = new DateTimeConverter();
+    	TimeConverter tc = new TimeConverter();
         String html = "<html><head><title>" +
                         msg.getSubject() +
                         "</title></head><body><h1>" +
                         msg.getSubject() +
                         "</h1><p style='font-size:120%'>Thanks for reserving a room at " + building + "! " +
-                        "Your reservation is set for room " + roomNumber + " on " + reserveDate + " from " + startTime + " to " + endTime + ". <br><br>" + 
+                        "Your reservation is set for room " + roomNumber + " on " + dtc.convertDateLong(reserveDate) + " from " + tc.convertTimeTo12(startTime) + " to " + tc.convertTimeTo12(endTime) + ". <br><br>" + 
                         "To check-in, view, or cancel your reservation, please visit [insert website].</body></html>";
 
         // HTMLDataSource is a static nested class
@@ -337,16 +337,5 @@ public class Email {
         
      
     }
-    
-    /**
-     * 
-     * @param emailStr email address
-     * @return makes sure that emails entered follow the pattern listed below.
-     */
-	public static boolean isEmail(String emailStr) {
-		Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = emailRegex.matcher(emailStr);
-		return matcher.find();
-	}
 	 
 } 
