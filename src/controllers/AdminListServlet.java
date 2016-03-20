@@ -47,9 +47,10 @@ public class AdminListServlet extends HttpServlet {
 		session = request.getSession();
 
 		// create admin user object
-		Admin adminUser = (Admin) session.getAttribute("adminUser");
-
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
 		
+		System.out.println("AdminListServlet: logged in user's role = " + loggedInAdminUser.getRole());
+	
 		// use the class AdminUserHelper
 		AdminUserHelper adminHelper = new AdminUserHelper();
 		
@@ -58,7 +59,7 @@ public class AdminListServlet extends HttpServlet {
 		table = adminHelper.ListAdmins();
 		
 		//forward our request along
-		request.setAttribute("adminUser", adminUser);
+		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		request.setAttribute("table", table);
 
 		url = "admin/adminList.jsp";	

@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +28,7 @@ public class AdminEditServlet extends HttpServlet {
      */
     public AdminEditServlet() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	/**
@@ -43,23 +44,42 @@ public class AdminEditServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String table = "";
+		String message = "";
+		
 		//get our current session
 		session = request.getSession();
-
-		// create admin user object
-		Admin adminUser = (Admin) session.getAttribute("adminUser");
-
-        //pull the fields from the form
-		int adminID = Integer.parseInt(request.getParameter("adminID"));
+		message = (String) request.getAttribute("message"); 
 		
-		// get the admin's user information and format into a table
+		// blank message if nothing gotten in message attribute
+		
+		if (message == null || message.isEmpty()) {
+			 message = "";
+		}
+		
+			
+		System.out.println("AdminEditServlet: beginning - message = " + message);
+
+		// create admin user object w/ session data on the logged in user's info
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
+			
+		System.out.println("AdminEditServlet: loggedInAdminUser adminMyID = " + loggedInAdminUser.getAdminMyID());
+
+		 
+		//hidden parameter = admin record id of the person to edit from adminEdit.jsp
+		int adminID = Integer.parseInt(request.getParameter("adminID")); 
+		
+		System.out.println("AdminEditServlet: adminID = " + adminID);
+		
 		AdminUserHelper adminUserHelper = new AdminUserHelper();
+	
+		// creates table w/ admin user's info to edit
+		// some of the pull down options are determined by the logged in admin's role
+       table = adminUserHelper.getAdminInfo(adminID, loggedInAdminUser);
 		
-        table = adminUserHelper.getAdminInfo(adminID, adminUser)	;
-		
+       System.out.println("AdminEditServlet: after getAdminInfo - message = " + message);
 
-
-        request.setAttribute("adminUser", adminUser);
+       	request.setAttribute("message", message);
+        request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		request.setAttribute("table", table);
 
 		url = "admin/adminEdit.jsp";	

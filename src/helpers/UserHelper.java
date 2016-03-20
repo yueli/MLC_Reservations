@@ -56,46 +56,14 @@ public class UserHelper {
 	 * Authenticates a user 
 	 * @return A user object if successful, null if unsuccessful.
 	 */
-	public User authenticateUser(String myID, String encryptedPass) {
-		User su = new User(); //set to null to return null in case not authenticated
+	public boolean authenticateUser(String myID, String encryptedPass) {
 		
-		System.out.println("UserHelper: authentication myID = " + myID); //MyID the student logged in with
-		
-		boolean valid = false; //assume not valid
 
-		//--------------------------------------------
-		//TODO
-		// call some authentication server/code to check if UGA student w/ login name and password
-		// send it myID and loginPassword
-		// get back first name, last name, and email back from authentication server
-		// returns w/ data or null
-		//--------------------------------------------
-		
-		//purely for testing, set the valid to true until authentication in place
-		valid = true;
-		//valid = false;
-		
-		String studentUserMyID = "ganix";
-		String studentUserFirstName = "Ginger";
-		String studentUserLastName = "Nix";
-		String userEmail = "ganix@uga.edu";
-		
-		studentUserMyID = myID;
-		System.out.println("UserHelper: studetUserMyID= " + studentUserMyID);
-			
-		//if true, set user object info and return login user data
-		if (valid){
-			//User su = new User(); //GINGER UNCOMMENTED THIS
-			//put all the student's data into the login user object
-			su.setMyID(studentUserMyID);
-			su.setUserLastName(studentUserLastName);
-			su.setUserFirstName(studentUserFirstName);
-			su.setUserEmail(userEmail);	
-			System.out.println("UserHelper: auth in valid if userMyID = " + studentUserMyID);
-		}		
 
-		return su; //will be null if user wasn't valid
+		return true; //will be null if user wasn't valid
 	}
+
+//-------------
 	
 	public boolean inUserTable(String myID){
 		
@@ -336,29 +304,11 @@ public class UserHelper {
 
 		return adminUser; //will be null if user wasn't valid
 	}
-	
-	public boolean inAdminUserTable(String myID){
-		
-		
-		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' AND adminStatus = 1 LIMIT 1";
-		
-		try {
-			PreparedStatement ps = this.connection.prepareStatement(query);
 
-			this.results = ps.executeQuery();
-			if (this.results.next()) {
-				return true;
-			}else{
-				return false;
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("****Error in UserHelper.java: inAdminUserTable method. Query = " + query);
-		}
-		
-		return false;
-	}
+	
+	//======
+	
+	
 	
 	public Admin getAdminInfo(String myID) {
 		
