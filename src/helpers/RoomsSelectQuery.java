@@ -118,11 +118,11 @@ public class RoomsSelectQuery {
 				while(this.results.next()){
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
-					room.setRoomID(this.results.getInt("roomID")); // TODO
+					room.setRoomID(this.results.getInt("roomID")); 
 					room.setRoomNumber(this.results.getString("roomNumber"));
 					
 					// display results in a table
-					table += "<div id='tabs-" + j + "'" + ">";
+					table += "<div id='tabs-" + j + "'" + ">"; // used for the jQuery tabs
 					table += "<table border=1>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
@@ -149,6 +149,7 @@ public class RoomsSelectQuery {
 						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
 						
 						// if result set IS NOT empty, then there IS a reservation at that time
+						// if there IS a reservation, then color cells red for unavailable.
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
@@ -191,6 +192,7 @@ public class RoomsSelectQuery {
 						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
 						
 						// if result set IS NOT empty, then there IS a reservation at that time
+						// if there IS a reservation, then color cells red for unavailable.
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
@@ -217,7 +219,7 @@ public class RoomsSelectQuery {
 					table += "</tbody>";
 					table += "</table>";
 					
-					// Key for rooms table
+					// Key Table for rooms table
 					table += "<br><br><br>";
 					table += "<table>";
 					table += "<tbody class='room'>";
