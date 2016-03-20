@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,42 +43,89 @@ public class AdminSaveServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String table = "";
 		String message = "";
+		boolean update = true;
 		
 		//get our current session
 		session = request.getSession();	
-
-		// create admin user object
-		Admin adminUser = (Admin) session.getAttribute("adminUser");
-
-		int adminRecordID = adminUser.getAdminID();
 		
-		//pull the fields from the form
-		String fname = request.getParameter("fname");
-		String lname = request.getParameter("lname");
-		String adminMyID = request.getParameter("adminMyID");
-		String role = request.getParameter("role");
-		String status = request.getParameter("status");
+		// create admin user object w/ session data on the logged in user's info
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+		
+		System.out.println("AdminSaveServlet: logged in admin user's record ID = " + loggedInAdminUser.getAdminID());
+		
+		Admin adminUserBeingEdited = new Admin();
+		
+		//pull the hidden field for the user being edited's record id from the form adminEdit.jsp
+		adminUserBeingEdited.setAdminID(Integer.parseInt(request.getParameter("adminID")));
 
-		System.out.println("AdminSaveServlet: fname = " + fname);
-
-
+		System.out.println("AdminSaveServlet: after setting admin ID for user being edited ");
+		
+		//pull the fields from the form adminEdit.jsp to populate the user being edited's object
+		adminUserBeingEdited.setFname(request.getParameter("fname"));
+		adminUserBeingEdited.setLname(request.getParameter("lname"));
+		adminUserBeingEdited.setAdminMyID(request.getParameter("adminMyID"));
+		adminUserBeingEdited.setRole(request.getParameter("role"));
+		adminUserBeingEdited.setAdminStatus(Integer.parseInt(request.getParameter("status")));
+				
+		System.out.println("AdminSaveServlet: adminRecordID for edited user = " + adminUserBeingEdited.getAdminID());
+	
+		System.out.println("AdminSaveServlet: fname = " + adminUserBeingEdited.getFname());
 		
 		AdminUserHelper adminUserHelper = new AdminUserHelper();
 	
-		// update the admin table for this edited admin
-	//HERE HERE 	SUNDAY NIGHT
+		// check to see if logged in user is editing themselves (myID's)
+		// and if so, check to see if logged in user has the role of super admin
+		// and if so, they can't change their role from super admin nor can they inactivate themselves
+		// because the admin users may end up with no one having a super admin role
+		// and that wouldn't be good
 		
-		adminUserHelper.updateAdmin(adminRecordID, fname, lname, adminMyID, role, status);
+		if (Objects.equals(loggedInAdminUser.getAdminMyID(), adminUserBeingEdited.getAdminMyID())){ // if logged in user is editing themselves
+			
+			if 	(	(Objects.equals(loggedInAdminUser.getRole(), "S" )) && // if logged in user's role is super admin
+					(!Objects.equals(adminUserBeingEdited.getRole(), "S" )) // and they are changing their role to something other than super admin
+				)
+			{ 
+				// they can't change their own role - send them back to the editing page w/ a message
+				// and the user being edited's info object to populate the table
+					
+				message = "A Super Admin user may not edit their own role.";	
+				url = "AdminEditServlet";	
+				update = false;
+					
+			}else if (Objects.equals(adminUserBeingEdited.getAdminStatus(), "0" ) ){ 
+				// editing themselves but roles are the same BUT they are making themselves inactive
+				// which is against the rules
+				
+				message = "A Super Admin user may not make themselves inactive.";
+				url = "AdminEditServlet";
+				update = false;
+			}
+		}		
 		
-		request.setAttribute("table", table);
+		// if the edited user can be updated, do it with pleasure
+		if (update){
+			adminUserHelper.updateAdminTable
+				   (adminUserBeingEdited.getAdminID(), 
+					adminUserBeingEdited.getFname(), 
+					adminUserBeingEdited.getLname(), 
+					adminUserBeingEdited.getAdminMyID(), 
+					adminUserBeingEdited.getRole(), 
+					adminUserBeingEdited.getAdminStatus());
 
-		url = "AdminListServlet";	
+			message = "";
+			url = "AdminListServlet";	
+		}
+		
+		request.setAttribute("message", message);
+		request.setAttribute("editedUser", adminUserBeingEdited);
+		request.setAttribute("loggedInUser", loggedInAdminUser);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
-
-		
+		dispatcher.forward(request, response);	
+				
 	}
 
+	
+	// HERE SAT NIGHT - IT LET ME MAKE MYSELF INACTIVE!! AND I'M A SUPER USER!!
 }

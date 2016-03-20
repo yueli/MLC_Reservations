@@ -14,6 +14,8 @@
 </head>
 <body>
 <h1>Admin Edit</h1>
+
+<%= message %>
 <%= table %>
 
 </body>

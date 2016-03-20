@@ -28,21 +28,21 @@
 	<div align="center">
 		<h2>MLC Reservations Administration</h2>
 	
-		${message}
-		adminID = ${adminUser.adminID }
-		my id = ${adminUser.adminMyID}
-		first name = ${adminUser.fname}
-		last name = ${adminUser.lname}
-		role = ${adminUser.role}
-		status = ${adminUser.adminStatus}
-		can't be deleted = ${adminUser.cantBeDeleted}
-		
-		
+		${message} <br />
+		admin record ID = ${loggedInAdminUser.adminID } <br />
+		my id = ${loggedInAdminUser.adminMyID} <br />
+		first name = ${loggedInAdminUser.fname} <br />
+		last name = ${loggedInAdminUser.lname} <br />
+		role = ${loggedInAdminUser.role} <br />
+		status = ${loggedInAdminUser.adminStatus} <br />
 		
 
 		
 		<p>Here are your options:
 			blah blah blah </p>
+			
+			<p><a href='AdminListServlet'>List Admin Users</a></p>
+			
 			
 		<form name="Logout" action="AdminLoginController" method="get">
  			<input class="btn btn-lg btn-red" type="submit" name = "logout" value="Logout">
