@@ -45,7 +45,7 @@ public class QRLoginController extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {  	
-    	
+/*    	
     	System.out.println("GQLoginController = beginning");
     	// called from qrLogin.jsp
     	
@@ -78,13 +78,15 @@ public class QRLoginController extends HttpServlet {
 		UserHelper uh = new UserHelper(); 
 		
 		//see if they are UGA affiliated
-		User loginUser = uh.authenticateUser(username, encryptedPass); //see if the person is UGA affiliated
+		
+		//TODO
+		//User loginUser = uh.authenticateUser(username, encryptedPass); //see if the person is UGA affiliated
 		//NOTE: the authenticate method will not return the user's record ID
 			
-		String userMyID = loginUser.getMyID();
+		//String userMyID = loginUser.getMyID();
 
 		//user will come back null if not authenticated and come back w/ data if authenticated
-		System.out.println("QR Login Controller returned from authentication login user myID =  " + userMyID);	
+		//System.out.println("QR Login Controller returned from authentication login user myID =  " + userMyID);	
 		
         // if they are not valid, send back to QR login with message
 		if (loginUser.getMyID() == null){ //if an empty object sent back (has no user data meaning they were not authenticated)
@@ -266,5 +268,7 @@ public class QRLoginController extends HttpServlet {
         
     } // end do post
     
-    
-} //end servlet
+  */  
+ //end servlet
+}
+}
