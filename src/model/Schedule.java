@@ -31,6 +31,30 @@ public class Schedule {
 		this.summary = summary;
 		this.createdBy = createdBy;
 	}
+	
+	public Schedule(String startDate, String endDate,
+			String startTime, String endTime, String summary, String createdBy){
+		
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.summary = summary;
+		this.createdBy = createdBy;
+	}
+	
+	public Schedule(String startDate, String endDate,
+			String startTime, String endTime, String summary, String createdBy, int allDayEvent, int buildingID){
+		
+		this.allDayEvent = allDayEvent;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.summary = summary;
+		this.createdBy = createdBy;
+		this.buildingID = buildingID;
+	}
 
 	/**
 	 * @return the scheduleID
