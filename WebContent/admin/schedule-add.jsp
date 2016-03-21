@@ -51,10 +51,10 @@
 	</head>
 	<body>
 		<div id="header1"></div>
-		<br><br><br><br><br>
+		<br><br><br>
 		<div align="center">
 			<h2>${msg} ${noButton} ${yesButton}</h2>
-			<p>${building}</p>
+			<p>${buildings}</p>
 			<form name="scheduleForm" action="new-schedule" method="post">
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>

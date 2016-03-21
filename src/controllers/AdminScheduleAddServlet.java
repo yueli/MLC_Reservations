@@ -56,7 +56,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			//------------------------------------------------//
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
 			// if there is no buildingID from request, then display building drop down
-			if (buildingID == null || buildingID.equals("0")){
+			if (buildingID == null){
 				buildingID = "1";
 				int bldg = Integer.parseInt(buildingID);
 				// query building
