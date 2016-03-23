@@ -65,6 +65,10 @@ public class UserHelper {
 
 //-------------
 	
+/*
+ * This method will take the myID aand check to see if
+ * this User exists already	
+ */
 	public boolean inUserTable(String myID){
 		
 		System.out.println("UserHelper inUserTable: myID = " + myID);

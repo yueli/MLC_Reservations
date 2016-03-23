@@ -80,10 +80,14 @@ public class AdminSaveServlet extends HttpServlet {
 		// because the admin users may end up with no one having a super admin role
 		// and that wouldn't be good
 		
-		if (Objects.equals(loggedInAdminUser.getAdminMyID(), adminUserBeingEdited.getAdminMyID())){ // if logged in user is editing themselves
+		// if logged in user is editing themselves
+		if (Objects.equals(loggedInAdminUser.getAdminMyID(), adminUserBeingEdited.getAdminMyID())){ 
 			
-			if 	(	(Objects.equals(loggedInAdminUser.getRole(), "S" )) && // if logged in user's role is super admin
-					(!Objects.equals(adminUserBeingEdited.getRole(), "S" )) // and they are changing their role to something other than super admin
+			// if logged in user's role is super admin
+			// and they are changing their role to something other than super admin
+		
+			if 	(	(Objects.equals(loggedInAdminUser.getRole(), "S" )) && 
+					(!Objects.equals(adminUserBeingEdited.getRole(), "S" )) 
 				)
 			{ 
 				// they can't change their own role - send them back to the editing page w/ a message
@@ -92,8 +96,9 @@ public class AdminSaveServlet extends HttpServlet {
 				message = "A Super Admin user may not edit their own role.";	
 				url = "AdminEditServlet";	
 				update = false;
-					
-			}else if (Objects.equals(adminUserBeingEdited.getAdminStatus(), "0" ) ){ 
+				System.out.println("AdminSaveServlet: before status compare status = " + adminUserBeingEdited.getAdminStatus());
+
+			}else if (Objects.equals(adminUserBeingEdited.getAdminStatus(), 0 ) ){ 
 				// editing themselves but roles are the same BUT they are making themselves inactive
 				// which is against the rules
 				
@@ -126,6 +131,4 @@ public class AdminSaveServlet extends HttpServlet {
 				
 	}
 
-	
-	// HERE SAT NIGHT - IT LET ME MAKE MYSELF INACTIVE!! AND I'M A SUPER USER!!
 }
