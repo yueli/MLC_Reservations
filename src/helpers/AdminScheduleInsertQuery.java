@@ -121,8 +121,8 @@ public class AdminScheduleInsertQuery {
 	 */
 	public static void main (String [] args){
 		Schedule schedule = new Schedule();
-		schedule.setStartDate("2016-03-20");
-		schedule.setEndDate("2016-03-20");
+		schedule.setStartDate("2017-03-20");
+		schedule.setEndDate("2017-03-20");
 		int id = 1;
 		schedule.setBuildingID(id);
 		AdminScheduleInsertQuery siq = new AdminScheduleInsertQuery();

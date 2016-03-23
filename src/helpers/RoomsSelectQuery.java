@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.DateTimeConverter;
 import model.DbConnect;
@@ -43,8 +45,33 @@ public class RoomsSelectQuery {
 			
 		}
 		
+		public List<String> roomList (int buildingID){
+			String query = "SELECT roomNumber FROM tomcatdb.Rooms, tomcatdb.Building "
+					+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
+					+ "AND tomcatdb.Building.buildingID = ?";
+			
+			List<String> roomsList = new ArrayList<String>();
+			// securely run query
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, buildingID);
+				this.results = ps.executeQuery();
+				
+				// add rooms to list array
+				while(this.results.next()){
+					roomsList.add(this.results.getString("roomNumber"));
+				}
+				return roomsList;
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement: " + query);
+			} 
+			
+			return roomsList;
+		}
 		
-		public void doRoomRead(int building, String floor){
+		public void doRoomRead(int buildingID, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
 			String query = "SELECT roomID, roomNumber "
 					+ "FROM tomcatdb.Rooms, tomcatdb.Building "
@@ -57,7 +84,7 @@ public class RoomsSelectQuery {
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
-				ps.setInt(1, building);
+				ps.setInt(1, buildingID);
 				ps.setString(2, "1");
 				ps.setString(3, floor);
 				

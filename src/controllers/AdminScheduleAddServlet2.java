@@ -81,17 +81,18 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				
 				// convert date and time to SQL format
 				DateTimeConverter dtc = new DateTimeConverter();
-				TimeConverter tc = new TimeConverter();
 				
 				if (startDate != null && !startDate.isEmpty()){
 					startDate = dtc.slashDateConvert(startDate);
+				} else {
+					startDate = dtc.parseDate(dtc.datetimeStamp());
 				}
 				if (endDate != null && !endDate.isEmpty()){
 					endDate =  dtc.slashDateConvert(endDate);
 				}
 				
 				// convert time to SQL format
-				
+				TimeConverter tc = new TimeConverter();
 				
 				// if there is an active session variable, 
 				// it will replace the request variable (which doesn't persist).
@@ -176,7 +177,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					siq.doScheduleInsert(schedule);
 					url = "schedule";
 				} else {
-					msg = "Item already exist, would you like to update the entry?";
+					msg = "Entry for " + startDate + "exists, would you like to update the entry?";
 					// create a button that says yes or no
 					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
 					yesButton += "<input name ='update' type='hidden' value='yes'>";

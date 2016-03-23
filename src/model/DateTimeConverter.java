@@ -356,20 +356,43 @@ public class DateTimeConverter {
 	}
 	/**
 	 * 
-	 * @param stringStartTime String starting time
-	 * @param stringEndTime String ending time
-	 * @param hourIncrement int hour increment - how long
+	 * @param stringStartTime String starting time in 24-hour format
+	 * @param stringEndTime String ending time in 24-hour format
 	 * @return String array list of all values inclusive between start time and end time
 	 */
-	public List<String> timeRangeList (String stringStartTime, String stringEndTime, int hourIncrement){
-		TimeConverter tc = new TimeConverter();
+	public List<Integer> timeRangeList (String startTime, String endTime){
+		// integer to place the parsed hour from the time.
+		int startHour;
+		int endHour;
 		
-		// if time is not in 24-hour format
-		stringStartTime = tc.convertTimeTo24(stringStartTime);
-		stringEndTime = tc.convertTimeTo24(stringEndTime);
+		// array list to place the time range, inclusive.
+		List<Integer> timeRange = new ArrayList<Integer>();
 		
+		// parse out the hour from time in 00:00:00 format
+		startHour = Integer.parseInt(startTime.substring(0, Math.min(startTime.length(), 2)));
+		endHour = Integer.parseInt(endTime.substring(0, Math.min(endTime.length(), 2)));
 		
-		return null;
+		// add range to list.
+		/**
+		 * Increment hour and if incrementing from 23, start hour over to 0 
+		 * increment to end hour.
+		 */
+		if (startHour > endHour){
+			for(int h = startHour;  h <=24; h++){
+				timeRange.add(startHour);
+				startHour++;
+				if(startHour == 24){
+					startHour = 0;
+				}
+			}	
+		}
+		for (int i = startHour; i <= endHour; i++){
+			timeRange.add(startHour);
+			startHour++;
+			
+		}
+		
+		return timeRange;
 	}
 	
 	/**
@@ -419,10 +442,19 @@ public class DateTimeConverter {
 		
 		System.out.println("TESTING ADD TIME METHOD: " + DateTimeConverter.addTime("23:00:00", 1));
 		System.out.println("LONG FORMAT of 2015-09-22 20:00:00 = " + dtc.dateTimeTo12Long("2015-09-22 20:00:00"));
+		
+		// date range
 		List<String> dates = dtc.dateRangeList("02/27/2016", "03/16/2016");
 		for(int i=0; i<dates.size(); i++){
 		    String date = dates.get(i);
 		    System.out.println(" Date is ..." + date);
+		}
+		
+		// time range
+		List<Integer> times = dtc.timeRangeList("09:00:00", "11:00:00");
+		for (int i=0; i<times.size(); i++){
+			int time = times.get(i);
+			System.out.println("Time is ..." + time);
 		}
 	}
 }

@@ -87,5 +87,23 @@ public class ReservationSelectQuery {
 		
 		return results;
 	}
+	/**
+	 * Used in Admin Reservations.  The database isn't closed.
+	 * @return
+	 */
+	public String doReservationResults2(){
+		String results = "";
+		try {
+			while(this.results.next()){
+				Reservation reservation = new Reservation();
+				reservation.setReserveID(this.results.getInt("reserveID"));
+				results += reservation.getReserveID();
+			} this.results.beforeFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		
+		return results;
+	}
 
 }
