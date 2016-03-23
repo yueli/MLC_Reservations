@@ -1,8 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.Objects;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +25,7 @@ public class AdminEditServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public AdminEditServlet() {
-        super();
-       
+        super();     
     }
 
 	/**
