@@ -95,7 +95,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				/*              MAKE RESERVATION                  */
 				//------------------------------------------------//
-				// get request variables
+				// schedule request variables
 				String startDate = request.getParameter("startDate");
 				String endDate = request.getParameter("endDate");
 				String startTime = request.getParameter("startTime");
@@ -107,13 +107,16 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				String startTimeSession = (String) session.getAttribute("startTime");
 				String endTimeSession = (String) session.getAttribute("endTime");
 				
+				// others
 				String roomID = (String) request.getParameter("roomID");
-				
+				String reserveName = request.getParameter("reserveName");
+
 				// convert date and time to SQL format
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
 				startTime = tc.convertTimeTo24(startTime);
 				endTime = tc.convertTimeTo24(endTime);
+				
 				// if there is an active session variable, 
 				// it will replace the request variable (which doesn't persist).
 				if (startDateSession != null){
@@ -161,13 +164,14 @@ public class AdminReservationsServlet2 extends HttpServlet {
 						res.doReservationRead(startDate, String.valueOf(times.get(j)), roomNumber.get(i));
 						String reservationCheck = res.doReservationResults2();
 						if(reservationCheck.isEmpty()){
+							// testing - printing to console
 							System.out.println();
 							System.out.println("DATE " + startDate);
 							System.out.println("END " + endDate);
 							System.out.println("ROOM NUMBER " + roomNumber.get(i));
 							System.out.println("TIME " + times.get(j));
 							System.out.println();
-							//TODO
+							//TODO create table for available times to reserve.
 							table += "<tr>";
 							table += "<td>" + j + "</td>";
 							table += "</tr>";
