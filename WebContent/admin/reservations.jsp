@@ -69,6 +69,7 @@
 				<input name="makeReservation" type="submit" value="Enter"> 
 
 			</form>
+			<p>${table}</p>
 		</div>
 		<div id="footer"></div>
 	</body>

@@ -61,6 +61,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//
 				String msg = "";
+				String table = "";
 				
 				//------------------------------------------------//
 				/*            BUILDING INFORMATION                */
@@ -142,7 +143,13 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
 				List<Integer> times = dtc.timeRangeList(startTime, endTime);
 				
-				
+				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
+				table += "<thead>";
+				table += "<tr>";
+				table += "<th></th>";
+				table += "</tr>";
+				table += "</thead>";
+				table += "<tbody>";
 				// loop through each room after all times have been checked 
 				for (int i = 0; i < roomNumber.size(); i++){
 					// loop through each time then increment room
@@ -160,9 +167,15 @@ public class AdminReservationsServlet2 extends HttpServlet {
 							System.out.println("ROOM NUMBER " + roomNumber.get(i));
 							System.out.println("TIME " + times.get(j));
 							System.out.println();
+							//TODO
+							table += "<tr>";
+							table += "<td>" + j + "</td>";
+							table += "</tr>";
 						} 
 					}
 				}
+				table += "</tbody>";
+				table += "</table>";
 				
 				// forwarding URL
 				url = "admin/reservations.jsp";
@@ -176,6 +189,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				session.setAttribute("endTime", endTime);
 				session.setAttribute("tc", tc);
 				session.setAttribute("msg", msg);
+				session.setAttribute("table", table);
 				
 				
 			//} else { 

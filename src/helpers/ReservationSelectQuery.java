@@ -40,7 +40,12 @@ public class ReservationSelectQuery {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * 
+	 * @param currentDate Sring current date in sql format
+	 * @param startTime string start time in 24-hour sql format
+	 * @param roomNumber String room number
+	 */
 	public void doReservationRead(String currentDate, String startTime, String roomNumber){
 		String query = "SELECT Reservations.reserveID "
 				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
@@ -64,7 +69,11 @@ public class ReservationSelectQuery {
 			System.out.println("Error in ReservationSelectQuery.java: doReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
-	
+	/**
+	 * Different from the version below.  The connection has to be closed
+	 * since there are too many open connections in RoomsSelectQuery.
+	 * @return reservation ID if there is a reservation or an empty string if there isn't.
+	 */
 	public String doReservationResults(){
 		String results = "";
 		try {
@@ -88,8 +97,9 @@ public class ReservationSelectQuery {
 		return results;
 	}
 	/**
-	 * Used in Admin Reservations.  The database isn't closed.
-	 * @return
+	 * Used in Admin Reservations.  
+	 * The database isn't closed so other operations can be performed.
+	 * @return reservation ID if there is a reservation or an empty string if there isn't.
 	 */
 	public String doReservationResults2(){
 		String results = "";
