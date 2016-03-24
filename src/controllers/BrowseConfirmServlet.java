@@ -133,7 +133,8 @@ public class BrowseConfirmServlet extends HttpServlet {
 				
 				// class used to send email
 				Email email = new Email();
-				email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime24, endTime, buildingName, roomNumber);
+				email.setWebsiteURL("http://ebus.terry.uga.edu:8080/MLC_Reservations");
+				email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime24, endTime, buildingName, roomNumber, email.getWebsiteURL());
 				
 				// set success message and forwarding URL
 				msg = "You have successfully made a reservation.  "
