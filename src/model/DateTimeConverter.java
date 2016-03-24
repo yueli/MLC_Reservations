@@ -360,14 +360,19 @@ public class DateTimeConverter {
 	 * @param stringEndTime String ending time in 24-hour format
 	 * @return String array list of all values inclusive between start time and end time
 	 */
-	public List<Integer> timeRangeList (String startTime, String endTime){
+	public List<String> timeRangeList (String startTime, String endTime){
 		// integer to place the parsed hour from the time.
 		int startHour;
 		int endHour;
 		
 		// array list to place the time range, inclusive.
-		List<Integer> timeRange = new ArrayList<Integer>();
-		
+		List<String> timeRange = new ArrayList<String>();
+		if(startTime.length() == 7){
+			startTime = "0" + startTime;
+		}
+		if(endTime.length() == 7){
+			endTime = "0" + startTime;
+		}
 		// parse out the hour from time in 00:00:00 format
 		startHour = Integer.parseInt(startTime.substring(0, Math.min(startTime.length(), 2)));
 		endHour = Integer.parseInt(endTime.substring(0, Math.min(endTime.length(), 2)));
@@ -379,16 +384,20 @@ public class DateTimeConverter {
 		 */
 		if (startHour > endHour){
 			for(int h = startHour;  h <=24; h++){
-				timeRange.add(startHour);
+				//timeRange.add(startHour);
+				timeRange.add(startTime);
 				startHour++;
+				startTime = startHour + ":00:00";
+				
 				if(startHour == 24){
 					startHour = 0;
 				}
 			}	
 		}
 		for (int i = startHour; i <= endHour; i++){
-			timeRange.add(startHour);
+			timeRange.add(startTime);
 			startHour++;
+			startTime = startHour + ":00:00";
 			
 		}
 		
@@ -451,9 +460,9 @@ public class DateTimeConverter {
 		}
 		
 		// time range
-		List<Integer> times = dtc.timeRangeList("09:00:00", "11:00:00");
+		List<String> times = dtc.timeRangeList("09:00:00", "11:00:00");
 		for (int i=0; i<times.size(); i++){
-			int time = times.get(i);
+			String time = times.get(i);
 			System.out.println("Time is ..." + time);
 		}
 	}

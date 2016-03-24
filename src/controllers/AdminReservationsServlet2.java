@@ -144,7 +144,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				
 				// list for the room number.  Below will print all times, inclusive between start and end
 				List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
-				List<Integer> times = dtc.timeRangeList(startTime, endTime);
+				List<String> times = dtc.timeRangeList(startTime, endTime);
 				
 				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 				table += "<thead>";
@@ -155,6 +155,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				table += "<th>Start Time</th>";
 				table += "<th>End Date</th>";
 				table += "<th>End Time</th>";
+				table += "<th></th>";
 				table += "</tr>";
 				table += "</thead>";
 				table += "<tbody>";
@@ -167,14 +168,13 @@ public class AdminReservationsServlet2 extends HttpServlet {
 						 * Check if there is a reservation at the time.
 						 * If there isn't then returned is an empty string.
 						 */
-						// TODO add check for end date.
-						res.doReservationRead(startDate, String.valueOf(times.get(j)), roomNumber.get(i));
+						//TODO change to do admin read.
+						res.doReservationRead(dtc.slashDateConvert(startDate), times.get(j), roomNumber.get(i));
 						String reservationCheck = res.doReservationResults2();
+						System.out.println("RES CHECK = " + reservationCheck);
 						if(reservationCheck.isEmpty()){
-							// only put in table when the current index at the last index.
-							int currentIndex = times.get(j);
-							int lastIndex = (times.size() - 1);
-							if(currentIndex == lastIndex){
+							// index 0 is the start time of the reservation
+							if(j == 0){
 								// testing - printing to console
 								System.out.println();
 								System.out.println("DATE " + startDate);
@@ -184,19 +184,51 @@ public class AdminReservationsServlet2 extends HttpServlet {
 								System.out.println();
 								
 								table += "<tr>";
-								table += "<td>" + h + "</td>";
+								table += "<td data-sort='" + h + "'>" + h + "</td>";
 								table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 								table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(startDate)) + "</td>";
 								table += "<td>" + tc.convertTimeTo12(startTime) + "</td>";
 								table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "</td>";
 								table += "<td>" + tc.convertTimeTo12(endTime) + "</td>";
-								// TODO add form that will pass hidden parameters to make a reservation
-								// hidden parameters will include above + building ID, roomID, adminID, and reserve name
+								// TODO get RoomID
+								table += "<td>";
+								table += "<form name='schedule' id='reserve" + h + "' action='admin-reserve-confirm' method='post'>";
+								table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
+								table += "<input type='hidden' name='startTime' value='" + startTime + "'>";
+								table += "<input type='hidden' name='endTime' value='" + endTime + "'>";
+								table += "<input type='hidden' name='startDate' value='" + dtc.slashDateConvert(startDate) + "'>";
+								table += "<input type='hidden' name='endDate' value='" + dtc.slashDateConvert(endDate) + "'>";
+								table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
+								table += "<input type='hidden' name='reserveName' value='" + reserveName + "'>";
+								// TODO get admin ID from session in all servlets.
+								table += "<input type='submit' value='Make Reservation'>";
+								table += "</form>";
+								table += "</td>";
 								table += "</tr>";
 								h++;
 							}
-						} else {
-							msg = "There were no available rooms for the date and or time lenth specified.";
+						} else if (!reservationCheck.isEmpty()){
+							// testing - printing to console
+							System.out.println("***** RESERVED ********");
+							System.out.println("RESERVE ID = " + reservationCheck);
+							System.out.println("DATE " + startDate);
+							System.out.println("END " + endDate);
+							System.out.println("ROOM NUMBER " + roomNumber.get(i));
+							System.out.println("TIME " + times.get(j));
+							System.out.println("***** RESERVED ********");
+							System.out.println();
+							
+							table += "<tr>";
+							table += "<form name='schedule' id='reserve" + h + "' action='admin-reserve-confirm' method='post'>";
+							table += "<td data-sort='" + h + "'>" + h + "</td>";
+							table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+							table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(startDate)) + "</td>";
+							table += "<td>" + tc.convertTimeTo12(startTime) + "</td>";
+							table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "</td>";
+							table += "<td>" + tc.convertTimeTo12(endTime) + "</td>";
+							table += "<td> **RESERVED**</td>"; 
+							table += "</tr>";
+							h++; 
 						}
 					}
 				}
