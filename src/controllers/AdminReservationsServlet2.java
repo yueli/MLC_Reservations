@@ -68,7 +68,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				// get session and request variables + initialization of others
 				String buildings = ""; // the string that contains the HTML drop down list
-				String buildingID = request.getParameter("buildingID"); // get the value from 
+				String buildingID = request.getParameter("buildingID"); // get the value from request
 				String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
 				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
 				
@@ -150,10 +150,16 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				table += "<thead>";
 				table += "<tr>";
 				table += "<th></th>";
+				table += "<th>Room #</th>";
+				table += "<th>Start Date</th>";
+				table += "<th>Start Time</th>";
+				table += "<th>End Date</th>";
+				table += "<th>End Time</th>";
 				table += "</tr>";
 				table += "</thead>";
 				table += "<tbody>";
 				// loop through each room after all times have been checked 
+				int h = 1; // counter
 				for (int i = 0; i < roomNumber.size(); i++){
 					// loop through each time then increment room
 					for (int j =0; j < times.size(); j++){
@@ -161,21 +167,37 @@ public class AdminReservationsServlet2 extends HttpServlet {
 						 * Check if there is a reservation at the time.
 						 * If there isn't then returned is an empty string.
 						 */
+						// TODO add check for end date.
 						res.doReservationRead(startDate, String.valueOf(times.get(j)), roomNumber.get(i));
 						String reservationCheck = res.doReservationResults2();
 						if(reservationCheck.isEmpty()){
-							// testing - printing to console
-							System.out.println();
-							System.out.println("DATE " + startDate);
-							System.out.println("END " + endDate);
-							System.out.println("ROOM NUMBER " + roomNumber.get(i));
-							System.out.println("TIME " + times.get(j));
-							System.out.println();
-							//TODO create table for available times to reserve.
-							table += "<tr>";
-							table += "<td>" + j + "</td>";
-							table += "</tr>";
-						} 
+							// only put in table when the current index at the last index.
+							int currentIndex = times.get(j);
+							int lastIndex = (times.size() - 1);
+							if(currentIndex == lastIndex){
+								// testing - printing to console
+								System.out.println();
+								System.out.println("DATE " + startDate);
+								System.out.println("END " + endDate);
+								System.out.println("ROOM NUMBER " + roomNumber.get(i));
+								System.out.println("TIME " + times.get(j));
+								System.out.println();
+								
+								table += "<tr>";
+								table += "<td>" + h + "</td>";
+								table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+								table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(startDate)) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(startTime) + "</td>";
+								table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(endTime) + "</td>";
+								// TODO add form that will pass hidden parameters to make a reservation
+								// hidden parameters will include above + building ID, roomID, adminID, and reserve name
+								table += "</tr>";
+								h++;
+							}
+						} else {
+							msg = "There were no available rooms for the date and or time lenth specified.";
+						}
 					}
 				}
 				table += "</tbody>";
@@ -191,6 +213,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				session.setAttribute("endDate", endDate);
 				session.setAttribute("startTime", startTime);
 				session.setAttribute("endTime", endTime);
+				session.setAttribute("reserveName", reserveName);
 				session.setAttribute("tc", tc);
 				session.setAttribute("msg", msg);
 				session.setAttribute("table", table);

@@ -8,11 +8,19 @@
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
-        
+		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf8" src="jquery/DataTables/dataTables.material.js"></script>
+		<script type="text/javascript" charset="utf8" src="jquery/Responsive/js/dataTables.responsive.js"></script>
+       <script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
+       
         <!-- CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-     	<link rel="stylesheet" type="text/css" href="jquery/Timepicker/jquery.timepicker.css">
+        <link rel="stylesheet" type="text/css" href="admin/table-view-reservation.css">
+ 		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
+        <!--link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js"-->
+        <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.material.css">
+        <link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="jquery/Timepicker/jquery.timepicker.css">
 		<script> 
 			// used to load header and footer html
 			$(function() {
@@ -47,6 +55,17 @@
 			function goBack() {
 			    window.history.back();
 			}
+			// jQuery for Datatable plugin for pagination, sort, and search
+			$(document).ready( function () {
+				$('table.mdl-data-table').DataTable( { responsive: true,
+					columnDefs: [
+				             {
+				                 targets: [ 0, 1, 2 ],
+				                 className: 'mdl-data-table__cell--non-numeric'
+				             }
+				         ]
+				});
+			});
 		</script> 
 	</head>
 	<body>
@@ -66,7 +85,7 @@
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
 				Start Time: <input type="text" id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input type="text" id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
-				Reservation Name = <input type = "text" id="reserveName" name="reserveName">
+				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}">
 				<input name="makeReservation" type="submit" value="Enter"> 
 			</form>
 			<p>${table}</p>
