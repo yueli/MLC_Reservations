@@ -7,7 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import model.DateTimeConverter;
 import model.DbConnect;
 import model.Reservation;
 
@@ -50,7 +52,7 @@ public class ReservationSelectQuery {
 		String query = "SELECT Reservations.reserveID "
 				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
 				        + "WHERE Reservations.reserveStartDate = ? "
-				       	+ "AND ((Reservations.reserveStartTime = ?) OR (? BETWEEN reserveStartTime AND reserveEndTime)) "
+				       	+ "AND ((Reservations.reserveStartTime = ?) AND (? BETWEEN reserveStartTime AND reserveEndTime)) "
 				       	+ "AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = ? "
 						+ "AND tomcatdb.Reservations.free = ?";
 		
@@ -67,6 +69,63 @@ public class ReservationSelectQuery {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in ReservationSelectQuery.java: doReservationRead method. Please check connection or SQL statement: " + query);
+		} 
+	}
+	/**
+	 * 
+	 * @param currentDate Sring current date in sql format
+	 * @param startTime string start time in 24-hour sql format
+	 * @param roomNumber String room number
+	 */
+	public void doAdminReservationRead(String startDate, String endDate, String startTime, String roomNumber){
+		String query = "";
+		if(startDate.equalsIgnoreCase(endDate)){
+			query = "SELECT Reservations.reserveID "
+				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
+				        + "WHERE Reservations.reserveStartDate = ? "
+				        + "AND Reservations.reserveEndDate = ? "
+				       	+ "AND ((Reservations.reserveStartTime = ?) AND (? BETWEEN reserveStartTime AND reserveEndTime)) "
+				       	+ "AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = ? "
+						+ "AND tomcatdb.Reservations.free = ?";
+		} else {
+			query =	"SELECT Reservations.reserveID " 
+						+ "FROM tomcatdb.Reservations, tomcatdb.Rooms "
+						+ "WHERE ((Reservations.reserveStartDate = '2016-03-17' AND Reservations.reserveEndDate = '2016-03-17') "
+						+ "OR (Reservations.reserveStartDate = '2016-03-17' AND Reservations.reserveEndDate = '2016-03-18')) "
+						+ "AND ((Reservations.reserveStartTime = '11:00:00') AND ('11:00:00' BETWEEN reserveStartTime AND reserveEndTime)) "
+						+ "AND Rooms.roomID = Reservations.Rooms_roomID "
+						+ "AND Rooms.roomNumber = '208' "
+						+ "AND tomcatdb.Reservations.free = 'N'";
+		}
+		
+		
+		/* */
+		
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			if (startDate.equalsIgnoreCase(endDate)){
+				ps.setString(1, startDate);
+				ps.setString(2, endDate);
+				ps.setString(3, startTime);
+				ps.setString(4, startTime);
+				ps.setString(5, roomNumber);
+				ps.setString(6, "N");
+			} else {
+				ps.setString(1, startDate);
+				ps.setString(2, startDate);
+				ps.setString(3, startDate);
+				ps.setString(4, endDate);
+				ps.setString(5, startTime);
+				ps.setString(6, startTime);
+				ps.setString(7, roomNumber);
+				ps.setString(8, "N");
+			}
+			
+			this.results = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in ReservationSelectQuery.java: doAdminReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
 	/**
@@ -115,5 +174,59 @@ public class ReservationSelectQuery {
 		
 		return results;
 	}
+	
+	// Main method used for testing
+	public static void main (String [] args){
+		String startDate = "2016-03-17";
+		String endDate = "2016-03-17";
+		String startTime = "11:00:00";
+		String endTime = "12:00:00";
+		String buildingID = "1";
+		DateTimeConverter dtc = new DateTimeConverter();
+		ReservationSelectQuery res = new ReservationSelectQuery();
+		RoomsSelectQuery rsq = new RoomsSelectQuery();
+		
+		// list for the room number.  Below will print all times, inclusive between start and end
+		List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
+		List<String> times = dtc.timeRangeList(startTime, endTime);
+		
+		// loop through each room after all times have been checked 
+		for (int i = 0; i < roomNumber.size(); i++){
+			// loop through each time then increment room
+			for (int j =0; j < times.size(); j++){
+				/*
+				 * Check if there is a reservation at the time.
+				 * If there isn't then returned is an empty string.
+				 */
+				res.doReservationRead(startDate, times.get(j), roomNumber.get(i));
+				String reservationCheck = res.doReservationResults2();
+				System.out.println("RES CHECK = " + reservationCheck);
+				if(reservationCheck.isEmpty()){
+					// start time is at index 0.
+					if(j == 0){
+						// testing - printing to console
+						System.out.println();
+						System.out.println("DATE " + startDate);
+						System.out.println("END " + endDate);
+						System.out.println("ROOM NUMBER " + roomNumber.get(i));
+						System.out.println("TIME " + times.get(j));
+						System.out.println();
+						
+						}
+					// If reservation check is not empty = reserveID is the result.
+					} else if(!reservationCheck.isEmpty()) {
+						System.out.println("***** RESERVED ********");
+						System.out.println("RESERVE ID = " + reservationCheck);
+						System.out.println("DATE " + startDate);
+						System.out.println("END " + endDate);
+						System.out.println("ROOM NUMBER " + roomNumber.get(i));
+						System.out.println("TIME " + times.get(j));
+						System.out.println("***** RESERVED ********");
+						System.out.println();
+					}
+				}
+			}
+	}
+	
 
 }
