@@ -230,6 +230,11 @@ public class AdminUserHelper {
 					table += "<option value='A' selected>" + convertAdminRole("A") + "</option>";
 					table += "<option value='V'>" + convertAdminRole("V") + "</option>";
 					
+				}else if (Objects.equals("V", role)){ // role is view only
+					table += "<option value='S'>" + convertAdminRole("S") + "</option>";
+					table += "<option value='A'>" + convertAdminRole("A") + "</option>";
+					table += "<option value='V' selected>" + convertAdminRole("V") + "</option>";
+					
 				}else{ // else the role is unknown
 					table += "<option value='U' selected>" + convertAdminRole("U") + "</option>";
 				}
@@ -237,9 +242,11 @@ public class AdminUserHelper {
 			}else{ // the admin making the changes is an admin only so can't set anyone to a super user
 				
 				if (Objects.equals("S", role)){
-					table += "<option disabled value='S' selected>Super</option>";
+					//HERE
+					table += "<option disabled value='S' selected>" + convertAdminRole("S") + "</option>";
 					
 				}else if (Objects.equals("A", role)){ // role is admin
+					//HERE
 					table += "<option disabled value='S'>" + convertAdminRole("S") + "</option>";
 					table += "<option value='A' selected>" + convertAdminRole("A") + "</option>";
 					table += "<option value='V'>" + convertAdminRole("V") + "</option>";
@@ -247,7 +254,7 @@ public class AdminUserHelper {
 				}else if (Objects.equals("V", role)){ // role is view only
 					table += "<option disabled value='S'>Super</option>";
 					table += "<option value='A'>Admin</option>";
-					table += "<option value='V'>View Only</option>";
+					table += "<option value='V' selected>View Only</option>";
 					
 				}else{ // else the role is unknown
 					table += "<option value='U' selected>" + convertAdminRole("U") + "</option>";

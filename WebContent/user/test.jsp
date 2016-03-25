@@ -10,7 +10,7 @@
 
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
 <%@ page import="org.jasig.cas.client.validation.Saml11TicketValidator" %>
- 
+ <%    String table = (String) request.getAttribute("table"); %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 
@@ -35,15 +35,18 @@
     <h1>CAS Test</h1>
 
  
+<p>Request Get Remote User</p>
 
-    <p><%= request.getRemoteUser() %></p>
+<p><%= request.getRemoteUser() %></p>
     
     
     
     
     
     
-    
+ <br />
+ <p>Enumeration keys</p>
+ <br />  
     
 <%
 Enumeration keys = session.getAttributeNames();
@@ -55,12 +58,10 @@ while (keys.hasMoreElements())
 
 %>
 <br> <br>
+<p>Attribute Principal</p>
 
- <%
-
+ <% 
 AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal();
-
-
 
 //Saml11TicketValidator  AbstractUrlBasedTicketValidator = (Saml11TicketValidator)request.getAbstractUrlBasedTicketValidator(); 
 
@@ -105,6 +106,8 @@ out.println("</table>");
 
 %>
 
+<br />
+<%= table %>
     </body>
 
 </html>
