@@ -104,7 +104,7 @@ public class AdminReservationsServlet extends HttpServlet {
 			//}
 			
 		//} else { // there isn't an active session.
-			//url = "admin/adminLogin.jsp";
+			//url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
 		//}
 		
 		// forward the request
