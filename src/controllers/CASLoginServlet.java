@@ -108,7 +108,7 @@ public class CASLoginServlet extends HttpServlet {
 		
 		boolean inAdminUserTable = false;	
 		inAdminUserTable = adminUserHelper.inAdminTable(loggedInUser.getMyID());
-		
+//ADD QR LOGIN HERE?		
 		if (inAdminUserTable){
 			url = "admin/adminHome.jsp";	
 			//set the logged in user to be an admin logged in user and pass along
