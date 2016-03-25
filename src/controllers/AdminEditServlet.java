@@ -62,7 +62,7 @@ public class AdminEditServlet extends HttpServlet {
 		System.out.println("AdminEditServlet: loggedInAdminUser adminMyID = " + loggedInAdminUser.getAdminMyID());
 
 		 
-		//hidden parameter = admin record id of the person to edit from adminEdit.jsp
+		//hidden parameter = admin record id of the person to edit from jsp
 		int adminID = Integer.parseInt(request.getParameter("adminID")); 
 		
 		System.out.println("AdminEditServlet: adminID = " + adminID);
