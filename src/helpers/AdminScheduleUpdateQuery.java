@@ -43,6 +43,7 @@ public class AdminScheduleUpdateQuery {
 				+ "startDate = ?, "
 				+ "endDate = ?, "
 				+ "summary = ? "
+				+ "createdBy = ? "
 				+ "WHERE scheduleID = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -51,7 +52,8 @@ public class AdminScheduleUpdateQuery {
 			ps.setString(3, schedule.getStartDate());
 			ps.setString(4, schedule.getStartDate());
 			ps.setString(5, schedule.getSummary());
-			ps.setInt(6, schedule.getScheduleID());
+			ps.setString(6, schedule.getCreatedBy());
+			ps.setInt(7, schedule.getScheduleID());
 			ps.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();

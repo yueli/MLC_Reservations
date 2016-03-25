@@ -37,6 +37,7 @@ public class Email {
 	private String endTime;
 	private String building;
 	private String roomNumber;
+	private String websiteURL;
 	
 	// Constructors
 	/**
@@ -50,6 +51,7 @@ public class Email {
 		this.endTime = "";
 		this.building = "";
 		this.roomNumber = "";
+		this.websiteURL = "";
 	}
 	
 	/**
@@ -62,7 +64,7 @@ public class Email {
 	 * @param building the name of the building where the reservation is made
 	 * @param roomNumber room number
 	 */
-	public Email(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber){
+	public Email(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL){
 		this.to = to;
 		this.cc = cc;  
 		this.reserveDate = reserveDate;
@@ -70,6 +72,7 @@ public class Email {
         this.endTime = endTime;
         this.building = building;
         this.roomNumber = roomNumber;
+        this.websiteURL = websiteURL;
 	}
 
 	// Getters & Setters
@@ -171,6 +174,22 @@ public class Email {
 		this.roomNumber = roomNumber;
 	}
 	
+	/**
+	 * 
+	 * @return websiteURL the websiteURL to set
+	 */
+	public String getWebsiteURL(){
+		return websiteURL;
+	}
+	
+	/**
+	 * 
+	 * @param websiteURL  URL of the website the user should visit
+	 */
+	public void setWebsiteURL(String websiteURL){
+		this.websiteURL = websiteURL;
+	}
+	
 	// Email Methods
 	/**
 	 * 
@@ -183,7 +202,7 @@ public class Email {
 	 * @param roomNumber room number
 	 * Send Email for reservation confirmation
 	 */
-	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber) {
+	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL) {
         // ROOM RESERVATION DETAILS
         this.reserveDate = reserveDate;
         this.startTime = startTime;
@@ -254,7 +273,7 @@ public class Email {
             msg.setSentDate(new Date());
 
 
-            setHTMLContent(msg, getReserveDate(), getStartTime(), getEndTime(), getBuilding(), getRoomNumber());
+            setHTMLContent(msg, getReserveDate(), getStartTime(), getEndTime(), getBuilding(), getRoomNumber(), getWebsiteURL());
             msg.saveChanges();
             bus.sendMessage(msg, address);
             bus.sendMessage(msg, address2);
@@ -291,7 +310,7 @@ public class Email {
 	 * @throws MessagingException error in sending message
 	 * Set the message of the email.  This is an HTML email message
 	 */
-    public static void setHTMLContent(Message msg, String reserveDate, String startTime, String endTime, String building, String roomNumber) throws MessagingException {
+    public static void setHTMLContent(Message msg, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL) throws MessagingException {
     	DateTimeConverter dtc = new DateTimeConverter();
     	TimeConverter tc = new TimeConverter();
         String html = "<html><head><title>" +
@@ -300,7 +319,7 @@ public class Email {
                         msg.getSubject() +
                         "</h1><p style='font-size:120%'>Thanks for reserving a room at " + building + "! " +
                         "Your reservation is set for room " + roomNumber + " on " + dtc.convertDateLong(reserveDate) + " from " + tc.convertTimeTo12(startTime) + " to " + tc.convertTimeTo12(endTime) + ". <br><br>" + 
-                        "To check-in, view, or cancel your reservation, please visit [insert website].</body></html>";
+                        "To check-in, view, or cancel your reservation, please visit " + websiteURL + "</body></html>";
 
         // HTMLDataSource is a static nested class
         msg.setDataHandler(new DataHandler(new HTMLDataSource(html)));
