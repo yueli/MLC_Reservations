@@ -1,2 +1,4 @@
 /build/
 /bin/
+
+WebContent/WEB-INF/web.xml
