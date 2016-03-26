@@ -243,7 +243,7 @@ public class UserHelper {
 
 		System.out.println("UserHelper inBannedTable: myID = " + userID);
 		
-		String query = "SELECT * from tomcatdb.banned WHERE User_userID = ? "
+		String query = "SELECT * from tomcatdb.Banned WHERE User_userID = ? "
 					+ "AND banEnd IS NULL "
 					+ "AND status = ? "
 					+ "AND penaltyCount > ? "
