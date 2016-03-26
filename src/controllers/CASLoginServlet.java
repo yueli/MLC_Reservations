@@ -100,6 +100,28 @@ public class CASLoginServlet extends HttpServlet {
 		table += "<h2>CN=*" + loggedInUser.getMyID() + "*";
 		
 		
+		
+		
+		//ADD QR LOGIN HERE?
+		//================================
+		// check to see if this url is coming from a QR checkin
+				
+		String building = request.getParameter( "building" );
+
+		String room = request.getParameter( "room" );
+				 
+		if(building != null && !building.isEmpty()){
+			// we have a parameter so we have a QR checkin
+					
+					
+		}
+				  
+		session.setAttribute( "building", building );
+		session.setAttribute( "room", room );
+				   
+		//=================================
+				
+				
 		// is this user's myID in the admin table?
 		// if so, send them to the admin home page
 		// else send them to the user home home
@@ -108,7 +130,8 @@ public class CASLoginServlet extends HttpServlet {
 		
 		boolean inAdminUserTable = false;	
 		inAdminUserTable = adminUserHelper.inAdminTable(loggedInUser.getMyID());
-//ADD QR LOGIN HERE?		
+
+		
 		if (inAdminUserTable){
 			url = "admin/adminHome.jsp";	
 			//set the logged in user to be an admin logged in user and pass along

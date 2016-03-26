@@ -36,7 +36,8 @@
 		role = ${loggedInAdminUser.role} <br />
 		status = ${loggedInAdminUser.adminStatus} <br />
 		
-
+building: ${building}
+room: ${room}
 		
 		<p>Here are your options:
 			blah blah blah </p>
