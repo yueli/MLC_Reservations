@@ -207,7 +207,7 @@ public class ListUserReservationsQuery {
 							}else {// else current hour = reservations hour - check to see if it is within the 
 								
 								// check-in time (up to 10 minutes after the hour) and if it is, have CHECKIN button,
-								// else list but have no active button - maybe say "missed check-in time"
+								// else list but have no button 
 								
 								System.out.println("7 In WHILE in List User Resv.java: current hour = resv hour " + this.results.getInt("reserveID"));
 								
@@ -261,6 +261,8 @@ public class ListUserReservationsQuery {
 								table += "<td>" + roomNumber + "</td>";
 								table += "<td>" + userPlace + "</td>";
 								
+								ReservationQuery rq = new ReservationQuery(); // to check below if already checked in 
+								
 								if (currentMinuteInt <= 10){
 									// it's not past 10 after the hour, so let them check-in
 									// display the check-in button that points to the check-in servlet
@@ -271,6 +273,9 @@ public class ListUserReservationsQuery {
 									//		"<input type='submit' value='Check In'>" +
 									//		"</form></td>";	
 								
+								//}else if (rq.alreadyCheckedIn(resv.getReserveID())) {
+									//table += "<td> *Already Checked In* </td>";
+									
 								}else{
 									table += "<td> *Too late to check in* </td>";
 								}	
@@ -321,15 +326,22 @@ public class ListUserReservationsQuery {
 						table += "</tr>"; //end this row for this reservation
 						
 					}// end while going through records returned
+					
 					if (!firstTime){ //headers written to table, so close table
 						table += "</table>";
+					}else{
+						table = "";
 					}
+					
+
+					
 					
 					this.results.beforeFirst(); //reset pointer back to the beginning of the records returned just in case
 				
 				
 			}else{//no records returned
 				System.out.println("Success in List User Resv.java: no results found");
+				table = "";
 				return table;
 			}
 			
@@ -344,7 +356,7 @@ public class ListUserReservationsQuery {
 	}
 	
 	
-	// CHANGE THIS!!! WRONG!!!!
+// USING THIS??
 	public String GetUserReservation(int resv_id, int userRecdID){
 		String table = "";
 		

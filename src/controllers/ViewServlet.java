@@ -81,21 +81,21 @@ public class ViewServlet extends HttpServlet {
 		
 		System.out.println("After try/catch");
 		
-		if (table == "")	{//if table is empty, no records found
-			table = "Nothing Found";
+		if(table == null || table.isEmpty()){
 			message="You have no current reservations.";
 			System.out.println("View Servlet: no records found");
+			
 		}
 		else {
 			System.out.println("View Servlet: something in table ");
 			
 		}
-		//session.setAttribute("message", message);
-		
+	
 		//forward our request along
 		request.setAttribute("user", user);
 		request.setAttribute("table", table);
 		request.setAttribute("message", message);
+		
 		url = "user/view.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

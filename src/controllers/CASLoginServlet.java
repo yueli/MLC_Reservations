@@ -99,17 +99,47 @@ public class CASLoginServlet extends HttpServlet {
 		
 		table += "<h2>CN=*" + loggedInUser.getMyID() + "*";
 		
-		
-		// is this user's myID in the admin table?
-		// if so, send them to the admin home page
-		// else send them to the user home home
-		
+		// used for checking below
+
 		AdminUserHelper adminUserHelper = new AdminUserHelper();
 		
+		System.out.println("QR Login Servlet logged in user my id = " + loggedInUser.getMyID());
+		 
 		boolean inAdminUserTable = false;	
 		inAdminUserTable = adminUserHelper.inAdminTable(loggedInUser.getMyID());
-//ADD QR LOGIN HERE?		
-		if (inAdminUserTable){
+
+		// is this request coming from a QR checkin?
+		// if so, process as QR, else check to see
+		// if this user's myID in the admin table
+		// if so, send them to the admin home page
+		// else send them to the user home home
+				
+		// check to see if this url is coming from a QR checkin
+		// by looking for a parameter
+		
+		String building = request.getParameter( "building" );
+
+		String room = request.getParameter( "room" );
+				 
+		//===== QR LOGIN CHECK =====//
+		
+		if(building != null && !building.isEmpty()){
+			// we have a parameter so we have a QR checkin
+			
+			User user = new User();			
+			user.setMyID(loggedInUser.getMyID());
+			user.setUserFirstName(loggedInUser.getUserFirstName());
+			user.setUserLastName(loggedInUser.getUserLastName());
+
+			session.setAttribute("user", user);
+			session.setAttribute( "building", building );
+			session.setAttribute( "room", room );
+			
+			url = "/QRLoginController";
+		
+		//===== IN ADMIN TABLE CHECK =====//
+			
+		}else if (inAdminUserTable){
 			url = "admin/adminHome.jsp";	
 			//set the logged in user to be an admin logged in user and pass along
 			Admin loggedInAdminUser  = new Admin();
@@ -118,6 +148,8 @@ public class CASLoginServlet extends HttpServlet {
 			loggedInAdminUser = adminUserHelper.getAdminData(loggedInUser.getMyID());
 			
 			session.setAttribute("loggedInAdminUser", loggedInAdminUser);
+			
+		//===== USER PROCESS ====//
 			
 		}else{
 			// this is a plain ole user and not an admin
@@ -138,16 +170,24 @@ public class CASLoginServlet extends HttpServlet {
 				recordID = userHelper.getRecordID(user.getMyID());
 
 				user.setUserRecordID(recordID);
+	
+				System.out.println("CAS login: record ID " + user.getUserRecordID());
 				
 				if(userHelper.alreadyBanned(recordID)) {
 					// since they have already been banned, send them to a page telling them 
 					
+
+					user.setUserRecordID(recordID);
+					session.setAttribute("user", user);
 					url="user/bannedUser.jsp";
 					
 					
 				}else{ 	// they are in the table and not banned
 						// update the last login date field
 					userHelper.updateLastLogin(user.getMyID());	
+
+					user.setUserRecordID(recordID);
+					session.setAttribute("user", user);
 					url = "index.html";
 				}
 				
@@ -159,16 +199,14 @@ public class CASLoginServlet extends HttpServlet {
 				recordID = userHelper.getRecordID(user.getMyID());
 
 				user.setUserRecordID(recordID);
-				
+				session.setAttribute("user", user);
 				url = "index.html";
 				
 			}
 			
 			// by this time the user object should have recordID, myID, fname, and lname (and maybe eventually email)
 			session.setAttribute("user", user);
-		}
-		
-					
+		}		
 		session.setAttribute("table", table);
 		
 		//forward our request along
