@@ -116,10 +116,10 @@ public class DbConnect {
 	 */
 	public static Connection devCredentials(){
 		String url = "jdbc:mysql://localhost:3306/tomcatdb";
-		String username = "tomcatuser";
-		String password = "bu11fr0g";
-		//String username = "root";
-		//String password = "";
+		//String username = "tomcatuser";
+		//String password = "bu11fr0g";
+		String username = "root";
+		String password = "";
 		try {
 			return DriverManager.getConnection(url, username, password);
 		} catch (SQLException e) {
