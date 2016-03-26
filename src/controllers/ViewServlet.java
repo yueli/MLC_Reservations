@@ -81,14 +81,7 @@ public class ViewServlet extends HttpServlet {
 		
 		System.out.println("After try/catch");
 		
-<<<<<<< HEAD
 		if(table == null || table.isEmpty()){
-			
-		//if (table == "")	{//if table is empty, no records found
-=======
-		if (table == "")	{//if table is empty, no records found
-			table = "Nothing Found";
->>>>>>> master
 			message="You have no current reservations.";
 			System.out.println("View Servlet: no records found");
 			
