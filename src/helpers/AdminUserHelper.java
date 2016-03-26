@@ -360,6 +360,8 @@ public class AdminUserHelper {
 		
 		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' AND adminStatus = 1 LIMIT 1";
 		
+		System.out.println("UserHelper.java: inAdminUserTable method. Query = " + query);
+		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 

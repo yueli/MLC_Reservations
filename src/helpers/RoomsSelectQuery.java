@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import model.DateTimeConverter;
 import model.DbConnect;
@@ -273,4 +274,91 @@ public class RoomsSelectQuery {
 			table += "</div>";
 			return table;
 		}
+		
+	
+// @author: Ginger Nix
+// this method takes a building record id and lists all the rooms in that building
+		
+		public String ListRoomsInBuilding(int buildingID){
+			
+			BuildingSelectQuery bsq = new BuildingSelectQuery();
+			
+			String buildingName = bsq.getBuildingNameFromID(buildingID);
+			
+			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingName = " + buildingName);
+
+			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingID = " + buildingID);
+			
+			String table = "";
+			String roomStatus = "";
+			
+			table += "<h2>Rooms List for Building " + buildingName + "</h2>";
+			
+			table += "<table>";
+			
+			table += "<tr>";
+			table += "<td>Room Floor</td>";
+			table += "<td>Room Number</td>";
+			table += "<td>Status</td>";
+			table += "</tr>";
+				
+			String query = "SELECT * FROM tomcatdb.Rooms "
+					+ "WHERE Building_buildingID = '" + buildingID + "' " 
+					+ "ORDER BY roomNumber";
+
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				this.results = ps.executeQuery();
+				while(this.results.next()){ //go through all records returned	
+	
+					Rooms room = new Rooms();
+					room.setRoomID(this.results.getInt("roomID"));
+					room.setRoomFloor(this.results.getInt("roomFloor"));
+					room.setRoomNumber(this.results.getString("roomNumber"));
+					room.setRoomStatus(this.results.getInt("roomStatus"));
+
+					if (room.getRoomStatus() == 1){ // the room is active
+						roomStatus = "Active";
+					}else{
+						roomStatus = "Inactive";
+					}
+					
+					table += "<tr>";
+					table += "<td>" + room.getRoomFloor() + "</td>";
+					table += "<td>" + room.getRoomNumber() + "</td>";
+					table += "<td>" + roomStatus + "</td>";
+					
+				
+					table += "<td><form action='RooomEditServlet' method = 'post'>" +
+							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>" +
+							"<input type='submit' value='Edit Room'>" +
+							"</form></td>";		
+				
+					table += "</tr>";
+				
+				} //end while
+				
+				table += "</table>";
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("***Error in RoomsSelectQuery:  Query = " + query);
+			}
+			
+			table += "<br /><br />";
+			table += "<p>";
+			table += "<form action='RoomAddServlet' method = 'post'>" +
+					"<input type='submit' value='Add A Room'>" +
+					"</form>";			
+			table += "</p>";
+			
+
+			return table;
+			
+		}
+		
+		
+		
+		
+		
 }
