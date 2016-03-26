@@ -43,7 +43,8 @@ public class AdminScheduleUpdateQuery {
 				+ "startDate = ?, "
 				+ "endDate = ?, "
 				+ "summary = ? "
-				+ "WHERE scheduleID ='" + schedule.getScheduleID() + "'";
+				+ "createdBy = ? "
+				+ "WHERE scheduleID = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			ps.setString(1, schedule.getStartTime());
@@ -51,10 +52,12 @@ public class AdminScheduleUpdateQuery {
 			ps.setString(3, schedule.getStartDate());
 			ps.setString(4, schedule.getStartDate());
 			ps.setString(5, schedule.getSummary());
+			ps.setString(6, schedule.getCreatedBy());
+			ps.setInt(7, schedule.getScheduleID());
 			ps.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();
-			System.out.println("Error in AdminScheduleInsertQuery.java: doScheduleUpdate method. Please check connection or SQL statement: " + query);
+			System.out.println("Error in AdminScheduleUpdateQuery.java: doScheduleUpdate method. Please check connection or SQL statement: " + query);
 		}
 	}
 	

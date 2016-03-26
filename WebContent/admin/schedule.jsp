@@ -9,22 +9,19 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/dataTables.material.js"></script>
-		<!-- Meta -->
-        
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-       
+		<script type="text/javascript" charset="utf8" src="jquery/Responsive/js/dataTables.responsive.js"></script>
+
         <!-- Template CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="user/browse.css">
+        <link rel="stylesheet" type="text/css" href="admin/table-schedule.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.material.css">
+        <link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
 		
 		<script> 
 			// used to load header and footer html
 			$(function() {
-				$("#header").load("header.html"); 
+				$("#header1").load("admin/adminheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 			
@@ -49,7 +46,7 @@
 			});
 			// jQuery for Datatable plugin for pagination, sort, and search
 			$(document).ready( function () {
-				$('table.mdl-data-table').DataTable( {
+				$('table.mdl-data-table').DataTable( { responsive: true,
 					columnDefs: [
 				             {
 				                 targets: [ 0, 1, 2 ],
@@ -61,7 +58,7 @@
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<h2>${msg}</h2>
 		<form name="BuildingSelect" action="Schedule" method="post">
 			<p>${buildings}

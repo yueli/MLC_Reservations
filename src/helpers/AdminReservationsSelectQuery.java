@@ -49,9 +49,8 @@ public class AdminReservationsSelectQuery {
 		}
 	}
 	/**
-	 * 
-	 * @param currentDate
-	 * @param time
+	 * @param buildingID the primary key ID of the building
+	 * @param currentDate String date in sql format
 	 */
 	public void doUserReservationRead(int buildingID, String currentDate){
 		
@@ -66,11 +65,11 @@ public class AdminReservationsSelectQuery {
 				+ "tomcatdb.Reservations.reserveEndTime, "
 				+ "tomcatdb.Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.User AS a, tomcatdb.User AS b "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = '" + buildingID + "' "
+				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = ? "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.primaryUser = a.userID "
 				+ "AND tomcatdb.Reservations.secondaryUser = b.userID "
-				+ "AND tomcatdb.Reservations.reserveStartDate = '" + currentDate + "' "
+				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
 				+ "AND tomcatdb.Reservations.free = 'N' "
 				+ "ORDER BY tomcatdb.Rooms.roomNumber, "
 				+ "tomcatdb.Reservations.reserveStartDate, "
@@ -79,13 +78,21 @@ public class AdminReservationsSelectQuery {
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, buildingID);
+			ps.setString(2, currentDate);
+			
 			this.results = ps.executeQuery();
-			System.out.println("User Query: " + query);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in AdminReservationsSelectQuery.java: doUserReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
+	/**
+	 * 
+	 * @param buildingID int buildingID primary key
+	 * @param currentDate String date in sql format
+	 */
 	public void doAdminReservationRead(int buildingID, String currentDate){
 		
 		// The query below pulls shows the primary & secondary's myID
@@ -101,18 +108,21 @@ public class AdminReservationsSelectQuery {
 				+ "tomcatdb.Reservations.reserveEndTime, "
 				+ "tomcatdb.Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.Admin "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = '" + buildingID + "' "
+				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = ? "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.Admin_adminID = tomcatdb.Admin.adminID "
-				+ "AND tomcatdb.Reservations.reserveStartDate = '" + currentDate + "' "
+				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
 				+ "ORDER BY tomcatdb.Rooms.roomNumber ASC, "
 				+ "tomcatdb.Reservations.reserveStartDate, "
 				+ "tomcatdb.Reservations.reserveStartTime DESC";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection2.prepareStatement(query);
+			ps.setInt(1, buildingID);
+			ps.setString(2, currentDate);
+			
 			this.results2 = ps.executeQuery();
-			System.out.println("Admin Query: " + query);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in AdminReservationsSelectQuery.java: doAdminReservationRead method. Please check connection or SQL statement: " + query);
@@ -154,7 +164,7 @@ public class AdminReservationsSelectQuery {
 				admin.setFname(this.results2.getString("fname"));
 				admin.setLname(this.results2.getString("lname"));
 				reservation.setReserveName(this.results2.getString("reserveName"));
-				room.setRoomNumber(Integer.parseInt(this.results2.getString("roomNumber")));
+				room.setRoomNumber(this.results2.getString("roomNumber"));
 				reservation.setReserveStartDate(this.results2.getString("reserveStartDate"));
 				reservation.setReserveEndDate(this.results2.getString("reserveEndDate"));
 				reservation.setReserveStartTime(this.results2.getString("reserveStartTime"));
@@ -182,7 +192,10 @@ public class AdminReservationsSelectQuery {
 		System.out.println(table);
 		return table;
 	}
-	// TODO fix result set for admin
+	/**
+	 * 
+	 * @return String HTML table with query resultset
+	 */
 	public String doUserReservationResults(){
 		String table = "";
 		try {
@@ -213,7 +226,7 @@ public class AdminReservationsSelectQuery {
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
 				
-				room.setRoomNumber(Integer.parseInt(this.results.getString("roomNumber")));
+				room.setRoomNumber(this.results.getString("roomNumber"));
 				primary.setMyID(this.results.getString("primary"));
 				secondary.setMyID(this.results.getString("secondary"));
 				reservation.setReserveStartDate(this.results.getString("reserveStartDate"));

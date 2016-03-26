@@ -23,9 +23,7 @@ public class BuildingListQuery {
 
 		/**
 		 * 
-		 * @param dbName
-		 * @param user
-		 * @param pwd
+		 * Connect to database.  This is hard coded in DBConnect.java
 		 */
 		public BuildingListQuery() {
 			
@@ -43,11 +41,6 @@ public class BuildingListQuery {
 			} 
 			
 		}
-		// table has ben rec in another sch that nw has access to
-		// f.aid has updated refs to the new location.
-		// moved from main nw sch as a way to
-		// limit the # direct edit tables to narrow down the crashing issues nw has experienced.
-		
 
 		public void doRead(){
 

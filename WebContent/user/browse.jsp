@@ -20,38 +20,20 @@
 	  	        $( "#tabs" ).tabs();
 	  	    });
 			$(function() {
-				$("#header").load("userheader.html"); 
+				$("#header1").load("user/userheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 		</script> 
 	</head>
 	<body>
-<<<<<<< HEAD
-<<<<<<< HEAD
-	<div id="header"></div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-		<nav class="menu">
-		    <ul class="active">
-		        <li class="current-item"><a href="#">Home</a></li>
-		        <li><a href="Browse">Browse</a></li>
-		        <li><a href="#">Search</a></li>
-		        <li><a href="ViewServlet">View & Cancel Reservations</a></li>
-		        <li><a href="#">Check In</a></li>
-		        <li><a href="#">Logout</a></li>
-		    </ul>
-		    <a class="toggle-nav" href="#">&#9776;</a>
-		</nav>
-=======
-=======
->>>>>>> origin/master
-		<div id="header"></div>
-		<br><br><br><br>
+		<div id="header1"></div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 		<form name="browseForm" action="BrowseFloors" method="post">
 			<h2>Please Select Building</h2>
 			<p>${buildings}

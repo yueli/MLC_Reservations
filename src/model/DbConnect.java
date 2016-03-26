@@ -28,10 +28,10 @@ public class DbConnect {
 	
 	/**
 	 * 
-	 * @param url
-	 * @param database
-	 * @param username
-	 * @param password
+	 * @param url URL of the connector and host name
+	 * @param database name of the database
+	 * @param username user name of a user on the database
+	 * @param password password of a user on the database
 	 */
 	public DbConnect(String url, String database, String username, String password){
 		this.url = url;

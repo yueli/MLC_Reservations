@@ -6,52 +6,28 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Student Reservation</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<script> 
-
-	$(function() {
-		$("#header").load("./userheader.html"); 
-		$("#footer").load("../footer.html"); 
-	});
-</script> 
-	</head>
-	<body>
-	<div id="header" style="z-index:1;"></div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div class="clearfix"></div>
-	<!-- <nav class="menu">
-=======
-=======
->>>>>>> origin/master
 		<script> 
 		
 			$(function() {
-				$("#header").load("./userheader.html"); 
-				$("#footer").load("../footer.html"); 
+				$("#header1").load("user/userheader.html"); 
+				$("#footer").load("footer.html"); 
 			});
+			// function for back button
+			function goBack() {
+			    window.history.back();
+			}
 		</script> 
 	</head>
 	<body>
-	<div id="header" style="z-index:1;"></div>
-	<div class="clearfix"></div>
-	<!-- <nav class="menu">
-		    <ul class="active">
-		        <li class="current-item"><a href="#">Home</a></li>
-		        <li><a href="Browse">Browse</a></li>
-		        <li><a href="#">Search</a></li>
-		        <li><a href="ViewServlet">View & Cancel Reservations</a></li>
-		        <li><a href="#">Check In</a></li>
-		        <li><a href="#">Logout</a></li>
-		    </ul>
-		    <a class="toggle-nav" href="#">&#9776;</a> 
-		</nav> -->
+		<div id="header1" style="z-index:1;"></div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<div class="clearfix"></div>
 		<div id="container margin-vert-60" style="z-index:1;" >
 		<div class="row text-center">
 		<div id="reservation_div">	
@@ -66,9 +42,9 @@
 				<p>Starting at: 
 				<input type="text" name="startTime" id="startTime" value="${startTime}" disabled></p>
 				<p>Reservation Length: ${incrementSelect}</p>
-				<p>Please enter email of secondary person:<br>
-				<input type="email" name="secondary" id="secondary" placeholder="example@email.com" required></p>
-				<input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
+				<p>Please enter myID of secondary person:<br>
+				<input type="text" name="secondary" id="secondary" placeholder="MyID" required></p>
+				<button onclick="goBack()">Go Back</button><input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
 			</form>
 		</div>	
 		</div>

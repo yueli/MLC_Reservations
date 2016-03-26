@@ -50,50 +50,25 @@ public class UserHelper {
 	}
 	
 	/**
+	 * 
+	 * @param myID user myID
+	 * @param encryptedPass encrypted password
 	 * Authenticates a user 
 	 * @return A user object if successful, null if unsuccessful.
 	 */
-	public User authenticateUser(String myID, String encryptedPass) {
-		User su = new User(); //set to null to return null in case not authenticated
+	public boolean authenticateUser(String myID, String encryptedPass) {
 		
-		System.out.println("UserHelper: authentication myID = " + myID); //MyID the student logged in with
-		
-		boolean valid = false; //assume not valid
 
-		//--------------------------------------------
-		//TODO
-		// call some authentication server/code to check if UGA student w/ login name and password
-		// send it myID and loginPassword
-		// get back first name, last name, and email back from authentication server
-		// returns w/ data or null
-		//--------------------------------------------
-		
-		//purely for testing, set the valid to true until authentication in place
-		valid = true;
-		//valid = false;
-		
-		String studentUserMyID = "ganix";
-		String studentUserFirstName = "Ginger";
-		String studentUserLastName = "Nix";
-		String userEmail = "ganix@uga.edu";
-		
-		studentUserMyID = myID;
-		System.out.println("UserHelper: studetUserMyID= " + studentUserMyID);
-			
-		//if true, set user object info and return login user data
-		if (valid){
-			//User su = new User(); //GINGER UNCOMMENTED THIS
-			//put all the student's data into the login user object
-			su.setMyID(studentUserMyID);
-			su.setUserLastName(studentUserLastName);
-			su.setUserFirstName(studentUserFirstName);
-			su.setUserEmail(userEmail);	
-			System.out.println("UserHelper: auth in valid if userMyID = " + studentUserMyID);
-		}		
 
-		return su; //will be null if user wasn't valid
+		return true; //will be null if user wasn't valid
 	}
+
+//-------------
 	
+/*
+ * This method will take the myID aand check to see if
+ * this User exists already	
+ */
 	public boolean inUserTable(String myID){
 		
 		System.out.println("UserHelper inUserTable: myID = " + myID);
@@ -298,7 +273,10 @@ public class UserHelper {
 
 
 	/**
-	 * Authenticates an admin user 
+	 * 
+	 * @param myID user myID
+	 * @param encryptedPass encrypted password
+	 *  Authenticates an admin user 
 	 * @return An admin user object if successful, null if unsuccessful.
 	 */
 	public Admin authenticateAdminUser(String myID, String encryptedPass) {
@@ -330,29 +308,11 @@ public class UserHelper {
 
 		return adminUser; //will be null if user wasn't valid
 	}
-	
-	public boolean inAdminUserTable(String myID){
-		
-		
-		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' AND adminStatus = 1 LIMIT 1";
-		
-		try {
-			PreparedStatement ps = this.connection.prepareStatement(query);
 
-			this.results = ps.executeQuery();
-			if (this.results.next()) {
-				return true;
-			}else{
-				return false;
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("****Error in UserHelper.java: inAdminUserTable method. Query = " + query);
-		}
-		
-		return false;
-	}
+	
+	//======
+	
+	
 	
 	public Admin getAdminInfo(String myID) {
 		
@@ -381,6 +341,32 @@ public class UserHelper {
 		
 		return adminUser;
 		
+	}
+	
+	public User getUserInfo(String myID){
+		User user = new User();
+		String query = "SELECT * FROM tomcatdb.User WHERE myID = ? LIMIT 1";
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, myID);
+			
+			this.results = ps.executeQuery();
+			while(this.results.next()){
+				user.setUserRecordID(this.results.getInt("userID"));
+				user.setMyID(this.results.getString("myID"));
+				user.setUserEmail(this.results.getString("email"));
+				user.setUserFirstName(this.results.getString("fname"));
+				user.setUserLastName(this.results.getString("lname"));
+				user.setLastLogin(this.results.getString("lastLogin"));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("****Error in UserHelper.java: get admin info method. Query = " + query);
+		}
+		
+		return user;
 	}
 	
 }

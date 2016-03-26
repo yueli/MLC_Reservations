@@ -15,7 +15,7 @@ import helpers.BuildingListQuery;
 /**
  * Servlet implementation class BuildingListServlet
  */
-@WebServlet({ "/BuildingListServlet", "/buildinglist" })
+@WebServlet({ "/BuildingListServlet", "/buildinglist", "/buildings" })
 public class BuildingListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

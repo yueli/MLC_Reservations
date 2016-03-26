@@ -13,13 +13,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
 			$(function() {
-				$("#header").load("./adminheader.html"); 
+				$("#header1").load("./adminheader.html"); 
 				$("#footer").load("../footer.html"); 
 			});
 		</script>
 </head>
 <body>
-<div id="header"></div>
+<div id="header1"></div>
 <div align="center">
 <form name="addForm" action="addbuilding" method=get>
 

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.Banned;
+import model.DbConnect;
 
 public class BanUserSelectDataQuery {
 	
@@ -15,24 +16,19 @@ public class BanUserSelectDataQuery {
 
 	/**
 	 * 
-	 * @param dbName
-	 * @param user
-	 * @param pwd
+	 * Connect to database.  This is hard coded in DBConnect.java
 	 */
-	public BanUserSelectDataQuery(String dbName, String user, String pwd) {
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
-		
+	public BanUserSelectDataQuery() {
+
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, user, pwd);
+			this.connection = DbConnect.devCredentials();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		

@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.DateTimeConverter;
 import model.DbConnect;
@@ -43,16 +45,49 @@ public class RoomsSelectQuery {
 			
 		}
 		
+		public List<String> roomList (int buildingID){
+			String query = "SELECT roomNumber FROM tomcatdb.Rooms, tomcatdb.Building "
+					+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
+					+ "AND tomcatdb.Building.buildingID = ?";
+			
+			List<String> roomsList = new ArrayList<String>();
+			// securely run query
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, buildingID);
+				this.results = ps.executeQuery();
+				
+				// add rooms to list array
+				while(this.results.next()){
+					roomsList.add(this.results.getString("roomNumber"));
+				}
+				return roomsList;
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement: " + query);
+			} 
+			
+			return roomsList;
+		}
 		
-		public void doRoomRead(int building, String floor){
+		public void doRoomRead(int buildingID, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
-			String query = "SELECT roomID, roomNumber FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = "
-					+ "tomcatdb.Building.buildingID AND tomcatdb.Building.buildingID = '" + building + "'" + " AND tomcatdb.Rooms.roomStatus = 1 "
-							+ "AND tomcatdb.Rooms.roomFloor = '" + floor + "'" + " ORDER BY roomNumber";
+			String query = "SELECT roomID, roomNumber "
+					+ "FROM tomcatdb.Rooms, tomcatdb.Building "
+					+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
+					+ "AND tomcatdb.Building.buildingID = ? "
+					+ "AND tomcatdb.Rooms.roomStatus = ? "
+					+ "AND tomcatdb.Rooms.roomFloor = ? "
+					+ "ORDER BY roomNumber";
 
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, buildingID);
+				ps.setString(2, "1");
+				ps.setString(3, floor);
+				
 				this.results = ps.executeQuery();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -61,7 +96,23 @@ public class RoomsSelectQuery {
 		}
 		
 		
-		
+		/**
+		 * This method constructs the tables that you see in browse-reservations.
+		 * Here I create the structure for the jQuery tabs for the rooms
+		 * Each tab will show the table/availability schedule for the selected room number.
+		 * To show the times, I created a string table block that is used in the loop to query if a room is available at the time
+		 * if the room is unavailable, the cell will have an ID of red
+		 * if the room is available, the cell will have and ID of green
+		 * if the time select (in the loop) is less than the current time, the cell ID is gray.
+		 * If it is 11 minutes past current time, the cell will have in ID of yellow.
+		 * Yellow means that the room was reserved but is now open for everyone (without a reservation)
+		 * Gray means that time has past so you can reserve a room at that time
+		 * information is sent via hidden forms to make a Browse Reserve Servlet 
+		 * uses Date Time Converter and Time converter classes to convert, parse, of format date or times
+		 * a key table is at the bottom of each schedule table in the tabs.
+		 * 
+		 * @return String HTML table
+		 */
 		public String getRoomsTable(){
 			// create the times to display in a table.  
 			String[] timeBlock = {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", 
@@ -77,7 +128,7 @@ public class RoomsSelectQuery {
 			try {
 				while(this.results.next()){
 					Rooms rooms = new Rooms();
-					rooms.setRoomNumber(this.results.getInt("roomNumber"));
+					rooms.setRoomNumber(this.results.getString("roomNumber"));
 					table += "<li><a href='#tabs-" + h + "'" + ">" + rooms.getRoomNumber() + "</a></li>";
 					h++;
 				}
@@ -94,11 +145,11 @@ public class RoomsSelectQuery {
 				while(this.results.next()){
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
-					room.setRoomID(this.results.getInt("roomID")); // TODO
-					room.setRoomNumber(this.results.getInt("roomNumber"));
+					room.setRoomID(this.results.getInt("roomID")); 
+					room.setRoomNumber(this.results.getString("roomNumber"));
 					
 					// display results in a table
-					table += "<div id='tabs-" + j + "'" + ">";
+					table += "<div id='tabs-" + j + "'" + ">"; // used for the jQuery tabs
 					table += "<table border=1>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
@@ -125,6 +176,7 @@ public class RoomsSelectQuery {
 						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
 						
 						// if result set IS NOT empty, then there IS a reservation at that time
+						// if there IS a reservation, then color cells red for unavailable.
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
@@ -167,6 +219,7 @@ public class RoomsSelectQuery {
 						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
 						
 						// if result set IS NOT empty, then there IS a reservation at that time
+						// if there IS a reservation, then color cells red for unavailable.
 						if(!reservation.isEmpty()){
 							table += "<td id='red'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
@@ -193,7 +246,7 @@ public class RoomsSelectQuery {
 					table += "</tbody>";
 					table += "</table>";
 					
-					// Key for rooms table
+					// Key Table for rooms table
 					table += "<br><br><br>";
 					table += "<table>";
 					table += "<tbody class='room'>";

@@ -5,11 +5,15 @@ package model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
+ * This class is used to convert/parse/transform a date or time from a datetime variable or date variable.
  * @author Brian Olaogun
- * This class is used to convert a date or a datetime variable.
  *
  */
 public class DateTimeConverter {
@@ -63,7 +67,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param date
+	 * @param date String date
 	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
 	 */
 	public String convertDateLong(String date){
@@ -99,7 +103,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param datetime 
+	 * @param datetime String date time
 	 * @return parsed Date from datetime in Month date, year format.
 	 */
 	public String parseDateLong(String datetime){
@@ -115,6 +119,45 @@ public class DateTimeConverter {
 			return "**Error, unable to parse date.**";
 		}
 	}
+	/**
+	 * 
+	 * @return String datetime in long date format (Month dd, yyyy) with 12-hour time
+	 */
+	public String dateTimeTo12Long(){
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format
+			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy hh:mm a"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert datetime to long format.**";
+		}
+	}
+	
+	/**
+	 * 
+	 * @param datetime String date Time
+	 * @return String datetime in long date format (Month dd, yyyy) with 12-hour time
+	 */
+	public String dateTimeTo12Long(String datetime){
+		
+		this.datetime = datetime.trim(); // removes leading and trailing whitespace
+		try{
+			SimpleDateFormat unformatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // used to convert String datetime to Simple Date Format
+			SimpleDateFormat formatted = new SimpleDateFormat("MMMM dd, yyyy hh:mm a"); // format date to ex. January 12, 2015
+			Date parsedDate = unformatted.parse(this.datetime); // parse the date from the datetime
+			return formatted.format(parsedDate); // return parsed date in String format
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert datetime to long format.**";
+		}
+	}
+	
+	/**
+	 * 
+	 * @return parsed date from a datetime string
+	 */
 	public String parseDate(){
 		
 		try{
@@ -130,7 +173,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param datetime 
+	 * @param datetime String Date Time
 	 * @return parsed Date from datetime in Month date, year format.
 	 */
 	public String parseDate(String datetime){
@@ -167,7 +210,7 @@ public class DateTimeConverter {
 	
 	/**
 	 * 
-	 * @param time
+	 * @param datetime String datetime
 	 * @return String: parsed time from datetime. Converted time from 24-hour format to 12-hour format.
 	 */
 	public String parsedTimeTo12(String datetime){
@@ -185,7 +228,10 @@ public class DateTimeConverter {
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @return parses the time from a date time string.  The date time should be already in 24-hour format.
+	 */
 	public String parsedTimeTo24(){
 		
 		this.datetime = datetime.trim(); // removes any leading or trailing whitespace
@@ -201,7 +247,11 @@ public class DateTimeConverter {
 		}
 		
 	}
-	
+	/**
+	 * 
+	 * @param datetime String date time
+	 * @return parses the time from a date time string.  The date time should be already in 24-hour format.
+	 */
 	public String parsedTimeTo24(String datetime){
 		
 		this.datetime = datetime.trim(); // removes any leading or trailing whitespace
@@ -268,9 +318,98 @@ public class DateTimeConverter {
 	}
 	/**
 	 * 
-	 * @param startTime
-	 * @param hourIncrement
-	 * @return endTime
+	 * @param stringStartDate String start date
+	 * @param stringEndDate String end date
+	 * @return an arraylist of all dates in range of start date and end date inclusive.
+	 */
+	public List<String> dateRangeList(String stringStartDate, String stringEndDate){
+		// convert string date to date object
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		List<String> dates = new ArrayList<String>();
+		
+		Date startdate;
+		Date enddate;
+		
+		try {
+			startdate = format.parse(stringStartDate);
+			enddate = format.parse(stringEndDate);
+			
+			
+		    Calendar calendar = new GregorianCalendar();
+		    calendar.setTime(startdate);
+
+		    while (calendar.getTime().getTime() <= enddate.getTime())
+		    {
+		        Date result = calendar.getTime();
+		        String sqlFormattedResult = sqlFormat.format(result); 
+		        dates.add(sqlFormattedResult);
+		        calendar.add(Calendar.DATE, 1);
+		    }
+		    return dates;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("DateTimeConverter.dateRangeList - Error printing date range: " + dates);
+		}
+		return null;
+	}
+	/**
+	 * 
+	 * @param stringStartTime String starting time in 24-hour format
+	 * @param stringEndTime String ending time in 24-hour format
+	 * @return String array list of all values inclusive between start time and end time
+	 */
+	public List<String> timeRangeList (String startTime, String endTime){
+		// integer to place the parsed hour from the time.
+		int startHour;
+		int endHour;
+		
+		// array list to place the time range, inclusive.
+		List<String> timeRange = new ArrayList<String>();
+		if(startTime.length() == 7){
+			startTime = "0" + startTime;
+		}
+		if(endTime.length() == 7){
+			endTime = "0" + startTime;
+		}
+		// parse out the hour from time in 00:00:00 format
+		startHour = Integer.parseInt(startTime.substring(0, Math.min(startTime.length(), 2)));
+		endHour = Integer.parseInt(endTime.substring(0, Math.min(endTime.length(), 2)));
+		
+		// add range to list.
+		/**
+		 * Increment hour and if incrementing from 23, start hour over to 0 
+		 * increment to end hour.
+		 */
+		if (startHour > endHour){
+			for(int h = startHour;  h <=24; h++){
+				//timeRange.add(startHour);
+				timeRange.add(startTime);
+				startHour++;
+				startTime = startHour + ":00:00";
+				
+				if(startHour == 24){
+					startHour = 0;
+				}
+			}	
+		}
+		for (int i = startHour; i <= endHour; i++){
+			timeRange.add(startTime);
+			startHour++;
+			startTime = startHour + ":00:00";
+			
+		}
+		
+		return timeRange;
+	}
+	
+	/**
+	 * 
+	 * @param reserveStartTime start time
+	 * @param hourIncrement the number to add to the start time
+	 * @return endTime the result of adding the hour increment and the time
+	 * This method is used to add an hour increment to a starting time probably in the most complicated way.
 	 */
 	public static String addTime(String reserveStartTime, int hourIncrement){
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -282,8 +421,12 @@ public class DateTimeConverter {
 			// convert hour increment to seconds and add it to the start time
 			Date add = new Date(startTime.getTime() + hourIncrement *(3600*1000));
 			
-			// format to get time only
+			// format to get time only.  The result is the endTime
+			// if endTime is 00:00:00, change end time to 23:59:59.
 			String endTime = df.format(add);
+			if(endTime.equals("0:00") || endTime.equals("00:00") || endTime.equals("00:00:00") || endTime.equals("0:00:00")){
+				endTime = "23:59:59";
+			}
 			return endTime;
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -307,7 +450,20 @@ public class DateTimeConverter {
 		System.out.println("Current Datetime: " + dtc.datetimeStamp());
 		
 		System.out.println("TESTING ADD TIME METHOD: " + DateTimeConverter.addTime("23:00:00", 1));
-	
+		System.out.println("LONG FORMAT of 2015-09-22 20:00:00 = " + dtc.dateTimeTo12Long("2015-09-22 20:00:00"));
 		
+		// date range
+		List<String> dates = dtc.dateRangeList("02/27/2016", "03/16/2016");
+		for(int i=0; i<dates.size(); i++){
+		    String date = dates.get(i);
+		    System.out.println(" Date is ..." + date);
+		}
+		
+		// time range
+		List<String> times = dtc.timeRangeList("09:00:00", "11:00:00");
+		for (int i=0; i<times.size(); i++){
+			String time = times.get(i);
+			System.out.println("Time is ..." + time);
+		}
 	}
 }

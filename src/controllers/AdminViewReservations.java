@@ -21,7 +21,7 @@ import model.DateTimeConverter;
 @WebServlet({ "/AdminViewReservations", "/view-reservations" })
 public class AdminViewReservations extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private HttpSession session;   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,7 +40,7 @@ public class AdminViewReservations extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		String buildingList = request.getParameter("buildingList");
 		
 		// set building & check if building is selected by user
@@ -55,9 +55,9 @@ public class AdminViewReservations extends HttpServlet {
 		String currentDate = dtc.parseDate(dtc.datetimeStamp());
 		System.out.println(currentDate);
 		
-		// get the inputed date
+		// get the inputed date. If datepicker date isn't null, it will be now be the current date
 		String inputtedDate = request.getParameter("datepicker");
-		if (inputtedDate != null){
+		if (inputtedDate != null && !inputtedDate.isEmpty()){
 			currentDate = inputtedDate;
 		}
 		
@@ -67,13 +67,14 @@ public class AdminViewReservations extends HttpServlet {
 		// query building
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		bsq.doAdminBuildingRead();
-		String buildings = bsq.getBuildingResults(bldg);
+		String buildings = bsq.getBuildingResults(bldg); // contains the HTML drop down building list.
 		
 		// query reservations
 		AdminReservationsSelectQuery arsq = new AdminReservationsSelectQuery();
-		arsq.doUserReservationRead(bldg, currentDate);
+		arsq.doUserReservationRead(bldg, currentDate); 
 		arsq.doAdminReservationRead(bldg, currentDate);
 		
+		// contains the html table with the query results
 		String userReservations = arsq.doUserReservationResults();
 		String adminReservations = arsq.doAdminReservationResults();
 		

@@ -38,7 +38,12 @@ public class AdminScheduleSelectQuery {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Run the query with the following parameters
+	 * @param buildingID String buildingID primary key
+	 * @param to (end date)
+	 * @param from (start Date)
+	 */
 	public void doRead(String buildingID, String to, String from){
 		DateTimeConverter dtc = new DateTimeConverter();
 		String currentDate = dtc.parseDate(dtc.datetimeStamp());
@@ -94,7 +99,10 @@ public class AdminScheduleSelectQuery {
 			System.out.println("Error in AdminScheduleSelectQuery.java: doRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
-	
+	/**
+	 * 
+	 * @return String HTML table of the query resultset.
+	 */
 	public String listSchedule(){
 		String table = "";
 		try {

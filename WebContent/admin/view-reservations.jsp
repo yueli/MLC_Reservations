@@ -8,7 +8,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
-		
+		<script type="text/javascript" charset="utf8" src="jquery/Responsive/js/dataTables.responsive.js"></script>
 		<!-- Meta -->
         
         <meta name="description" content="">
@@ -17,13 +17,14 @@
        
         <!-- Template CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="user/browse.css">
+        <link rel="stylesheet" type="text/css" href="admin/table-view-reservation.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js">
+        <link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
 		<script> 
 			// used to load header and footer html
 			$(function() {
-				$("#header").load("user/userheader.html"); 
+				$("#header1").load("admin/adminheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 			// jQuery for datepicker plugin
@@ -32,13 +33,13 @@
 			 });
 			// jQuery for Datatable plugin for pagination
 			$(document).ready( function () {
-				$('table.display').DataTable();
+				$('table.display').DataTable({responsive: true});
   
 			});
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 			<br><br><br><br><br>
 			<div id="search-container">
 				<form name="adminViewForm" action="view-reservations?building?date" method="post">

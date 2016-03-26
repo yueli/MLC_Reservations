@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -39,6 +37,7 @@ public class Email {
 	private String endTime;
 	private String building;
 	private String roomNumber;
+	private String websiteURL;
 	
 	// Constructors
 	/**
@@ -52,19 +51,20 @@ public class Email {
 		this.endTime = "";
 		this.building = "";
 		this.roomNumber = "";
+		this.websiteURL = "";
 	}
 	
 	/**
 	 * 
-	 * @param to
-	 * @param cc
-	 * @param reserveDate
-	 * @param startTime
-	 * @param endTime
-	 * @param building
-	 * @param roomNumber
+	 * @param to sendee 
+	 * @param cc copy other sendees
+	 * @param reserveDate reservation start date
+	 * @param startTime reservation start time
+	 * @param endTime reservation end time
+	 * @param building the name of the building where the reservation is made
+	 * @param roomNumber room number
 	 */
-	public Email(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber){
+	public Email(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL){
 		this.to = to;
 		this.cc = cc;  
 		this.reserveDate = reserveDate;
@@ -72,6 +72,7 @@ public class Email {
         this.endTime = endTime;
         this.building = building;
         this.roomNumber = roomNumber;
+        this.websiteURL = websiteURL;
 	}
 
 	// Getters & Setters
@@ -173,19 +174,35 @@ public class Email {
 		this.roomNumber = roomNumber;
 	}
 	
+	/**
+	 * 
+	 * @return websiteURL the websiteURL to set
+	 */
+	public String getWebsiteURL(){
+		return websiteURL;
+	}
+	
+	/**
+	 * 
+	 * @param websiteURL  URL of the website the user should visit
+	 */
+	public void setWebsiteURL(String websiteURL){
+		this.websiteURL = websiteURL;
+	}
+	
 	// Email Methods
 	/**
 	 * 
-	 * @param to
-	 * @param cc
-	 * @param reserveDate
-	 * @param startTime
-	 * @param endTime
-	 * @param building
-	 * @param roomNumber
+	 * @param to sendee 
+	 * @param cc copy other sendees
+	 * @param reserveDate reservation start date
+	 * @param startTime reservation start time
+	 * @param endTime reservation end time
+	 * @param building the name of the building where the reservation is made
+	 * @param roomNumber room number
 	 * Send Email for reservation confirmation
 	 */
-	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber) {
+	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL) {
         // ROOM RESERVATION DETAILS
         this.reserveDate = reserveDate;
         this.startTime = startTime;
@@ -199,7 +216,8 @@ public class Email {
         String from = "example@email.com"; //TODO change from Email
         
         // MAIL SERVER
-        String host = "smtp.office365.com";
+       // String host = "smtp.office365.com";
+        String host = "smtp.gmail.com";
 
         // Create properties for the Session
         Properties props = new Properties();
@@ -209,7 +227,7 @@ public class Email {
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.port", "25");
+        props.put("mail.smtp.port", "587");
         
         // To see what is going on behind the scene
         props.put("mail.debug", "true");
@@ -219,7 +237,7 @@ public class Email {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
         		   //TODO Set Username & Password
-                   private String username = "";
+                   private String username = "study.room.reserve@gmail.com";
                    private String password = "";
 
 				protected PasswordAuthentication getPasswordAuthentication() {
@@ -255,7 +273,7 @@ public class Email {
             msg.setSentDate(new Date());
 
 
-            setHTMLContent(msg, getReserveDate(), getStartTime(), getEndTime(), getBuilding(), getRoomNumber());
+            setHTMLContent(msg, getReserveDate(), getStartTime(), getEndTime(), getBuilding(), getRoomNumber(), getWebsiteURL());
             msg.saveChanges();
             bus.sendMessage(msg, address);
             bus.sendMessage(msg, address2);
@@ -283,24 +301,25 @@ public class Email {
     // Sending data of any type is similar.
 	/**
 	 * 
-	 * @param msg
-	 * @param reserveDate
-	 * @param startTime
-	 * @param endTime
-	 * @param building
-	 * @param roomNumber
-	 * @throws MessagingException
+	 * @param msg email message contents
+	 * @param reserveDate start date of the reservation
+	 * @param startTime reservation start time
+	 * @param endTime reservation end time
+	 * @param building the building where the reservation was made
+	 * @param roomNumber room number
+	 * @throws MessagingException error in sending message
 	 * Set the message of the email.  This is an HTML email message
 	 */
-    public static void setHTMLContent(Message msg, String reserveDate, String startTime, String endTime, String building, String roomNumber) throws MessagingException {
-
+    public static void setHTMLContent(Message msg, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL) throws MessagingException {
+    	DateTimeConverter dtc = new DateTimeConverter();
+    	TimeConverter tc = new TimeConverter();
         String html = "<html><head><title>" +
                         msg.getSubject() +
                         "</title></head><body><h1>" +
                         msg.getSubject() +
                         "</h1><p style='font-size:120%'>Thanks for reserving a room at " + building + "! " +
-                        "Your reservation is set for room " + roomNumber + " on " + reserveDate + " from " + startTime + " to " + endTime + ". <br><br>" + 
-                        "To check-in, view, or cancel your reservation, please visit [insert website].</body></html>";
+                        "Your reservation is set for room " + roomNumber + " on " + dtc.convertDateLong(reserveDate) + " from " + tc.convertTimeTo12(startTime) + " to " + tc.convertTimeTo12(endTime) + ". <br><br>" + 
+                        "To check-in, view, or cancel your reservation, please visit " + websiteURL + "</body></html>";
 
         // HTMLDataSource is a static nested class
         msg.setDataHandler(new DataHandler(new HTMLDataSource(html)));
@@ -337,16 +356,5 @@ public class Email {
         
      
     }
-    
-    /**
-     * 
-     * @param emailStr
-     * @return makes sure that emails entered follow the pattern listed below.
-     */
-	public static boolean isEmail(String emailStr) {
-		Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = emailRegex.matcher(emailStr);
-		return matcher.find();
-	}
 	 
 } 
