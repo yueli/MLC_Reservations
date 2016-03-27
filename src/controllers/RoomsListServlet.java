@@ -1,3 +1,8 @@
+/*
+ *  @author: Ginger Nix
+ */
+
+
 package controllers;
 
 import java.io.IOException;
@@ -12,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.RoomsSelectQuery;
+import model.Admin;
 
 /**
  * Servlet implementation class RoomsListServlet
@@ -46,8 +52,20 @@ public class RoomsListServlet extends HttpServlet {
 		//get our current session
 		session = request.getSession();
 
+		// create admin user object w/ session data on the logged in user's info
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+
+		int buildingID;
+
 		// get building id from form - it's the id of the building they selected		
-		int buildingID = Integer.parseInt(request.getParameter("buildingList")); 
+		buildingID = Integer.parseInt(request.getParameter("buildingList")); 
+		
+		if (buildingID == 0) {
+			System.out.println("RoomListServlet: buildingID = 0");
+			buildingID = Integer.parseInt(request.getParameter("buildingList")); 
+			System.out.println("RoomListServlet: NEW buildingID = " + buildingID);
+		}
+		
 		
 		System.out.println("Rooms List Servlet: building id = " + buildingID);
 		
@@ -58,15 +76,13 @@ public class RoomsListServlet extends HttpServlet {
 		
 		//forward our request along
 		request.setAttribute("table", table);
+		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 
 		url = "admin/roomsList.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 
-		
-		
-		
-		
+	
 		
 	}
 
