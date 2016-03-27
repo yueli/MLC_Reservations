@@ -168,7 +168,7 @@ public class AdminReservationsSelectQuery {
 				reservation.setReserveStartDate(this.results2.getString("reserveStartDate"));
 				reservation.setReserveEndDate(this.results2.getString("reserveEndDate"));
 				reservation.setReserveStartTime(this.results2.getString("reserveStartTime"));
-				reservation.setReserveEndTime(this.results2.getString("reserveEndTime"));
+				reservation.setReserveEndTime(TimeConverter.addOneSecondToTime(this.results2.getString("reserveEndTime")));
 				reservation.setHourIncrement(this.results2.getInt("hourIncrement"));
 				
 				table += "<tr>";
@@ -232,7 +232,7 @@ public class AdminReservationsSelectQuery {
 				reservation.setReserveStartDate(this.results.getString("reserveStartDate"));
 				reservation.setReserveEndDate(this.results.getString("reserveEndDate"));
 				reservation.setReserveStartTime(this.results.getString("reserveStartTime"));
-				reservation.setReserveEndTime(this.results.getString("reserveEndTime"));
+				reservation.setReserveEndTime(TimeConverter.addOneSecondToTime(this.results.getString("reserveEndTime")));
 				reservation.setHourIncrement(this.results.getInt("hourIncrement"));
 				
 				table += "<tr>";

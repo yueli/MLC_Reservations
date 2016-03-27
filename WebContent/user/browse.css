@@ -115,7 +115,7 @@ table th {
 /* used for table cell colors in browse reservations: */
 #red { /* room reserved at time listed */
 	background: #fbcfd0;
-	color: #999;
+	color: #202021;
  	border: 1px solid #d8d8dd;
   	padding: 7px 20px;
   	border-collapse: collapse;
@@ -123,15 +123,23 @@ table th {
 	
 #gray { /* room unavailable at time listed */
 	background: #c9c9c9;
-	color: #999;
+	color: #202021;
  	border: 1px solid #d8d8dd;
   	padding: 7px 20px;
   	border-collapse: collapse;
 	}
-
+	
+#yellow { /* room open at time listed */
+	background: #f2f799;
+	color: #777677;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
+	
 #green { /* room available at time listed */
 	background: #e3f2e0;
-	color: #999;
+	color: #777677;
  	border: 1px solid #d8d8dd;
   	padding: 7px 20px;
   	border-collapse: collapse;

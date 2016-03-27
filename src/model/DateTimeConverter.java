@@ -410,6 +410,8 @@ public class DateTimeConverter {
 	 * @param hourIncrement the number to add to the start time
 	 * @return endTime the result of adding the hour increment and the time
 	 * This method is used to add an hour increment to a starting time probably in the most complicated way.
+	 * This is used for student/user reservations where reservations can only be made
+	 * for one day.
 	 */
 	public static String addTime(String reserveStartTime, int hourIncrement){
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");

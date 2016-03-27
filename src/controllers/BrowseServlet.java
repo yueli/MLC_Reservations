@@ -24,7 +24,8 @@ import helpers.BuildingSelectQuery;
 		})
 public class BrowseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private HttpSession session; 
+    private String url;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -44,18 +45,20 @@ public class BrowseServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get current session
-		HttpSession session = request.getSession();
+		session = request.getSession();
 		
 		// loads building list from db, create dropdown for list, and output as String
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
+		System.out.println("BUILDINGS DROPDOWN");
+		System.out.println(buildings);
 		
 		// set session attribute
 		session.setAttribute("buildings", buildings);
 		
 		// URL of the view to forward
-		String url = "/user/browse.jsp";
+		url = "/user/browse.jsp";
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

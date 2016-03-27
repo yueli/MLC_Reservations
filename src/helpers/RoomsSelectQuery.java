@@ -167,7 +167,60 @@ public class RoomsSelectQuery {
 						DateTimeConverter dtc = new DateTimeConverter();
 						
 						// check to see if room is reserved at the current hour at the current date
-						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
+						// added seconds to timeblock so that its in sql format.
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i] + ":00", room.getRoomNumber());
+						String reservation = rsq.doReservationResults();
+						
+						// used for hour comparison
+						String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+						int currentHour = Integer.parseInt(currentTime.substring(0, Math.min(currentTime.length(), 2)));
+						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
+						
+						// if result set IS NOT empty, then there IS a reservation at that time
+						// if there IS a reservation, then color cells red for unavailable.
+						if(!reservation.isEmpty()){
+							table += "<td id='red'>";
+							table += tc.convertTimeTo12(timeBlock[i]);
+						// compare the current hour with the hour of the reservation
+						// user can only make a reservation for current hour and beyond for the day
+						} else if (reserveHour < currentHour){
+							table += "<td id='gray'>";
+							table += tc.convertTimeTo12(timeBlock[i]);
+						// if result set IS empty, then there IS NOT a reservation at that time
+						
+						} else {
+							if (reserveHour == currentHour){
+								if (tc.currentMinutes() > 10){
+									table += "<td id='yellow'>";
+									table += tc.convertTimeTo12(timeBlock[i]);
+								}
+							} else {
+								table += "<td id='green'>";
+								table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+								table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+								table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+								table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+								table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+								table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+								table += "</form> ";
+								//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							}
+						}
+
+						table += "</td>";
+					}
+					table += "</tr>";
+					table += "<tr>";
+					for(int i = 12; i < timeBlock.length; i++){
+						// get results for reservation
+						ReservationSelectQuery rsq = new ReservationSelectQuery();
+						
+						// class used to get the current datetime and parse date
+						DateTimeConverter dtc = new DateTimeConverter();
+						
+						// check to see if room is reserved at the current hour at the current date
+						// added seconds to timeblock so that its in sql format.
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i] + ":00", room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
 						
 						// used for hour comparison
@@ -187,60 +240,23 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time
 						} else {
-							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
-							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
-							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
-							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
-							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
-							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-							table += "</form> ";
-							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							if (reserveHour == currentHour){
+								if (tc.currentMinutes() > 10){
+									table += "<td id='yellow'>";
+									table += tc.convertTimeTo12(timeBlock[i]);
+								}
+							} else {
+								table += "<td id='green'>";
+								table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+								table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+								table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+								table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+								table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+								table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+								table += "</form> ";
+								//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							}
 						}
-
-						table += "</td>";
-					}
-					table += "</tr>";
-					table += "<tr>";
-					for(int i = 12; i < timeBlock.length; i++){
-						// get results for reservation
-						ReservationSelectQuery rsq = new ReservationSelectQuery();
-						
-						// class used to get the current datetime and parse date
-						DateTimeConverter dtc = new DateTimeConverter();
-						
-						// check to see if room is reserved at the current hour at the current date
-						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
-						String reservation = rsq.doReservationResults();
-						
-						// used for hour comparison
-						String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
-						int currentHour = Integer.parseInt(currentTime.substring(0, Math.min(currentTime.length(), 2)));
-						int reserveHour = Integer.parseInt(timeBlock[i].substring(0, Math.min(timeBlock[i].length(), 2)));
-						
-						// if result set IS NOT empty, then there IS a reservation at that time
-						// if there IS a reservation, then color cells red for unavailable.
-						if(!reservation.isEmpty()){
-							table += "<td id='red'>";
-							table += tc.convertTimeTo12(timeBlock[i]);
-						// compare the current hour with the hour of the reservation
-						// user can only make a reservation for current hour and beyond for the day
-						}else if (reserveHour < currentHour){
-							table += "<td id='gray'>";
-							table += tc.convertTimeTo12(timeBlock[i]);
-						// if result set IS empty, then there IS NOT a reservation at that time
-						} else {
-							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
-							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
-							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
-							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
-							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
-							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-							table += "</form> ";
-							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-						}
-						
 					}
 					table += "</tr>";
 					table += "</tbody>";
@@ -251,7 +267,7 @@ public class RoomsSelectQuery {
 					table += "<table>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th COLSPAN=3 ALIGN=CENTER><h3>";
+					table += "<th COLSPAN=4 ALIGN=CENTER><h3>";
 					table += "Key";
 					table += "</h3></th>";
 					table += "</tr>";
@@ -260,7 +276,11 @@ public class RoomsSelectQuery {
 					table += "<tr>";
 					table += "<td id='gray'>" + "Time Unavailable" + "</td>";
 					table += "<td id='red'>" + "Time Reserved" + "</td>";
-					table += "<td id='green'>" + "Time Available" + "</td>";
+					table += "<td id='yellow'>" + "Open Room" + "</td>";
+					table += "<td id='green'>" + "Time Available to Reserve" + "</td>";
+					table += "</tr>";
+					table += "<tr>";
+					table += "<td COLSPAN=4 ALIGN=CENTER>" + "Open room times require no reservation to use room." + "</td>";
 					table += "</tr>";
 					table += "</tbody>";
 					table += "</table>";
