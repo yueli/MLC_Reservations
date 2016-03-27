@@ -209,13 +209,13 @@ public class AdminReservationsServlet2 extends HttpServlet {
 							}
 						} else if (!reservationCheck.isEmpty()){
 							// testing - printing to console
-							System.out.println("***** RESERVED ********");
+							System.out.println("******* RESERVED ********");
 							System.out.println("RESERVE ID = " + reservationCheck);
 							System.out.println("DATE " + startDate);
 							System.out.println("END " + endDate);
 							System.out.println("ROOM NUMBER " + roomNumber.get(i));
 							System.out.println("TIME " + times.get(j));
-							System.out.println("***** RESERVED ********");
+							System.out.println("******* RESERVED ********");
 							System.out.println();
 							
 							table += "<tr>";
@@ -263,7 +263,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 			//}
 			
 		//} else { // there isn't an active session.
-			//url = "admin/adminLogin.jsp";
+			//url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
 		//}
 		
 		// forward the request

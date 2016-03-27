@@ -27,22 +27,18 @@
 	</head>
 	<body>
 		<div id="header1"></div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<form name="browseForm" action="BrowseFloors" method="post">
-			<h2>Please Select Building</h2>
-			<p>${buildings}
-			<input name="enterBuilding" type="submit" value="Enter"></p> 
-		</form>
-		<form name="browseForm2" action="BrowseRooms" method="post">
-			<h2>Please Select Floor</h2>
-			<p>${floor}</p>
-		</form>
+		<br><br><br><br><br><br><br>
+		<div align="center">
+			<form name="browseForm" action="BrowseFloors" method="post">
+				<h2>Please Select Building</h2>
+				<p>${buildings}
+				<input name="enterBuilding" type="submit" value="Enter"></p> 
+			</form>
+			<form name="browseForm2" action="BrowseRooms" method="post">
+				<h2>Please Select Floor</h2>
+				<p>${floor}</p>
+			</form>
+		</div>
 		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

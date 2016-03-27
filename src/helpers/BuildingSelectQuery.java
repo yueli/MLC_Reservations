@@ -96,66 +96,87 @@ public class BuildingSelectQuery {
 	
 	public String getBuildingResults(){
 		// Create the String for HTML
-		String select = "<select id='buildingList' name='buildingList'>";
+		String select = "";
 		
 		// HTML for dropdown list
 		try {
-			while(this.results.next()){
-				// place results in a building object
-				Building building = new Building();
-				building.setBuildingID(this.results.getInt("buildingID"));
-				building.setBuildingName(this.results.getString("buildingName"));
-				
-				// HTML for dropdown list
-				if(this.results.getString(1) != null){
-					select += "<option selected='selected' value=" + "'" + building.getBuildingID() + "'" + ">";
-					select += building.getBuildingName();
-					select += "</option>";
+			select = "<select id='buildingList' name='buildingList'>";
+			
+				if(this.results.next()){
+					do {
+						// place results in a building object
+						Building building = new Building();
+						building.setBuildingID(this.results.getInt("buildingID"));
+						building.setBuildingName(this.results.getString("buildingName"));
+					
+						// HTML for dropdown list
+						if(this.results.getString("buildingID") != null){
+							select += "<option selected='selected' value=" + "'" + building.getBuildingID() + "'" + ">";
+							select += building.getBuildingName();
+							select += "</option>";
+						} else {
+							select += "<option value=" + "'" + building.getBuildingID() + "'" + ">";
+							select += building.getBuildingName();
+							select += "</option>";
+						}
+					} while (this.results.next());
 				} else {
-					select += "<option value=" + "'" + building.getBuildingID() + "'" + ">";
-					select += building.getBuildingName();
-					select += "</option>";
+					select = "<h2>No Buildings Online</h2>";
 				}
-			}
+				select += "</select>";
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		select += "</select>";
 		
 		return select;
 	}
 	
 	public String getBuildingResults(int selected){
 		// Create the String for HTML
-		String select = "<select id='buildingList' name='buildingList'>";
+		String select = "";
 		
 		// HTML for dropdown list
 		try {
-			while(this.results.next()){
-				// place results in a building object
-				Building building = new Building();
-				building.setBuildingID(this.results.getInt("buildingID"));
-				building.setBuildingName(this.results.getString("buildingName"));
-				
-				// HTML for dropdown list
-				if(building.getBuildingID() == selected){
-					select += "<option selected='selected' value=" + "'" + building.getBuildingID() + "'" + ">";
-					select += building.getBuildingName();
-					select += "</option>";
-				} else {
-					select += "<option value=" + "'" + building.getBuildingID() + "'" + ">";
-					select += building.getBuildingName();
-					select += "</option>";
-				}
-			} this.results.beforeFirst(); // resets the cursor to 0
+			select = "<select id='buildingList' name='buildingList'>";
+			
+			if(this.results.next()){
+				do{
+					// place results in a building object
+					Building building = new Building();
+					building.setBuildingID(this.results.getInt("buildingID"));
+					building.setBuildingName(this.results.getString("buildingName"));
+					
+					// HTML for dropdown list
+					if(building.getBuildingID() == selected){
+						select += "<option selected='selected' value=" + "'" + building.getBuildingID() + "'" + ">";
+						select += building.getBuildingName();
+						select += "</option>";
+					} else {
+						select += "<option value=" + "'" + building.getBuildingID() + "'" + ">";
+						select += building.getBuildingName();
+						select += "</option>";
+					}
+				} while (this.results.next());
+			} else {
+				select = "<h2>No Buildings Online</h2>";
+			}
+			select += "</select>";
+			this.results.beforeFirst(); // resets the cursor to 0
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		select += "</select>";
+		
 		
 		return select;
 	}
-	
+	/**
+	 * This method takes into account the building schedule.  
+	 * We get the building name from inputted buildingID
+	 * @param buildingID
+	 * @return buildingName
+	 * 
+	 */
 	public String buildingName(int buildingID){
 		String buildingName = "";
 		doBuildingRead();

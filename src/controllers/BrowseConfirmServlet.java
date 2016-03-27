@@ -48,7 +48,10 @@ public class BrowseConfirmServlet extends HttpServlet {
 		
 		// get request and session parameters/attributes
 		String startTime = (String) session.getAttribute("startTime");
-		String startTime24;
+		/* session has start time in 12-hr format, 
+		 * startTime24 is for the 24-hour conversion.
+		 */
+		String startTime24; 
 		int roomID = Integer.parseInt((String) session.getAttribute("roomID"));
 		String roomNumber = (String) session.getAttribute("roomNumber");
 		String currentDate = (String) session.getAttribute("currentDate");
@@ -115,7 +118,8 @@ public class BrowseConfirmServlet extends HttpServlet {
 				
 			} else { // the room selected is not reserved = make a reservation
 				// create reservation object to insert in query
-				Reservation reservation = new Reservation(primaryUserID, secondaryUserID, roomID, currentDate, currentDate, startTime24, endTime, hourIncrement, buildingID, free);
+				// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
+				Reservation reservation = new Reservation(primaryUserID, secondaryUserID, roomID, currentDate, currentDate, startTime24, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement, buildingID, free);
 				ReservationInsertQuery riq = new ReservationInsertQuery();
 				riq.doReservationInsert(reservation);
 				
