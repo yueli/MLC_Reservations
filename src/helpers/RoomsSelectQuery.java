@@ -467,9 +467,8 @@ public class RoomsSelectQuery {
 				ps.setInt(3, roomStatus);
 				ps.setInt(4, adminID);
 				ps.setInt(5, roomID);
-
-				this.results = ps.executeQuery();
-				this.results.next();
+				
+				ps.executeUpdate();
 
 					
 			} catch (SQLException e) {
