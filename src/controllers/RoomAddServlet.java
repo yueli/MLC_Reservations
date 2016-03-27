@@ -1,3 +1,7 @@
+/*
+ * @author: Ginger Nix
+ */
+
 package controllers;
 
 import java.io.IOException;
@@ -11,29 +15,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.AdminUserHelper;
+import helpers.RoomsSelectQuery;
 import model.Admin;
 
 /**
- * Servlet implementation class AdminAddServlet
+ * Servlet implementation class RoomAddServlet
  */
-@WebServlet("/AdminAddServlet")
-public class AdminAddServlet extends HttpServlet {
+@WebServlet("/RoomAddServlet")
+public class RoomAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session; 
 	private String url;
-
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminAddServlet() {
+    public RoomAddServlet() {
         super();
+
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
+	
+		doPost(request, response);
+
 	}
 
 	/**
@@ -47,35 +55,43 @@ public class AdminAddServlet extends HttpServlet {
 		session = request.getSession();
 		message = (String) request.getAttribute("message"); 
 		
-		// blank message if nothing gotten in message attribute
-		
+		// blank message if nothing gotten in message attribute		
 		if (message == null || message.isEmpty()) {
 			 message = "";
 		}
-		
+
+		// get building id from list or rooms - it's the id of the building they selected		
+		int buildingID = Integer.parseInt(request.getParameter("buildingList")); 
 
 		// create admin user object w/ session data on the logged in user's info
 		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
 
-		System.out.println("AdminAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
+		System.out.println("RoomAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
 		
-		AdminUserHelper adminUserHelper = new AdminUserHelper();
+		RoomsSelectQuery rsq = new RoomsSelectQuery();
+		table = rsq.createAddRoomForm(buildingID);
+
+		
+/*		AdminUserHelper adminUserHelper = new AdminUserHelper();
 		
 		// creates table to display an empty form
 		// some of the pull down options are determined by the logged in admin's role
 		
        table = adminUserHelper.createAddAdminForm(loggedInAdminUser);
-
+*/
     	request.setAttribute("message", message);
         request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		request.setAttribute("table", table);
 
-		url = "admin/adminAdd.jsp";
+		url = "admin/roomAdd.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	
-		
 	}
+	
+	
+	
+	
 
 }

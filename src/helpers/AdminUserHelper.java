@@ -1,3 +1,8 @@
+/*
+ * @author: Ginger Nix
+ * class containing methods to use with viewing, adding, and editing admin users
+ */
+
 package helpers;
 
 import java.sql.PreparedStatement;
@@ -156,7 +161,11 @@ public class AdminUserHelper {
 	
 	
 	
-		
+	/*
+	 * This method takes the admin record's id and based on the
+	 * role of the logged in admin user it creates a form
+	 * pre-populated with the admin data to be edited	
+	 */
 		
 	public String getAdminInfo(int adminID, Admin loggedInAdminUser){
 
@@ -168,7 +177,7 @@ public class AdminUserHelper {
 		
 		String table = "";
 		
-		String query = "SELECT * FROM tomcatdb.Admin WHERE adminID = '" + adminID + "'";
+		String query = "SELECT * FROM tomcatdb.Admin WHERE adminID = '" + adminID + "' LIMIT 1";
 
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -176,8 +185,6 @@ public class AdminUserHelper {
 			this.results.next();
 		
 			// grab the results we need to display in form
-		
-
 			String adminMyID = this.results.getString("adminMyID");	
 			String fname = this.results.getString("fname");	
 			String lname = this.results.getString("lname");	
@@ -333,7 +340,7 @@ public class AdminUserHelper {
 	
 	public void updateAdminTable(int adminRecordID, String fname, String lname, String adminMyID, String role, int status) {
 
-		String query = "Update tomcatdb.Admin SET adminMyID = '" + adminMyID + "', " +
+		String query = "UPDATE tomcatdb.Admin SET adminMyID = '" + adminMyID + "', " +
 				"fname = '" + fname + "'," + 
 				"lname = '" + lname + "'," + 
 				"role = '" + role + "'," + 		
