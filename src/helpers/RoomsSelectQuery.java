@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import model.Admin;
 import model.DateTimeConverter;
 import model.DbConnect;
 import model.Rooms;
@@ -19,6 +20,8 @@ import model.TimeConverter;
 /**
  * @author Brian Olaogun
  * Helper for the Student side of the website.
+ * 
+ * @contributer: Ginger Nix
  *
  */
 public class RoomsSelectQuery {
@@ -168,8 +171,7 @@ public class RoomsSelectQuery {
 						DateTimeConverter dtc = new DateTimeConverter();
 						
 						// check to see if room is reserved at the current hour at the current date
-						// added seconds to timeblock so that its in sql format.
-						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i] + ":00", room.getRoomNumber());
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
 						
 						// used for hour comparison
@@ -188,24 +190,16 @@ public class RoomsSelectQuery {
 							table += "<td id='gray'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time
-						
 						} else {
-							if (reserveHour == currentHour){
-								if (tc.currentMinutes() > 10){
-									table += "<td id='yellow'>";
-									table += tc.convertTimeTo12(timeBlock[i]);
-								}
-							} else {
-								table += "<td id='green'>";
-								table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
-								table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
-								table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
-								table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
-								table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
-								table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-								table += "</form> ";
-								//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-							}
+							table += "<td id='green'>";
+							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							table += "</form> ";
+							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 						}
 
 						table += "</td>";
@@ -220,8 +214,7 @@ public class RoomsSelectQuery {
 						DateTimeConverter dtc = new DateTimeConverter();
 						
 						// check to see if room is reserved at the current hour at the current date
-						// added seconds to timeblock so that its in sql format.
-						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i] + ":00", room.getRoomNumber());
+						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
 						
 						// used for hour comparison
@@ -236,28 +229,22 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// compare the current hour with the hour of the reservation
 						// user can only make a reservation for current hour and beyond for the day
-						} else if (reserveHour < currentHour){
+						}else if (reserveHour < currentHour){
 							table += "<td id='gray'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time
 						} else {
-							if (reserveHour == currentHour){
-								if (tc.currentMinutes() > 10){
-									table += "<td id='yellow'>";
-									table += tc.convertTimeTo12(timeBlock[i]);
-								}
-							} else {
-								table += "<td id='green'>";
-								table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
-								table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
-								table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
-								table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
-								table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
-								table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-								table += "</form> ";
-								//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-							}
+							table += "<td id='green'>";
+							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							table += "</form> ";
+							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
 						}
+						
 					}
 					table += "</tr>";
 					table += "</tbody>";
@@ -268,7 +255,7 @@ public class RoomsSelectQuery {
 					table += "<table>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th COLSPAN=4 ALIGN=CENTER><h3>";
+					table += "<th COLSPAN=3 ALIGN=CENTER><h3>";
 					table += "Key";
 					table += "</h3></th>";
 					table += "</tr>";
@@ -277,11 +264,7 @@ public class RoomsSelectQuery {
 					table += "<tr>";
 					table += "<td id='gray'>" + "Time Unavailable" + "</td>";
 					table += "<td id='red'>" + "Time Reserved" + "</td>";
-					table += "<td id='yellow'>" + "Open Room" + "</td>";
-					table += "<td id='green'>" + "Time Available to Reserve" + "</td>";
-					table += "</tr>";
-					table += "<tr>";
-					table += "<td COLSPAN=4 ALIGN=CENTER>" + "Open room times require no reservation to use room." + "</td>";
+					table += "<td id='green'>" + "Time Available" + "</td>";
 					table += "</tr>";
 					table += "</tbody>";
 					table += "</table>";
@@ -295,10 +278,11 @@ public class RoomsSelectQuery {
 			return table;
 		}
 		
+/*
+ * @author: Ginger Nix
+ * this method takes a building record id and lists all the rooms in that building
 	
-// @author: Ginger Nix
-// this method takes a building record id and lists all the rooms in that building
-		
+ */
 		public String ListRoomsInBuilding(int buildingID){
 			
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -306,16 +290,13 @@ public class RoomsSelectQuery {
 			String buildingName = bsq.getBuildingNameFromID(buildingID);
 			
 			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingName = " + buildingName);
-
 			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingID = " + buildingID);
 			
 			String table = "";
 			String roomStatus = "";
 			
-			table += "<h2>Rooms List for Building " + buildingName + "</h2>";
-			
-			table += "<table>";
-			
+			table += "<h2>Rooms List for Building " + buildingName + "</h2>";			
+			table += "<table>";			
 			table += "<tr>";
 			table += "<td>Room Floor</td>";
 			table += "<td>Room Number</td>";
@@ -347,10 +328,10 @@ public class RoomsSelectQuery {
 					table += "<td>" + room.getRoomFloor() + "</td>";
 					table += "<td>" + room.getRoomNumber() + "</td>";
 					table += "<td>" + roomStatus + "</td>";
-					
-				
-					table += "<td><form action='RooomEditServlet' method = 'post'>" +
+									
+					table += "<td><form action='RoomEditServlet' method = 'post'>" +
 							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>" +
+							"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
 							"<input type='submit' value='Edit Room'>" +
 							"</form></td>";		
 				
@@ -363,22 +344,259 @@ public class RoomsSelectQuery {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("***Error in RoomsSelectQuery:  Query = " + query);
-			}
-			
+			}			
 			table += "<br /><br />";
 			table += "<p>";
 			table += "<form action='RoomAddServlet' method = 'post'>" +
+					"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
 					"<input type='submit' value='Add A Room'>" +
 					"</form>";			
 			table += "</p>";
 			
-
+			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingID AT END= " + buildingID);
+			
 			return table;
 			
 		}
 		
+/*
+ * @author: Ginger Nix
+ * 
+ * This method takes the room ID and creates a form already populated
+ * with the room info. The form is meant to edit the room data by an amin.	
+ */
 		
+		public String createEditRoomForm (int roomID){
 		
+			String table = "";
+			
+			String query = "SELECT * FROM tomcatdb.Rooms WHERE roomID = ? LIMIT 1";
+			
+			try {
+
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, roomID);
+				this.results = ps.executeQuery();
+				this.results.next();
+
+				// grab the results we need to display in form
+				String roomNumber = this.results.getString("roomNumber");	
+				int roomFloor = this.results.getInt("roomFloor");	
+				int roomStatus = this.results.getInt("roomStatus");	
+				int buildingID = this.results.getInt("Building_buildingID");
+				
+				System.out.println("RoomsSelectQuery: createEditRoomForm: buildingID START = " + buildingID);
+				
+				BuildingSelectQuery bsq = new BuildingSelectQuery();
+				String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
+					
+				System.out.println("RoomsSelectQuery: createEditRoomForm:  room number= " + roomNumber);
+				System.out.println("RoomsSelectQuery: createEditRoomForm:  room floor= " + roomFloor);
+				System.out.println("RoomsSelectQuery: createEditRoomForm:  room status= " + roomStatus);
+				
+				table += "<p>Building: " + buildingName + "</p>";
+				
+				table += "<form action='RoomSaveServlet' method = 'post'>";
+				
+				table += "Room Number:<br>";
+				table +=  "<input type='text' name = 'roomNumber' value = '" + roomNumber + "' required>";
+				table += "<br />";
+				
+				table += "Room Floor:<br>";
+				table +=  "<input type='text' name = 'roomFloor' value = '" + roomFloor + "' required>";
+				table += "<br />";
+					
+				table += "Room Status:<br>";
+				table += "<select name = 'roomStatus' required>";
+				
+				if (roomStatus == 1){
+					table += "<option value='1' selected>Active</option>";
+					table += "<option value='0'>Inactive</option>";
+					
+				}else{
+					table += "<option value='1'>Active</option>";
+					table += "<option value='0' selected>Inactive</option>";		
+				}		
+				
+				table += "</select>";	
+				
+				table += "<input type = 'submit' value = 'Save'>";
+				table += "<input type = 'hidden' name = 'roomID' value='" + roomID + "'>";
+				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+				
+				table += "</form>";
+				
+				table += "<br /><br />";
+				table += "<form action='RoomsListServlet' method = 'post'>";
+				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+				table += "<input type = 'submit' value = 'Cancel'>";
+				table += "</form>";
+	
+				System.out.println("RoomsSelectQuery: createEditRoomForm: buildingID END = " + buildingID);
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("***Error in RoomsSelectQuery: createEditRoomForm:  Query = " + query);
+			}
 		
+			//System.out.println("RoomsSelectQuery: createEditRoomForm: buildingID VERY END = " + buildingID);
+			
+			return table;
 		
+			
+		}
+/*
+ * @author: Ginger Nix
+ * 
+ * This method takes the data about the room and updates the room's record in the Rooms table
+ * 
+ */
+		
+		public void updateRoomTable(int roomID, String roomNumber, int roomFloor, int roomStatus, int adminID) {
+
+			String query = "UPDATE tomcatdb.Rooms SET "
+							+ "roomNumber = ?, roomFloor = ?,  "
+							+ "roomStatus = ?, Admin_adminID = ? "
+							+ "WHERE roomID = ?";		
+			
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);		
+				ps.setString(1, roomNumber);
+				ps.setInt(2, roomFloor);
+				ps.setInt(3, roomStatus);
+				ps.setInt(4, adminID);
+				ps.setInt(5, roomID);
+
+				this.results = ps.executeQuery();
+				this.results.next();
+
+					
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("***Error in RoomsSelectQuery updateRoomTable:  Query = " + query);
+			}
+			
+		}
+
+/*
+ * @author: Ginger Nix
+ * This method creates a blank form to add a new room to the building ID provided
+*/
+			
+			public String createAddRoomForm(int buildingID){
+				
+				String table = "";
+					
+					BuildingSelectQuery bsq = new BuildingSelectQuery();
+					String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
+
+					table += "<p>Building: " + buildingName + "</p>";
+					
+					table += "<form action='RoomAddSaveServlet' method = 'post'>";
+					
+					table += "Room Number:<br>";
+					table +=  "<input type='text' name = 'roomNumber' required>";
+					table += "<br />";
+					
+					table += "Room Floor:<br>";
+					table +=  "<input type='text' name = 'roomFloor' required>";
+					table += "<br />";
+						
+					table += "Room Status:<br>";
+					table += "<select name = 'roomStatus' required>";
+					table += "<option value='1' selected>Active</option>";
+					table += "<option value='0'>Inactive</option>";							
+					table += "</select>";	
+					
+					table += "<input type = 'submit' value = 'Save'>";	
+					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+					
+					table += "</form>";
+					
+					table += "<br /><br />";
+					table += "<form action='RoomsListServlet' method = 'post'>";
+					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+					table += "<input type = 'submit' value = 'Cancel'>";
+					table += "</form>";
+		
+					System.out.println("RoomsSelectQuery: createAddRoomForm: buildingID END = " + buildingID);
+			
+				return table;
+			
+				
+			}
+
+			
+/*
+ * @author: Ginger Nix
+ * 
+ * This method takes the room object and see if this room already exists in the rooms table
+ * having the same room number, room floor, and building
+ * 			
+ */
+			public boolean roomAlreadExists (Rooms room){
+				
+				String query = "SELECT * FROM tomcatdb.Rooms "
+								+ "WHERE Building_buildingID = ? "
+								+ "AND roomNumber = ? "
+								+ "AND roomFloor = ? "
+								+ "LIMIT 1";
+								
+				try {
+					PreparedStatement ps = this.connection.prepareStatement(query);		
+					ps.setInt(1, room.getBuildingID());
+					ps.setString(2, room.getRoomNumber());
+					ps.setInt(3, room.getRoomFloor());
+
+					ps.executeUpdate();
+
+					boolean results = this.results.next();
+					
+					if (results) {//the room is in the room table already
+						return true;
+					}else{
+						return false;
+					}
+
+						
+				} catch (SQLException e) {
+					e.printStackTrace();
+					System.out.println("***Error in RoomsSelectQuery updateRoomTable:  Query = " + query);
+				}
+				
+				return false;
+								
+			}
+
+			
+/*
+ * @author: Ginger Nix
+ * 
+ * This method take the room info and adds it to the rooms table
+ * 
+*/
+			public void insertRoomsTable(Rooms room) {
+				
+				String query = "INSERT INTO tomcatdb.Rooms "
+						+ "(Admin_adminID, Building_buildingID, roomNumber, roomFloor, roomStatus) "
+						+ "VALUES (?, ?, ?, ?, ?)";
+				
+				try {
+					PreparedStatement ps = this.connection.prepareStatement(query);		
+					ps.setInt(1, room.getAdminID());
+					ps.setInt(2, room.getBuildingID());
+					ps.setString(3, room.getRoomNumber());
+					ps.setInt(4, room.getRoomFloor());
+					ps.setInt(5, room.getRoomStatus());
+	
+					ps.executeUpdate();
+					
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+					System.out.println("***Error in RoomSelectQuery insert into rooms method. Query = " + query);
+				}
+				
+			}
 }

@@ -44,6 +44,8 @@ room: ${room}
 			
 			<p><a href='AdminListServlet'>List Admin Users</a></p>
 			
+			<p><a href='RoomsServlet'>View and Edit Rooms</a></p>
+			
 			
 		<form name="Logout" action="AdminLoginController" method="get">
  			<input class="btn btn-lg btn-red" type="submit" name = "logout" value="Logout">

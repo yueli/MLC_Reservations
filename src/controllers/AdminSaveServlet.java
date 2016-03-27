@@ -1,3 +1,10 @@
+/*
+ * @author: Ginger Nix
+ * 
+ * This servlet takes a filled out edit rooms form
+ * and processes it by updating the admin users table
+ * 
+ */
 package controllers;
 
 import java.io.IOException;
@@ -124,7 +131,7 @@ public class AdminSaveServlet extends HttpServlet {
 		
 		request.setAttribute("message", message);
 		request.setAttribute("editedUser", adminUserBeingEdited);
-		request.setAttribute("loggedInUser", loggedInAdminUser);
+		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);	
