@@ -70,7 +70,35 @@ public class Reservation {
 		this.free = free;
 	}
 	
-	
+	/**
+	 * 
+	 * @param adminID ID of admin who made a reservation
+	 * @param roomsID int roomID foreign key
+	 * @param reserveStartDate String start date of reservation
+	 * @param reserveEndDate String end date of reservation
+	 * @param reserveStartTime String start time of reservation
+	 * @param reserveEndTime String end time of reservation
+	 * @param hourIncrement int how long the reservation is
+	 * @param reserveName String the name of the reservation - for admin reservations only
+	 * @param buildingID int building ID foreign key
+	 * @param free whether the room has been reserved or not. value is Y/N
+	 */
+	public Reservation(int adminID, int roomsID,
+			String reserveStartDate, String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement,
+			String reserveName, int buildingID, String free) {
+		
+		this.adminID = adminID;
+		this.roomsID = roomsID;
+		this.reserveStartDate = reserveStartDate;
+		this.reserveEndDate = reserveEndDate;
+		this.reserveStartTime = reserveStartTime;
+		this.reserveEndTime = reserveEndTime;
+		this.hourIncrement = hourIncrement;
+		this.reserveName = reserveName;
+		this.buildingID = buildingID;
+		this.free = free;
+		
+	}
 
 	// Accessors and Mutators
 	/**
