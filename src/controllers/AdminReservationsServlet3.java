@@ -77,7 +77,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				//------------------------------------------------//
 				// get room ID
 				RoomsSelectQuery roomsq = new RoomsSelectQuery();
-				roomID = roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				 roomID = (int) roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
 				
 				// check if reservation is available
 				ReservationSelectQuery rsq = new ReservationSelectQuery();
@@ -94,9 +94,12 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				} else { // the room selected is not reserved = make a reservation
 					// create reservation object to insert in query
 					// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
-					String placeholderAdminID = ""; // placeholder for admin ID
-					int placeholderHourIncrement = 0;
-					Reservation reservation = new Reservation(placeholderAdminID, roomID, startDate, endDate, startTime24, TimeConverter.subtractOneSecondToTime(endTime24), placeholderHourIncrement, buildingID, free);
+					int adminID = 0; // placeholder for admin ID
+					int hourIncrement = 0; // placeholder for hourIncrement
+					int buildingIDInt = Integer.parseInt(buildingID);
+					Reservation reservation = new Reservation(adminID, roomID,
+							startDate, endDate, startTime,  endTime, hourIncrement,
+							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
 					riq.doReservationInsert(reservation);
 					

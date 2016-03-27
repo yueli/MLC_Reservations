@@ -44,7 +44,7 @@ public class Reservation {
 	}
 	
 	/**
-	 * 
+	 * This constructor is used to make user/student reservations
 	 * @param primaryUser int primary user ID
 	 * @param secondaryUser int secondary user ID
 	 * @param roomsID int roomID foreign key
@@ -71,33 +71,31 @@ public class Reservation {
 	}
 	
 	/**
-	 * 
+	 * This constructor is used to make admin reservations
 	 * @param adminID ID of admin who made a reservation
-	 * @param roomsID int roomID foreign key
-	 * @param reserveStartDate String start date of reservation
-	 * @param reserveEndDate String end date of reservation
-	 * @param reserveStartTime String start time of reservation
-	 * @param reserveEndTime String end time of reservation
+	 * @param roomID int roomID foreign key
+	 * @param startDate String start date of reservation
+	 * @param endDate String end date of reservation
+	 * @param startTime String start time of reservation
+	 * @param endTime String end time of reservation
 	 * @param hourIncrement int how long the reservation is
 	 * @param reserveName String the name of the reservation - for admin reservations only
 	 * @param buildingID int building ID foreign key
 	 * @param free whether the room has been reserved or not. value is Y/N
 	 */
-	public Reservation(int adminID, int roomsID,
-			String reserveStartDate, String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement,
-			String reserveName, int buildingID, String free) {
-		
+	public Reservation(int adminID, int roomID, String startDate, String endDate, String startTime, String endTime,
+			int hourIncrement, String reserveName, int buildingID, String free) {
+		// TODO Auto-generated constructor stub
 		this.adminID = adminID;
-		this.roomsID = roomsID;
-		this.reserveStartDate = reserveStartDate;
-		this.reserveEndDate = reserveEndDate;
-		this.reserveStartTime = reserveStartTime;
-		this.reserveEndTime = reserveEndTime;
+		this.roomsID = roomID;
+		this.reserveStartDate = startDate;
+		this.reserveEndDate = endDate;
+		this.reserveStartTime = startTime;
+		this.reserveEndTime = endTime;
 		this.hourIncrement = hourIncrement;
 		this.reserveName = reserveName;
 		this.buildingID = buildingID;
 		this.free = free;
-		
 	}
 
 	// Accessors and Mutators
