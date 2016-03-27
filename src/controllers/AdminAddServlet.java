@@ -1,3 +1,8 @@
+/*
+ * @author: Ginger Nix
+ * 
+ * This servlet is call to create an empty form for the user to add anther admin user
+ */
 package controllers;
 
 import java.io.IOException;
