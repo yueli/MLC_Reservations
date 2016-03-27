@@ -1,5 +1,6 @@
-/*
+/* 
  * @author: Ginger Nix
+ *
  * class containing methods to use with viewing, adding, and editing admin users
  */
 
@@ -47,7 +48,7 @@ public class AdminUserHelper {
 		
 		System.out.println("AdminUserHelper: ListAdmins");
 
-		table = "<table>";
+		table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 		
 		table += "<tr>";
 		table += "<td> MyID</td>";

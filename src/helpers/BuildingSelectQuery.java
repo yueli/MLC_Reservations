@@ -13,6 +13,8 @@ import model.DbConnect;
  * @author Brian Olaogun
  * Helper for the Student side of the website.
  *
+ *@contributer: Ginger Nix
+ *
  */
 public class BuildingSelectQuery {
 	// initialize fields
@@ -198,9 +200,11 @@ public class BuildingSelectQuery {
 	}
 	
 
-	
-// @author: Ginger Nix
-// This method brings back all the active buildings for a pull down list
+/*	
+ *  @author: Ginger Nix
+ *  
+ *  This method brings back all the active buildings for a pull down list
+ */
 	public String getAllActiveBuildings(){
 		
 		String select = "<select id='buildingList' name='buildingList'>";

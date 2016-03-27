@@ -1,4 +1,8 @@
-
+/*
+ * @author: Ginger Nix
+ * 
+ * This class contains the method to cancel a reservation
+ */
 
 package helpers;
 

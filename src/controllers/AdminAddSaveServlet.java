@@ -1,3 +1,9 @@
+/*
+ * @author: Ginger Nix
+ * 
+ * This is called when the admin add form is filled out and they want to save it
+ * 
+ */
 package controllers;
 
 import java.io.IOException;
