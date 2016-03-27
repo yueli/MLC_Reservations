@@ -94,7 +94,9 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				} else { // the room selected is not reserved = make a reservation
 					// create reservation object to insert in query
 					// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
-					Reservation reservation = new Reservation(adminUser.getAdminID(), roomID, startDate, endDate, startTime24, TimeConverter.subtractOneSecondToTime(endTime24), hourIncrement, buildingID, free);
+					String placeholderAdminID = ""; // placeholder for admin ID
+					int placeholderHourIncrement = 0;
+					Reservation reservation = new Reservation(placeholderAdminID, roomID, startDate, endDate, startTime24, TimeConverter.subtractOneSecondToTime(endTime24), placeholderHourIncrement, buildingID, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
 					riq.doReservationInsert(reservation);
 					
