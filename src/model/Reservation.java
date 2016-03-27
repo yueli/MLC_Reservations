@@ -72,8 +72,6 @@ public class Reservation {
 	
 	/**
 	 * 
-	 * @param primaryUser int primary user ID
-	 * @param secondaryUser int secondary user ID
 	 * @param adminID ID of admin who made a reservation
 	 * @param roomsID int roomID foreign key
 	 * @param reserveStartDate String start date of reservation
@@ -85,11 +83,10 @@ public class Reservation {
 	 * @param buildingID int building ID foreign key
 	 * @param free whether the room has been reserved or not. value is Y/N
 	 */
-	public Reservation(int primaryUser, int secondaryUser, int adminID, int roomsID,
+	public Reservation(int adminID, int roomsID,
 			String reserveStartDate, String reserveEndDate, String reserveStartTime, String reserveEndTime, int hourIncrement,
 			String reserveName, int buildingID, String free) {
-		this.primaryUser = primaryUser;
-		this.secondaryUser = secondaryUser;
+		
 		this.adminID = adminID;
 		this.roomsID = roomsID;
 		this.reserveStartDate = reserveStartDate;

@@ -16,7 +16,7 @@ import model.Admin;
 /**
  * Servlet implementation class AdminReservations
  */
-@WebServlet({ "/AdminReservations", "/admin-make-reservations" })
+@WebServlet({ "/AdminReservations", "/make-reservations" })
 public class AdminReservationsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private HttpSession session;   
@@ -58,7 +58,7 @@ public class AdminReservationsServlet extends HttpServlet {
 				
 				// get session and request variables + initialization of others
 				String buildings = ""; // the string that contains the HTML drop down list
-				String buildingID = request.getParameter("buildingID"); // get the value from 
+				String buildingID = request.getParameter("buildingID"); // get the value from request
 				String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
 				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
 				
@@ -98,12 +98,15 @@ public class AdminReservationsServlet extends HttpServlet {
 				//------------------------------------------------//
 				
 				// forwarding URL
-				//url = "view-reservations";
+				//url = "AdminViewReservations";
 				
 				// set session attributes
 			//}
 			
 		//} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*           VIEW FOR INVALID SESSION             */
+			//------------------------------------------------//
 			//url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
 		//}
 		

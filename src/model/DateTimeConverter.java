@@ -354,87 +354,7 @@ public class DateTimeConverter {
 		}
 		return null;
 	}
-	/**
-	 * 
-	 * @param stringStartTime String starting time in 24-hour format
-	 * @param stringEndTime String ending time in 24-hour format
-	 * @return String array list of all values inclusive between start time and end time
-	 */
-	public List<String> timeRangeList (String startTime, String endTime){
-		// integer to place the parsed hour from the time.
-		int startHour;
-		int endHour;
-		
-		// array list to place the time range, inclusive.
-		List<String> timeRange = new ArrayList<String>();
-		if(startTime.length() == 7){
-			startTime = "0" + startTime;
-		}
-		if(endTime.length() == 7){
-			endTime = "0" + startTime;
-		}
-		// parse out the hour from time in 00:00:00 format
-		startHour = Integer.parseInt(startTime.substring(0, Math.min(startTime.length(), 2)));
-		endHour = Integer.parseInt(endTime.substring(0, Math.min(endTime.length(), 2)));
-		
-		// add range to list.
-		/**
-		 * Increment hour and if incrementing from 23, start hour over to 0 
-		 * increment to end hour.
-		 */
-		if (startHour > endHour){
-			for(int h = startHour;  h <=24; h++){
-				//timeRange.add(startHour);
-				timeRange.add(startTime);
-				startHour++;
-				startTime = startHour + ":00:00";
-				
-				if(startHour == 24){
-					startHour = 0;
-				}
-			}	
-		}
-		for (int i = startHour; i <= endHour; i++){
-			timeRange.add(startTime);
-			startHour++;
-			startTime = startHour + ":00:00";
-			
-		}
-		
-		return timeRange;
-	}
 	
-	/**
-	 * 
-	 * @param reserveStartTime start time
-	 * @param hourIncrement the number to add to the start time
-	 * @return endTime the result of adding the hour increment and the time
-	 * This method is used to add an hour increment to a starting time probably in the most complicated way.
-	 * This is used for student/user reservations where reservations can only be made
-	 * for one day.
-	 */
-	public static String addTime(String reserveStartTime, int hourIncrement){
-		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-		
-		try {
-			// convert start time to date.  Convert increment to integer
-			Date startTime = df.parse(reserveStartTime);
-			
-			// convert hour increment to seconds and add it to the start time
-			Date add = new Date(startTime.getTime() + hourIncrement *(3600*1000));
-			
-			// format to get time only.  The result is the endTime
-			// if endTime is 00:00:00, change end time to 23:59:59.
-			String endTime = df.format(add);
-			if(endTime.equals("0:00") || endTime.equals("00:00") || endTime.equals("00:00:00") || endTime.equals("0:00:00")){
-				endTime = "23:59:59";
-			}
-			return endTime;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 	
 // Main method used for testing. Will output to console.
 	
@@ -451,7 +371,6 @@ public class DateTimeConverter {
 		System.out.println("Parse date: " + dtc.parseDate());
 		System.out.println("Current Datetime: " + dtc.datetimeStamp());
 		
-		System.out.println("TESTING ADD TIME METHOD: " + DateTimeConverter.addTime("23:00:00", 1));
 		System.out.println("LONG FORMAT of 2015-09-22 20:00:00 = " + dtc.dateTimeTo12Long("2015-09-22 20:00:00"));
 		
 		// date range
@@ -459,13 +378,6 @@ public class DateTimeConverter {
 		for(int i=0; i<dates.size(); i++){
 		    String date = dates.get(i);
 		    System.out.println(" Date is ..." + date);
-		}
-		
-		// time range
-		List<String> times = dtc.timeRangeList("09:00:00", "11:00:00");
-		for (int i=0; i<times.size(); i++){
-			String time = times.get(i);
-			System.out.println("Time is ..." + time);
 		}
 	}
 }

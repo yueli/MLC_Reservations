@@ -5,8 +5,10 @@ package model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -51,7 +53,7 @@ public class TimeConverter {
 	// Methods to convert 24-hour time format to 12-hour time format
 
 	/**
-	 *
+	 * Convert time from 24-hour HH:mm format to 12- hour h:mm a format.
 	 * @return String: the converted time from 24-hour format
 	 */
 	public String convertTimeTo12(){
@@ -69,7 +71,7 @@ public class TimeConverter {
 	}
 
 	/**
-	 *
+	 * Convert time from 24-hour HH:mm format to 12- hour h:mm a format.
 	 * @param time String in 24-hour format
 	 * @return String: the converted time from 24-hour format
 	 */
@@ -90,7 +92,7 @@ public class TimeConverter {
 	}
 
 	/**
-	 *
+	 * Convert time from 12-hour hh:mma or hh:mm format to 24-hour HH:mm:ss format.
 	 * @return converted time from 12 hour to 24 hour format
 	 */
 	public String convertTimeTo24(){
@@ -109,7 +111,7 @@ public class TimeConverter {
 	}
 
 	/**
-	 *
+	 * Convert time from 12-hour hh:mma or hh:mm format to 24-hour HH:mm:ss format.
 	 * @param time String in 12-hour format
 	 * @return converted time from 12 hour to 24 hour format
 	 */
@@ -130,13 +132,12 @@ public class TimeConverter {
 
 	}
 	/**
-	 * 
-	 * @param reserveStartTime start time
-	 * @param hourIncrement the number to add to the start time
-	 * @return endTime the result of adding the hour increment and the time
 	 * This method is used to add an hour increment to a starting time probably in the most complicated way.
 	 * This is used for student/user reservations where reservations can only be made
 	 * for one day.
+	 * @param reserveStartTime start time
+	 * @param hourIncrement the number to add to the start time
+	 * @return endTime the result of adding the hour increment and the time
 	 */
 	public static String addTime(String reserveStartTime, int hourIncrement){
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -159,6 +160,65 @@ public class TimeConverter {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	/**
+	 * This method will count the number of hours between start and end time.
+	 * @param reserveStartTime String start time
+	 * @param reserveEndTime String end time
+	 * @return Int hour increment - the number of hours between start and end time
+	 */
+	public Integer getHourIncrement(String reserveStartTime, String reserveEndTime){
+		
+		return null;
+	}
+	/**
+	 * 
+	 * @param stringStartTime String starting time in 24-hour format
+	 * @param stringEndTime String ending time in 24-hour format
+	 * @return String array list of all values inclusive between start time and end time
+	 */
+	public List<String> timeRangeList (String startTime, String endTime){
+		// integer to place the parsed hour from the time.
+		int startHour;
+		int endHour;
+		
+		// array list to place the time range, inclusive.
+		List<String> timeRange = new ArrayList<String>();
+		if(startTime.length() == 7){
+			startTime = "0" + startTime;
+		}
+		if(endTime.length() == 7){
+			endTime = "0" + startTime;
+		}
+		// parse out the hour from time in 00:00:00 format
+		startHour = Integer.parseInt(startTime.substring(0, Math.min(startTime.length(), 2)));
+		endHour = Integer.parseInt(endTime.substring(0, Math.min(endTime.length(), 2)));
+		
+		// add range to list.
+		/**
+		 * Increment hour and if incrementing from 23, start hour over to 0 
+		 * increment to end hour.
+		 */
+		if (startHour > endHour){
+			for(int h = startHour;  h <=24; h++){
+				//timeRange.add(startHour);
+				timeRange.add(startTime);
+				startHour++;
+				startTime = startHour + ":00:00";
+				
+				if(startHour == 24){
+					startHour = 0;
+				}
+			}	
+		}
+		for (int i = startHour; i <= endHour; i++){
+			timeRange.add(startTime);
+			startHour++;
+			startTime = startHour + ":00:00";
+			
+		}
+		
+		return timeRange;
 	}
 	/**
 	 * This method is used to make a reservation.  We need to subtract one second
@@ -300,7 +360,13 @@ public class TimeConverter {
 		System.out.println("subtract 1 sec from 23:00:00 = " + TimeConverter.subtractOneSecondToTime("23:00:00"));
 		System.out.println("add 1 sec to 22:59:59 = " + TimeConverter.addOneSecondToTime("22:59:59"));
 		System.out.println("current minutes = " + tc.currentMinutes());
-		
+		System.out.println("TESTING ADD TIME METHOD: " + TimeConverter.addTime("23:00:00", 1));
+		// time range
+		List<String> times = tc.timeRangeList("09:00:00", "11:00:00");
+		for (int i=0; i<times.size(); i++){
+			String time = times.get(i);
+			System.out.println("Time is ..." + time);
+		}
 	}
 
 }
