@@ -93,7 +93,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 			// convert time to 24-hour format + get the end time
 			TimeConverter tc = new TimeConverter();
 			startTime24 = tc.convertTimeTo24(startTime);
-			String endTime = DateTimeConverter.addTime(startTime24, hourIncrement); // adding time and hour increment together to get end time
+			String endTime = TimeConverter.addTime(startTime24, hourIncrement); // adding time and hour increment together to get end time
 			
 			//--- user information ---//
 			       // primary user
