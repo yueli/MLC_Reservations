@@ -51,8 +51,6 @@ public class BrowseServlet extends HttpServlet {
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
-		System.out.println("BUILDINGS DROPDOWN");
-		System.out.println(buildings);
 		
 		// set session attribute
 		session.setAttribute("buildings", buildings);
