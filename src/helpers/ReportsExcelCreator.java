@@ -17,7 +17,7 @@ import model.DbConnect;
 
 public class ReportsExcelCreator {
 
-      @SuppressWarnings("deprecation")
+      //@SuppressWarnings("deprecation")
       public String downloadExcel(ServletOutputStream out){
            
             int nRow = 1;
@@ -61,61 +61,61 @@ public class ReportsExcelCreator {
                  
                  
                   // Create a row for header
-                  row = sheet.createRow( (short)0);
+                  row = sheet.createRow(0);
                  
-                  cell = row.createCell( (short)0);
+                  cell = row.createCell(0);
                   cell.setCellValue("Banned Id");
                   cell.setCellStyle(cellStyle);
                  
-                  cell = row.createCell( (short)1);
+                  cell = row.createCell(1);
                   cell.setCellValue("UserID");
                   cell.setCellStyle(cellStyle);
                  
-                  cell = row.createCell( (short)2);
+                  cell = row.createCell(2);
                   cell.setCellValue("AdminID");
                   cell.setCellStyle(cellStyle);
                  
-                  cell = row.createCell( (short)3);
+                  cell = row.createCell(3);
                   cell.setCellValue("Ban Start Date");
                   cell.setCellStyle(cellStyle);
                   
-                  cell = row.createCell( (short)4);
+                  cell = row.createCell(4);
                   cell.setCellValue("Ban End Date");
                   cell.setCellStyle(cellStyle);
                   
-                  cell = row.createCell( (short)5);
+                  cell = row.createCell(5);
                   cell.setCellValue("Penalty Count");
                   cell.setCellStyle(cellStyle);
                   
-                  cell = row.createCell( (short)6);
+                  cell = row.createCell(6);
                   cell.setCellValue("Description");
                   cell.setCellStyle(cellStyle);
                   
-                  cell = row.createCell( (short)7);
+                  cell = row.createCell(7);
                   cell.setCellValue("Status");
                   cell.setCellStyle(cellStyle);
                  
                  
                   // Reading one row of table at a time and putting the values into excel cell
                   while(rs.next()){
-                        row = sheet.createRow( (short)nRow);
+                        row = sheet.createRow(nRow);
                         // Create a cell and put a value in it.
-                        cell = row.createCell( (short)0);
+                        cell = row.createCell(0);
                        
                         cell.setCellValue(rs.getString(1));
-                        cell = row.createCell( (short)1);
+                        cell = row.createCell(1);
                         cell.setCellValue(rs.getString(2));
-                        cell = row.createCell( (short)2);
+                        cell = row.createCell(2);
                         cell.setCellValue(rs.getString(3));
-                        cell = row.createCell( (short)3);
+                        cell = row.createCell(3);
                         cell.setCellValue(rs.getString(4));
-                        cell = row.createCell( (short)4);
+                        cell = row.createCell(4);
                         cell.setCellValue(rs.getString(5));
-                        cell = row.createCell( (short)5);
+                        cell = row.createCell(5);
                         cell.setCellValue(rs.getString(6));
-                        cell = row.createCell( (short)6);
+                        cell = row.createCell(6);
                         cell.setCellValue(rs.getString(7));
-                        cell = row.createCell( (short)7);
+                        cell = row.createCell(7);
                         nRow++;
                   }
                   wb.write(out);
