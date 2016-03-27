@@ -65,6 +65,10 @@ public class UserHelper {
 
 //-------------
 	
+/*
+ * This method will take the myID aand check to see if
+ * this User exists already	
+ */
 	public boolean inUserTable(String myID){
 		
 		System.out.println("UserHelper inUserTable: myID = " + myID);
@@ -239,7 +243,7 @@ public class UserHelper {
 
 		System.out.println("UserHelper inBannedTable: myID = " + userID);
 		
-		String query = "SELECT * from tomcatdb.banned WHERE User_userID = ? "
+		String query = "SELECT * from tomcatdb.Banned WHERE User_userID = ? "
 					+ "AND banEnd IS NULL "
 					+ "AND status = ? "
 					+ "AND penaltyCount > ? "

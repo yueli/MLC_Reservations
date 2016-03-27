@@ -63,27 +63,39 @@ public class ViewServlet extends HttpServlet {
 			
 		ListUserReservationsQuery lurq = new ListUserReservationsQuery();
 		
-		System.out.println("View Servlet: just set up database connection");
+		System.out.println("View Servlet: just set up database connection 2");
+		
 		
 		//see how many records the student has, and if none, set error message, and if has at least one, 
 		//put reservations found in a table
-
-		table = lurq.ListUserReservations(user.getUserRecordID());
+		System.out.println("Before try/catch");
 		
-		if (table == "")	{//if table is empty, no records found
+		try {
+			System.out.println("Fell into try/catch");
+			table = lurq.ListUserReservations(user.getUserRecordID());
+		}
+		catch (Exception e){
+			System.out.println("Inside catch");
+			table = "";
+		}
+		
+		System.out.println("After try/catch");
+		
+		if(table == null || table.isEmpty()){
 			message="You have no current reservations.";
 			System.out.println("View Servlet: no records found");
+			
 		}
 		else {
 			System.out.println("View Servlet: something in table ");
 			
 		}
-		//session.setAttribute("message", message);
-		
+	
 		//forward our request along
 		request.setAttribute("user", user);
 		request.setAttribute("table", table);
 		request.setAttribute("message", message);
+		
 		url = "user/view.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

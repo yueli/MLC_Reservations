@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.AdminUserHelper;
 import helpers.ReservationQuery;
 import helpers.UserHelper;
+import model.Admin;
 import model.PasswordService;
 import model.Reservation;
 import model.User;
@@ -45,99 +47,54 @@ public class QRLoginController extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {  	
-/*    	
-    	System.out.println("GQLoginController = beginning");
-    	// called from qrLogin.jsp
-    	
-        //get our current session
+
+    	//get our current session
         session = request.getSession();
-        session.removeAttribute("message");
-    	
-    	String message = "";
-    	
         String building = (String) session.getAttribute("building");
         String room = (String) session.getAttribute("room");
-        
+        		
+		User user = (User) session.getAttribute("user");		
+
+        session.removeAttribute("message");
+    	String message = "";
+    	       
         System.out.println("GQLoginController resv building = " + building);
         System.out.println("GQLoginController resv room = " + room);
-    	
-        //pull the fields from the form
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-      
-        System.out.println("GQLoginController username = " + username);
-    	
-        // have the username and password
-        // authenticate credentials to see if uga
-        
-		//encrypt the password 
-		PasswordService pws = new PasswordService();
-		String encryptedPass = pws.encrypt(password);
-		
-		//set up connection to the database
-		UserHelper uh = new UserHelper(); 
-		
-		//see if they are UGA affiliated
-		
-		//TODO
-		//User loginUser = uh.authenticateUser(username, encryptedPass); //see if the person is UGA affiliated
-		//NOTE: the authenticate method will not return the user's record ID
-			
-		//String userMyID = loginUser.getMyID();
-
-		//user will come back null if not authenticated and come back w/ data if authenticated
-		//System.out.println("QR Login Controller returned from authentication login user myID =  " + userMyID);	
-		
-        // if they are not valid, send back to QR login with message
-		if (loginUser.getMyID() == null){ //if an empty object sent back (has no user data meaning they were not authenticated)
-					
-		    session.removeAttribute("message");
-			message = "Error: Not Valid UGA Credentials";
-			session.setAttribute("message", message);
-
-			System.out.println("QR Login Controller: user doesn't exist!");
-
-			url = "user/qrLogin2.jsp?building=" + building + "&room=" + room;
-			
-		}else{
-			// user authenticated, create user object, and check to see if in our user table
-			System.out.println("QR Login Controller: authenticated!");
-			
-			session.removeAttribute("message");
-			message = "";
-			
-			// create a Student User object using the info we got back from authentication
-			User user = new User();
-			
-			user.setMyID(loginUser.getMyID());
-			user.setUserFirstName(loginUser.getUserFirstName());
-			user.setUserLastName(loginUser.getUserLastName());
-			user.setUserEmail(loginUser.getUserEmail());
+        System.out.println("GQLoginController user my id = " + user.getMyID());
 					 
-			// check to see if this user is banned. If this user is not even in the user table, the record id = 0
-			// doing this before checking if in the user table because of the logic below having to do 
-			// with getting reservation, checking in, etc.
+			// check to see if this user was banned after making this 
+        	// reservation but before checking into it
+ 
+			UserHelper uh = new UserHelper();
 			
+			// we get the user object w/ MyID, fname, and lname
+			// so get their user table record number to do checks below
+						
+			//int recordID = uh.getRecordID(user.getMyID());
+			
+			user.setUserRecordID(uh.getRecordID(user.getMyID()));
+				   	
 			if(uh.alreadyBanned(user.getUserRecordID())) {
 				
 				// since they have already been banned, send them to a page telling them 
 				
-				session.setAttribute("user", user);
-				System.out.println("QR Login Controller already banned! " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName() + " " + user.getUserEmail());				
+				System.out.println("QR Login Controller already banned! " + user.getMyID() + " " + user.getUserFirstName() + " " + user.getUserLastName());				
+	
+				message = "This user " + user.getUserFirstName() + " " 
+				+ user.getUserLastName()+ " has been banned and can not check into this room";
 				
+				session.setAttribute("message", message);
+				session.setAttribute("user", user);
 				url="user/bannedUser.jsp";
-				//forward our request along
-				RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-				dispatcher.forward(request, response);
 				
 			}else{ // not banned - check if in user table
+
 				boolean inTable = uh.inUserTable(user.getMyID());
-				System.out.println("QR Login Controller returned from inUserTable " + inTable);				
 			
 				if (inTable){ // if in the user table update the last login filed
 					
 					uh.updateLastLogin(user.getMyID());	
-					System.out.println("QR Login Controller in table " + user.getUserFirstName() + user.getUserLastName() + user.getUserEmail());	
+					System.out.println("QR Login Controller in table " + user.getUserFirstName() + user.getUserLastName());	
 				
 				}else{ //not in user table so insert
 					uh.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail());
@@ -162,16 +119,15 @@ public class QRLoginController extends HttpServlet {
 				if (buildingID == 0){
 					// ERROR there is no building record with this building QR name
 					
-					session.setAttribute("user", user);
+					
 					System.out.println("QR Login Controller building qr name doesn't exist " + building);
+					
 					
 					url="user/qrError.jsp"; 
 					message = "The building name " + building + " on the QR code doesn't exist. Alert the admins.";
-					request.setAttribute("message", message);
-					//forward our request along
-					RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-					dispatcher.forward(request, response);
-
+					
+					
+					
 				}else{
 					// the building QR name is good and we have the building record ID :)
 					
@@ -183,18 +139,15 @@ public class QRLoginController extends HttpServlet {
 
 					// check if room id = 0, and if so send to error page w/ message
 					
-					if (roomID == 0){ //have an error
+					if (roomID == 0){ //have an error						
 						
-						session.setAttribute("user", user);
 						System.out.println("QR Login Controller room qr name doesn't exist " + room);
 						
 						url="user/qrError.jsp"; 
 						message = "The room number " + room + " for building " + building + " on the QR code doesn't exist. Alert the admins.";
-						request.setAttribute("message", message);
-						//forward our request along
-						RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-						dispatcher.forward(request, response);
+						
 
+						
 					}else{ // found room record
 						
 						// check to see if there is a free reservation with this person as primary or secondary at this current date
@@ -203,8 +156,8 @@ public class QRLoginController extends HttpServlet {
 						reservationID = resvQuery.getUserReservation(userRecordID, buildingID, roomID);
 						
 						if (reservationID == 0){ // didn't find reservation 
+							
 							System.out.println("QR Login Controller reservation not found ");
-							session.setAttribute("user", user);
 							
 							url="user/qrError.jsp"; 
 							message = "A reservation for room " + room + " in the building " + building + " was not found. "
@@ -216,18 +169,13 @@ public class QRLoginController extends HttpServlet {
 									+ "</ul>"
 									+ "<p>See the FAQ for more information.</p>";
 							
-							request.setAttribute("message", message);
-							
-							//forward our request along
-							RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-							dispatcher.forward(request, response);
 						
 						}else{ 
-							// there is a reservation check them in and send to "Checked In"
 							
 							System.out.println("QR Login Controller reservation found - checking in ");
 							
 							if (resvQuery.checkInUser(reservationID, userRecordID)) { //if successfully checked in user
+								
 								url = "user/qrCheckInSuccess.jsp";
 								
 								message = "Successfully checked into the " + building + ", room " + room
@@ -238,37 +186,31 @@ public class QRLoginController extends HttpServlet {
 								message += "</form>";
 								message += "<br /><br />";
 								
+							
 							}else{
 								
 								url = "user/qrError.jsp";	
 								message = "Error checking in. Contact administrators.";
+
 								
-							}
-							
-							request.setAttribute("message", message);
-							
-							//forward our request along
-							RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-							dispatcher.forward(request, response);
-
-							
-							
-						} // end if reservation found
+							} //end if/else check them into the rooom
+						
+						} // end if/else reservation found
 			        
-					} // end if room # QR exists
+					} // end if/else QR room # exists					
 					
-					
-				} // end if building QR name exists
-
+				} // end if/else building QR name exists
 		     
 			}//end if not banned user
- 		
-        
-		}// end if not authenticated
+			
+			session.setAttribute("user", user);
+			session.setAttribute("message", message);
+	
+			//forward our request along
+			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+			dispatcher.forward(request, response);
         
     } // end do post
     
-  */  
  //end servlet
-}
 }

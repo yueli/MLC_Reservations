@@ -1,8 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.Objects;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +25,7 @@ public class AdminEditServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public AdminEditServlet() {
-        super();
-       
+        super();     
     }
 
 	/**
@@ -65,7 +62,7 @@ public class AdminEditServlet extends HttpServlet {
 		System.out.println("AdminEditServlet: loggedInAdminUser adminMyID = " + loggedInAdminUser.getAdminMyID());
 
 		 
-		//hidden parameter = admin record id of the person to edit from adminEdit.jsp
+		//hidden parameter = admin record id of the person to edit from jsp
 		int adminID = Integer.parseInt(request.getParameter("adminID")); 
 		
 		System.out.println("AdminEditServlet: adminID = " + adminID);

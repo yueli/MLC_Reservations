@@ -94,7 +94,8 @@ public class LoginController extends HttpServlet {
 				// once this person is authenticated as being UGA affiliated, check to is they have been banned
 				// and if so, send them to the banned page to let them know and to have them log out
 								
-				 	//TODO
+					// send the logged in user's myID  to check if in the user's table
+					
 					boolean inTable = uh.inUserTable(loggedInUser.getMyID());
 					
 					System.out.println("Login Controller returned from inUserTable " + inTable);				

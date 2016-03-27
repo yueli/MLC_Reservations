@@ -204,7 +204,26 @@ public class ReservationQuery {
 			return true;
 			
 		}
+		//------------------------------------------------------------------
+		
+				public boolean alreadyCheckedIn(int reservationID){
 
-//------------------------------------------------------------------
-
+					String query = "SELECT * FROM tomcatdb.CheckIn "
+							+ "WHERE Reservation_reserveID = '" + reservationID +"'";
+							
+					try {
+						PreparedStatement ps = this.connection.prepareStatement(query);
+					
+						ps.executeUpdate();
+						
+					} catch (SQLException e) {
+						e.printStackTrace();
+					
+						return false;
+					}
+					
+					return true;
+					
+			}
+				
 }// end class

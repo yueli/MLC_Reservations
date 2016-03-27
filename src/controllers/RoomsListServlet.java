@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,23 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.AdminUserHelper;
-import model.Admin;
-import model.User;
+import helpers.RoomsSelectQuery;
 
 /**
- * Servlet implementation class AdminListServlet
+ * Servlet implementation class RoomsListServlet
  */
-@WebServlet("/AdminListServlet")
-public class AdminListServlet extends HttpServlet {
+@WebServlet("/RoomsListServlet")
+public class RoomsListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session; 
-	private String url;
-	
+  
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminListServlet() {
+    public RoomsListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,48 +33,38 @@ public class AdminListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
+		doGet(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String url = "";
+		String table = "";
 
 		//get our current session
 		session = request.getSession();
 
-		String message = "";
-		message = (String) request.getAttribute("message"); 
+		// get building id from form - it's the id of the building they selected		
+		int buildingID = Integer.parseInt(request.getParameter("buildingList")); 
 		
-		// blank out message if nothing gotten in message attribute
+		System.out.println("Rooms List Servlet: building id = " + buildingID);
 		
-		if (message == null || message.isEmpty()) {
-			 message = " ";
-		}
-
-		// create admin user object
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+		// using building id, create a table of a list of all the rooms in that building
+		RoomsSelectQuery rsq = new RoomsSelectQuery();
+		table = rsq.ListRoomsInBuilding(buildingID);
 		
-		System.out.println("AdminListServlet: logged in user's role = " + loggedInAdminUser.getRole());
-	
-		// use the class AdminUserHelper
-		AdminUserHelper adminHelper = new AdminUserHelper();
-		
-		// get the admin users
-		String table = "";
-		table = adminHelper.ListAdmins();
 		
 		//forward our request along
-		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		request.setAttribute("table", table);
-		request.setAttribute("message", message);
 
-
-		url = "admin/adminList.jsp";	
+		url = "admin/roomsList.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 
+		
+		
 		
 		
 		

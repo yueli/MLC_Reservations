@@ -3,6 +3,9 @@ package helpers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import model.Admin;
@@ -11,7 +14,6 @@ import model.DbConnect;
 public class AdminUserHelper {
 	private java.sql.Connection connection;
 	private ResultSet results;
-	private int reserveID;
 
 	public AdminUserHelper(){
 		
@@ -96,10 +98,9 @@ public class AdminUserHelper {
 				table += "<td><form action='AdminEditServlet' method = 'post'>" +
 						"<input type='hidden' name='adminID' value='" + adminID + "'>" +
 						"<input type='submit' value='Edit Admin'>" +
-						"</form></td>";			
+						"</form></td>";		
 			
 				table += "</tr>";
-				
 			} //end while
 			
 			table += "</table>";
@@ -109,6 +110,14 @@ public class AdminUserHelper {
 			System.out.println("***Error in AdminUserHelper:  Query = " + query);
 		}
 		
+		table += "<br /><br />";
+		table += "<p>";
+		table += "<form action='AdminAddServlet' method = 'post'>" +
+				"<input type='submit' value='Add An Admin'>" +
+				"</form>";			
+		table += "</p>";
+		
+
 		return table;
 		
 	}
@@ -116,7 +125,6 @@ public class AdminUserHelper {
 	
 	
 	public Admin getAdminData(String adminMyID){
-		String table = "";
 		
 		Admin adminUser = new Admin();
 		
@@ -181,15 +189,15 @@ public class AdminUserHelper {
 			table += "<form action='AdminSaveServlet' method = 'post'>";
 			
 			table += "First name:<br>";
-			table +=  "<input type='text' name = 'fname' value = '" + fname + "'>";
+			table +=  "<input type='text' name = 'fname' value = '" + fname + "' required>";
 			table += "<br />";
 			
 			table += "Last name:<br>";
-			table +=  "<input type='text' name = 'lname' value = '" + lname + "'>";
+			table +=  "<input type='text' name = 'lname' value = '" + lname + "'required>";
 			table += "<br />";
 			
 			table += "MyID:<br>";
-			table +=  "<input type='text' name = 'adminMyID' value = '" + adminMyID + "'>";
+			table +=  "<input type='text' name = 'adminMyID' value = '" + adminMyID + "'required>";
 			table += "<br />";
 			
 			table += "Role:<br>";
@@ -202,7 +210,7 @@ public class AdminUserHelper {
 			// if the admin logged in has a user role = super
 			// then list all the roles w/ the current role being the default
 			
-			table += "<select name='role'>";
+			table += "<select name='role'required>";
 			
 			
 			// based on the admin user who is logged in, create the pull down list
@@ -222,6 +230,11 @@ public class AdminUserHelper {
 					table += "<option value='A' selected>" + convertAdminRole("A") + "</option>";
 					table += "<option value='V'>" + convertAdminRole("V") + "</option>";
 					
+				}else if (Objects.equals("V", role)){ // role is view only
+					table += "<option value='S'>" + convertAdminRole("S") + "</option>";
+					table += "<option value='A'>" + convertAdminRole("A") + "</option>";
+					table += "<option value='V' selected>" + convertAdminRole("V") + "</option>";
+					
 				}else{ // else the role is unknown
 					table += "<option value='U' selected>" + convertAdminRole("U") + "</option>";
 				}
@@ -229,9 +242,11 @@ public class AdminUserHelper {
 			}else{ // the admin making the changes is an admin only so can't set anyone to a super user
 				
 				if (Objects.equals("S", role)){
-					table += "<option disabled value='S' selected>Super</option>";
+					//HERE
+					table += "<option disabled value='S' selected>" + convertAdminRole("S") + "</option>";
 					
 				}else if (Objects.equals("A", role)){ // role is admin
+					//HERE
 					table += "<option disabled value='S'>" + convertAdminRole("S") + "</option>";
 					table += "<option value='A' selected>" + convertAdminRole("A") + "</option>";
 					table += "<option value='V'>" + convertAdminRole("V") + "</option>";
@@ -239,7 +254,7 @@ public class AdminUserHelper {
 				}else if (Objects.equals("V", role)){ // role is view only
 					table += "<option disabled value='S'>Super</option>";
 					table += "<option value='A'>Admin</option>";
-					table += "<option value='V'>View Only</option>";
+					table += "<option value='V' selected>View Only</option>";
 					
 				}else{ // else the role is unknown
 					table += "<option value='U' selected>" + convertAdminRole("U") + "</option>";
@@ -253,7 +268,7 @@ public class AdminUserHelper {
 			// based on the admin user being edited's status, list the status with the default selected
 			
 			table += "Admin Status:<br>";
-			table += "<select name = 'status'>";
+			table += "<select name = 'status'required>";
 			
 			// if the admin being edited is active (=1)
 			if (Objects.equals("1", adminStatus)){
@@ -276,7 +291,11 @@ public class AdminUserHelper {
 			table += "<input type = 'hidden' name = 'adminID' value='" + adminID + "'>";
 			table += "</form>";
 			
-			
+			table += "<br /><br />";
+			table += "<form action='AdminListServlet' method = 'post'>";
+			table += "<input type = 'submit' value = 'Cancel'>";
+			table += "</form>";
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("***Error in AdminUserHelper getAdminInfo:  Query = " + query);
@@ -341,6 +360,8 @@ public class AdminUserHelper {
 		
 		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' AND adminStatus = 1 LIMIT 1";
 		
+		System.out.println("UserHelper.java: inAdminUserTable method. Query = " + query);
+		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 
@@ -360,5 +381,140 @@ public class AdminUserHelper {
 	}
 	
 	
+/*
+ * This method creates a blank form to add a new admin user	
+ */
+	
+	public String createAddAdminForm(Admin loggedInAdminUser){
+		
+		String table = "";
+
+			table += "<form action='AdminAddSaveServlet' method = 'post'>";
+		
+		table += "First name:<br>";
+		table +=  "<input type='text' name = 'fname' required>";
+		table += "<br />";
+		
+		table += "Last name:<br>";
+		table +=  "<input type='text' name = 'lname' required>";
+		table += "<br />";
+		
+		table += "MyID:<br>";
+		table +=  "<input type='text' name = 'adminMyID' required>";
+		table += "<br />";
+		
+		table += "Role:<br>";
+
+		// pull down of all the roles based on logged in admin's role, w/ the role being the default
+		
+		String adminUserRole = loggedInAdminUser.getRole();
+		System.out.println("AdminUserHelper: getAdminInfo role = " + adminUserRole);
+
+		// if the admin logged in has a user role = super
+		// then list all the roles w/ the current role being the default
+		
+		table += "<select name='role' required>";
+		
+		
+		// based on the admin user who is logged in, create the pull down list
+		// for the user being added's role
+		// if the role of the logged in admin user is View Only, they will never get to this page
+		
+		// convertAdminRole takes the letter in the role field and makes it human readable
+		
+		if (Objects.equals("S", adminUserRole)){ // the logged in admin's role is super admin
+				table += "<option value='S'>" + convertAdminRole("S") + "</option>";
+				table += "<option value='A'>" + convertAdminRole("A") + "</option>";
+				table += "<option value='V'>" + convertAdminRole("V") + "</option>";
+				
+		}else{ // the admin making the changes is an admin only so can't set anyone to a super user
+				table += "<option disabled value='S'>" + convertAdminRole("S") + "</option>";
+				table += "<option value='A' selected>" + convertAdminRole("A") + "</option>";
+				table += "<option value='V'>" + convertAdminRole("V") + "</option>";			
+		}
+				
+		table += "</select>";
+		table += "<br />";
+				
+		table += "Admin Status:<br>";
+		table += "<select name = 'status' required>";
+		table += "<option value='1' selected>Active</option>";
+		table += "<option value='0'>Inactive</option>";	
+		table += "</select>";
+		table += "<br />";	
+		table += "<br />";		
+				
+		table += "<input type = 'submit' value = 'Add Admin'>";
+		table += "</form>";
+		
+		table += "<br /><br />";
+		table += "<form action='AdminListServlet' method = 'post'>";
+		table += "<input type = 'submit' value = 'Cancel'>";
+		table += "</form>";
+				
+		return table;
+	}
+
+	/*
+	 * This method take the admin info and adds them to the admin user's table
+	 */
+	public void insertAdminTable(String adminMyID, String fname, String lname, String role, int adminStatus) {
+		
+		String query = "INSERT INTO tomcatdb.Admin (adminMyID, fname, lname, role, adminStatus) "
+				+ "VALUES ('" + adminMyID + "','" + fname + "','" + lname + 
+				"','" + role + "','"+ adminStatus + "')";
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+		
+			ps.executeUpdate();
+			System.out.println("Success in AdminUserHelper.java: insert into table method. Query = " + query);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("***Error in AdminUserHelper.java: insert into table method. Query = " + query);
+		}
+		
+	}	
+
+	/*
+	 * This method will take the myID and check to see if
+	 * this Admin exists already	
+	 */
+		public boolean inAdminTable(String myID){
+			
+			System.out.println("AdminUserHelper inAdminTable: myID = " + myID);
+			
+			String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' LIMIT 1";
+			
+			System.out.println("AdminUserHelper inAdminTable: query = " + query);
+			
+			
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+
+				this.results = ps.executeQuery();
+				
+
+				boolean results = this.results.next();
+				System.out.println("Admin User Helper: in admin table: results found " + results + " query = " + query);
+				
+				if (results) {//the myID is in the user table
+					System.out.println("Admin User Helper: in admin table: results found TRUE");
+					return true;
+				}else{
+					System.out.println("Admin User Helper: in admin table: results found FALSE");
+					return false;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("****Error in Admin UserHelper.java: inAdminTable method. Query = " + query);
+			}
+			
+			return false;
+		}
+
+		
 	
 } //end class

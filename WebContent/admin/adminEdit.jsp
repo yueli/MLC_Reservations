@@ -16,6 +16,7 @@
 <h1>Admin Edit</h1>
 
 <%= message %>
+<br /><br />
 <%= table %>
 
 </body>

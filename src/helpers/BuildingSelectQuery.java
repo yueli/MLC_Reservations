@@ -189,6 +189,7 @@ public class BuildingSelectQuery {
 				if(building.getBuildingID() == buildingID){
 					buildingName = building.getBuildingName();
 				}
+
 			} this.results.beforeFirst(); // resets the cursor to 0
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -196,5 +197,85 @@ public class BuildingSelectQuery {
 		return buildingName;
 	}
 	
+
+	
+// @author: Ginger Nix
+// This method brings back all the active buildings for a pull down list
+	public String getAllActiveBuildings(){
+		
+		String select = "<select id='buildingList' name='buildingList'>";
+
+		// go through all the active buildings to put into a list
+		String query = "SELECT * FROM tomcatdb.Building "
+						+ "WHERE buildingStatus = ?";
+		
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, "1");
+			
+			this.results = ps.executeQuery();
+			
+			while(this.results.next()){
+				Building building = new Building();
+				building.setBuildingID(this.results.getInt("buildingID"));
+				building.setBuildingName(this.results.getString("buildingName"));
+				
+				// HTML for dropdown list
+				if(this.results.getString(1) != null){
+					select += "<option selected='selected' value=" + "'" + building.getBuildingID() + "'" + ">";
+					select += building.getBuildingName();
+					select += "</option>";
+				} else {
+					select += "<option value=" + "'" + building.getBuildingID() + "'" + ">";
+					select += building.getBuildingName();
+					select += "</option>";
+				}
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in BuildingSelectQuery.java: doBuildingRead method. Please check connection or SQL statement: " + query);
+		}
+		
+		select += "</select>";
+		
+		
+		return select;
+	}
+	
+	// @author: Ginger Nix
+	// this method takes just a building record id and returns the human readable name
+	
+	public String getBuildingNameFromID (int buildingID){
+		
+		String buildingName = "Unknown Building";
+		
+		String query = "SELECT * FROM tomcatdb.Building " + 
+						"WHERE buildingID = " + buildingID ;
+		
+		System.out.println("BuildingSelectQuery getBuildingNameFromID BEFORE executing query = " + query);
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			
+			this.results = ps.executeQuery();
+			
+			this.results.next();
+			
+			buildingName = this.results.getString("buildingName");
+			
+			System.out.println("BuildingSelectQuery getBuildingNameFromID AFTER executing query building name = " + buildingName);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("** Error in BuildingSelectQuery getBuildingNameFromID query = " + query);
+		}
+		
+		return buildingName;
+			
+		
+	}
 	
 }
