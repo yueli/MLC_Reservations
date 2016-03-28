@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.RoomsSelectQuery;
+import model.Admin;
 import model.Email;
 import model.Reservation;
 import model.TimeConverter;
@@ -49,7 +50,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 		//if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			//Admin adminUser = (Admin) session.getAttribute("adminUser");
+			//Admin adminUser = (Admin) session.getAttribute("loggedInAdminUser");
 			//String role = adminUser.getRole();
 			//int status = adminUser.getAdminStatus();
 			
@@ -77,7 +78,10 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				//------------------------------------------------//
 				// get room ID
 				RoomsSelectQuery roomsq = new RoomsSelectQuery();
-				 roomID = (int) roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				roomID = (int) roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				
+				// TODO get hour increment
+				
 				
 				// check if reservation is available
 				ReservationSelectQuery rsq = new ReservationSelectQuery();
@@ -94,14 +98,14 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				} else { // the room selected is not reserved = make a reservation
 					// create reservation object to insert in query
 					// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
-					int adminID = 0; // placeholder for admin ID
+					int adminID = 1; // placeholder for admin ID
 					int hourIncrement = 0; // placeholder for hourIncrement
 					int buildingIDInt = Integer.parseInt(buildingID);
 					Reservation reservation = new Reservation(adminID, roomID,
 							startDate, endDate, startTime,  endTime, hourIncrement,
 							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
-					riq.doReservationInsert(reservation);
+					riq.doAdminReservationInsert(reservation);
 					
 					
 					// set success message and forwarding URL

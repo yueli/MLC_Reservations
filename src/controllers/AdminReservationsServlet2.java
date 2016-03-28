@@ -97,7 +97,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				// schedule request variables
 				String startDate = request.getParameter("startDate");
-				String endDate = request.getParameter("endDate");
+				String endDate = startDate;
 				String startTime = request.getParameter("startTime");
 				String endTime = request.getParameter("endTime");
 				
@@ -116,6 +116,9 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				TimeConverter tc = new TimeConverter();
 				startTime = tc.convertTimeTo24(startTime);
 				endTime = tc.convertTimeTo24(endTime);
+				
+				// TODO check to make sure start time is less than end time
+				
 				
 				// if there is an active session variable, 
 				// it will replace the request variable (which doesn't persist).
