@@ -83,7 +83,7 @@
 				<p>${msg}</p>
 				Building ${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
-				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
+				<!--  End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br> -->
 				Start Time: <input type="text" id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input type="text" id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}">
