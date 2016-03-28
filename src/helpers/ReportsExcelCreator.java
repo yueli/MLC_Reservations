@@ -17,7 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import model.DbConnect;
 
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 public class ReportsExcelCreator {
 

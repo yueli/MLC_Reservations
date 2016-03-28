@@ -205,7 +205,7 @@ public class ListUserReservationsQuery {
 								
 								table += "<td><form action='confirm' method = 'post'>" +
 										"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
-										"<input class="btn btn-lg btn-red" type='submit' value='Cancel Reservation'>" +
+										"<input class='btn btn-lg btn-red' type='submit' value='Cancel Reservation'>" +
 										"</form></td>";		
 							
 								
@@ -275,7 +275,7 @@ public class ListUserReservationsQuery {
 									table += "<td> CHECK IN </td>"; //TODO add ink
 									table += "<tr><td><form action='/CheckInServlet' method = 'post'>" +
 											"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
-											"<input class="btn btn-lg btn-red" type='submit' value='Check In'>" +
+											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
 											"</form></td>";	
 								
 								}else if (rq.alreadyCheckedIn(resv.getReserveID())) {
