@@ -39,8 +39,14 @@
 		</script> 
 	</head>
 	<body>
-		<div id="header1"></div>
-			<br><br><br><br><br>
+	<div id="header1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 			<div id="search-container">
 				<form name="adminViewForm" action="view-reservations?building?date" method="post">
 					<p>Building ${buildings}<input name="enterBuilding" type="submit" value="Enter"></p>

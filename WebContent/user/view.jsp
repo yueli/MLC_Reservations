@@ -29,6 +29,7 @@
 		<br>
 		<br>
 		<br>
+<div align="center">
 		<h1>View Home Page</h1>
 		<h2>Reservations for: 
 			${user.userFirstName} 
@@ -36,6 +37,7 @@
 		</h2>
 			<%= message %>
 			<%= table %>
+</div>
 		<div id="footer"></div>
 	</body>
 </html>

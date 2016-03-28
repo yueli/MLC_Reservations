@@ -23,6 +23,11 @@
 	<br>
 	<br>
 	<br>
+		<div align="center">
+	    <form id="checkin" action="../QRLoginController" method="POST">
+            <input class="btn btn-lg btn-red" type="submit" value="Check into Room"><br>
+    </form>
+	</div>
 </div>
 <br>
 <br>

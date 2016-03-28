@@ -11,8 +11,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Admin Edit</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+		<script> 
+
+	$(function() {
+		$("#header1").load("./adminheader.html"); 
+		$("#footer").load("../footer.html"); 
+	});
+		</script> 
 </head>
 <body>
+	<div id="header1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 <h1>Admin Edit</h1>
 
 <%= message %>
