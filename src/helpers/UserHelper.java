@@ -1,5 +1,9 @@
-//MLC USER HELPER
-
+/**
+ * @author: Ginger Nix
+ * 
+ * This class contains methods that help to get user information, to add and edit
+ * users, check if user is in the table, etc
+ */
 package helpers;
 
 import java.sql.Connection;

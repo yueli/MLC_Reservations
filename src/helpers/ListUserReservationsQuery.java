@@ -1,4 +1,8 @@
-
+/*
+ * @author: Gingr Nix
+ * 
+ * This class contains methods to help with listing a user's reservations
+ */
 
 package helpers;
 
@@ -170,7 +174,7 @@ public class ListUserReservationsQuery {
 								
 								if (firstTime){
 
-									table = "<table>";
+									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 									table += "<tr>";
 									table += "<td> Reservation ID</td>";
 									table += "<td> Start Date</td>";
@@ -231,7 +235,7 @@ public class ListUserReservationsQuery {
 								// if this is the first time around, print out the table headers
 								if (firstTime){
 
-									table = "<table>";
+									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 									table += "<tr>";
 									table += "<td> Reservation ID</td>";
 									table += "<td> Start Date</td>";
@@ -286,7 +290,7 @@ public class ListUserReservationsQuery {
 						}else {// end if record's date > current date 
 							if (firstTime){
 
-								table = "<table>";
+								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 								table += "<tr>";
 								table += "<td> Reservation ID</td>";
 								table += "<td> Start Date</td>";
@@ -395,7 +399,7 @@ public class ListUserReservationsQuery {
 			}else{	
 				userPlace = "Seconday User";
 			}
-			table = "<table>";
+			table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 			table += "<tr>";
 			table += "<td> Reservation ID</td>";
 			table += "<td> Start Date</td>";
