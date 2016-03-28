@@ -1,5 +1,7 @@
 /build/
 /bin/
-/build/classes
-
+/build/classes/
+/build/classes/model/
+/build/classes/controllers/
+/build/classes/helpers/
 *.class
