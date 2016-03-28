@@ -274,7 +274,7 @@ public class ListUserReservationsQuery {
 									
 									table += "<td> CHECK IN </td>"; //TODO add ink
 									table += "<tr><td><form action='/CheckInServlet' method = 'post'>" +
-											"<input type='hidden' name='resv_id' value='"  + "'>" +
+											"<input type='hidden' name='resv_id' value='" + "resv_id" + "'>" +
 											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
 											"</form></td>";	
 								
