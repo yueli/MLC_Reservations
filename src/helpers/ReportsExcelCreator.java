@@ -1,16 +1,10 @@
 /* @Author Victoria Chambers */
 
-<<<<<<< Updated upstream:src/helpers/ReportsExcelCreator.java
 package helpers;
 
 import java.sql.Connection;
-=======
-package controllers;
-
 import java.sql.DriverManager;
->>>>>>> Stashed changes:src/controllers/ReportsExcelCreator.java
 import java.sql.ResultSet;
-
 import javax.servlet.ServletOutputStream;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -19,11 +13,9 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-<<<<<<< Updated upstream:src/helpers/ReportsExcelCreator.java
 import model.DbConnect;
-=======
+
 import com.mysql.jdbc.Statement;
->>>>>>> Stashed changes:src/controllers/ReportsExcelCreator.java
 
 public class ReportsExcelCreator {
 
@@ -44,12 +36,9 @@ public class ReportsExcelCreator {
                  
                   /* Getting connection here for mysql database */
                   Class.forName("com.mysql.jdbc.Driver").newInstance();
-<<<<<<< Updated upstream:src/helpers/ReportsExcelCreator.java
-                  con = DbConnect.devCredentials();
-=======
+                  //con = DbConnect.devCredentials();
                   con = DriverManager.getConnection
                     ("jdbc:mysql://localhost:3306/","viccham","Hitch1991*");
->>>>>>> Stashed changes:src/controllers/ReportsExcelCreator.java
                  
                   if(con==null)
                         return "Connection Failed";
