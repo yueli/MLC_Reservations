@@ -12,15 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-<<<<<<< Updated upstream
 import helpers.ReportsExcelCreator;
-=======
-@WebServlet(
-		description = "Download Reports", 
-		urlPatterns = { 
-				"/DownloadReports"
-		})
->>>>>>> Stashed changes
+
+@WebServlet(description = "Download Reports", urlPatterns = { "/DownloadReports" })
 
 public class ReportsExcelDownloadServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -34,15 +28,11 @@ public class ReportsExcelDownloadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
        HttpServletResponse response)
        throws ServletException, IOException {
-<<<<<<< Updated upstream
-    	doPost(request, response);
-=======
     	System.out.println("Above doPost");
     	url = "user/confirmCancellation.jsp";	
     	RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
  //   	doPost(request,response);
->>>>>>> Stashed changes
       }
 
 /**    protected void doPost(HttpServletRequest request,
