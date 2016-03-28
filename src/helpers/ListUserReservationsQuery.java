@@ -1,5 +1,5 @@
 /*
- * @author: Gingr Nix
+ * @author: Ginger Nix
  * 
  * This class contains methods to help with listing a user's reservations
  */

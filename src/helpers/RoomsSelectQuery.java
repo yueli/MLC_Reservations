@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package helpers;
 
 import java.sql.Connection;
@@ -339,7 +337,7 @@ public class RoomsSelectQuery {
 			String roomStatus = "";
 			
 			table += "<h2>Rooms List for Building " + buildingName + "</h2>";			
-			table += "<table>";			
+			table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";			
 			table += "<tr>";
 			table += "<td>Room Floor</td>";
 			table += "<td>Room Number</td>";
