@@ -198,7 +198,6 @@ public class BuildingSelectQuery {
 		}
 		return buildingName;
 	}
-	
 	/**
 	 * @author: Ginger Nix
 	 * @return This method brings back all the active buildings for a pull down list
