@@ -3,7 +3,7 @@
   <display-name>MLC_Reservations</display-name>
   <welcome-file-list>
   	<welcome-file>CASLoginServlet</welcome-file>
-    <welcome-file>/admin/</welcome-file>
+  	<welcome-file>/admin/</welcome-file>
     <welcome-file>/user/login.jsp</welcome-file>
     <welcome-file>/user/home.jsp</welcome-file>
     <welcome-file>/user/index.html</welcome-file>
