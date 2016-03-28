@@ -58,7 +58,14 @@
 		</script> 
 	</head>
 	<body>
-		<div id="header1"></div>
+	<div id="header1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<h2>${msg}</h2>
 		<form name="BuildingSelect" action="Schedule" method="post">
 			<p>${buildings}

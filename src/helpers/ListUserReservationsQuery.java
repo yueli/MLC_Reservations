@@ -205,8 +205,9 @@ public class ListUserReservationsQuery {
 								
 								table += "<td><form action='confirm' method = 'post'>" +
 										"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
-										"<input type='submit' value='Cancel Reservation'>" +
-										"</form></td>";			
+										"<input class="btn btn-lg btn-red" type='submit' value='Cancel Reservation'>" +
+										"</form></td>";		
+							
 								
 							}else {// else current hour = reservations hour - check to see if it is within the 
 								
@@ -272,13 +273,13 @@ public class ListUserReservationsQuery {
 									// display the check-in button that points to the check-in servlet
 									
 									table += "<td> CHECK IN </td>"; //TODO add ink
-									//table += "<tr><td><form action='?????' method = 'post'>" +
-									//		"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
-									//		"<input type='submit' value='Check In'>" +
-									//		"</form></td>";	
+									table += "<tr><td><form action='/CheckInServlet' method = 'post'>" +
+											"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
+											"<input class="btn btn-lg btn-red" type='submit' value='Check In'>" +
+											"</form></td>";	
 								
-								//}else if (rq.alreadyCheckedIn(resv.getReserveID())) {
-									//table += "<td> *Already Checked In* </td>";
+								}else if (rq.alreadyCheckedIn(resv.getReserveID())) {
+									table += "<td> *Already Checked In* </td>";
 									
 								}else{
 									table += "<td> *Too late to check in* </td>";

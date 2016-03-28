@@ -1,8 +1,10 @@
+/* @Author Victoria Chambers */
+
 package helpers;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import javax.servlet.ServletOutputStream;
 
@@ -14,6 +16,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import model.DbConnect;
+
+import com.mysql.jdbc.Statement;
 
 public class ReportsExcelCreator {
 
@@ -34,7 +38,9 @@ public class ReportsExcelCreator {
                  
                   /* Getting connection here for mysql database */
                   Class.forName("com.mysql.jdbc.Driver").newInstance();
-                  con = DbConnect.devCredentials();
+                  //con = DbConnect.devCredentials();
+                  con = DriverManager.getConnection
+                    ("jdbc:mysql://localhost:3306/","viccham","Hitch1991*");
                  
                   if(con==null)
                         return "Connection Failed";

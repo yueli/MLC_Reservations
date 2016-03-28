@@ -1,4 +1,5 @@
 /* MLC View Servlet */
+/* @Author Ginger Nix & Victoria Chambers */
 
 package controllers;
 
@@ -56,6 +57,7 @@ public class ViewServlet extends HttpServlet {
 		
 		String message = " ";
 		String table = "";
+
 		
 		//get our current session
 		session = request.getSession();
@@ -90,7 +92,7 @@ public class ViewServlet extends HttpServlet {
 			System.out.println("View Servlet: something in table ");
 			
 		}
-	
+
 		//forward our request along
 		request.setAttribute("user", user);
 		request.setAttribute("table", table);
