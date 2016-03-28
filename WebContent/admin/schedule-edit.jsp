@@ -41,7 +41,14 @@
 	</script>
 	</head>
 	<body>
-		<div id="header1"></div>
+	<div id="header1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<h2>${msg}</h2>
 		<form name="scheduleEdit" id="scheduleEdit" method="post" action="schedule-edit">
 			<h2>Edit schedule entry #${scheduleID} for ${buildingName}</h2>

@@ -19,7 +19,14 @@
 		</script>
 </head>
 <body>
-<div id="header1"></div>
+	<div id="header1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 <div align="center">
 <form name="addForm" action="addbuilding" method=get>
 

@@ -1,3 +1,5 @@
+<!--@Author Victoria Chambers -->
+
 <!DOCTYPE html>
 <html lang="en" class=" js no-touch cssanimations"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- Title -->
@@ -35,24 +37,30 @@
                                             <span class="fa-coffee">Download Reports</span>
                                             </a>
                                         </li>
-                                        <li class="slicknav_collapsed slicknav_parent"><a href="./reservations.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                        <li class="slicknav_collapsed slicknav_parent"><a href="./view-reservations.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
                                             <span class="fa-search">Reservations</span>
                                             </a>
                                         </li>
-                                        <li class="slicknav_collapsed slicknav_parent"><a href="./buildings.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
-                                            <span class="fa-calendar">Buildings & Rooms</span>
+                                        <li class="slicknav_collapsed slicknav_parent"><a href="/RoomsServlet" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-calendar">View & Edit Rooms</span>
                                             </a>
                                         </li>
-                                        <li class="slicknav_collapsed slicknav_parent"><a href="./ban.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                        <li class="slicknav_collapsed slicknav_parent parent"><a href="/Schedule" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-calendar">View Schedule</span>
+                                        </li>
+                                        <li class="slicknav_collapsed slicknav_parent parent"><a href="/addschedule" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-calendar">Add Schedule</span>
+                                        </li>
+                                        <li class="slicknav_collapsed slicknav_parent"><a href="./banread" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
                                             <span class="fa-calendar">Banning</span>
                                             </a>
                                         </li>
-                                        <li class="slicknav_collapsed slicknav_parent"><a href="./user.jsp" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
-                                            <span class="fa-check">Users</span>
+                                        <li class="slicknav_collapsed slicknav_parent"><a href="/AdminListServlet" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item" style="outline: none;">
+                                            <span class="fa-check">List Admin Users</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="./logout.jsp" class="fa-ban" role="menuitem" tabindex="-1">Logout</a>
+                                            <a href="https://cas.uga.edu/cas/logout" class="fa-ban" role="menuitem" tabindex="-1">Logout</a>
                                         </li>
                                     </ul></div>
         <div id="body_bg">
@@ -98,22 +106,33 @@
                                             <a href="adminHomePage.jsp">Home</a>
                                         </li>
                                         <li>
-                                            <a href="./downloadreports.html">Download Reports</a>
+                                            <a href="./downloadreports.jsp">Download Reports</a>
                                         </li>
                                         <li>
                                             <a href="./reservations.jsp">Reservations</a>
                                         </li>
                                         <li>
-                                            <a href="./buildings">Buildings &amp; Rooms</a>
+                                            <a href="/RoomsServlet">View & Edit Rooms</a>
+                                        </li>
+                                        <li class="parent">
+                                       	 <span>Schedule</span>
+                                           <ul>
+                                             <li>
+                                          		<a href="/Schedule">View Schedule</a>
+                                             </li>
+                                             <li>
+                                               	<a href="/addschedule">Add Schedule</a>
+                                             </li>
+                                            </ul>
                                         </li>
                                         <li>
                                             <a href="./banread">Banning</a>
                                         </li>
                                         <li>
-                                            <a href="./users.jsp">Users</a>
+                                            <a href="/AdminListServlet">List Admin Users</a>
                                         </li>
                                         <li>
-                                            <a href="./logout.jsp">Logout</a>
+                                            <a href="https://cas.uga.edu/cas/logout">Logout</a>
                                         </li>
                                       </ul>
                                 </div>
