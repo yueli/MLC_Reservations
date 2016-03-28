@@ -35,7 +35,11 @@ public class CancelQuery {
 
 	}
 
-
+	/**
+	 * this method cancels the reservation by setting the free field to 'Y'
+	 * showing that the day, time, and room are now free for someone to reserve
+	 * @param resv_id reservation ID
+	 */
 	public void cancelReservation(int resv_id){
 		// this method cancels the reservation by setting the free field to 'Y'
 		// showing that the day, time, and room are now free for someone to reserve

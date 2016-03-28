@@ -93,7 +93,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 			// convert time to 24-hour format + get the end time
 			TimeConverter tc = new TimeConverter();
 			startTime24 = tc.convertTimeTo24(startTime);
-			String endTime = DateTimeConverter.addTime(startTime24, hourIncrement); // adding time and hour increment together to get end time
+			String endTime = TimeConverter.addTime(startTime24, hourIncrement); // adding time and hour increment together to get end time
 			
 			//--- user information ---//
 			       // primary user
@@ -138,6 +138,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 				// class used to send email
 				Email email = new Email();
 				email.setWebsiteURL("http://ebus.terry.uga.edu:8080/MLC_Reservations");
+				//email.setWebsiteURL("http://localhost:8080/MLC_Reservations");
 				email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime24, endTime, buildingName, roomNumber, email.getWebsiteURL());
 				
 				// set success message and forwarding URL

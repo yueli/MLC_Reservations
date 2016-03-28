@@ -1,4 +1,4 @@
-/*
+/**
  * @author: Ginger Nix
  * 
  * This class contains methods that help to get user information, to add and edit

@@ -17,13 +17,20 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
 			$(function() {
-				$("#header").load("header.html"); 
-				$("#footer").load("footer.html"); 
+				$("#header1").load("./adminheader.html"); 
+				$("#footer").load("../footer.html"); 
 			});
 		</script> 
 	</head>
 	<body>
-	<div id="header"></div>
+		<div id="header1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<%=table %>
 	
 	<div id="footer"></div>
