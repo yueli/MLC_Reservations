@@ -14,9 +14,10 @@ import helpers.FloorSelectQuery;
 import helpers.RoomsSelectQuery;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseServlet3
  */
-@WebServlet({ "/BrowseServlet3", "/Browse3" })
+@WebServlet({ "/BrowseServlet3", "/Browse3", "/BrowseRooms" })
 public class BrowseServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,34 +39,30 @@ public class BrowseServlet3 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// get current session
 		HttpSession session = request.getSession();
 		
-		//String floor = (String) session.getAttribute("floor");
-		String buildingSelected = (String) session.getAttribute("buildingSelected");
+		// get session and request variables
+		int buildingSelected = (Integer) session.getAttribute("buildingSelected");
 		String floorSelected = (String) request.getParameter("floorList");
 		
-		// TEST
-		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
-		System.out.println("Building - Browse 2: " + buildingSelected);
+		// loads floor list from database, create dropdown for list, and output as String
+		FloorSelectQuery fsq = new FloorSelectQuery();
 		fsq.doFloorRead(buildingSelected);
 		String floor = fsq.getFloorResults(floorSelected);
 		
-		// END TEST
-	
-		RoomsSelectQuery rsq = new RoomsSelectQuery ("tomcatdb", "root", "");
-		System.out.println("#3 Building: " + buildingSelected);
-		System.out.println("#3 Floor: " + floorSelected);
+		// loads rooms from database, query reservation to get availability, outputs string table
+		RoomsSelectQuery rsq = new RoomsSelectQuery ();
 		rsq.doRoomRead(buildingSelected, floorSelected);
-		
-		
 		String table = rsq.getRoomsTable();
 		
 		// URL of the view to forward
-		String url = "/student/browse.jsp";
+		String url = "/user/browse.jsp";
 		
 		// set session attribute
 		session.setAttribute("floorSelected", floorSelected);
-		session.setAttribute("floor", floor); // TEST
+		session.setAttribute("building", buildingSelected);
+		session.setAttribute("floor", floor); 
 		session.setAttribute("table", table);
 		
 		// forward the request

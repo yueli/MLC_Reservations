@@ -1,0 +1,217 @@
+@CHARSET "UTF-8";
+
+html {
+	font-family: sans-serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%
+	}
+
+table {
+  	font-family: 'Arial';
+  	margin: 5px auto;
+  	border-collapse: collapse;
+  	border: 1px solid #eee;
+  	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+	}
+	
+table td:hover {
+  	background: #f4f4f4;
+	}
+	
+table td:hover td {
+  	color: #555;
+	}
+	
+table td {
+	color: #999;
+	border: 1px solid #eee;
+	padding: 7px 20px;
+	border-collapse: collapse;
+	}
+	
+table th {
+	background: #CC0000;
+	color: #fff;
+	/*text-transform: uppercase;*/
+	font-size: 18px;
+	padding: 15px 30px;
+	text-align: center;
+	border: 1px solid #eee;
+	border-collapse: collapse;
+	
+	}
+
+/* FOR HORIZONTAL TABS - Currently in use */
+.ui-tabs {
+	position: relative; /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+	padding: .2em; 
+	height: 10px;
+}
+.ui-tabs .ui-tabs-nav {
+	margin: 0;
+	text-align: center;
+	padding: .2em .2em 0; 
+}
+.ui-tabs .ui-tabs-nav li {
+	/*list-style: none;
+	float: none !important;
+	position: relative;
+	margin: 1px .2em 0 0;
+	border-bottom-width: 0;
+	padding: 0;  */
+	display:inline-block; 
+	list-style: none;
+	color: rgba(249, 249, 249, .9);
+	top: 0;
+	margin: 1px .2em 0 0;
+	white-space: nowrap;
+	/*text-decoration: none;
+	transition: color .5s, background .5s, height .5s;
+	padding: 5px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-top: 1px solid rgba(255, 255, 255, .1);*/
+	background: #333332;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	display:inline-block; 
+	color: rgba(249, 249, 249, .9);
+	text-decoration: none;
+	transition: color .5s, background .5s, height .5s;
+	padding: 15px 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-top: 1px solid rgba(255, 255, 255, .1);
+	}
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+	/*float: left;*/
+	padding: .5em 1em;
+	padding-bottom: 10px;
+	text-decoration: none;
+}
+.ui-tabs .ui-tabs-nav li a:hover{
+    background: #CC0000;
+    color: #FFF;
+	}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+	margin-bottom: -1px;
+	padding-bottom: 10px;
+	
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor,
+.ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor {
+	cursor: text;
+}
+.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor {
+	cursor: pointer;
+}
+.ui-tabs .ui-tabs-panel {
+	display: block;
+	border-width: 0;
+	padding: 1em 1.4em;
+	background: none;
+}
+
+/* used for table cell colors in browse reservations: */
+#red { /* room reserved at time listed */
+	background: #fbcfd0;
+	color: #202021;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
+	
+#gray { /* room unavailable at time listed */
+	background: #c9c9c9;
+	color: #202021;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
+	
+#yellow { /* room open at time listed */
+	background: #f2f799;
+	color: #777677;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
+	
+#green { /* room available at time listed */
+	background: #e3f2e0;
+	color: #777677;
+ 	border: 1px solid #d8d8dd;
+  	padding: 7px 20px;
+  	border-collapse: collapse;
+	}
+
+#green a {
+	text-decoration: none;
+	color: #555;
+	}
+
+#green:hover {
+  	background: #f4f4f4;
+	}
+	
+#green:hover td {
+  	color: #555;
+	}
+	
+/* CSS FOR RESPONSIVE TABLES */
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr {
+		display: block;
+		text-align: center;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	tr { border: 1px solid #ccc; }
+
+	td {
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee;
+		position: relative;
+		padding-left: 50%;
+	}
+
+	td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+
+
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+	body {
+		padding: 0;
+		margin: 0;
+		width: 320px; }
+	}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+	body {
+		width: 495px;
+	}
+}

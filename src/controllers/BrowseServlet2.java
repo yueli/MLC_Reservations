@@ -14,12 +14,14 @@ import helpers.BuildingSelectQuery;
 import helpers.FloorSelectQuery;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseServlet2
  */
-@WebServlet({ "/BrowseServlet2", "/Browse2" })
+@WebServlet({ "/BrowseServlet2", "/Browse2", "/BrowseFloors" })
 public class BrowseServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private HttpSession session;
+	private String url;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,32 +41,36 @@ public class BrowseServlet2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		// get current session
+		session = request.getSession();
 		
-		String buildingSelected = (String) request.getParameter("buildingList");
-		String floorSelected = (String) request.getParameter("floorList");
-		
-		// TEST
-		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
-		bsq.doBuildingRead();
-		String buildings = bsq.getBuildingResults(buildingSelected);
-		// END TEST
-		
-		FloorSelectQuery fsq = new FloorSelectQuery("tomcatdb", "root", "");
-		System.out.println("Building - Browse 2: " + buildingSelected);
-		fsq.doFloorRead(buildingSelected);
-		String floor = fsq.getFloorResults();
-		
-		// URL of the view to forward
-		String url = "/student/browse.jsp";
-		
-		// set session attribute
-		session.setAttribute("buildings", buildings); //TEST
-		
-		session.setAttribute("buildingSelected", buildingSelected);
-		session.setAttribute("floorSelected", floorSelected);
-		session.setAttribute("floor", floor);
-		
+		// there should be a value from select.  If not, go back to BrowseServlet
+		if(request.getParameter("buildingList") == null || request.getParameter("buildingList").isEmpty()){
+			url = "Browse";
+		} else {
+			// get request variables		
+			int buildingSelected = Integer.parseInt(request.getParameter("buildingList"));
+			String floorSelected = (String) request.getParameter("floorList");
+			
+			// loads building list from db, create drop down for list, and output as String
+			BuildingSelectQuery bsq = new BuildingSelectQuery();
+			bsq.doBuildingRead();
+			String buildings = bsq.getBuildingResults(buildingSelected);
+			
+			// loads floor list from db, create drop down for list, and output as String
+			FloorSelectQuery fsq = new FloorSelectQuery();
+			fsq.doFloorRead(buildingSelected);
+			String floor = fsq.getFloorResults();
+			
+			// URL of the view to forward
+			url = "/user/browse.jsp";
+			
+			// set session attribute
+			session.setAttribute("buildings", buildings); 
+			session.setAttribute("buildingSelected", buildingSelected);
+			session.setAttribute("floorSelected", floorSelected);
+			session.setAttribute("floor", floor);
+		}
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

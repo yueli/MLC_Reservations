@@ -4,11 +4,11 @@
 package helpers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.DbConnect;
 import model.Rooms;
 
 /**
@@ -20,31 +20,35 @@ public class FloorSelectQuery {
 	private Connection connection;
 	private ResultSet results;
 	
-	public FloorSelectQuery(String dbName, String user, String pwd) {
-		String url = "jdbc:mysql://localhost:3306/" + dbName;
-
+	public FloorSelectQuery() {
 		
 		// set up the driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			this.connection = DriverManager.getConnection(url, user, pwd);
+			// hard coded the connection in DbConnect class
+			this.connection = DbConnect.devCredentials();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} 
 		
 	}
 	
-	public void doFloorRead(String building){
-		String query = "SELECT roomFloor FROM tomcatdb.Rooms, tomcatdb.Building WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID AND tomcatdb.Building.buildingName = '" + building + "'" + " GROUP BY roomFloor ORDER BY roomFloor";
-		System.out.println(query);
+	public void doFloorRead(int building){
+		String query = "SELECT roomFloor "
+				+ "FROM tomcatdb.Rooms, tomcatdb.Building "
+				+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
+				+ "AND tomcatdb.Building.buildingID = ? " 
+				+ "GROUP BY roomFloor "
+				+ "ORDER BY roomFloor";
+	
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, building);
+			
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,11 +82,11 @@ public class FloorSelectQuery {
 		return select;
 	}
 	
+	
 	public String getFloorResults(String selected){
 		// Create the String for HTML
 		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";
-		//select += "<option></option>";
-		
+	
 		// HTML for dropdown list
 		try {
 			while(this.results.next()){

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.BuildingSelectQuery;
 
 /**
+ * @author Brian Olaogun
  * Servlet implementation class BrowseServlet
  */
 @WebServlet(
@@ -23,7 +24,8 @@ import helpers.BuildingSelectQuery;
 		})
 public class BrowseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private HttpSession session; 
+    private String url;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -42,25 +44,23 @@ public class BrowseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		BuildingSelectQuery bsq = new BuildingSelectQuery("tomcatdb", "root", "");
+		// get current session
+		session = request.getSession();
+		
+		// loads building list from db, create dropdown for list, and output as String
+		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		bsq.doBuildingRead();
 		String buildings = bsq.getBuildingResults();
-
-	
-		System.out.println(bsq);
-		
 		
 		// set session attribute
 		session.setAttribute("buildings", buildings);
 		
 		// URL of the view to forward
-		String url = "/student/browse.jsp";
+		url = "/user/browse.jsp";
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
 	}
 
 }
