@@ -15,7 +15,6 @@
   <session-config>
     <session-timeout>10</session-timeout>
   </session-config>
-<?ignore
   <filter>
     <filter-name>CAS Authentication Filter</filter-name>
     <filter-class>org.jasig.cas.client.authentication.Saml11AuthenticationFilter</filter-class>
@@ -64,6 +63,4 @@
     <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-<<<<<<< HEAD
-  ?>
 </web-app>
