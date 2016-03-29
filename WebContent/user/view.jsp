@@ -30,7 +30,6 @@
 		<br>
 		<br>
 <div align="center">
-		<h1>View Home Page</h1>
 		<h2>Reservations for: 
 			${user.userFirstName} 
 			${user.userLastName}
