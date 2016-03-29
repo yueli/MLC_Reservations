@@ -160,6 +160,14 @@ public class CASLoginServlet extends HttpServlet {
 			user.setMyID(loggedInUser.getMyID());
 			user.setUserFirstName(loggedInUser.getUserFirstName());
 			user.setUserLastName(loggedInUser.getUserLastName());
+			
+			String userEmail = loggedInUser.getMyID() + "@uga.edu";
+			//user.setUserEmail(userEmail);
+			/* HARD CODED FOR TESTING */
+			
+			user.setUserEmail("ganix@uga.edu"); 
+			
+			
 						
 			UserHelper userHelper = new UserHelper();			
 			boolean inTable = userHelper.inUserTable(user.getMyID());				
@@ -204,7 +212,7 @@ public class CASLoginServlet extends HttpServlet {
 				
 			}
 			
-			// by this time the user object should have recordID, myID, fname, and lname (and maybe eventually email)
+			// by this time the user object should have recordID, myID, fname, lname and email
 			session.setAttribute("user", user);
 		}		
 		session.setAttribute("table", table);
