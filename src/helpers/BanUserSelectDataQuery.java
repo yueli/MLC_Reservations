@@ -61,7 +61,7 @@ public class BanUserSelectDataQuery {
 	public String getHTMLTable(){ 
 		//Return table of banned students
 		
-		String table = "<table id== '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+		String table = "<table id= '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 		
 	
 		try{
