@@ -18,10 +18,7 @@
     <session-timeout>10</session-timeout>
   </session-config>
 
-
-<?ignore 
-
-
+<?ignore
   <filter>
     <filter-name>CAS Authentication Filter</filter-name>
     <filter-class>org.jasig.cas.client.authentication.Saml11AuthenticationFilter</filter-class>
