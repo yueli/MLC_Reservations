@@ -2,10 +2,9 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>MLC_Reservations</display-name>
   <welcome-file-list>
-  
-<?ignore <welcome-file>CASLoginServlet</welcome-file> ?>
-  
+    <!--welcome-file>CASLoginServlet</welcome-file--> 
     <welcome-file>LoginController</welcome-file>
+  	<welcome-file>/admin/</welcome-file>
     <welcome-file>/user/login.jsp</welcome-file>
     <welcome-file>/user/home.jsp</welcome-file>
     <welcome-file>/user/index.html</welcome-file>
@@ -17,11 +16,7 @@
   <session-config>
     <session-timeout>10</session-timeout>
   </session-config>
-
-
 <?ignore 
-
-
   <filter>
     <filter-name>CAS Authentication Filter</filter-name>
     <filter-class>org.jasig.cas.client.authentication.Saml11AuthenticationFilter</filter-class>

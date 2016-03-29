@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+//**By Ronnie Xu~****/
+
 /**
  * Servlet implementation class BuildingListUpdateServlet
  */

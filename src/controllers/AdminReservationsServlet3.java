@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.RoomsSelectQuery;
-import model.Email;
+import model.Admin;
 import model.Reservation;
 import model.TimeConverter;
 
@@ -43,18 +43,19 @@ public class AdminReservationsServlet3 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
+		this.session = request.getSession(false);
 		
 		// check to see if there is a valid session
-		//if (session != null){ // there is an active session
+		if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			//Admin adminUser = (Admin) session.getAttribute("adminUser");
-			//String role = adminUser.getRole();
-			//int status = adminUser.getAdminStatus();
+			Admin adminUser = (Admin) session.getAttribute("adminUser"); // USED FOR TESTING
+			//Admin adminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			String role = adminUser.getRole();
+			int status = adminUser.getAdminStatus();
 			
 			// push content based off role
-			//if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
+			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
 				//------------------------------------------------//
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//
@@ -77,7 +78,10 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				//------------------------------------------------//
 				// get room ID
 				RoomsSelectQuery roomsq = new RoomsSelectQuery();
-				 roomID = (int) roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				roomID = (int) roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				
+				// TODO get hour increment
+				
 				
 				// check if reservation is available
 				ReservationSelectQuery rsq = new ReservationSelectQuery();
@@ -94,37 +98,37 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				} else { // the room selected is not reserved = make a reservation
 					// create reservation object to insert in query
 					// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
-					int adminID = 0; // placeholder for admin ID
+					
 					int hourIncrement = 0; // placeholder for hourIncrement
 					int buildingIDInt = Integer.parseInt(buildingID);
-					Reservation reservation = new Reservation(adminID, roomID,
-							startDate, endDate, startTime,  endTime, hourIncrement,
+					Reservation reservation = new Reservation(adminUser.getAdminID(), roomID,
+							startDate, endDate, startTime24, TimeConverter.subtractOneSecondToTime(endTime24), hourIncrement,
 							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
-					riq.doReservationInsert(reservation);
+					riq.doAdminReservationInsert(reservation);
 					
 					
 					// set success message and forwarding URL
 					msg = "You have successfully made a reservation.  "
 							+ "You should receive a confirmation email shortly";
 				}
-			//} else { 
+				session.setAttribute("msg", msg);
+			} else { 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
 				
-				// forwarding URL
-				//url = "AdminViewReservations";
-				
-				// set session attributes
-			//}
+				 //forwarding URL
+				 url = "AdminViewReservations";
 			
-		//} else { // there isn't an active session.
+			}
+			
+		} else { // there isn't an active session.
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			//url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
-		//}
+			url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+		}
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
