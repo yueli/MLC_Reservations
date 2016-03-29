@@ -51,10 +51,10 @@ public class AdminReservationsServlet2 extends HttpServlet {
 		if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			Admin adminUser = (Admin) session.getAttribute("adminUser"); //USED FOR TESTING
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); //USED FOR TESTING
 			//Admin adminUser = (Admin) session.getAttribute("adminUser");
-			String role = adminUser.getRole();
-			int status = adminUser.getAdminStatus();
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
 			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
