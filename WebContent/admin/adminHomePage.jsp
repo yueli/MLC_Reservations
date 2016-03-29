@@ -27,8 +27,8 @@
                                     <!-- Carousel Indicators -->
                                     <ol class="carousel-indicators">
                                         <li data-target="#carousel-example" data-slide-to="0" class=""></li>
-                                        <li data-target="#carousel-example" data-slide-to="1" class="active"></li>
-                                        <li data-target="#carousel-example" data-slide-to="2" class=""></li>
+                                        <li data-target="#carousel-example" data-slide-to="1" class=""></li>
+                                        <li data-target="#carousel-example" data-slide-to="2" class="active"></li>
                                         <li data-target="#carousel-example" data-slide-to="3" class=""></li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -38,10 +38,10 @@
                                         <div class="item">
                                             <img src="../assets/img/fillers/mlc1.jpg">
                                         </div>
-                                        <div class="item active">
+                                        <div class="item">
                                             <img src="../assets/img/fillers/mlc2.jpg">
                                         </div>
-                                        <div class="item">
+                                        <div class="item active">
                                             <img src="../assets/img/fillers/mlc3.jpg">
                                         </div>
                                         <div class="item">
@@ -51,10 +51,10 @@
                                     <!-- End Carousel Images -->
                                     <!--  
                                     <!-- Carousel Controls -->
-                                    <a class="left carousel-control" href="index.html#carousel-example" data-slide="prev">
+                                    <a class="left carousel-control" href="adminHomePage.jsp#carousel-example" data-slide="prev">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
-                                    <a class="right carousel-control" href="index.html#carousel-example" data-slide="next">
+                                    <a class="right carousel-control" href="adminHomePage.jsp#carousel-example" data-slide="next">
                                         <span class="glyphicon glyphicon-chevron-right"></span>
                                     </a>
                                     <!-- End Carousel Controls -->
@@ -68,7 +68,7 @@
                                 <h2 class="animate fadeIn text-center margin-top-50 animated">Welcome to the UGA Reservation System</h2>
                                 <h4 class="animate fadeIn text-center margin-top-10 animated">Admin View</h4>
                                 <hr class="margin-top-15">
-                                <p class="animate fadeIn text-center animated">		${message} <br />
+ <!--                              <p class="animate fadeIn text-center animated">		${message} <br />
 		admin record ID = ${loggedInAdminUser.adminID } <br />
 		my id = ${loggedInAdminUser.adminMyID} <br />
 		first name = ${loggedInAdminUser.fname} <br />
@@ -77,20 +77,16 @@
 		status = ${loggedInAdminUser.adminStatus} <br />
 		
 building: ${building}
-room: ${room}
+room: ${room}-->   
 		
-		<p>To begin, please choose an option from the menu above. </p>
+		<p class="animate fadeIn text-center animated">To begin, please choose an option from the menu above or logout. </p>
 			
-			<p><a href='AdminListServlet'>List Admin Users</a></p>
+			<!-- <p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='AdminListServlet'>List Admin Users</a></p>-->
 			
-			
-		<form name="Logout" action="AdminLoginController" method="get">
- 			<input class="btn btn-lg btn-red" type="submit" name = "logout" value="Logout">
- 		</form>
- 		</div></p>
-                                <p class="text-center animate fadeInUp margin-bottom-50 animated">
-                                    <button type="button" class="btn btn-lg btn-red" href="reservation.jsp">Reserve a Room</button>
-                                </p>
+			<div align="Center">
+		 		<p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='https://cas.uga.edu/cas/logout'>Logout</a></p>
+         		<br><br>
+ 			</div>                      
                             </div>
                         </div>
                         <div class="container">

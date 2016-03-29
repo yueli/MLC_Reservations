@@ -52,9 +52,10 @@ public class ReservationSelectQuery {
 		System.out.println("DATE: " + currentDate + " START: " + startTime + " ROOM# " + roomNumber);
 		String query = "SELECT Reservations.reserveID "
 				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
-				        + "WHERE ((Reservations.reserveStartDate = ? )"
-				       	+ "AND (Reservations.reserveStartTime = ?) OR (? BETWEEN reserveStartTime AND reserveEndTime)) "
-				       	+ "AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = ? "
+				        + "WHERE ((Reservations.reserveStartDate = ? ) "
+				       	+ "AND ((Reservations.reserveStartTime = ?) OR (? BETWEEN reserveStartTime AND reserveEndTime))) "
+				       	+ "AND Rooms.roomID = Reservations.Rooms_roomID "
+				       	+ "AND Rooms.roomNumber = ? "
 						+ "AND tomcatdb.Reservations.free = ?";
 		
 		// securely run query
@@ -73,7 +74,7 @@ public class ReservationSelectQuery {
 		} 
 	}
 	/**
-	 * 
+	 * NOT USING
 	 * @param currentDate Sring current date in sql format
 	 * @param startTime string start time in 24-hour sql format
 	 * @param roomNumber String room number

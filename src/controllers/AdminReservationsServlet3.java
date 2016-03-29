@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.RoomsSelectQuery;
-import model.Email;
+import model.Admin;
 import model.Reservation;
 import model.TimeConverter;
 
@@ -43,88 +43,92 @@ public class AdminReservationsServlet3 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
+		this.session = request.getSession(false);
 		
 		// check to see if there is a valid session
-		//if (session != null){ // there is an active session
+		if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			//Admin adminUser = (Admin) session.getAttribute("adminUser");
-			//String role = adminUser.getRole();
-			//int status = adminUser.getAdminStatus();
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); // USED FOR TESTING
+			//Admin adminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
-			//if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
+			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
 				//------------------------------------------------//
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//
 				String buildingID = (String) session.getAttribute("buildingID");
-				String startDate = (String) session.getAttribute("startDate");
-				String endDate = (String) session.getAttribute("endDate");
+				String startDate = request.getParameter("startDate");
+				String endDate = request.getParameter("endDate");
 				String startTime = (String) session.getAttribute("startTime");
-				String endTime = (String) session.getAttribute("endTime");
+				//String endTime = (String) session.getAttribute("endTime");
+				String endTime = request.getParameter("endTime");
 				String reserveName = (String) session.getAttribute("reserveName");
-				String roomNumber = (String) session.getAttribute("roomNumber");
+				String roomNumber = request.getParameter("roomNumber");
 				TimeConverter tc = (TimeConverter) session.getAttribute("tc");
 				String msg = (String) session.getAttribute("msg");
-				String startTime24 = tc.convertTimeTo24(startTime);
-				String endTime24 = tc.convertTimeTo24(endTime);
 				String free = "N";
 				int roomID;
-				
+				System.out.println("ADMIN RESERVATION BUILDING ID: " + buildingID);
+				System.out.println("ADMIN RESERVATION ROOM NUMBER: " + roomNumber);
+				System.out.println("ADMIN RESERVATION ADMIN USER: " + loggedInAdminUser.getAdminID());
+				System.out.println();
 				//------------------------------------------------//
 				/*            MAKE RESERVATION CONT.              */
 				//------------------------------------------------//
 				// get room ID
 				RoomsSelectQuery roomsq = new RoomsSelectQuery();
-				 roomID = (int) roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				roomID = roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				
+				// TODO get hour increment
+				int hourIncrement = tc.getHourIncrement(startTime, endTime);
 				
 				// check if reservation is available
 				ReservationSelectQuery rsq = new ReservationSelectQuery();
-				rsq.doReservationRead(startDate, startTime24, roomNumber); //TODO add end date to method
+				rsq.doReservationRead(startDate, startTime, roomNumber); //TODO add end date to method - NOT YET
 				String reservationCheck = rsq.doReservationResults();
 				
 				// a returned value = the room was reserved at the time
 				// an empty result set/string =  the room is free at the time
 				if(!reservationCheck.isEmpty()){ // the room the user selected is reserved
-					msg = "Another user just reserved this room at this time.  Please select another time. "
-							+ "";
-					url = "admin/confirmation.jsp";
+					msg = "Another user just reserved this room at this time.  Please select another time.";
+					url = "admin-reservations";
 					
 				} else { // the room selected is not reserved = make a reservation
 					// create reservation object to insert in query
 					// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
-					int adminID = 0; // placeholder for admin ID
-					int hourIncrement = 0; // placeholder for hourIncrement
+					
 					int buildingIDInt = Integer.parseInt(buildingID);
-					Reservation reservation = new Reservation(adminID, roomID,
-							startDate, endDate, startTime,  endTime, hourIncrement,
+					Reservation reservation = new Reservation(loggedInAdminUser.getAdminID(), roomID,
+							startDate, endDate, startTime, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement,
 							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
-					riq.doReservationInsert(reservation);
+					riq.doAdminReservationInsert(reservation);
 					
 					
 					// set success message and forwarding URL
-					msg = "You have successfully made a reservation.  "
-							+ "You should receive a confirmation email shortly";
+					msg = "You have successfully made a reservation.";
+					url = "admin/confirmation.jsp";
 				}
-			//} else { 
+				session.setAttribute("msg", msg);
+			} else { 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
 				
-				// forwarding URL
-				//url = "AdminViewReservations";
-				
-				// set session attributes
-			//}
+				 //forwarding URL
+				 url = "AdminViewReservations";
 			
-		//} else { // there isn't an active session.
+			}
+			
+		} else { // there isn't an active session.
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			//url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
-		//}
+			url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+		}
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

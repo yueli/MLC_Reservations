@@ -19,7 +19,9 @@ import model.Admin;
 @WebServlet({ "/AdminReservations", "/make-reservations" })
 public class AdminReservationsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private HttpSession session;   
+    private HttpSession session;  
+    private String url = "";
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,15 +42,20 @@ public class AdminReservationsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession();
-		String url = "";
+		
 		
 		// check to see if there is a valid session
 		//if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			//Admin adminUser = (Admin) session.getAttribute("adminUser");
-			//String role = adminUser.getRole();
-			//int status = adminUser.getAdminStatus();
+			//Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			Admin loggedInAdminUser = new Admin();
+			loggedInAdminUser.setAdminID(1);
+			loggedInAdminUser.setAdminMyID("bbo89");
+			loggedInAdminUser.setAdminStatus(1);
+			loggedInAdminUser.setRole("admin");
+			//String role = loggedInAdminUser.getRole();
+			//int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
 			//if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
@@ -90,6 +97,7 @@ public class AdminReservationsServlet extends HttpServlet {
 				url = "admin/reservations.jsp";
 				
 				// set session and request variables
+				session.setAttribute("adminUser", loggedInAdminUser);
 				session.setAttribute("buildingID", buildingID);
 				session.setAttribute("buildings", buildings);
 			//} else { 

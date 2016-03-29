@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.AdminUserHelper;
 import helpers.UserHelper;
 import model.Admin;
 import model.PasswordService;
@@ -56,24 +57,17 @@ public class LoginController extends HttpServlet {
 		String message = "";
 		request.setAttribute("message", message); //TODO WHAT AM I DOING HERE??
 
+		System.out.println("Login Controller 1");				
+		
 		//get our current session
 		session = request.getSession();
-		
-			//pull the fields from the form
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-
-			//encrypt the password 
-			PasswordService pws = new PasswordService();
-			String encryptedPass = pws.encrypt(password);
-			
-			//set up connection to the database
-			UserHelper uh = new UserHelper(); 
-			
 			//see if they are UGA affiliated
-			boolean authenticated = uh.authenticateUser(username, encryptedPass); //see if the person is UGA affiliated
-
-			if (authenticated){ //if a non-empty object sent back (has user data meaning they were authenticated)
+		System.out.println("Login Controller 2");	
+		//set up connection to the database
+		UserHelper uh = new UserHelper(); 
+		System.out.println("Login Controller 3");	
+		boolean authenticated = true;
+		
 				message = "UGA person!!"; //for testing
 				
 				//TODO
@@ -89,7 +83,13 @@ public class LoginController extends HttpServlet {
 				loggedInUser.setUserFirstName(fname);
 				loggedInUser.setUserLastName(lname);
 				loggedInUser.setUserEmail(email);
-						
+	
+				AdminUserHelper auh = new AdminUserHelper();
+				
+				Admin loggedInAdminUser = new Admin(); // create the user object to pass forward
+
+				loggedInAdminUser = auh.getAdminData(loggedInUser.getMyID());
+				
 				//----------------
 				// once this person is authenticated as being UGA affiliated, check to is they have been banned
 				// and if so, send them to the banned page to let them know and to have them log out
@@ -140,11 +140,13 @@ public class LoginController extends HttpServlet {
 					session.invalidate();
 					session=request.getSession(true);
 					
-					
+					session.setAttribute("loggedInAdminUser", loggedInAdminUser);
 					session.setAttribute("loggedInUser", loggedInUser);
 					session.setAttribute("message", message);
 
-					url="index.html";
+					//changed for testing
+					//url="index.html";
+					url = "admin/adminHome.jsp";
 					
 					//forward our request along
 					RequestDispatcher dispatcher = request.getRequestDispatcher(url);
@@ -152,20 +154,7 @@ public class LoginController extends HttpServlet {
 
 				
 			
-			}else{// user doesn't exist, redirect to previous page and show error
-			 
-				message = "Error: Not Valid UGA Credentials";
-				session.setAttribute("message", message);
 
-				System.out.println("Login Controller: user doesn't exist!");
-
-				url = "user/login.jsp";
-				
-				//forward our request along
-				RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-				dispatcher.forward(request, response);
-
-			}
 				
 		}
 	
