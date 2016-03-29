@@ -63,7 +63,8 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				String startDate = request.getParameter("startDate");
 				String endDate = request.getParameter("endDate");
 				String startTime = (String) session.getAttribute("startTime");
-				String endTime = (String) session.getAttribute("endTime");
+				//String endTime = (String) session.getAttribute("endTime");
+				String endTime = request.getParameter("endTime");
 				String reserveName = (String) session.getAttribute("reserveName");
 				String roomNumber = request.getParameter("roomNumber");
 				TimeConverter tc = (TimeConverter) session.getAttribute("tc");
@@ -92,8 +93,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				// a returned value = the room was reserved at the time
 				// an empty result set/string =  the room is free at the time
 				if(!reservationCheck.isEmpty()){ // the room the user selected is reserved
-					msg = "Another user just reserved this room at this time.  Please select another time. "
-							+ "";
+					msg = "Another user just reserved this room at this time.  Please select another time.";
 					url = "admin-reservations";
 					
 				} else { // the room selected is not reserved = make a reservation

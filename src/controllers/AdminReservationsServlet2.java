@@ -119,7 +119,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				endTime = tc.convertTimeTo24(endTime);
 				
 				// TODO check to make sure start time is less than end time
-				
+				// TODO check start Date to make sure its >= currentDate
 				
 				// if there is an active session variable, 
 				// it will replace the request variable (which doesn't persist).
@@ -194,7 +194,6 @@ public class AdminReservationsServlet2 extends HttpServlet {
 								table += "<td>" + tc.convertTimeTo12(startTime) + "</td>";
 								table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "</td>";
 								table += "<td>" + tc.convertTimeTo12(endTime) + "</td>";
-								// TODO get RoomID
 								table += "<td>";
 								table += "<form name='schedule' id='reserve" + h + "' action='admin-reserve-confirm' method='post'>";
 								table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
