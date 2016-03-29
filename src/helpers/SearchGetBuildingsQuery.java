@@ -10,11 +10,7 @@ import model.Building;
 import model.DbConnect;
 
 
-/**
- * @author Ronnie Xu
- * Helper for the Admin side of the website.
- *
- */
+//**By Ronnie Xu~****/
 
 public class SearchGetBuildingsQuery {
 	
