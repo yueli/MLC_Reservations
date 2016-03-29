@@ -274,8 +274,12 @@ public class ListUserReservationsQuery {
 									
 									table += "<td> CHECK IN </td>"; //TODO add ink
 									table += "<tr><td><form action='/CheckInServlet' method = 'post'>" +
+<<<<<<< HEAD
 											"<input type='hidden' name='" + resv.getReserveID() + "' " + 
 											" value='" + resv.getReserveID() + "'>" +
+=======
+											"<input type='hidden' name='resv_id' value='" + resv.getReserveID() + "'>" +
+>>>>>>> origin/MLC-Ginger-03-27-16
 											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
 											"</form></td>";	
 								

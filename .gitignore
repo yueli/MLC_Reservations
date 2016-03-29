@@ -1,13 +1,16 @@
+
 /build/
 /bin/
 
-build/classes/controllers/BrowseServlet.class
 
-build/classes/controllers/BrowseServlet.class
 
-build/classes/controllers/BrowseServlet.class
+*.component
 
-build/classes/controllers/BrowseServlet2.class
+*.class
+
+.settings/org.eclipse.wst.common.component
+
+*.component
 
 *.class
 
@@ -15,4 +18,4 @@ build/classes/controllers/BrowseServlet2.class
 
 *.class
 
-.classpath
+*.component
