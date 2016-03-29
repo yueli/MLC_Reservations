@@ -50,13 +50,14 @@ public class AdminUserHelper {
 
 		table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 		
-		table += "<tr>";
-		table += "<td> MyID</td>";
-		table += "<td> First Name</td>";
-		table += "<td> Last Name</td>";
-		table += "<td> Role</td>";
-		table += "<td> Status</td>"; 
-		table += "</tr>";
+		table += "<thead>";
+		table += "<th> MyID</th>";
+		table += "<th> First Name</th>";
+		table += "<th> Last Name</th>";
+		table += "<th> Role</th>";
+		table += "<th> Status</th>"; 
+		table += "<th>&nbsp;</th>"; 
+		table += "</thead>";
 			
 		String query = "SELECT * FROM tomcatdb.Admin ORDER BY lname";
 
@@ -94,6 +95,7 @@ public class AdminUserHelper {
 				
 				System.out.println("AdminUserHelper: ListAdmins: adminID for user to list from table=  " + adminID);
 				
+				table += "<tbody>";
 				table += "<tr>";
 				table += "<td>" + adminMyID + "</td>";
 				table += "<td>" + fname + "</td>";	
@@ -109,6 +111,24 @@ public class AdminUserHelper {
 				table += "</tr>";
 			} //end while
 			
+			table += "</tbody>";
+			
+			table += "<tfoot>";
+			table += "<tr>";
+			table += "<td></td>";
+			table += "<td></td>";
+			table += "<td></td>";
+			table += "<td></td>";
+			table += "<td></td>";
+			table += "<td align:center >";
+			table += "<form action='AdminAddServlet' method = 'post'>" +
+					"<input type='submit' value='Add An Admin'>" +
+					"</form>";
+			
+			table += "</td>";
+			table += "</tr>";
+			table += "</tfoot>";
+			
 			table += "</table>";
 			
 		} catch (SQLException e) {
@@ -116,13 +136,7 @@ public class AdminUserHelper {
 			System.out.println("***Error in AdminUserHelper:  Query = " + query);
 		}
 		
-		table += "<br /><br />";
-		table += "<p>";
-		table += "<form action='AdminAddServlet' method = 'post'>" +
-				"<input type='submit' value='Add An Admin'>" +
-				"</form>";			
-		table += "</p>";
-		
+	
 
 		return table;
 		
@@ -193,7 +207,8 @@ public class AdminUserHelper {
 			String adminStatus = this.results.getString("adminStatus");	
 		
 			// create an HTML form with this information
-			
+
+				table += "<br /><br /><br />";
 			table += "<form action='AdminSaveServlet' method = 'post'>";
 			
 			table += "First name:<br>";
@@ -304,6 +319,8 @@ public class AdminUserHelper {
 			table += "<input type = 'submit' value = 'Cancel'>";
 			table += "</form>";
 	
+	
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("***Error in AdminUserHelper getAdminInfo:  Query = " + query);
@@ -396,8 +413,8 @@ public class AdminUserHelper {
 	public String createAddAdminForm(Admin loggedInAdminUser){
 		
 		String table = "";
-
-			table += "<form action='AdminAddSaveServlet' method = 'post'>";
+		
+		table += "<form action='AdminAddSaveServlet' method = 'post'>";
 		
 		table += "First name:<br>";
 		table +=  "<input type='text' name = 'fname' required>";

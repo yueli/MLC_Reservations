@@ -295,12 +295,15 @@ public class RoomsSelectQuery {
 			
 			table += "<h2>Rooms List for Building " + buildingName + "</h2>";			
 			table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";			
-			table += "<tr>";
-			table += "<td>Room Floor</td>";
-			table += "<td>Room Number</td>";
-			table += "<td>Status</td>";
-			table += "</tr>";
-				
+			table += "<thead>";
+			table += "<th>Room Floor</th>";
+			table += "<th>Room Number</th>";
+			table += "<th>Status</th>";
+			table += "<th>&nbsp;</th>";
+			table += "</thead>";
+			
+			table += "<tbody>";
+			
 			String query = "SELECT * FROM tomcatdb.Rooms "
 					+ "WHERE Building_buildingID = '" + buildingID + "' " 
 					+ "ORDER BY roomNumber";
@@ -322,20 +325,38 @@ public class RoomsSelectQuery {
 						roomStatus = "Inactive";
 					}
 					
+					
 					table += "<tr>";
+						
 					table += "<td>" + room.getRoomFloor() + "</td>";
 					table += "<td>" + room.getRoomNumber() + "</td>";
 					table += "<td>" + roomStatus + "</td>";
 									
 					table += "<td><form action='RoomEditServlet' method = 'post'>" +
-							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>" +
-							"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
-							"<input type='submit' value='Edit Room'>" +
+							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'/>" +
+							"<input type='hidden' name='buildingList' value='" + buildingID + "'/>" +
+							"<input type='submit' value='Edit Room' />" +
 							"</form></td>";		
 				
 					table += "</tr>";
 				
 				} //end while
+				
+				table += "</tbody>";
+				table += "<tfoot>";
+				table += "<tr>";
+				table += "<td></td>";
+				table += "<td></td>";
+				table += "<td></td>";
+				table += "<td align:center >";
+				table += "<form action='RoomAddServlet' method = 'post'>" +
+						"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
+						"<input type='submit' value='Add A Room'>" +
+						"</form>";
+				
+				table += "</td>";
+				table += "</tr>";
+				table += "</tfoot>";
 				
 				table += "</table>";
 				
@@ -343,13 +364,7 @@ public class RoomsSelectQuery {
 				e.printStackTrace();
 				System.out.println("***Error in RoomsSelectQuery:  Query = " + query);
 			}			
-			table += "<br /><br />";
-			table += "<p>";
-			table += "<form action='RoomAddServlet' method = 'post'>" +
-					"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
-					"<input type='submit' value='Add A Room'>" +
-					"</form>";			
-			table += "</p>";
+
 			
 			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingID AT END= " + buildingID);
 			
@@ -392,7 +407,9 @@ public class RoomsSelectQuery {
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room floor= " + roomFloor);
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room status= " + roomStatus);
 				
-				table += "<p>Building: " + buildingName + "</p>";
+				table += "<br /><br /><br />";
+
+				table += "<center><h3>Building: " + buildingName + "</h3></center>";
 				
 				table += "<form action='RoomSaveServlet' method = 'post'>";
 				
@@ -418,6 +435,7 @@ public class RoomsSelectQuery {
 				
 				table += "</select>";	
 				
+				table += "<br /><br />";
 				table += "<input type = 'submit' value = 'Save'>";
 				table += "<input type = 'hidden' name = 'roomID' value='" + roomID + "'>";
 				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
@@ -488,7 +506,7 @@ public class RoomsSelectQuery {
 					BuildingSelectQuery bsq = new BuildingSelectQuery();
 					String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
 
-					table += "<p>Building: " + buildingName + "</p>";
+					table += "<center><p>Building: " + buildingName + "</p></center>";
 					
 					table += "<form action='RoomAddSaveServlet' method = 'post'>";
 					
@@ -505,6 +523,8 @@ public class RoomsSelectQuery {
 					table += "<option value='1' selected>Active</option>";
 					table += "<option value='0'>Inactive</option>";							
 					table += "</select>";	
+					
+					table += "<br /><br />";
 					
 					table += "<input type = 'submit' value = 'Save'>";	
 					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
