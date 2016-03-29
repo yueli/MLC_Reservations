@@ -169,10 +169,8 @@ public class TimeConverter {
 	 */
 	public Integer getHourIncrement(String reserveStartTime, String reserveEndTime){
 		List<String> times = timeRangeList(reserveStartTime, reserveEndTime);
-		int hourIncrement = 0;
-		for (int i=0; i<times.size(); i++){
-			hourIncrement ++;
-		}
+		int hourIncrement = (times.size()-1);
+	
 		return hourIncrement;
 	}
 	/**

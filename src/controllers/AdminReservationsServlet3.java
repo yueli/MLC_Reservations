@@ -72,6 +72,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				int roomID;
 				System.out.println("ADMIN RESERVATION BUILDING ID: " + buildingID);
 				System.out.println("ADMIN RESERVATION ROOM NUMBER: " + roomNumber);
+				System.out.println("ADMIN RESERVATION ADMIN USER: " + adminUser.getAdminID());
 				System.out.println();
 				//------------------------------------------------//
 				/*            MAKE RESERVATION CONT.              */
@@ -81,11 +82,11 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				roomID = roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
 				
 				// TODO get hour increment
-				
+				int hourIncrement = tc.getHourIncrement(startTime, endTime);
 				
 				// check if reservation is available
 				ReservationSelectQuery rsq = new ReservationSelectQuery();
-				rsq.doReservationRead(startDate, startTime, roomNumber); //TODO add end date to method
+				rsq.doReservationRead(startDate, startTime, roomNumber); //TODO add end date to method - NOT YET
 				String reservationCheck = rsq.doReservationResults();
 				
 				// a returned value = the room was reserved at the time
@@ -99,7 +100,6 @@ public class AdminReservationsServlet3 extends HttpServlet {
 					// create reservation object to insert in query
 					// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
 					
-					int hourIncrement = 0; // placeholder for hourIncrement
 					int buildingIDInt = Integer.parseInt(buildingID);
 					Reservation reservation = new Reservation(adminUser.getAdminID(), roomID,
 							startDate, endDate, startTime, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement,
