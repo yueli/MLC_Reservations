@@ -55,7 +55,7 @@ public class RoomsSelectQuery {
 		public Integer getRoomID (int buildingID, String roomNumber){
 			int roomID;
 			
-			String query = "SELECT tomcatdb.roomID FROM tomcatdb.Rooms, tomcatdb.Building "
+			String query = "SELECT tomcatdb.Rooms.roomID FROM tomcatdb.Rooms, tomcatdb.Building "
 					+ "WHERE tomcatdb.Building.buildingID = tomcatdb.Rooms.Building_buildingID "
 					+ "AND tomcatdb.Building.buildingID = ? "
 					+ "AND tomcatdb.Rooms.roomNumber = ?";

@@ -168,8 +168,12 @@ public class TimeConverter {
 	 * @return Int hour increment - the number of hours between start and end time
 	 */
 	public Integer getHourIncrement(String reserveStartTime, String reserveEndTime){
-		
-		return null;
+		List<String> times = timeRangeList(reserveStartTime, reserveEndTime);
+		int hourIncrement = 0;
+		for (int i=0; i<times.size(); i++){
+			hourIncrement ++;
+		}
+		return hourIncrement;
 	}
 	/**
 	 * 
@@ -187,7 +191,7 @@ public class TimeConverter {
 		if(startTime.length() == 7){
 			startTime = "0" + startTime;
 		}
-		if(endTime.length() == 7){
+		else if(endTime.length() == 7){
 			endTime = "0" + startTime;
 		}
 		// parse out the hour from time in 00:00:00 format
@@ -367,6 +371,8 @@ public class TimeConverter {
 			String time = times.get(i);
 			System.out.println("Time is ..." + time);
 		}
+		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("09:00:00", "11:00:00"));
+		
 	}
 
 }

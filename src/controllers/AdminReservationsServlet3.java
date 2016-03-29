@@ -60,32 +60,32 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//
 				String buildingID = (String) session.getAttribute("buildingID");
-				String startDate = (String) session.getAttribute("startDate");
-				String endDate = (String) session.getAttribute("endDate");
+				String startDate = request.getParameter("startDate");
+				String endDate = request.getParameter("endDate");
 				String startTime = (String) session.getAttribute("startTime");
 				String endTime = (String) session.getAttribute("endTime");
 				String reserveName = (String) session.getAttribute("reserveName");
-				String roomNumber = (String) session.getAttribute("roomNumber");
+				String roomNumber = request.getParameter("roomNumber");
 				TimeConverter tc = (TimeConverter) session.getAttribute("tc");
 				String msg = (String) session.getAttribute("msg");
-				String startTime24 = tc.convertTimeTo24(startTime);
-				String endTime24 = tc.convertTimeTo24(endTime);
 				String free = "N";
 				int roomID;
-				
+				System.out.println("ADMIN RESERVATION BUILDING ID: " + buildingID);
+				System.out.println("ADMIN RESERVATION ROOM NUMBER: " + roomNumber);
+				System.out.println();
 				//------------------------------------------------//
 				/*            MAKE RESERVATION CONT.              */
 				//------------------------------------------------//
 				// get room ID
 				RoomsSelectQuery roomsq = new RoomsSelectQuery();
-				roomID = (int) roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
+				roomID = roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
 				
 				// TODO get hour increment
 				
 				
 				// check if reservation is available
 				ReservationSelectQuery rsq = new ReservationSelectQuery();
-				rsq.doReservationRead(startDate, startTime24, roomNumber); //TODO add end date to method
+				rsq.doReservationRead(startDate, startTime, roomNumber); //TODO add end date to method
 				String reservationCheck = rsq.doReservationResults();
 				
 				// a returned value = the room was reserved at the time
@@ -93,7 +93,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				if(!reservationCheck.isEmpty()){ // the room the user selected is reserved
 					msg = "Another user just reserved this room at this time.  Please select another time. "
 							+ "";
-					url = "admin/confirmation.jsp";
+					url = "admin-reservations";
 					
 				} else { // the room selected is not reserved = make a reservation
 					// create reservation object to insert in query
@@ -102,15 +102,15 @@ public class AdminReservationsServlet3 extends HttpServlet {
 					int hourIncrement = 0; // placeholder for hourIncrement
 					int buildingIDInt = Integer.parseInt(buildingID);
 					Reservation reservation = new Reservation(adminUser.getAdminID(), roomID,
-							startDate, endDate, startTime24, TimeConverter.subtractOneSecondToTime(endTime24), hourIncrement,
+							startDate, endDate, startTime, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement,
 							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
 					riq.doAdminReservationInsert(reservation);
 					
 					
 					// set success message and forwarding URL
-					msg = "You have successfully made a reservation.  "
-							+ "You should receive a confirmation email shortly";
+					msg = "You have successfully made a reservation.";
+					url = "admin/confirmation.jsp";
 				}
 				session.setAttribute("msg", msg);
 			} else { 

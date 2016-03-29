@@ -54,7 +54,8 @@ public class AdminReservationsServlet extends HttpServlet {
 			adminUser.setAdminMyID("bbo89");
 			adminUser.setAdminStatus(1);
 			adminUser.setRole("admin");
-			//String role = adminUser.getRole();
+			String role = adminUser.getRole();
+			System.out.println("ADMIN ROLE = " + adminUser.getRole());
 			//int status = adminUser.getAdminStatus();
 			
 			// push content based off role
