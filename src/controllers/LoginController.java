@@ -140,13 +140,12 @@ public class LoginController extends HttpServlet {
 					session.invalidate();
 					session=request.getSession(true);
 					
+					//url = "admin/adminHome.jsp";
+					url = "index.html";
 					session.setAttribute("loggedInAdminUser", loggedInAdminUser);
 					session.setAttribute("loggedInUser", loggedInUser);
 					session.setAttribute("message", message);
 
-					//changed for testing
-					//url="index.html";
-					url = "admin/adminHome.jsp";
 					
 					//forward our request along
 					RequestDispatcher dispatcher = request.getRequestDispatcher(url);
