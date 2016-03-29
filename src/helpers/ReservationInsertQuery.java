@@ -60,7 +60,7 @@ public class ReservationInsertQuery {
 	
 	public void doAdminReservationInsert(Reservation reservation){
 		this.reservation = reservation;
-		String query = "INSERT INTO tomcatdb.Reservations (tomcatdb.Reservations.Admin_adminID "
+		String query = "INSERT INTO tomcatdb.Reservations (tomcatdb.Reservations.Admin_adminID, "
 				+ "tomcatdb.Reservations.Rooms_roomID, tomcatdb.Reservations.reserveStartDate, tomcatdb.Reservations.reserveEndDate, "
 				+ "tomcatdb.Reservations.reserveStartTime, tomcatdb.Reservations.reserveEndTime, tomcatdb.Reservations.hourIncrement, "
 				+ "tomcatdb.Reservations.reserveName, tomcatdb.Reservations.Building_buildingID, tomcatdb.Reservations.free) "

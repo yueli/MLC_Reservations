@@ -231,6 +231,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 							table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "</td>";
 							table += "<td>" + tc.convertTimeTo12(endTime) + "</td>";
 							table += "<td> **RESERVED**</td>"; 
+							table += "</form>";
 							table += "</tr>";
 							h++; 
 						}
