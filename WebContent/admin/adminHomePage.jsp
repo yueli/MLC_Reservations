@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <!--@Author Victoria Chambers -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -66,7 +68,26 @@
                                 <h2 class="animate fadeIn text-center margin-top-50 animated">Welcome to the UGA Reservation System</h2>
                                 <h4 class="animate fadeIn text-center margin-top-10 animated">Admin View</h4>
                                 <hr class="margin-top-15">
-                                <p class="animate fadeIn text-center animated">This website will enable you to reserve a room in the Zell B. Miller Learning Center for study purposes or group meetings.</p>
+                                <p class="animate fadeIn text-center animated">		${message} <br />
+		admin record ID = ${loggedInAdminUser.adminID } <br />
+		my id = ${loggedInAdminUser.adminMyID} <br />
+		first name = ${loggedInAdminUser.fname} <br />
+		last name = ${loggedInAdminUser.lname} <br />
+		role = ${loggedInAdminUser.role} <br />
+		status = ${loggedInAdminUser.adminStatus} <br />
+		
+building: ${building}
+room: ${room}
+		
+		<p>To begin, please choose an option from the menu above. </p>
+			
+			<p><a href='AdminListServlet'>List Admin Users</a></p>
+			
+			
+		<form name="Logout" action="AdminLoginController" method="get">
+ 			<input class="btn btn-lg btn-red" type="submit" name = "logout" value="Logout">
+ 		</form>
+ 		</div></p>
                                 <p class="text-center animate fadeInUp margin-bottom-50 animated">
                                     <button type="button" class="btn btn-lg btn-red" href="reservation.jsp">Reserve a Room</button>
                                 </p>

@@ -50,8 +50,14 @@
 		</script> 
 	</head>
 	<body>
-		<div id="header1"></div>
-		<br><br><br>
+			<div id="header1"></div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<div align="center">
 			<h2>${msg} ${noButton} ${yesButton}</h2>
 			<p>${buildings}</p>

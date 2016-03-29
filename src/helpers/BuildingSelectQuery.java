@@ -198,13 +198,10 @@ public class BuildingSelectQuery {
 		}
 		return buildingName;
 	}
-	
-
-/*	
- *  @author: Ginger Nix
- *  
- *  This method brings back all the active buildings for a pull down list
- */
+	/**
+	 * @author: Ginger Nix
+	 * @return This method brings back all the active buildings for a pull down list
+	 */
 	public String getAllActiveBuildings(){
 		
 		String select = "<select id='buildingList' name='buildingList'>";
@@ -247,10 +244,14 @@ public class BuildingSelectQuery {
 		
 		return select;
 	}
-	
-	// @author: Ginger Nix
-	// this method takes just a building record id and returns the human readable name
-	
+
+	/**
+	 * 
+	 * This method takes just a building record id and returns the human readable name
+	 * @author: Ginger Nix
+	 * @param buildingID
+	 * @return
+	 */
 	public String getBuildingNameFromID (int buildingID){
 		
 		String buildingName = "Unknown Building";

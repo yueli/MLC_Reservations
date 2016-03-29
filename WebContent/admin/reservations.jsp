@@ -70,7 +70,13 @@
 	</head>
 	<body>
 		<div id="header1"></div>
-		<br><br><br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<div align="center">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
 				<h2>Please select a building, date, start and end time for your reservation.</h2>

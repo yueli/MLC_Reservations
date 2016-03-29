@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.DateTimeConverter;
+import model.TimeConverter;
 import model.DbConnect;
 import model.Reservation;
 
@@ -183,13 +183,13 @@ public class ReservationSelectQuery {
 		String startTime = "11:00:00";
 		String endTime = "12:00:00";
 		String buildingID = "1";
-		DateTimeConverter dtc = new DateTimeConverter();
+		TimeConverter tc = new TimeConverter();
 		ReservationSelectQuery res = new ReservationSelectQuery();
 		RoomsSelectQuery rsq = new RoomsSelectQuery();
 		
 		// list for the room number.  Below will print all times, inclusive between start and end
 		List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
-		List<String> times = dtc.timeRangeList(startTime, endTime);
+		List<String> times = tc.timeRangeList(startTime, endTime);
 		
 		// loop through each room after all times have been checked 
 		for (int i = 0; i < roomNumber.size(); i++){

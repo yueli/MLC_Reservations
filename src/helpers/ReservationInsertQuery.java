@@ -57,4 +57,32 @@ public class ReservationInsertQuery {
 			System.out.println("Error in ReservationInsertQuery.java: doReservationInsert method. Please check connection or SQL statement: " + query);
 		} 
 	}
+	
+	public void doAdminReservationInsert(Reservation reservation){
+		this.reservation = reservation;
+		String query = "INSERT INTO tomcatdb.Reservations (tomcatdb.Reservations.Admin_adminID "
+				+ "tomcatdb.Reservations.Rooms_roomID, tomcatdb.Reservations.reserveStartDate, tomcatdb.Reservations.reserveEndDate, "
+				+ "tomcatdb.Reservations.reserveStartTime, tomcatdb.Reservations.reserveEndTime, tomcatdb.Reservations.hourIncrement, "
+				+ "tomcatdb.Reservations.reserveName, tomcatdb.Reservations.Building_buildingID, tomcatdb.Reservations.free) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, this.reservation.getAdminID());
+			ps.setInt(2, this.reservation.getRoomsID());
+			ps.setString(3, this.reservation.getReserveStartDate());
+			ps.setString(4, this.reservation.getReserveEndDate());
+			ps.setString(5, this.reservation.getReserveStartTime());
+			ps.setString(6, this.reservation.getReserveEndTime());
+			ps.setInt(7, this.reservation.getHourIncrement());
+			ps.setString(8, this.reservation.getReserveName());
+			ps.setInt(9, this.reservation.getbuildingID());
+			ps.setString(10, this.reservation.getFree());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in ReservationInsertQuery.doAdminReservationInsert method. Please check connection or SQL statement");
+		} 
+	}
 }

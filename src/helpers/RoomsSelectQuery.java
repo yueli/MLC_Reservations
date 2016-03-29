@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import model.Admin;
 import model.DateTimeConverter;
@@ -47,6 +46,44 @@ public class RoomsSelectQuery {
 			
 		}
 		
+		/**
+		 * Get the roomID from the buildingID and room number.
+		 * @param buildingID Integer buildingID
+		 * @param roomNumber String roomNumber
+		 * @return Integer roomID
+		 */
+		public Integer getRoomID (int buildingID, String roomNumber){
+			int roomID;
+			
+			String query = "SELECT tomcatdb.roomID FROM tomcatdb.Rooms, tomcatdb.Building "
+					+ "WHERE tomcatdb.Building.buildingID = tomcatdb.Rooms.Building_buildingID "
+					+ "AND tomcatdb.Building.buildingID = ? "
+					+ "AND tomcatdb.Rooms.roomNumber = ?";
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, buildingID);
+				ps.setString(2, roomNumber);
+				this.results = ps.executeQuery();
+				
+				// get roomID from result set
+				while(this.results.next()){
+					roomID = Integer.parseInt(this.results.getString("roomID"));
+					return roomID;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in RoomSelectQuery.getRoomID. Please check connection or SQL statement");
+			} 
+			
+			return null;
+		}
+		
+		/**
+		 * This method will return an array list of all rooms in a building.
+		 * @param buildingID Integer buildingID of building
+		 * @return String Array List
+		 */
 		public List<String> roomList (int buildingID){
 			String query = "SELECT roomNumber FROM tomcatdb.Rooms, tomcatdb.Building "
 					+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
@@ -67,12 +104,16 @@ public class RoomsSelectQuery {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement: " + query);
+				System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
 			} 
 			
 			return roomsList;
 		}
-		
+		/**
+		 * Run the query to get roomID and roomNumber for getRoomsTable method.
+		 * @param buildingID Integer buildingID of building
+		 * @param floor String floor number
+		 */
 		public void doRoomRead(int buildingID, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
 			String query = "SELECT roomID, roomNumber "
@@ -276,11 +317,13 @@ public class RoomsSelectQuery {
 			return table;
 		}
 		
-/*
- * @author: Ginger Nix
- * this method takes a building record id and lists all the rooms in that building
-	
- */
+
+		/**
+		 * This method takes a building record id and lists all the rooms in that building
+		 * @author: Ginger Nix
+		 * @param buildingID
+		 * @return
+		 */
 		public String ListRoomsInBuilding(int buildingID){
 			
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -362,8 +405,10 @@ public class RoomsSelectQuery {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
+
 				System.out.println("***Error in RoomsSelectQuery:  Query = " + query);
 			}			
+
 
 			
 			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingID AT END= " + buildingID);

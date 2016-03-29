@@ -144,7 +144,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				
 				// list for the room number.  Below will print all times, inclusive between start and end
 				List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
-				List<String> times = dtc.timeRangeList(startTime, endTime);
+				List<String> times = tc.timeRangeList(startTime, endTime);
 				
 				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 				table += "<thead>";
@@ -257,12 +257,15 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				
 				// forwarding URL
-				//url = "admin/reservations-clerk.jsp";
+				//url = "AdminViewReservations";
 				
 				// set session attributes
 			//}
 			
 		//} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*           VIEW FOR INVALID SESSION             */
+			//------------------------------------------------//
 			//url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
 		//}
 		

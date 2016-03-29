@@ -176,7 +176,7 @@ public class AdminUserHelper {
 	
 	
 	
-	/*
+	/**
 	 * This method takes the admin record's id and based on the
 	 * role of the logged in admin user it creates a form
 	 * pre-populated with the admin data to be edited	
@@ -331,9 +331,9 @@ public class AdminUserHelper {
 	}
 	
 	
-/*
- * This function take the role letter (like 'A') and converts it to human readable text	(like "Super User")
- */
+	/**
+	 * This function take the role letter (like 'A') and converts it to human readable text	(like "Super User")
+	 */
 	public String convertAdminRole (String role){
 		
 		// takes the role and makes it human readable
@@ -355,7 +355,15 @@ public class AdminUserHelper {
 		return roleDesc;
 	}
 	
-	
+	/**
+	 * 
+	 * @param adminRecordID
+	 * @param fname
+	 * @param lname
+	 * @param adminMyID
+	 * @param role
+	 * @param status
+	 */
 	public void updateAdminTable(int adminRecordID, String fname, String lname, String adminMyID, String role, int status) {
 
 		String query = "UPDATE tomcatdb.Admin SET adminMyID = '" + adminMyID + "', " +
@@ -379,7 +387,11 @@ public class AdminUserHelper {
 		
 	}
 	
-	
+	/**
+	 * 
+	 * @param myID
+	 * @return
+	 */
 	public boolean inAdminUserTable(String myID){
 		
 		
@@ -405,11 +417,11 @@ public class AdminUserHelper {
 		return false;
 	}
 	
-	
-/*
- * This method creates a blank form to add a new admin user	
- */
-	
+	/**
+	 * This method creates a blank form to add a new admin user	
+	 * @param loggedInAdminUser
+	 * @return
+	 */
 	public String createAddAdminForm(Admin loggedInAdminUser){
 		
 		String table = "";
@@ -480,8 +492,13 @@ public class AdminUserHelper {
 		return table;
 	}
 
-	/*
+	/**
 	 * This method take the admin info and adds them to the admin user's table
+	 * @param adminMyID
+	 * @param fname
+	 * @param lname
+	 * @param role
+	 * @param adminStatus
 	 */
 	public void insertAdminTable(String adminMyID, String fname, String lname, String role, int adminStatus) {
 		
@@ -502,43 +519,45 @@ public class AdminUserHelper {
 		
 	}	
 
-	/*
+	/**
 	 * This method will take the myID and check to see if
 	 * this Admin exists already	
+	 * @param myID
+	 * @return
 	 */
-		public boolean inAdminTable(String myID){
-			
-			System.out.println("AdminUserHelper inAdminTable: myID = " + myID);
-			
-			String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' LIMIT 1";
-			
-			System.out.println("AdminUserHelper inAdminTable: query = " + query);
-			
-			
-			try {
-				PreparedStatement ps = this.connection.prepareStatement(query);
+	public boolean inAdminTable(String myID){
+		
+		System.out.println("AdminUserHelper inAdminTable: myID = " + myID);
+		
+		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' LIMIT 1";
+		
+		System.out.println("AdminUserHelper inAdminTable: query = " + query);
+		
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
 
-				this.results = ps.executeQuery();
-				
+			this.results = ps.executeQuery();
+			
 
-				boolean results = this.results.next();
-				System.out.println("Admin User Helper: in admin table: results found " + results + " query = " + query);
-				
-				if (results) {//the myID is in the user table
-					System.out.println("Admin User Helper: in admin table: results found TRUE");
-					return true;
-				}else{
-					System.out.println("Admin User Helper: in admin table: results found FALSE");
-					return false;
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("****Error in Admin UserHelper.java: inAdminTable method. Query = " + query);
+			boolean results = this.results.next();
+			System.out.println("Admin User Helper: in admin table: results found " + results + " query = " + query);
+			
+			if (results) {//the myID is in the user table
+				System.out.println("Admin User Helper: in admin table: results found TRUE");
+				return true;
+			}else{
+				System.out.println("Admin User Helper: in admin table: results found FALSE");
+				return false;
 			}
 			
-			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("****Error in Admin UserHelper.java: inAdminTable method. Query = " + query);
 		}
+		
+		return false;
+	}
 
 		
 	
