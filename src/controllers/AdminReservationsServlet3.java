@@ -49,10 +49,10 @@ public class AdminReservationsServlet3 extends HttpServlet {
 		if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			Admin adminUser = (Admin) session.getAttribute("adminUser"); // USED FOR TESTING
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); // USED FOR TESTING
 			//Admin adminUser = (Admin) session.getAttribute("loggedInAdminUser");
-			String role = adminUser.getRole();
-			int status = adminUser.getAdminStatus();
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
 			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
@@ -73,7 +73,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				int roomID;
 				System.out.println("ADMIN RESERVATION BUILDING ID: " + buildingID);
 				System.out.println("ADMIN RESERVATION ROOM NUMBER: " + roomNumber);
-				System.out.println("ADMIN RESERVATION ADMIN USER: " + adminUser.getAdminID());
+				System.out.println("ADMIN RESERVATION ADMIN USER: " + loggedInAdminUser.getAdminID());
 				System.out.println();
 				//------------------------------------------------//
 				/*            MAKE RESERVATION CONT.              */
@@ -101,7 +101,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 					// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
 					
 					int buildingIDInt = Integer.parseInt(buildingID);
-					Reservation reservation = new Reservation(adminUser.getAdminID(), roomID,
+					Reservation reservation = new Reservation(loggedInAdminUser.getAdminID(), roomID,
 							startDate, endDate, startTime, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement,
 							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();

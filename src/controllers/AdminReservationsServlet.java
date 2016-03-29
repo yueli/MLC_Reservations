@@ -48,15 +48,14 @@ public class AdminReservationsServlet extends HttpServlet {
 		//if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			//Admin adminUser = (Admin) session.getAttribute("adminUser");
-			Admin adminUser = new Admin();
-			adminUser.setAdminID(1);
-			adminUser.setAdminMyID("bbo89");
-			adminUser.setAdminStatus(1);
-			adminUser.setRole("admin");
-			String role = adminUser.getRole();
-			System.out.println("ADMIN ROLE = " + adminUser.getRole());
-			//int status = adminUser.getAdminStatus();
+			//Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			Admin loggedInAdminUser = new Admin();
+			loggedInAdminUser.setAdminID(1);
+			loggedInAdminUser.setAdminMyID("bbo89");
+			loggedInAdminUser.setAdminStatus(1);
+			loggedInAdminUser.setRole("admin");
+			//String role = loggedInAdminUser.getRole();
+			//int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
 			//if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
@@ -98,7 +97,7 @@ public class AdminReservationsServlet extends HttpServlet {
 				url = "admin/reservations.jsp";
 				
 				// set session and request variables
-				session.setAttribute("adminUser", adminUser);
+				session.setAttribute("adminUser", loggedInAdminUser);
 				session.setAttribute("buildingID", buildingID);
 				session.setAttribute("buildings", buildings);
 			//} else { 
