@@ -21,8 +21,8 @@
 			});
 			// function for Time Picker plugin
 			$(function(){
-				$('#startTime').timepicker();
-				$('#endTime').timepicker();
+				$('#startTime').timepicker( {useSelect: true} );
+				$('#endTime').timepicker( {useSelect: true} );
 			});	
 			// jQuery for datepicker plugin
 			$(function() {
@@ -59,7 +59,7 @@
 	<br>
 	<br>
 		<div align="center">
-			<h2>${msg} ${noButton} ${yesButton}</h2>
+			<h2>${msg}</h2> ${noButton} ${yesButton}
 			<p>${buildings}</p>
 			<form name="scheduleForm" action="new-schedule" method="post">
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>

@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Admin;
 import model.DateTimeConverter;
 import model.DbConnect;
 import model.Rooms;
@@ -55,7 +54,7 @@ public class RoomsSelectQuery {
 		public Integer getRoomID (int buildingID, String roomNumber){
 			int roomID;
 			
-			String query = "SELECT tomcatdb.roomID FROM tomcatdb.Rooms, tomcatdb.Building "
+			String query = "SELECT tomcatdb.Rooms.roomID FROM tomcatdb.Rooms, tomcatdb.Building "
 					+ "WHERE tomcatdb.Building.buildingID = tomcatdb.Rooms.Building_buildingID "
 					+ "AND tomcatdb.Building.buildingID = ? "
 					+ "AND tomcatdb.Rooms.roomNumber = ?";
@@ -230,15 +229,22 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time
 						} else {
-							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
-							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
-							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
-							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
-							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
-							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-							table += "</form> ";
-							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							if (reserveHour == currentHour){
+								if (tc.currentMinutes() > 10){
+									table += "<td id='yellow'>";
+									table += tc.convertTimeTo12(timeBlock[i]);
+								}
+							} else {
+								table += "<td id='green'>";
+								table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+								table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+								table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+								table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+								table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+								table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+								table += "</form> ";
+								//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + " onclick='document.getElementById('reserve_submit').submit(); return false;'" + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							}
 						}
 
 						table += "</td>";
@@ -273,15 +279,22 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time
 						} else {
-							table += "<td id='green'>";
-							table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
-							table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
-							table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
-							table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
-							table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
-							table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
-							table += "</form> ";
-							//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							if (reserveHour == currentHour){
+								if (tc.currentMinutes() > 10){
+									table += "<td id='yellow'>";
+									table += tc.convertTimeTo12(timeBlock[i]);
+								}
+							} else {
+								table += "<td id='green'>";
+								table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+								table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+								table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+								table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+								table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+								table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+								table += "</form> ";
+								//table += "<a href=Browse_Reservation?startTime=" + timeBlock[i] + "&roomNumber=" + room.getRoomNumber() + "&currentDate=" + dtc.parseDate(dtc.datetimeStamp()) + ">" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+							}
 						}
 						
 					}
@@ -294,7 +307,7 @@ public class RoomsSelectQuery {
 					table += "<table>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th COLSPAN=3 ALIGN=CENTER><h3>";
+					table += "<th COLSPAN=4 ALIGN=CENTER><h3>";
 					table += "Key";
 					table += "</h3></th>";
 					table += "</tr>";
@@ -303,7 +316,14 @@ public class RoomsSelectQuery {
 					table += "<tr>";
 					table += "<td id='gray'>" + "Time Unavailable" + "</td>";
 					table += "<td id='red'>" + "Time Reserved" + "</td>";
+					table += "<td id='yellow'>" + "Open Room" + "</td>";
 					table += "<td id='green'>" + "Time Available" + "</td>";
+					table += "</tr>";
+					table += "<tr>";
+					table += "<td COLSPAN=4 ALIGN=CENTER>" + "Rooms with open room times are free to use without a reservation" + "</td>";
+					table += "</tr>";
+					table += "<tr>";
+					table += "<td COLSPAN=4 ALIGN=CENTER>" + "<b>Reservations are limited to 2 hours per day</b>" + "</td>";
 					table += "</tr>";
 					table += "</tbody>";
 					table += "</table>";
@@ -338,12 +358,15 @@ public class RoomsSelectQuery {
 			
 			table += "<h2>Rooms List for Building " + buildingName + "</h2>";			
 			table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";			
-			table += "<tr>";
-			table += "<td>Room Floor</td>";
-			table += "<td>Room Number</td>";
-			table += "<td>Status</td>";
-			table += "</tr>";
-				
+			table += "<thead>";
+			table += "<th>Room Floor</th>";
+			table += "<th>Room Number</th>";
+			table += "<th>Status</th>";
+			table += "<th>&nbsp;</th>";
+			table += "</thead>";
+			
+			table += "<tbody>";
+			
 			String query = "SELECT * FROM tomcatdb.Rooms "
 					+ "WHERE Building_buildingID = '" + buildingID + "' " 
 					+ "ORDER BY roomNumber";
@@ -365,36 +388,48 @@ public class RoomsSelectQuery {
 						roomStatus = "Inactive";
 					}
 					
+					
 					table += "<tr>";
+						
 					table += "<td>" + room.getRoomFloor() + "</td>";
 					table += "<td>" + room.getRoomNumber() + "</td>";
 					table += "<td>" + roomStatus + "</td>";
 									
 					table += "<td><form action='RoomEditServlet' method = 'post'>" +
-							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>" +
-							"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
-							"<input type='submit' value='Edit Room'>" +
+							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'/>" +
+							"<input type='hidden' name='buildingList' value='" + buildingID + "'/>" +
+							"<input type='submit' value='Edit Room' />" +
 							"</form></td>";		
 				
 					table += "</tr>";
 				
 				} //end while
 				
+				table += "</tbody>";
+				table += "<tfoot>";
+				table += "<tr>";
+				table += "<td></td>";
+				table += "<td></td>";
+				table += "<td></td>";
+				table += "<td align:center >";
+				table += "<form action='RoomAddServlet' method = 'post'>" +
+						"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
+						"<input type='submit' value='Add A Room'>" +
+						"</form>";
+				
+				table += "</td>";
+				table += "</tr>";
+				table += "</tfoot>";
+				
 				table += "</table>";
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 
-				System.out.println("***Error in RoomsSelectQuery.ListRoomsInBuilding:  Query = " + query);
-			}
+				System.out.println("***Error in RoomsSelectQuery:  Query = " + query);
+			}			
 
-			table += "<br /><br />";
-			table += "<p>";
-			table += "<form action='RoomAddServlet' method = 'post'>" +
-					"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
-					"<input type='submit' value='Add A Room'>" +
-					"</form>";			
-			table += "</p>";
+
 			
 			System.out.println("Rooms Select Query: ListRoomsInBuilding buildingID AT END= " + buildingID);
 			
@@ -437,7 +472,9 @@ public class RoomsSelectQuery {
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room floor= " + roomFloor);
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room status= " + roomStatus);
 				
-				table += "<p>Building: " + buildingName + "</p>";
+				table += "<br /><br /><br />";
+
+				table += "<center><h3>Building: " + buildingName + "</h3></center>";
 				
 				table += "<form action='RoomSaveServlet' method = 'post'>";
 				
@@ -463,6 +500,7 @@ public class RoomsSelectQuery {
 				
 				table += "</select>";	
 				
+				table += "<br /><br />";
 				table += "<input type = 'submit' value = 'Save'>";
 				table += "<input type = 'hidden' name = 'roomID' value='" + roomID + "'>";
 				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
@@ -533,7 +571,7 @@ public class RoomsSelectQuery {
 					BuildingSelectQuery bsq = new BuildingSelectQuery();
 					String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
 
-					table += "<p>Building: " + buildingName + "</p>";
+					table += "<center><p>Building: " + buildingName + "</p></center>";
 					
 					table += "<form action='RoomAddSaveServlet' method = 'post'>";
 					
@@ -550,6 +588,8 @@ public class RoomsSelectQuery {
 					table += "<option value='1' selected>Active</option>";
 					table += "<option value='0'>Inactive</option>";							
 					table += "</select>";	
+					
+					table += "<br /><br />";
 					
 					table += "<input type = 'submit' value = 'Save'>";	
 					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";

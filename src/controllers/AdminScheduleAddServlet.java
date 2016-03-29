@@ -15,7 +15,7 @@ import helpers.BuildingSelectQuery;
 /**
  * Servlet implementation class AdminScheduleAddServlet2
  */
-@WebServlet({ "/AdminScheduleAddServlet2", "/add-schedule" })
+@WebServlet({ "/AdminScheduleAddServlet", "/add-schedule" })
 public class AdminScheduleAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private HttpSession session;
@@ -50,6 +50,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			String buildingID = request.getParameter("buildingID"); // get the value from 
 			String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
 			String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
+			String msg = (String) session.getAttribute("msg");
 			
 			//------------------------------------------------//
 			/*            BUILDING INFORMATION                */
@@ -80,6 +81,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			// set session and request variables
 			session.setAttribute("buildingID", buildingID);
 			session.setAttribute("buildings", buildings);
+			session.setAttribute("msg", msg);
 			
 		// if session is null (not active/valid)	
 		//} else {

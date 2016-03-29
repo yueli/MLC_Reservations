@@ -29,13 +29,13 @@
 			});
 			// function for Time Picker plugin
 			$(function(){
-				$('#startTime').timepicker();
-				$('#endTime').timepicker();
+				$('#startTime').timepicker( { useSelect: true });
+				$('#endTime').timepicker( {useSelect: true} );
 			});	
 			// jQuery for datepicker plugin
 			$(function() {
 			    $( "#startDate" ).datepicker({
-			      defaultDate: "+1w",
+			      defaultDate: null,
 			      changeMonth: true,
 			      numberOfMonths: 3,
 			      onClose: function( selectedDate ) {
@@ -84,9 +84,9 @@
 				Building ${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				<!--  End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br> -->
-				Start Time: <input type="text" id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
-				End Time: <input type="text" id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
-				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}">
+				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
+				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
+				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br>
 				<input name="makeReservation" type="submit" value="Enter"> 
 			</form>
 			<p>${table}</p>

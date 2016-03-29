@@ -51,10 +51,10 @@ public class AdminReservationsServlet2 extends HttpServlet {
 		if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			Admin adminUser = (Admin) session.getAttribute("adminUser"); //USED FOR TESTING
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); //USED FOR TESTING
 			//Admin adminUser = (Admin) session.getAttribute("adminUser");
-			String role = adminUser.getRole();
-			int status = adminUser.getAdminStatus();
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
 			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
@@ -119,7 +119,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				endTime = tc.convertTimeTo24(endTime);
 				
 				// TODO check to make sure start time is less than end time
-				
+				// TODO check start Date to make sure its >= currentDate
 				
 				// if there is an active session variable, 
 				// it will replace the request variable (which doesn't persist).
@@ -194,7 +194,6 @@ public class AdminReservationsServlet2 extends HttpServlet {
 								table += "<td>" + tc.convertTimeTo12(startTime) + "</td>";
 								table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "</td>";
 								table += "<td>" + tc.convertTimeTo12(endTime) + "</td>";
-								// TODO get RoomID
 								table += "<td>";
 								table += "<form name='schedule' id='reserve" + h + "' action='admin-reserve-confirm' method='post'>";
 								table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
@@ -231,6 +230,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 							table += "<td>" + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "</td>";
 							table += "<td>" + tc.convertTimeTo12(endTime) + "</td>";
 							table += "<td> **RESERVED**</td>"; 
+							table += "</form>";
 							table += "</tr>";
 							h++; 
 						}
