@@ -51,7 +51,7 @@ public class RoomsServlet extends HttpServlet {
 
 		// loads building list from db, create dropdown for list, and output as String
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
-		bsq.doBuildingRead(); //need?
+		bsq.doBuildingRead(); 
 		
 		// get a list of all the active building to list
 		String buildings = bsq.getAllActiveBuildings();
