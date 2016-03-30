@@ -45,9 +45,9 @@ public class AdminViewReservations extends HttpServlet {
 		
 		
 		String buildingList = request.getParameter("buildingList");
-		
+		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		// set building & check if building is selected by user
-		int bldg = 1;
+		int bldg = Integer.toString(bsq.getFirstBuildingID());
 		if (buildingList != null){ // if selected, get value & transform into integer
 			bldg = Integer.parseInt(buildingList);
 		}
@@ -68,7 +68,7 @@ public class AdminViewReservations extends HttpServlet {
 		String currentDateLong = dtc.convertDateLong(currentDate);
 		
 		// query building
-		BuildingSelectQuery bsq = new BuildingSelectQuery();
+		//BuildingSelectQuery bsq = new BuildingSelectQuery();
 		bsq.doAdminBuildingRead();
 		String buildings = bsq.getBuildingResults(bldg); // contains the HTML drop down building list.
 		
