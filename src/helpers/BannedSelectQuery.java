@@ -137,7 +137,12 @@ public class BannedSelectQuery {
 					table += ban.getDescription();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getStatus();
+					if (ban.getStatus() == 1){
+						table += "Active";
+					} else {
+						table += "Not Active";
+					}
+					//table += ban.getStatus();
 					table += "</td>";
 					
 					table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";

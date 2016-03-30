@@ -24,7 +24,7 @@
         
     </head>
     <body>
-    <div class="slicknav_menu hidden-lg"><a href="index.html" aria-haspopup="true" tabindex="0" 
+    <div class="slicknav_menu hidden-lg"><a href="adminHomePage.jsp" aria-haspopup="true" tabindex="0" 
     class="slicknav_btn slicknav_collapsed" style="outline: none;"><span class="slicknav_menutxt">MENU</span>
     	<span class="slicknav_icon"><span class="slicknav_icon-bar"></span>
     	<span class="slicknav_icon-bar"></span>
@@ -88,7 +88,7 @@
                         <div class="row">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html" title="">
+                                <a href="adminHomePage.jsp" title="">
                                     <img src="../assets/img/UGA$!logo.png" alt="Logo">
                                 </a>
                             </div>
@@ -106,32 +106,44 @@
                                             <a href="adminHomePage.jsp">Home</a>
                                         </li>
                                         <li>
-                                            <a href="./downloadreports.jsp">Download Reports</a>
-                                        </li>
-                                        <li>
-                                            <a href="./reservations.jsp">Reservations</a>
-                                        </li>
-                                        <li>
-                                            <a href="RoomsServlet">View & Edit Rooms</a>
+                                            <a href="downloadreports.jsp">Download Reports</a>
                                         </li>
                                         <li class="parent">
-                                       	 <span>Schedule</span>
+                                       	 <span>Reservations</span>
                                            <ul>
                                              <li>
-                                          		<a href="/Schedule">View Schedule</a>
+                                          		<a href="AdminViewReservations">View Reservations</a>
                                              </li>
                                              <li>
-                                               	<a href="/addschedule">Add Schedule</a>
+                                               	<a href="AdminReservations">Make a Reservation</a>
                                              </li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a href="./banread">Banning</a>
+                                        <li class="parent">
+                                       	 <span>Buildings</span>
+                                           <ul>
+                                           	 <li>
+                                          		<a href="buildings">View Buildings</a>
+                                             </li>
+                                             <li>
+                                          		<a href="Schedule">View Building Hours</a>
+                                             </li>
+                                             <li>
+                                          		<a href="buildingform">Add Buildings</a>
+                                             </li>
+                                             <li>
+                                               	<a href="add-schedule">Add Building Hours</a>
+                                             </li>
+                                             <li>
+                                            	<a href="RoomsServlet">View Rooms</a>
+                                        	</li>
+                                            </ul>
                                         </li>
                                         <li>
-
+                                            <a href="banread">Banning</a>
+                                        </li>
+                                        <li>
                                             <a href="AdminListServlet">List Admin Users</a>
-
                                         </li>
                                         <li>
                                             <a href="https://cas.uga.edu/cas/logout">Logout</a>

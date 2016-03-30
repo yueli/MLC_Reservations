@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.AdminScheduleInsertQuery;
 import helpers.AdminScheduleUpdateQuery;
 import helpers.BuildingSelectQuery;
+import model.Admin;
 import model.DateTimeConverter;
 import model.Schedule;
 import model.TimeConverter;
@@ -20,7 +21,7 @@ import model.TimeConverter;
 /**
  * Servlet implementation class AdminScheduleAddServlet
  */
-@WebServlet({ "/AdminScheduleAddServlet", "/new-schedule" })
+@WebServlet({ "/AdminScheduleAddServlet2", "/new-schedule" })
 public class AdminScheduleAddServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private HttpSession session;
@@ -45,8 +46,17 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
-		//if(this.session != null){
+		this.session = request.getSession(false); 
+		
+		// if this session is not null (active/valid)
+		if(this.session != null){
+			// get admin user from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
+			
+			// push content based off role
+			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
 			
 				// TODO Looping in multiple dates.
 		
@@ -128,18 +138,42 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 						
 						// query to update entry instead
 						AdminScheduleUpdateQuery suq = new AdminScheduleUpdateQuery();
-						Schedule schedule = new Schedule(scheduleID, startDate, endDate, startTime, endTime, summary, createdBy);
+						Schedule schedule = new Schedule(scheduleID, startDate, endDate, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy);
 						suq.doScheduleUpdate(schedule);
+						
 						msg = "Schedule Updated!";
-						//url = "new-schedule";
-						url = "admin/schedule-add.jsp";
+						
+						session.removeAttribute("buildingID");
+						session.removeAttribute("startDate");
+						session.removeAttribute("endDate");
+						session.removeAttribute("startTime");
+						session.removeAttribute("endTime");
+						session.removeAttribute("summary");
+						session.removeAttribute("yesButton");
+						session.removeAttribute("noButton");
+						
+						session.setAttribute("msg", msg);
+						
+						
+						url = "add-schedule";
 						
 					} else if (update.equalsIgnoreCase("no")){
 						msg = "Schedule was not updated.";
-						//url = "new-schedule";
-						url = "admin/schedule-add.jsp";
+						
+						session.removeAttribute("buildingID");
+						session.removeAttribute("startDate");
+						session.removeAttribute("endDate");
+						session.removeAttribute("startTime");
+						session.removeAttribute("endTime");
+						session.removeAttribute("summary");
+						session.removeAttribute("yesButton");
+						session.removeAttribute("noButton");
+						
+						session.setAttribute("msg", msg);
+						
+						url = "add-schedule";
 					}
-				}
+				} else {
 				//------------------------------------------------//
 				/*            BUILDING INFORMATION                */
 				//------------------------------------------------//
@@ -167,7 +201,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				/*               SCHEDULE INSERT                  */
 				//------------------------------------------------//
 				int buildingIDInt = Integer.parseInt(buildingID);
-				Schedule schedule = new Schedule(startDate, endDate, startTime, endTime, summary, createdBy, allDayEvent, buildingIDInt);
+				Schedule schedule = new Schedule(startDate, endDate, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy, allDayEvent, buildingIDInt);
 				AdminScheduleInsertQuery siq = new AdminScheduleInsertQuery();
 				String check = siq.scheduleInsertCheck(schedule);
 				if (check.equalsIgnoreCase("false")){
@@ -177,17 +211,19 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					siq.doScheduleInsert(schedule);
 					url = "schedule";
 				} else {
-					msg = "Entry for " + startDate + "exists, would you like to update the entry?";
 					// create a button that says yes or no
 					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
 					yesButton += "<input name ='update' type='hidden' value='yes'>";
 					yesButton += "<input name ='scheduleID' type='hidden' value='" + check + "'>";
-					yesButton += "<input name = 'submit' value='Yes'>";
+					yesButton += "<input type='submit' name='Yes' value='Yes'>";
 					yesButton += "</form>";
 					
 					noButton = "<form name='dontUpdate' action='new-schedule' method='post'>";
 					noButton += "<input name ='update' type='hidden' value='no'>";
+					noButton += "<input type='submit' name='No' value='No'>";
 					noButton += "</form>";
+					
+					msg = "Entry for " + dtc.convertDateLong(startDate) + " exists, would you like to update the entry? ";
 					
 					url = "admin/schedule-add.jsp";
 				}
@@ -204,11 +240,24 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				session.setAttribute("yesButton", yesButton);
 				session.setAttribute("noButton", noButton);
 				session.setAttribute("tc", tc);
-		//} else {
-			// go back to login
+				}
+			} else { 
+				//------------------------------------------------//
+				/*                VIEW FOR CLERK                  */
+				//------------------------------------------------//
+				
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+				// set session attributes
+			}
 			
-			//url = "[insert login controller or login url here]";
-		//}
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*           VIEW FOR INVALID SESSION             */
+			//------------------------------------------------//
+			url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+		}
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

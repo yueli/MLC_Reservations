@@ -42,7 +42,7 @@ public class AdminScheduleUpdateQuery {
 				+ "endTime = ?, "
 				+ "startDate = ?, "
 				+ "endDate = ?, "
-				+ "summary = ? "
+				+ "summary = ?, "
 				+ "createdBy = ? "
 				+ "WHERE scheduleID = ?";
 		try {

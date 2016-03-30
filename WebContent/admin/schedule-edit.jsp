@@ -35,8 +35,8 @@
 		});
 		// function for Time Picker plugin
 		$(function(){
-			$('#startTime').timepicker();
-			$('#endTime').timepicker();
+			$('#startTime').timepicker( {useSelect: true} );
+			$('#endTime').timepicker( {useSelect: true} );
 		});	
 	</script>
 	</head>
