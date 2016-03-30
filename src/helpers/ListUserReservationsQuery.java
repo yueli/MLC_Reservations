@@ -177,7 +177,6 @@ public class ListUserReservationsQuery {
 									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 									table += "<thead>";
 									table += "<tr>";
-									table += "<th> Reservation ID</td>";
 									table += "<th> Start Date</td>";
 									table += "<th> End Date</td>";
 									table += "<th> Start Time</td>";
@@ -196,7 +195,6 @@ public class ListUserReservationsQuery {
 								
 								
 								table += "<tr>";
-								table += "<td>" + resv.getReserveID() + "</td>";
 								table += "<td>" + resv.getReserveStartDate() + "</td>";
 								table += "<td>" + resv.getReserveEndDate() + "</td>";
 								table += "<td>" + resv.getReserveStartTime() + "</td>";
@@ -243,7 +241,6 @@ public class ListUserReservationsQuery {
 									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 									table += "<thead>";
 									table += "<tr>";
-									table += "<th> Reservation ID</th>";
 									table += "<th> Start Date</th>";
 									table += "<th> End Date</th>";
 									table += "<th> Start Time</th>";
@@ -263,7 +260,6 @@ public class ListUserReservationsQuery {
 								// but check below on whether to have a 'cancel' button or a 'check-in' button
 								//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 								table += "<tr>";
-								table += "<td>" + resv.getReserveID() + "</td>";
 								table += "<td>" + resv.getReserveStartDate() + "</td>";
 								table += "<td>" + resv.getReserveEndDate() + "</td>";
 								table += "<td>" + resv.getReserveStartTime() + "</td>";
@@ -302,7 +298,6 @@ public class ListUserReservationsQuery {
 								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 								table += "<thead>";
 								table += "<tr>";
-								table += "<th> Reservation ID</td>";
 								table += "<th> Start Date</td>";
 								table += "<th> End Date</td>";
 								table += "<th> Start Time</td>";
@@ -323,7 +318,6 @@ public class ListUserReservationsQuery {
 							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 							
 							table += "<tr>";
-							table += "<td>" + resv.getReserveID() + "</td>";
 							table += "<td>" + resv.getReserveStartDate() + "</td>";
 							table += "<td>" + resv.getReserveEndDate() + "</td>";
 							table += "<td>" + resv.getReserveStartTime() + "</td>";
@@ -418,7 +412,6 @@ public class ListUserReservationsQuery {
 			table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 			table += "<thead>";
 			table += "<tr>";
-			table += "<th> Reservation ID</th>";
 			table += "<th> Start Date</th>";
 			table += "<th> End Date</th>";
 			table += "<th> Start Time</th>";
@@ -431,7 +424,6 @@ public class ListUserReservationsQuery {
 			table += "</thead>";
 			table += "<tbody>";
 			table += "<tr>";
-			table += "<td>" + resv_id + "</td>";
 			table += "<td>" + resvStartDate + "</td>";
 			table += "<td>" + resvEndDate + "</td>";	
 			table += "<td>" + resvStartTime + "</td>";
@@ -449,7 +441,12 @@ public class ListUserReservationsQuery {
 			table += "<td><form action='ViewServlet' method = 'post'>" +
 					"<input type='submit' value='Go back to viewing reservations'>" +
 					"</form></td>";	
-			
+			table += "<td>&nbsp;</td>";
+			table += "<td>&nbsp;</td>";
+			table += "<td>&nbsp;</td>";
+			table += "<td>&nbsp;</td>";
+			table += "<td>&nbsp;</td>";
+			table += "<td>&nbsp;</td>";
 			table += "</tr></tbody></table>";
 			
 		} catch (SQLException e) {
