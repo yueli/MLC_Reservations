@@ -94,7 +94,7 @@ room: ${room}-->
                                 <!-- Main Column -->
                                 <div class="col-md-9">
                                     <img class="visible-lg animate fadeInUp animated" style="bottom: -50px; position: relative; 
-                                    left: 85px; margin-top: -20px;" src="../assets/img/mlc_head_terrace_unoccupied.jpg" alt="">
+                                    left: 85px; margin-top: -20px;" src="assets/img/mlc_head_terrace_unoccupied.jpg" alt="">
                                 </div>
                                 <!-- End Main Column -->
                                 <!-- Side Column -->
