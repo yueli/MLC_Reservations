@@ -12,7 +12,7 @@ form {
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>QR Error</title>
+<title>Checking In Error Page</title>
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -53,7 +53,7 @@ form {
 	<br>
 	<br>
 	<br>
-<h1>QR Error Page</h1>
+<h1>Checking In Error Page</h1>
 
 ${message}
 <div id="footer1"></div>

@@ -77,7 +77,7 @@ public class SearchReservationsResultsQuery {
 		String query = "SELECT Reservations.Building_buildingID,  Reservations.Rooms_roomID, Reservations.hourIncrement, Reservations.reserveStartDate, Reservations.reserveEndDate, Reservations.reserveStartTime, Reservations.reserveEndTime"
 				+ " FROM tomcatdb.Reservations WHERE Reservations.Building_buildingID ='"+buildingid+"' AND "
 				+ "Reservations.reserveStartDate>='"+ beginDate +"' AND "
-				+ "Reservations.reserveendDate<='"+ endDate +"' AND "
+				+ "Reservations.reserveEndDate<='"+ endDate +"' AND "
 				+ "Reservations.reserveStartTime>='"+ beginTime +"' AND "
 				+ "Reservations.reserveEndTime<='"+ endTime +"' "
 				+ "ORDER BY Reservations.reserveStartDate, Reservations.reserveStartTime";	
