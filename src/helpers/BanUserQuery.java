@@ -8,7 +8,10 @@ import model.Banned;
 import model.DbConnect;
 
 
-//**By Ronnie Xu~****/
+/**
+ * @author Ronnie Xu
+ * Helper for the Admin side of the website.
+ **/
 
 public class BanUserQuery {
 	

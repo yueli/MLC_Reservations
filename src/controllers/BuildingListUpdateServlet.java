@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.BuildingListSelectQuery;
 import model.Building;
-//**By Ronnie Xu~****/
+
 /**
  * Servlet implementation class BuildingListUpdateServlet
  */
