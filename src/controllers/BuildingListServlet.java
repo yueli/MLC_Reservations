@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import helpers.BuildingListQuery;
-//**By Ronnie Xu~****//
+
 /**
  * Servlet implementation class BuildingListServlet
  */

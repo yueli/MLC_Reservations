@@ -14,6 +14,7 @@ import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.RoomsSelectQuery;
 import model.Admin;
+import model.Email;
 import model.Reservation;
 import model.TimeConverter;
 
@@ -50,7 +51,6 @@ public class AdminReservationsServlet3 extends HttpServlet {
 			
 			// get the role for the currently logged in admin user.
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); // USED FOR TESTING
-			//Admin adminUser = (Admin) session.getAttribute("loggedInAdminUser");
 			String role = loggedInAdminUser.getRole();
 			int status = loggedInAdminUser.getAdminStatus();
 			
@@ -105,22 +105,22 @@ public class AdminReservationsServlet3 extends HttpServlet {
 							startDate, endDate, startTime, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement,
 							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
-					riq.doAdminReservationInsert(reservation);
+					riq.doReservationInsert(reservation);
 					
 					
 					// set success message and forwarding URL
 					msg = "You have successfully made a reservation.";
 					url = "admin/confirmation.jsp";
 				}
-				session.setAttribute("msg", msg);
 			} else { 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
 				
-				 //forwarding URL
-				 url = "AdminViewReservations";
-			
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+				// set session attributes
 			}
 			
 		} else { // there isn't an active session.

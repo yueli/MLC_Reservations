@@ -48,12 +48,13 @@ public class AdminReservationsServlet extends HttpServlet {
 		if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			//Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			/*
 			Admin loggedInAdminUser = new Admin();
 			loggedInAdminUser.setAdminID(1);
 			loggedInAdminUser.setAdminMyID("bbo89");
 			loggedInAdminUser.setAdminStatus(1);
-			loggedInAdminUser.setRole("admin");
+			loggedInAdminUser.setRole("admin"); */
 			String role = loggedInAdminUser.getRole();
 			int status = loggedInAdminUser.getAdminStatus();
 			
