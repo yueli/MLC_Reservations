@@ -40,7 +40,7 @@
     </init-param>
     <init-param>
       <param-name>tolerance</param-name>
-      <param-value>300000</param-value>
+      <param-value>5000</param-value>
     </init-param>
   </filter>
   <filter>
