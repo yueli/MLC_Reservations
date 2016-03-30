@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,12 +38,10 @@ public class CASLogoutServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession(false);
-		logout(this.session);
+		this.session.invalidate();
+		
+		response.sendRedirect("https://cas.dev.uga.edu/cas/logout");
 		
 	}
 	
-	public String logout(HttpSession session){
-		this.session.invalidate();
-		return "redirect:https://cas.dev.uga.edu/cas/logout";
-	}
 }
