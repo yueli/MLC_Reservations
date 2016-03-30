@@ -52,7 +52,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
-			if((role.equalsIgnoreCase("S") || role.equalsIgnoreCase("S")) && status == 1){
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 				// get session and request variables + initialization of others
 				String buildings = ""; // the string that contains the HTML drop down list
 				String buildingID = request.getParameter("buildingID"); // get the value from 

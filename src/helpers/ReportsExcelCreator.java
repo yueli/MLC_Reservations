@@ -2,6 +2,7 @@
 
 package helpers;
 
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -134,7 +135,7 @@ public class ReportsExcelCreator {
                   return e.getMessage();
             }
       }
-}*/
+}*//*
                   HSSFWorkbook wb = new HSSFWorkbook();
                   HSSFSheet sheet = wb.createSheet("Excel Sheet");
                   HSSFRow rowhead = sheet.createRow((short) 0);
@@ -145,29 +146,31 @@ public class ReportsExcelCreator {
                   rowhead.createCell((short) 4).setCellValue("Ban End Date");
                   rowhead.createCell((short) 5).setCellValue("Penalty Count");
                   rowhead.createCell((short) 6).setCellValue("Description");
-                  rowhead.createCell((short) 7).setCellValue("Status");
+                  rowhead.createCell((short) 7).setCellValue("Status"); */
               
-                  int index = 1;
+                /*  int index = 1;
                   while (rs.next()) {
 
-                          HSSFRow row = sheet.createRow((short) index);
+                          //HSSFRow row = sheet.createRow((short) index);
                           row.createCell((short) 0).setCellValue(rs.getInt(1));
                           row.createCell((short) 1).setCellValue(rs.getInt(2));
                           row.createCell((short) 2).setCellValue(rs.getInt(3));
                           row.createCell((short) 3).setCellValue(rs.getDateTime(4));
                           row.createCell((short) 4).setCellValue(rs.getDateTime(5));
                           row.createCell((short) 5).setCellValue(rs.getInt(6));
-                          row.createCell((short) 5).setCellValue(rs.getVarChar(7));
+                          //row.createCell((short) 5).setCellValue(rs.getVarChar(7));
                           row.createCell((short) 6).setCellValue(rs.getInt(8));
                           index++;
-                  }
-                  FileOutputStream fileOut = new FileOutputStream("c:\\bannedstudents.xls");
+                  }*/
+                 /* FileOutputStream fileOut = new FileOutputStream("c:\\bannedstudents.xls");
                   wb.write(fileOut);
                   fileOut.close();
                   System.out.println("Data is saved in excel file.");
                   rs.close();
-                  connection.close();
+                  con.close();*/
+                  
           } catch (Exception e) {
           }
+			return strQuery; //delete this
   }
-
+}
