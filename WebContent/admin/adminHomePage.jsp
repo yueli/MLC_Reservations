@@ -84,7 +84,7 @@ room: ${room}-->
 			<!-- <p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='AdminListServlet'>List Admin Users</a></p>-->
 			
 			<div align="Center">
-		 		<p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='https://cas.uga.edu/cas/logout'>Logout</a></p>
+		 		<p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='Logout'>Logout</a></p>
          		<br><br>
  			</div>                      
                             </div>
