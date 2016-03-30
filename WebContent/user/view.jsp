@@ -51,7 +51,7 @@ form {
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<br>
 		<br>
 		<br>
@@ -68,6 +68,6 @@ form {
 			<%= message %>
 			<%= table %>
 </div>
-		<div id="footer"></div>
+		<div id="footer1"></div>
 	</body>
 </html>

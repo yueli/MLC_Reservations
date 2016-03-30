@@ -63,15 +63,18 @@ public class ViewServlet extends HttpServlet {
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 			
+		
+		System.out.println("view servlet user recd id = " + user.getUserRecordID());
 		ListUserReservationsQuery lurq = new ListUserReservationsQuery();
 		
 		System.out.println("View Servlet: just set up database connection 2");
 		
+		table = lurq.ListUserReservations(user.getUserRecordID());
 		
 		//see how many records the student has, and if none, set error message, and if has at least one, 
 		//put reservations found in a table
 		System.out.println("Before try/catch");
-		
+/*		
 		try {
 			System.out.println("Fell into try/catch");
 			table = lurq.ListUserReservations(user.getUserRecordID());
@@ -79,7 +82,7 @@ public class ViewServlet extends HttpServlet {
 		catch (Exception e){
 			System.out.println("Inside catch");
 			table = "";
-		}
+		}*/
 		
 		System.out.println("After try/catch");
 		
