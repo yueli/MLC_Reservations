@@ -29,7 +29,7 @@ public class ReportsExcelDownloadServlet extends HttpServlet {
        HttpServletResponse response)
        throws ServletException, IOException {
     	System.out.println("Above doPost");
-    	url = "user/confirmCancellation.jsp";	
+    	url = "../admin/adminHomePage.jsp";	
     	RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
  //   	doPost(request,response);

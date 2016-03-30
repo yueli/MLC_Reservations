@@ -7,7 +7,7 @@ html {
 	}
 
 table {
-  	font-family: 'Arial';
+  	font-family: 'Roboto','Arial';
   	margin: 5px auto;
   	border-collapse: collapse;
   	border: 1px solid #eee;
@@ -30,7 +30,7 @@ table td {
 	}
 	
 table th {
-	background: #CC0000;
+	background: #cc0033;
 	color: #fff;
 	/*text-transform: uppercase;*/
 	font-size: 18px;
@@ -89,7 +89,7 @@ table th {
 	text-decoration: none;
 }
 .ui-tabs .ui-tabs-nav li a:hover{
-    background: #CC0000;
+    background: #CC0033;
     color: #FFF;
 	}
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
@@ -114,7 +114,7 @@ table th {
 
 /* used for table cell colors in browse reservations: */
 #red { /* room reserved at time listed */
-	background: #fbcfd0;
+	background: #f88b7f;
 	color: #202021;
  	border: 1px solid #d8d8dd;
   	padding: 7px 20px;
@@ -130,7 +130,7 @@ table th {
 	}
 	
 #yellow { /* room open at time listed */
-	background: #f2f799;
+	background: #f8f550;
 	color: #777677;
  	border: 1px solid #d8d8dd;
   	padding: 7px 20px;
@@ -138,7 +138,7 @@ table th {
 	}
 	
 #green { /* room available at time listed */
-	background: #e3f2e0;
+	background: #88ef8f;
 	color: #777677;
  	border: 1px solid #d8d8dd;
   	padding: 7px 20px;

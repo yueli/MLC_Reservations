@@ -2,6 +2,7 @@
 
 package helpers;
 
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,9 +23,10 @@ import java.sql.Statement;
 public class ReportsExcelCreator {
 
       //@SuppressWarnings("deprecation")
+	
       public String downloadExcel(ServletOutputStream out){
            
-            int nRow = 1;
+    	  	int nRow = 1;
             String strQuery = null;
             Connection con = null;
            
@@ -32,7 +34,7 @@ public class ReportsExcelCreator {
             HSSFCell cell;
                  
             try {
-                 
+                 System.out.println("Inside Try");
                   HSSFWorkbook wb = new HSSFWorkbook();
                   HSSFSheet sheet = wb.createSheet("Banned Students");
                  
@@ -41,15 +43,16 @@ public class ReportsExcelCreator {
                   //con = DbConnect.devCredentials();
                   con = DriverManager.getConnection
                     ("jdbc:mysql://localhost:3306/","Root","");
+                  System.out.println("Got into server");
                  
                   if(con==null)
                         return "Connection Failed";
                   /* Database Query */               
                   strQuery = "select * from banned";
                   Statement stmt=con.createStatement();
-                ResultSet rs=stmt.executeQuery(strQuery);
+                  ResultSet rs=stmt.executeQuery(strQuery);
                
-                /* Setting Font Style for Header Row */
+  /**              // Setting Font Style for Header Row 
                   sheet.setColumnWidth(0, 5000);
                   sheet.setColumnWidth(1, 7000);
                   sheet.setColumnWidth(3, 5000);
@@ -58,7 +61,7 @@ public class ReportsExcelCreator {
                   sheet.setColumnWidth(6, 5000);
                   sheet.setColumnWidth(7, 5000);
                  
-                  /* Creating the Font Style here */
+                  // Creating the Font Style here 
                   HSSFFont boldFont = wb.createFont();
                   boldFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
                   boldFont.setColor(HSSFFont.COLOR_RED);
@@ -126,9 +129,48 @@ public class ReportsExcelCreator {
                   }
                   wb.write(out);
                   return "File downloaded successfully";
+                  System.out.println("End of ReportsExcelCreator");
             }
             catch (Exception e) {
                   return e.getMessage();
             }
       }
+}*//*
+                  HSSFWorkbook wb = new HSSFWorkbook();
+                  HSSFSheet sheet = wb.createSheet("Excel Sheet");
+                  HSSFRow rowhead = sheet.createRow((short) 0);
+                  rowhead.createCell((short) 0).setCellValue("BannedID");
+                  rowhead.createCell((short) 1).setCellValue("UserID");
+                  rowhead.createCell((short) 2).setCellValue("AdminID");
+                  rowhead.createCell((short) 3).setCellValue("Ban Start Date");
+                  rowhead.createCell((short) 4).setCellValue("Ban End Date");
+                  rowhead.createCell((short) 5).setCellValue("Penalty Count");
+                  rowhead.createCell((short) 6).setCellValue("Description");
+                  rowhead.createCell((short) 7).setCellValue("Status"); */
+              
+                /*  int index = 1;
+                  while (rs.next()) {
+
+                          //HSSFRow row = sheet.createRow((short) index);
+                          row.createCell((short) 0).setCellValue(rs.getInt(1));
+                          row.createCell((short) 1).setCellValue(rs.getInt(2));
+                          row.createCell((short) 2).setCellValue(rs.getInt(3));
+                          row.createCell((short) 3).setCellValue(rs.getDateTime(4));
+                          row.createCell((short) 4).setCellValue(rs.getDateTime(5));
+                          row.createCell((short) 5).setCellValue(rs.getInt(6));
+                          //row.createCell((short) 5).setCellValue(rs.getVarChar(7));
+                          row.createCell((short) 6).setCellValue(rs.getInt(8));
+                          index++;
+                  }*/
+                 /* FileOutputStream fileOut = new FileOutputStream("c:\\bannedstudents.xls");
+                  wb.write(fileOut);
+                  fileOut.close();
+                  System.out.println("Data is saved in excel file.");
+                  rs.close();
+                  con.close();*/
+                  
+          } catch (Exception e) {
+          }
+			return strQuery; //delete this
+  }
 }

@@ -44,7 +44,7 @@ public class UnbanUserQuery {
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		
 
-		String query = "UPDATE tomcatdb.banned SET banEnd='"+ date + "', status=0 WHERE bannedID="+banID+"";
+		String query = "UPDATE tomcatdb.Banned SET banEnd='"+ date + "', status=0 WHERE bannedID="+banID+"";
 		
 
 		

@@ -241,28 +241,27 @@ public class ListUserReservationsQuery {
 								if (firstTime){
 
 									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-									table += "<tbody>";
+									table += "<thead>";
 									table += "<tr>";
-									table += "<td> Reservation ID</td>";
-									table += "<td> Start Date</td>";
-									table += "<td> End Date</td>";
-									table += "<td> Start Time</td>";
-									table += "<td> End Time </td>"; 
-									table += "<td> Building </td>";
-									table += "<td> Room Floor</td>";
-									table += "<td> Room Number</td>";
-									table += "<td> Primary/Secondary</td>";
+									table += "<th> Reservation ID</th>";
+									table += "<th> Start Date</th>";
+									table += "<th> End Date</th>";
+									table += "<th> Start Time</th>";
+									table += "<th> End Time </th>"; 
+									table += "<th> Building </th>";
+									table += "<th> Room Floor</th>";
+									table += "<th> Room Number</th>";
+									table += "<th> Primary/Secondary</th>";
 									table += "</tr>";
-									table += "</tbody>";
-									
+									table += "</thead>";
+									table += "<tbody>";
 									firstTime = false;
 									
 								}
 								// add the fields to the string table that we need to display
 								// already know we want to display this reservation
 								// but check below on whether to have a 'cancel' button or a 'check-in' button
-								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-								table += "<tbody>";
+								//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 								table += "<tr>";
 								table += "<td>" + resv.getReserveID() + "</td>";
 								table += "<td>" + resv.getReserveStartDate() + "</td>";
@@ -301,7 +300,7 @@ public class ListUserReservationsQuery {
 							if (firstTime){
 
 								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-								table += "<tbody>";
+								table += "<thead>";
 								table += "<tr>";
 								table += "<td> Reservation ID</td>";
 								table += "<td> Start Date</td>";
@@ -313,16 +312,16 @@ public class ListUserReservationsQuery {
 								table += "<td> Room Number</td>";
 								table += "<td> Primary/Secondary</td>";
 								table += "</tr>";
-								table += "</tbody>";
-								
+								table += "</thead>";
+								table += "<tbody>";
 								firstTime = false;
 								
 							}
 							// add the fields to the string table that we need to display
 							// already know we want to display this reservation
 							// but check below on whether to have a 'cancel' button or a 'check-in' button
-							table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-							table += "<tbody>";
+							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+							
 							table += "<tr>";
 							table += "<td>" + resv.getReserveID() + "</td>";
 							table += "<td>" + resv.getReserveStartDate() + "</td>";
@@ -334,7 +333,7 @@ public class ListUserReservationsQuery {
 							table += "<td>" + roomNumber + "</td>";
 							table += "<td>" + userPlace + "</td>";
 							
-							table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 							table += "<td><form action='CancelConfirmServlet' method = 'post'>" +
 									"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
 									"<input type='submit' value='Cancel Reservation'>" +
@@ -343,11 +342,12 @@ public class ListUserReservationsQuery {
 						}
 						
 						table += "</tr>"; //end this row for this reservation
-						table += "</tbody>";
+						
 						
 					}// end while going through records returned
 					
 					if (!firstTime){ //headers written to table, so close table
+						table += "</tbody>";
 						table += "</table>";
 					}else{
 						table = "";
@@ -416,19 +416,19 @@ public class ListUserReservationsQuery {
 				userPlace = "Seconday User";
 			}
 			table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-			table += "<tbody>";
+			table += "<thead>";
 			table += "<tr>";
-			table += "<td> Reservation ID</td>";
-			table += "<td> Start Date</td>";
-			table += "<td> End Date</td>";
-			table += "<td> Start Time</td>";
-			table += "<td> End Time </td>"; 
-			table += "<td> Building </td>";
-			table += "<td> Room Floor</td>";
-			table += "<td> Room Number</td>";
-			table += "<td> Primary/Secondary</td>";
+			table += "<th> Reservation ID</th>";
+			table += "<th> Start Date</th>";
+			table += "<th> End Date</th>";
+			table += "<th> Start Time</th>";
+			table += "<th> End Time </th>"; 
+			table += "<th> Building </th>";
+			table += "<th> Room Floor</th>";
+			table += "<th> Room Number</th>";
+			table += "<th> Primary/Secondary</th>";
 			table += "</tr>";
-			table += "</tbody>";
+			table += "</thead>";
 			table += "<tbody>";
 			table += "<tr>";
 			table += "<td>" + resv_id + "</td>";
@@ -450,8 +450,7 @@ public class ListUserReservationsQuery {
 					"<input type='submit' value='Go back to viewing reservations'>" +
 					"</form></td>";	
 			
-			table += "</tr></table>";
-			table += "</tbody>";
+			table += "</tr></tbody></table>";
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
