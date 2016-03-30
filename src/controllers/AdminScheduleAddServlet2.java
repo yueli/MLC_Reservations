@@ -209,7 +209,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					// match parameters user entered
 					msg = "Successfully added schedule!";
 					siq.doScheduleInsert(schedule);
-					url = "schedule-add";
+					url = "add-schedule";
 				} else {
 					// create a button that says yes or no
 					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
