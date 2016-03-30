@@ -11,8 +11,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
 			$(function() {
-				$("#header1").load("./adminheader.html"); 
-				$("#footer").load("../footer.html"); 
+				$("#header1").load("admin/adminheader.html"); 
+				$("#footer").load("footer.html"); 
 			});
 		</script> 
 	</head>
