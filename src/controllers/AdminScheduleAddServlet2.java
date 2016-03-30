@@ -179,8 +179,9 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				// if there is no buildingID from request, then display building drop down
-				if (buildingID == null || buildingID.equals("0")){
+				if (buildingID == null){
 					buildingID = Integer.toString(bsq.getFirstBuildingID());
+					System.out.println("BuildingID in Schedule add 2: getFirstBuilding: " + buildingID);
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
@@ -196,7 +197,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				} else if (buildingIDSession != null){
 					buildingID = buildingIDSession;
 				} 
-				
+				System.out.println("BuildingID in Schedule add 2: " + buildingID);
 				//------------------------------------------------//
 				/*               SCHEDULE INSERT                  */
 				//------------------------------------------------//
@@ -209,7 +210,16 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					// match parameters user entered
 					msg = "Successfully added schedule!";
 					siq.doScheduleInsert(schedule);
-					url = "add-schedule";
+					
+					session.removeAttribute("buildingID");
+					session.removeAttribute("startDate");
+					session.removeAttribute("endDate");
+					session.removeAttribute("startTime");
+					session.removeAttribute("endTime");
+					session.removeAttribute("summary");
+					session.removeAttribute("yesButton");
+					session.removeAttribute("noButton");
+					url = "admin/schedule-add.jsp";
 				} else {
 					// create a button that says yes or no
 					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
