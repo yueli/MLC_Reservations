@@ -41,7 +41,7 @@
 		<div align="center">
 		<a href='buildingform'>Add Building</a>
 		<br /><br />
-		<a href='RoomsServlet'>Add and Edit Rooms</a>
+
 		<p>${table}</p>
 		</div>
 		<div id="footer"></div>
