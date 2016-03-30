@@ -282,11 +282,14 @@ public class BuildingSelectQuery {
 			
 		
 	}
-	
+	/**
+	 * 
+	 * @return first row's buildingID
+	 */
 	public int getFirstBuildingID(){
 		Integer buildingID = null;
 		
-		String query = "SELECT buildingID FROM tomcatdb.Building limit 1;";
+		String query = "SELECT buildingID FROM tomcatdb.Building limit 1";
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
