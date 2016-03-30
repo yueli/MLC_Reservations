@@ -40,7 +40,7 @@ public class ReportsExcelCreator {
                   Class.forName("com.mysql.jdbc.Driver").newInstance();
                   //con = DbConnect.devCredentials();
                   con = DriverManager.getConnection
-                    ("jdbc:mysql://localhost:3306/","viccham","Hitch1991*");
+                    ("jdbc:mysql://localhost:3306/","Root","");
                  
                   if(con==null)
                         return "Connection Failed";
