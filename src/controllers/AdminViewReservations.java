@@ -41,6 +41,9 @@ public class AdminViewReservations extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		session = request.getSession();
+		
+		
+		
 		String buildingList = request.getParameter("buildingList");
 		
 		// set building & check if building is selected by user
