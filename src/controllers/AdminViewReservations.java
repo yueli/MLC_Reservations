@@ -47,7 +47,7 @@ public class AdminViewReservations extends HttpServlet {
 		String buildingList = request.getParameter("buildingList");
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		// set building & check if building is selected by user
-		int bldg = Integer.toString(bsq.getFirstBuildingID());
+		int bldg = bsq.getFirstBuildingID();
 		if (buildingList != null){ // if selected, get value & transform into integer
 			bldg = Integer.parseInt(buildingList);
 		}
