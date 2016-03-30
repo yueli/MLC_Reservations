@@ -422,6 +422,7 @@ public class ListUserReservationsQuery {
 			table += "<th> Primary/Secondary</th>";
 			table += "</tr>";
 			table += "</thead>";
+			
 			table += "<tbody>";
 			table += "<tr>";
 			table += "<td>" + resvStartDate + "</td>";
@@ -433,21 +434,31 @@ public class ListUserReservationsQuery {
 			table += "<td>" + roomNumber+ "</td>";
 			table += "<td>" + userPlace + "</td>";
 			table += "</tr>";
-			table += "<tr><td><form action='CancelServlet' method = 'post'>" +
+			
+			table += "<tr>"
+					+ "<td>"
+					+ "<form action='CancelServlet' method = 'post'>" +
 					"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
 					"<input type='submit' value='Cancel Reservation'>" +
-					"</form></td>";	
+					"</form>"
+					+ "</td>";	
 			
-			table += "<td><form action='ViewServlet' method = 'post'>" +
+			table += "<td>"
+					+ "<form action='ViewServlet' method = 'post'>" +
 					"<input type='submit' value='Go back to viewing reservations'>" +
-					"</form></td>";	
+					"</form>"
+					+ "</td>";	
+			
 			table += "<td>&nbsp;</td>";
 			table += "<td>&nbsp;</td>";
 			table += "<td>&nbsp;</td>";
 			table += "<td>&nbsp;</td>";
 			table += "<td>&nbsp;</td>";
 			table += "<td>&nbsp;</td>";
-			table += "</tr></tbody></table>";
+			
+			table += "</tr>"
+					+ "</tbody>"
+					+ "</table>";
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
