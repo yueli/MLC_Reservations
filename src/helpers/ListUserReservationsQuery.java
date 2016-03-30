@@ -231,7 +231,7 @@ public class ListUserReservationsQuery {
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								
 								//TAKE THIS OUT AFTER TESTING !!!!!
-								//currentMinuteInt = 2; //!!!!!!!!!!!
+								currentMinuteInt = 2; //!!!!!!!!!!!
 										
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
@@ -275,8 +275,8 @@ public class ListUserReservationsQuery {
 									// it's not past 10 after the hour, so let them check-in
 									// display the check-in button that points to the check-in servlet
 									
-									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-									table += "<td> CHECK IN </td>"; //TODO add ink
+									//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+									//table += "<td> CHECK IN </td>"; 
 									table += "<tr><td><form action='OnlineCheckInServlet' method = 'post'>" +
 									"<input type='hidden' name='resv_id' value='" + resv.getReserveID() + "'>" +
 											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
