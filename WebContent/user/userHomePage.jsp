@@ -1,24 +1,30 @@
+<!-- @Author Victoria Chambers-->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    <!--@Author Victoria Chambers -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>MLC Reservation System – Administrative View</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
-		<script> 
-	//Importing Header & Fotter
-	$(function() {
-		$("#header1").load("admin/adminheader.html"); 
-		$("#footer").load("footer.html"); 
-	});
-		</script> 
+<title>MLC Reservations – Student View</title>
+	<script> 
+			// Importing Header and Footer
+			$(function() {
+				$("#header1").load("user/userheader.html"); 
+				$("#footer1").load("footer.html"); 
+			});
+	</script>
 </head>
 <body>
-<div id="header1"></div>
- <!-- === BEGIN CONTENT === -->
+		<div id="header1"></div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+<!-- === BEGIN CONTENT === -->
                     <div id="content">
                         <div class="container no-padding">
                             <div class="row">
@@ -27,8 +33,8 @@
                                     <!-- Carousel Indicators -->
                                     <ol class="carousel-indicators">
                                         <li data-target="#carousel-example" data-slide-to="0" class=""></li>
-                                        <li data-target="#carousel-example" data-slide-to="1" class=""></li>
-                                        <li data-target="#carousel-example" data-slide-to="2" class="active"></li>
+                                        <li data-target="#carousel-example" data-slide-to="1" class="active"></li>
+                                        <li data-target="#carousel-example" data-slide-to="2" class=""></li>
                                         <li data-target="#carousel-example" data-slide-to="3" class=""></li>
                                     </ol>
                                     <div class="clearfix"></div>
@@ -38,10 +44,10 @@
                                         <div class="item">
                                             <img src="assets/img/fillers/mlc1.jpg">
                                         </div>
-                                        <div class="item">
+                                        <div class="item active">
                                             <img src="assets/img/fillers/mlc2.jpg">
                                         </div>
-                                        <div class="item active">
+                                        <div class="item">
                                             <img src="assets/img/fillers/mlc3.jpg">
                                         </div>
                                         <div class="item">
@@ -51,10 +57,10 @@
                                     <!-- End Carousel Images -->
                                     <!--  
                                     <!-- Carousel Controls -->
-                                    <a class="left carousel-control" href="adminHomePage.jsp#carousel-example" data-slide="prev">
+                                    <a class="left carousel-control" href="index.html#carousel-example" data-slide="prev">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
-                                    <a class="right carousel-control" href="adminHomePage.jsp#carousel-example" data-slide="next">
+                                    <a class="right carousel-control" href="index.html#carousel-example" data-slide="next">
                                         <span class="glyphicon glyphicon-chevron-right"></span>
                                     </a>
                                     <!-- End Carousel Controls -->
@@ -66,35 +72,19 @@
                         <div class="container background-gray-lighter">
                             <div class="row">
                                 <h2 class="animate fadeIn text-center margin-top-50 animated">Welcome to the UGA Reservation System</h2>
-                                <h4 class="animate fadeIn text-center margin-top-10 animated">Admin View</h4>
+                                <h4 class="animate fadeIn text-center margin-top-10 animated">Student View</h4>
                                 <hr class="margin-top-15">
- <!--                              <p class="animate fadeIn text-center animated">		${message} <br />
-		admin record ID = ${loggedInAdminUser.adminID } <br />
-		my id = ${loggedInAdminUser.adminMyID} <br />
-		first name = ${loggedInAdminUser.fname} <br />
-		last name = ${loggedInAdminUser.lname} <br />
-		role = ${loggedInAdminUser.role} <br />
-		status = ${loggedInAdminUser.adminStatus} <br />
-		
-building: ${building}
-room: ${room}-->   
-		
-		<p class="animate fadeIn text-center animated">To begin, please choose an option from the menu above or logout. </p>
-			
-			<!-- <p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='AdminListServlet'>List Admin Users</a></p>-->
-			
-			<div align="Center">
-		 		<p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='Logout'>Logout</a></p>
-         		<br><br>
- 			</div>                      
+                                <p class="animate fadeIn text-center animated">This website will enable you to reserve a room in the Zell B. Miller Learning Center for study purposes or group meetings.</p>
+                                <p class="text-center animate fadeInUp margin-bottom-50 animated">
+                                    <button type="button" class="btn btn-lg btn-red" href="browse.jsp">Reserve a Room</button>
+                                </p>
                             </div>
                         </div>
                         <div class="container">
                             <div class="row margin-vert-30">
                                 <!-- Main Column -->
                                 <div class="col-md-9">
-                                    <img class="visible-lg animate fadeInUp animated" style="bottom: -50px; position: relative; 
-                                    left: 85px; margin-top: -20px;" src="assets/img/mlc_head_terrace_unoccupied.jpg" alt="">
+                                    <img class="visible-lg animate fadeInUp animated" style="bottom: -50px; position: relative; left: 85px; margin-top: -20px;" src="assets/img/mlc_head_terrace_unoccupied.jpg" alt="">
                                 </div>
                                 <!-- End Main Column -->
                                 <!-- Side Column -->
@@ -128,7 +118,8 @@ room: ${room}-->
                     </div>
                 </div>
             </div>
-            <!-- === END CONTENT === -->
-<div id="footer"></div>
+<!-- === END CONTENT === -->
+
+<div id="footer1"></div>
 </body>
 </html>

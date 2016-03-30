@@ -231,7 +231,7 @@ public class ListUserReservationsQuery {
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								
 								//TAKE THIS OUT AFTER TESTING !!!!!
-								//currentMinuteInt = 2; //!!!!!!!!!!!
+								currentMinuteInt = 2; //!!!!!!!!!!!
 										
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
@@ -275,9 +275,9 @@ public class ListUserReservationsQuery {
 									// it's not past 10 after the hour, so let them check-in
 									// display the check-in button that points to the check-in servlet
 									
-									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-									table += "<td> CHECK IN </td>"; //TODO add ink
-									table += "<tr><td><form action='CheckInServlet' method = 'post'>" +
+									//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+									//table += "<td> CHECK IN </td>"; 
+									table += "<tr><td><form action='OnlineCheckInServlet' method = 'post'>" +
 									"<input type='hidden' name='resv_id' value='" + resv.getReserveID() + "'>" +
 											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
 											"</form></td>";	
@@ -327,11 +327,12 @@ public class ListUserReservationsQuery {
 							table += "<td>" + roomNumber + "</td>";
 							table += "<td>" + userPlace + "</td>";
 							
-							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";		
 							table += "<td><form action='CancelConfirmServlet' method = 'post'>" +
 									"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
-									"<input type='submit' value='Cancel Reservation'>" +
-									"</form></td>";			
+									"<input class='btn btn-lg btn-red' type='submit' value='Cancel Reservation'>" +
+									"</form></td>";		
+
 						
 						}
 						
@@ -439,10 +440,11 @@ public class ListUserReservationsQuery {
 					+ "<td>"
 					+ "<form action='CancelServlet' method = 'post'>" +
 					"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
-					"<input type='submit' value='Cancel Reservation'>" +
+					"<input class='btn btn-lg btn-red' type='submit' value='Cancel Reservation'>" +
 					"</form>"
 					+ "</td>";	
-			
+	
+
 			table += "<td>"
 					+ "<form action='ViewServlet' method = 'post'>" +
 					"<input type='submit' value='Go back to viewing reservations'>" +

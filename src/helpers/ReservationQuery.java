@@ -176,34 +176,38 @@ public class ReservationQuery {
 
 		}
 
-//------------------------------------------------------------------
 		
-		public boolean checkInUser(int reservationID, int userRecordID){
+		//------------------------------------------------------------------
+		
+				public boolean checkInUser(int reservationID, int userRecordID){
 
-			DateFormat currentTime = new SimpleDateFormat("H:mm:ss"); // get current time format ex/ 13:02:23
-			Date time = new Date(); // convert to Date object
-			String currentTimeForQuery = currentTime.format(time);
+					DateFormat currentTime = new SimpleDateFormat("H:mm:ss"); // get current time format ex/ 13:02:23
+					Date time = new Date(); // convert to Date object
+					String currentTimeForQuery = currentTime.format(time);
 
-			System.out.println("ReservationQuery: check in user: current time = " + currentTimeForQuery);			
-			
-			String query = "INSERT INTO tomcatdb.CheckIn (Reservation_reserveID, User_userID) "
-					+ "VALUES ('" + reservationID + "','" + userRecordID + "')";
-				
-			try {
-				PreparedStatement ps = this.connection.prepareStatement(query);
-			
-				ps.executeUpdate();
-				System.out.println("Success in Reservation Query: check in user: Query = " + query);
+					System.out.println("ReservationQuery: check in user: current time = " + currentTimeForQuery);			
+					
+					String query = "INSERT INTO tomcatdb.CheckIn (Reservation_reserveID, User_userID) "
+							+ "VALUES ('" + reservationID + "','" + userRecordID + "')";
+						
+					try {
+						PreparedStatement ps = this.connection.prepareStatement(query);
+					
+						ps.executeUpdate();
+						System.out.println("Success in Reservation Query: check in user: Query = " + query);
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("******* ERROR: in Reservation Query: check in user: Query = " + query);
-				return false;
-			}
-			
-			return true;
-			
-		}
+					} catch (SQLException e) {
+						e.printStackTrace();
+						System.out.println("******* ERROR: in Reservation Query: check in user: Query = " + query);
+						return false;
+					}
+					
+					return true;
+					
+				}
+		
+		
+
 		//------------------------------------------------------------------
 		
 				public boolean alreadyCheckedIn(int reservationID){
