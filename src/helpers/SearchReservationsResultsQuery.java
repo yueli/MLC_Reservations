@@ -137,7 +137,7 @@ public class SearchReservationsResultsQuery {
 	}
 	
 	
-	public String getHTMLTable(ArrayList<Integer> roomsArrayList, ArrayList<Reservation> reservationArrayList, String sDate , String sTime, String eDate, String eTime, int hrIncrement) throws ParseException{ 
+	public String getHTMLTable(ArrayList<Integer> roomsArrayList, ArrayList<Reservation> reservationArrayList, String sDate , String sTime, String eDate, String eTime, int hrIncrement, int buildingid) throws ParseException{ 
 		//Return tables of open Reservations
 		
 		
@@ -236,7 +236,7 @@ public class SearchReservationsResultsQuery {
 						
 				//5.Cycle to all rooms for the building
 						
-						//Creating OPEN/CLOSE rooms -- ADD ROOMS
+						//Creating OPEN/CLOSE rooms -- ADD ROOMS -row
 						for(int z=0;z<roomsAL.size();z++){
 							table += "<tr>";
 							table+="<td>"+roomsAL.get(z)+"</td>";
@@ -246,9 +246,9 @@ public class SearchReservationsResultsQuery {
 						
 						//Only searching for hours requested	
 						for(int i=hourbt;i<=houret;i++){
-						
 							
-								
+							
+						int roomtaken=0;
 								//Mark off all reserved spots
 								//if empty skip and fill table with Open
 								if(reservationAL.size()>0){
@@ -264,27 +264,46 @@ public class SearchReservationsResultsQuery {
 									String tempTime = reservationAL.get(y).getReserveStartTime();
 									int tempRoom = reservationAL.get(y).getRoomsID();
 									
+									//Date Match
 									int a = newDate.compareTo(tempDate);
+									//Time Match
 									int b = tempTime.compareTo(tempEndTime);
+									//Room Match
+									int hrInc = reservationAL.get(y).getHourIncrement();
 									
-									if(a==1 && b==1 && tempRoom==tempRoomAL){
+									//Date & Time
+									if(a==1 && b==1 && tempRoom==tempRoomAL && roomtaken==0){
 										table +="<td>";
 										table +="TAKEN";
 										table +="</td>";
-										System.out.println("match");
+								
+										
+										roomtaken=1;
 										
 									}
-									else{
+									
+									
+									else if(y==(reservationAL.size()-1) && roomtaken==0){
 										table +="<td>";
-										table +="<a href='#?'>OPEN</a>";
+										table +="<a href=/searchconfrimresults"
+												+ "?Rooms_roomID="+ tempRoomAL +"&"
+												+ "?reserveStartDate="+ newDate +"&"
+												+ "?reserveEndDate=01-01-2001&"
+												+ "?reserveStartTime="+ tempEndTime +"&"
+												+ "?reserveEndTime=11:11:1111&"
+												+ "?hourIncrement="+ hrIncrement +"&"
+												+ "?Building_buildingID="+ buildingid +"&"
+												+ "?free=N&"
+												+ ">OPEN</a>";
 										table +="</td>";
 									}
-									}
+								
+								}
 								}
 								//Else will fill empty slots instead of skipping
 								else{
 										table +="<td>";
-										table +="<a href='#'>OPEN</a>";
+										table +="OPEN";
 										table +="</td>";
 									}
 									

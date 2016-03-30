@@ -18,7 +18,7 @@
 		        
 		<script> 
 			$(function() {
-				$("#header1").load("admin/adminheader.html"); 
+				$("#header1").load("user/userheader.html");
 				$("#footer").load("footer.html"); 
 			});
 			// jQuery for Datatable plugin for pagination
