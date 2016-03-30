@@ -84,7 +84,7 @@ public class AdminScheduleInsertQuery {
 	 */
 	public void doScheduleInsert(Schedule schedule){
 		this.schedule = schedule;
-		
+		System.out.println(this.schedule.toString());
 		String query = "INSERT INTO tomcatdb.Schedule "
 				+ "(tomcatdb.Schedule.allDayEvent, tomcatdb.Schedule.startDate, tomcatdb.Schedule.endDate, tomcatdb.Schedule.startTime, "
 				+ "tomcatdb.Schedule.endTime, tomcatdb.Schedule.summary, tomcatdb.Schedule.createdBy, tomcatdb.Schedule.Building_buildingID) "
