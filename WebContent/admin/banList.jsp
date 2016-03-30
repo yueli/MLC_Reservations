@@ -22,7 +22,7 @@
 			// used to load header and footer html
 			$(function() {
 				$("#header1").load("admin/adminheader.html"); 
-				$("#footer").load("footer.html"); 
+				$("#footer").load("../footer.html"); 
 			});
 			
 			// jQuery for datepicker plugin

@@ -28,7 +28,7 @@
 			// used to load header and footer html
 			$(function() {
 				$("#header").load("admin/adminheader.html"); 
-				$("#footer").load("footer.html"); 
+				$("#footer").load("../footer.html"); 
 			});
 			// jQuery for Datatable plugin for pagination, sort, and search
 			$(document).ready( function () {
