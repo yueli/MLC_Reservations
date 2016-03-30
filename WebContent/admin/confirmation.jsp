@@ -8,13 +8,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script> 
 			$(function() {
-				$("#header").load("admin/adminheader.html"); 
+				$("#header1").load("admin/adminheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<br><br><br><br><br><br><br>
 		<div align="center">
 			<p>${msg}</p>
