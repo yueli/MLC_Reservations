@@ -204,6 +204,7 @@ public class ReservationQuery {
 			return true;
 			
 		}
+		
 		//------------------------------------------------------------------
 		
 				public boolean alreadyCheckedIn(int reservationID){
