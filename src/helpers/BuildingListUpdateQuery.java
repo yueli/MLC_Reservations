@@ -39,7 +39,7 @@ public class BuildingListUpdateQuery {
 		
 		
 		
-		String query = "UPDATE tomcatdb.building SET buildingName='"+building.getBuildingName()+"', buildingCalName='"+building.getBuildingCalName()+"', buildingCalUrl='"+building.getBuildingCalUrl()+"', Admin_adminID=1 WHERE buildingID="+building.getBuildingID()+";";
+		String query = "UPDATE tomcatdb.Building SET buildingName='"+building.getBuildingName()+"', buildingCalName='"+building.getBuildingCalName()+"', buildingCalUrl='"+building.getBuildingCalUrl()+"', Admin_adminID=1 WHERE buildingID="+building.getBuildingID()+";";
 
 		// securely run query
 		try {

@@ -37,7 +37,7 @@ public class BuildingListAddQuery {
 		
 		public int getLastBuildingID(){
 			
-		String query = "SELECT buildingID FROM tomcatdb.building ORDER BY buildingID DESC LIMIT 1;";
+		String query = "SELECT buildingID FROM tomcatdb.Building ORDER BY buildingID DESC LIMIT 1;";
 		buildingCount = 0;
 		int buildingID = 0;
 		try{

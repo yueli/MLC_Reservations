@@ -46,7 +46,7 @@ public class BannedSelectQuery {
 
 		public void doRead(){
 
-			String query = "SELECT banned.bannedID, banned.User_userID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
+			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
