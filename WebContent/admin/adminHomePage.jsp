@@ -36,16 +36,16 @@
                                     <!-- Carousel Images -->
                                     <div class="carousel-inner">
                                         <div class="item">
-                                            <img src="../assets/img/fillers/mlc1.jpg">
+                                            <img src="assets/img/fillers/mlc1.jpg">
                                         </div>
                                         <div class="item">
-                                            <img src="../assets/img/fillers/mlc2.jpg">
+                                            <img src="assets/img/fillers/mlc2.jpg">
                                         </div>
                                         <div class="item active">
-                                            <img src="../assets/img/fillers/mlc3.jpg">
+                                            <img src="assets/img/fillers/mlc3.jpg">
                                         </div>
                                         <div class="item">
-                                            <img src="../assets/img/fillers/mlc4.jpg">
+                                            <img src="assets/img/fillers/mlc4.jpg">
                                         </div>
                                     </div>
                                     <!-- End Carousel Images -->
