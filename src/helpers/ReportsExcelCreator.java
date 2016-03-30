@@ -22,9 +22,7 @@ import java.sql.Statement;
 
 public class ReportsExcelCreator {
 
-      //@SuppressWarnings("deprecation")
-	
-      public String downloadExcel(ServletOutputStream out){
+          public String downloadExcel(ServletOutputStream out){
            
     	  	int nRow = 1;
             String strQuery = null;
@@ -38,7 +36,7 @@ public class ReportsExcelCreator {
                   HSSFWorkbook wb = new HSSFWorkbook();
                   HSSFSheet sheet = wb.createSheet("Banned Students");
                  
-                  /* Getting connection here for mysql database */
+                  // Getting connection here for mySQL database 
                   Class.forName("com.mysql.jdbc.Driver").newInstance();
                   //con = DbConnect.devCredentials();
                   con = DriverManager.getConnection
@@ -47,7 +45,7 @@ public class ReportsExcelCreator {
                  
                   if(con==null)
                         return "Connection Failed";
-                  /* Database Query */               
+                  // Database Query               
                   strQuery = "select * from banned";
                   Statement stmt=con.createStatement();
                   ResultSet rs=stmt.executeQuery(strQuery);
@@ -136,6 +134,7 @@ public class ReportsExcelCreator {
             }
       }
 }*//*
+//Attempt #2
                   HSSFWorkbook wb = new HSSFWorkbook();
                   HSSFSheet sheet = wb.createSheet("Excel Sheet");
                   HSSFRow rowhead = sheet.createRow((short) 0);
