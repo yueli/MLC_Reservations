@@ -76,7 +76,7 @@
                                 <hr class="margin-top-15">
                                 <p class="animate fadeIn text-center animated">This website will enable you to reserve a room in the Zell B. Miller Learning Center for study purposes or group meetings.</p>
                                 <p class="text-center animate fadeInUp margin-bottom-50 animated">
-                                    <button type="button" class="btn btn-lg btn-red" href="browse.jsp">Reserve a Room</button>
+                                    <button type="button" class="btn btn-lg btn-red" href="Browse">Reserve a Room</button>
                                 </p>
                             </div>
                         </div>
