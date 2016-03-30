@@ -56,7 +56,6 @@ public class CASLoginServlet extends HttpServlet {
 		//get our current session
 		session = request.getSession();
 	
-		String table = "";
 		int recordID = 0;
 
 		// CAS stuff
@@ -83,21 +82,19 @@ public class CASLoginServlet extends HttpServlet {
 		      //=====================
 		      if (Objects.equals("lastName", attributeName)){
 		    		loggedInUser.setUserLastName(attributeValue);    
-		    		table += " ** using this attirbute last name ** ";
+		    		//table += " ** using this attirbute last name ** ";
 		      }
 		      if (Objects.equals("firstName", attributeName)){
 		    		loggedInUser.setUserFirstName(attributeValue);    
-		    		table += " ** using this attirbute first name ** ";
+		    		//table += " ** using this attirbute first name ** ";
 		      }
 		      if (Objects.equals("CN", attributeName)){
 		    		loggedInUser.setMyID(attributeValue);    
-		    		table += " ** using this attirbute CAN ** ";
+		    		//table += " ** using this attirbute CAN ** ";
 		      }
 		      //=====================
 
 		}
-		
-		table += "<h2>CN=*" + loggedInUser.getMyID() + "*";
 		
 		// used for checking below
 
@@ -140,7 +137,7 @@ public class CASLoginServlet extends HttpServlet {
 		//===== IN ADMIN TABLE CHECK =====//
 			
 		}else if (inAdminUserTable){
-			url = "admin/adminHome.jsp";	
+			url = "admin/adminHomePage.jsp";	
 			//set the logged in user to be an admin logged in user and pass along
 			Admin loggedInAdminUser  = new Admin();
 			
@@ -160,6 +157,14 @@ public class CASLoginServlet extends HttpServlet {
 			user.setMyID(loggedInUser.getMyID());
 			user.setUserFirstName(loggedInUser.getUserFirstName());
 			user.setUserLastName(loggedInUser.getUserLastName());
+			
+			String userEmail = loggedInUser.getMyID() + "@uga.edu";
+			//user.setUserEmail(userEmail);
+			/* HARD CODED FOR TESTING */
+			
+			user.setUserEmail("ganix@uga.edu"); 
+			
+			
 						
 			UserHelper userHelper = new UserHelper();			
 			boolean inTable = userHelper.inUserTable(user.getMyID());				
@@ -204,10 +209,10 @@ public class CASLoginServlet extends HttpServlet {
 				
 			}
 			
-			// by this time the user object should have recordID, myID, fname, and lname (and maybe eventually email)
+			// by this time the user object should have recordID, myID, fname, lname and email
 			session.setAttribute("user", user);
 		}		
-		session.setAttribute("table", table);
+
 		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

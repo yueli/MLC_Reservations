@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.AdminScheduleInsertQuery;
 import helpers.AdminScheduleUpdateQuery;
 import helpers.BuildingSelectQuery;
+import model.Admin;
 import model.DateTimeConverter;
 import model.Schedule;
 import model.TimeConverter;
@@ -45,8 +46,17 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
-		//if(this.session != null){
+		this.session = request.getSession(false); 
+		
+		// if this session is not null (active/valid)
+		if(this.session != null){
+			// get admin user from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
+			
+			// push content based off role
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 			
 				// TODO Looping in multiple dates.
 		
@@ -231,11 +241,23 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				session.setAttribute("noButton", noButton);
 				session.setAttribute("tc", tc);
 				}
-		//} else {
-			// go back to login
+			} else { 
+				//------------------------------------------------//
+				/*                VIEW FOR CLERK                  */
+				//------------------------------------------------//
+				
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+				// set session attributes
+			}
 			
-			//url = "[insert login controller or login url here]";
-		//}
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*           VIEW FOR INVALID SESSION             */
+			//------------------------------------------------//
+			url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+		}
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

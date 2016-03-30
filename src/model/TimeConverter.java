@@ -92,7 +92,7 @@ public class TimeConverter {
 	}
 
 	/**
-	 * Convert time from 12-hour hh:mma or hh:mm a format to 24-hour HH:mm:ss format.
+	 * Convert time from 12-hour hh:mma or hh:mm format to 24-hour HH:mm:ss format.
 	 * @return converted time from 12 hour to 24 hour format
 	 */
 	public String convertTimeTo24(){

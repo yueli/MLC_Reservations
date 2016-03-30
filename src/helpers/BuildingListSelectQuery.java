@@ -1,5 +1,5 @@
 package helpers;
-//**By Ronnie Xu~****/
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +37,7 @@ public class BuildingListSelectQuery {
 	
 	public void doRead(int buildingID){
 
-		String query = "SELECT building.buildingID, building.buildingName, building.buildingStatus, building.buildingCalName, building.buildingCalUrl, building.Admin_adminID FROM building where building.buildingID="+buildingID+" ORDER BY buildingID LIMIT 1";
+		String query = "SELECT Building.buildingID, b=Building.buildingName, Building.buildingStatus, Building.buildingCalName, Building.buildingCalUrl, Building.Admin_adminID FROM tomcatdb.Building where Building.buildingID= " + buildingID + " ORDER BY buildingID LIMIT 1";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);

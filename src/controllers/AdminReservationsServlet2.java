@@ -57,7 +57,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
-			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 				//------------------------------------------------//
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//
@@ -109,7 +109,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				String endTimeSession = (String) session.getAttribute("endTime");
 				
 				// others
-				//String roomID = (String) request.getParameter("roomID");
+				String roomID = (String) request.getParameter("roomID");
 				String reserveName = request.getParameter("reserveName");
 
 				// convert date and time to SQL format
@@ -117,7 +117,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				TimeConverter tc = new TimeConverter();
 				startTime = tc.convertTimeTo24(startTime);
 				endTime = tc.convertTimeTo24(endTime);
-				
+
 				// TODO check to make sure start time is less than end time
 				// TODO check start Date to make sure its >= currentDate
 				
@@ -263,6 +263,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				// forwarding URL
 				url = "AdminViewReservations";
 				
+				// set session attributes
 			}
 			
 		} else { // there isn't an active session.

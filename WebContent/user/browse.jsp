@@ -20,19 +20,19 @@
 	  	        $( "#tabs" ).tabs();
 	  	    });
 			$(function() {
-				$("#header1").load("user/userheader.html"); 
-				$("#footer").load("footer.html"); 
+				$("#header1").load("./userheader.html"); 
+				$("#footer").load("../footer.html"); 
 			});
 		</script> 
 	</head>
 	<body>
 		<div id="header1"></div>
-		<br><br><br><br><br><br><br>
+		<br><br><br><br>
 		<div align="center">
 			<form name="browseForm" action="BrowseFloors" method="post">
 				<h2>Please Select Building</h2>
 				<p>${buildings}
-				<input name="enterBuilding" type="submit" value="Enter"></p> 
+				<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p> 
 			</form>
 			<form name="browseForm2" action="BrowseRooms" method="post">
 				<h2>Please Select Floor</h2>
