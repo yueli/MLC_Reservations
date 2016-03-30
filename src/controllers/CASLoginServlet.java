@@ -137,7 +137,7 @@ public class CASLoginServlet extends HttpServlet {
 		//===== IN ADMIN TABLE CHECK =====//
 			
 		}else if (inAdminUserTable){
-			url = "admin/adminHomePage.jsp";	
+			url = "AdminHome";	
 			//set the logged in user to be an admin logged in user and pass along
 			Admin loggedInAdminUser  = new Admin();
 			
@@ -193,7 +193,7 @@ public class CASLoginServlet extends HttpServlet {
 
 					user.setUserRecordID(recordID);
 					session.setAttribute("user", user);
-					url = "index.html";
+					url = "UserHome";
 				}
 				
 			}else{ //authenticated but not in user table, so add them
@@ -205,7 +205,7 @@ public class CASLoginServlet extends HttpServlet {
 
 				user.setUserRecordID(recordID);
 				session.setAttribute("user", user);
-				url = "index.html";
+				url = "UserHome";
 				
 			}
 			
