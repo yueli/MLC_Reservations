@@ -57,7 +57,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
-			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 				//------------------------------------------------//
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//

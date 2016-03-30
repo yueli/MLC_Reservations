@@ -50,7 +50,7 @@ public class SearchReservationsResultsQuery {
 
 	//Method to get all rooms in building
 	public ArrayList<Integer> getAllRooms(int buildingid){
-		String query = "SELECT rooms.roomID, rooms.Building_buildingID FROM tomcatdb.rooms WHERE rooms.Building_buildingID ='"+buildingid+"' ORDER BY rooms.roomNumber";
+		String query = "SELECT Rooms.roomID, Rooms.Building_buildingID FROM tomcatdb.Rooms WHERE Rooms.Building_buildingID ='"+buildingid+"' ORDER BY Rooms.roomNumber";
 		System.out.println("getAllRooms:");
 		System.out.println(query);
 		
@@ -74,13 +74,13 @@ public class SearchReservationsResultsQuery {
 	
 	//User Input for Results
 	public void doRead(int buildingid, String beginDate, String beginTime, String endDate, String endTime, int hourIncrement ){
-		String query = "SELECT reservations.Building_buildingID,  reservations.Rooms_roomID, reservations.hourIncrement, reservations.reserveStartDate, reservations.reserveEndDate, reservations.reserveStartTime, reservations.reserveEndTime"
-				+ " FROM tomcatdb.reservations WHERE reservations.Building_buildingID ='"+buildingid+"' AND "
-				+ "reservations.reserveStartDate>='"+ beginDate +"' AND "
-				+ "reservations.reserveendDate<='"+ endDate +"' AND "
-				+ "reservations.reserveStartTime>='"+ beginTime +"' AND "
-				+ "reservations.reserveEndTime<='"+ endTime +"' "
-				+ "ORDER BY reservations.reserveStartDate, reservations.reserveStartTime";	
+		String query = "SELECT Reservations.Building_buildingID,  Reservations.Rooms_roomID, Reservations.hourIncrement, Reservations.reserveStartDate, Reservations.reserveEndDate, Reservations.reserveStartTime, Reservations.reserveEndTime"
+				+ " FROM tomcatdb.Reservations WHERE reservations.Building_buildingID ='"+buildingid+"' AND "
+				+ "Reservations.reserveStartDate>='"+ beginDate +"' AND "
+				+ "Reservations.reserveendDate<='"+ endDate +"' AND "
+				+ "Reservations.reserveStartTime>='"+ beginTime +"' AND "
+				+ "Reservations.reserveEndTime<='"+ endTime +"' "
+				+ "ORDER BY Reservations.reserveStartDate, Reservations.reserveStartTime";	
 		System.out.println("doRead "+ query);
 		// securely run query
 		try {

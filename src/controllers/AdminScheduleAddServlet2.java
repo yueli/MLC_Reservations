@@ -56,7 +56,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
-			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 			
 				// TODO Looping in multiple dates.
 		

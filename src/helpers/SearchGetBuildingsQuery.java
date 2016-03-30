@@ -40,13 +40,13 @@ public class SearchGetBuildingsQuery {
 
 		public void doRead(){
 
-			String query = "SELECT building.buildingID, "
-					+ "building.buildingName, "
-					+ "building.buildingStatus, "
-					+ "building.buildingCalName, "
-					+ "building.buildingCalUrl, "
-					+ "building.Admin_adminID "
-					+ "FROM building";
+			String query = "SELECT Building.buildingID, "
+					+ "Building.buildingName, "
+					+ "Building.buildingStatus, "
+					+ "Building.buildingCalName, "
+					+ "Building.buildingCalUrl, "
+					+ "Building.Admin_adminID "
+					+ "FROM tomcatdb.Building";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);

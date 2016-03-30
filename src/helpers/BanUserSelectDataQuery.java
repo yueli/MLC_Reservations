@@ -39,7 +39,7 @@ public class BanUserSelectDataQuery {
 	public void doRead(String userID){
 
 		//String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
-		String query = "SELECT studentID , myID, fname, lname, lastLogin FROM tomcatdb.student";
+		String query = "SELECT userID , myID, fname, lname, lastLogin FROM tomcatdb.User";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);

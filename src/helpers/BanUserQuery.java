@@ -40,7 +40,7 @@ public class BanUserQuery {
 	
 	public void banUser(Banned ban){
 		
-		String query = "INSERT INTO `tomcatdb`.`banned` (`bannedID`, `Student_studentID`, `Admin_adminID`, `banStart`, `banEnd`, `penaltyCount`, `description`, `status`) VALUES (?,?,?,?,?,?,?,?)";;
+		String query = "INSERT INTO `tomcatdb`.`Banned` (`bannedID`, `Student_studentID`, `Admin_adminID`, `banStart`, `banEnd`, `penaltyCount`, `description`, `status`) VALUES (?,?,?,?,?,?,?,?)";;
 		
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
