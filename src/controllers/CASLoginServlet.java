@@ -56,7 +56,6 @@ public class CASLoginServlet extends HttpServlet {
 		//get our current session
 		session = request.getSession();
 	
-		String table = "";
 		int recordID = 0;
 
 		// CAS stuff
@@ -96,8 +95,6 @@ public class CASLoginServlet extends HttpServlet {
 		      //=====================
 
 		}
-		
-		table += "<h2>CN=*" + loggedInUser.getMyID() + "*";
 		
 		// used for checking below
 
@@ -140,7 +137,7 @@ public class CASLoginServlet extends HttpServlet {
 		//===== IN ADMIN TABLE CHECK =====//
 			
 		}else if (inAdminUserTable){
-			url = "admin/adminHome.jsp";	
+			url = "admin/adminHomePage.jsp";	
 			//set the logged in user to be an admin logged in user and pass along
 			Admin loggedInAdminUser  = new Admin();
 			
@@ -215,7 +212,7 @@ public class CASLoginServlet extends HttpServlet {
 			// by this time the user object should have recordID, myID, fname, lname and email
 			session.setAttribute("user", user);
 		}		
-		session.setAttribute("table", table);
+
 		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
