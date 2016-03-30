@@ -56,25 +56,25 @@ public class AdminReservationsSelectQuery {
 		
 		// The query below pulls shows the primary & secondary's myID
 		// TODO add the current date / date range of current date - 2 weeks from current date.
-		String query = "SELECT a.myID as 'primary', "
-				+ "b.myID as 'secondary',"
-				+ "tomcatdb.Rooms.roomNumber, "
-				+ "tomcatdb.Reservations.reserveStartDate, "
-				+ "tomcatdb.Reservations.reserveEndDate, "
-				+ "tomcatdb.Reservations.reserveStartTime, "
-				+ "tomcatdb.Reservations.reserveEndTime, "
-				+ "tomcatdb.Reservations.hourIncrement "
+		String query = "SELECT a.myID AS 'primary', "
+				+ "b.myID AS 'secondary',"
+				+ "Rooms.roomNumber, "
+				+ "Reservations.reserveStartDate, "
+				+ "Reservations.reserveEndDate, "
+				+ "Reservations.reserveStartTime, "
+				+ "Reservations.reserveEndTime, "
+				+ "Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.User AS a, tomcatdb.User AS b "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID "
-				+ "AND tomcatdb.Building.buildingID = ? "
-				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
-				+ "AND tomcatdb.Reservations.primaryUser = a.userID "
-				+ "AND tomcatdb.Reservations.secondaryUser = b.userID "
-				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
-				+ "AND tomcatdb.Reservations.free = N "
-				+ "ORDER BY tomcatdb.Rooms.roomNumber, "
-				+ "tomcatdb.Reservations.reserveStartDate, "
-				+ "tomcatdb.Reservations.reserveStartTime DESC";
+				+ "WHERE Reservations.Building_buildingID = tomcatdb.Building.buildingID "
+				+ "AND Building.buildingID = ? "
+				+ "AND Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
+				+ "AND Reservations.primaryUser = a.userID "
+				+ "AND Reservations.secondaryUser = b.userID "
+				+ "AND Reservations.reserveStartDate = ? "
+				+ "AND Reservations.free = 'N' "
+				+ "ORDER BY Rooms.roomNumber, "
+				+ "Reservations.reserveStartDate, "
+				+ "Reservations.reserveStartTime DESC";
 		
 		// securely run query
 		try {
@@ -109,7 +109,8 @@ public class AdminReservationsSelectQuery {
 				+ "tomcatdb.Reservations.reserveEndTime, "
 				+ "tomcatdb.Reservations.hourIncrement "
 				+ "FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building, tomcatdb.Admin "
-				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID = ? "
+				+ "WHERE tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID "
+				+ "AND tomcatdb.Building.buildingID = ? "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.Admin_adminID = tomcatdb.Admin.adminID "
 				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
