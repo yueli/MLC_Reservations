@@ -175,26 +175,26 @@ public class ListUserReservationsQuery {
 								if (firstTime){
 
 									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-									table += "<tbody>";
+									table += "<thead>";
 									table += "<tr>";
-									table += "<td> Reservation ID</td>";
-									table += "<td> Start Date</td>";
-									table += "<td> End Date</td>";
-									table += "<td> Start Time</td>";
-									table += "<td> End Time </td>"; 
-									table += "<td> Building </td>";
-									table += "<td> Room Floor</td>";
-									table += "<td> Room Number</td>";
-									table += "<td> Primary/Secondary</td>";
+									table += "<th> Reservation ID</td>";
+									table += "<th> Start Date</td>";
+									table += "<th> End Date</td>";
+									table += "<th> Start Time</td>";
+									table += "<th> End Time </td>"; 
+									table += "<th> Building </td>";
+									table += "<th> Room Floor</td>";
+									table += "<th> Room Number</td>";
+									table += "<th> Primary/Secondary</td>";
 									table += "</tr>";
-									table += "</tbody>";
+									table += "</thead>";
+									table += "<tbody>";
 									
 									firstTime = false;
 									
 								}
 								
-								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-								table += "<tbody>";
+								
 								table += "<tr>";
 								table += "<td>" + resv.getReserveID() + "</td>";
 								table += "<td>" + resv.getReserveStartDate() + "</td>";
@@ -210,7 +210,7 @@ public class ListUserReservationsQuery {
 										"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
 										"<input class='btn btn-lg btn-red' type='submit' value='Cancel Reservation'>" +
 										"</form></td>";		
-								table += "</tbody>";
+								
 							
 								
 							}else {// else current hour = reservations hour - check to see if it is within the 
@@ -302,15 +302,15 @@ public class ListUserReservationsQuery {
 								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 								table += "<thead>";
 								table += "<tr>";
-								table += "<td> Reservation ID</td>";
-								table += "<td> Start Date</td>";
-								table += "<td> End Date</td>";
-								table += "<td> Start Time</td>";
-								table += "<td> End Time </td>"; 
-								table += "<td> Building </td>";
-								table += "<td> Room Floor</td>";
-								table += "<td> Room Number</td>";
-								table += "<td> Primary/Secondary</td>";
+								table += "<th> Reservation ID</td>";
+								table += "<th> Start Date</td>";
+								table += "<th> End Date</td>";
+								table += "<th> Start Time</td>";
+								table += "<th> End Time </td>"; 
+								table += "<th> Building </td>";
+								table += "<th> Room Floor</td>";
+								table += "<th> Room Number</td>";
+								table += "<th> Primary/Secondary</td>";
 								table += "</tr>";
 								table += "</thead>";
 								table += "<tbody>";
