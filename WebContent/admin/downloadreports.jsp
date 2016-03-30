@@ -12,7 +12,7 @@
 		<script> 
 			$(function() {
 				$("#header1").load("./adminheader.html"); 
-				$("#footer").load("./footer.html"); 
+				$("#footer").load("../footer.html"); 
 			});
 		</script> 
 	</head>
@@ -26,7 +26,7 @@
 	
 	<br>
 	<div align="center">
-	    <form id="downloadBanned" action="../DownloadReports" method="POST">
+	    <form id="downloadBanned" action="/ReportsExcelDownloadServlet" method="GET">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
     </form>
       
