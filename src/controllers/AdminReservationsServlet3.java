@@ -127,7 +127,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+			url = "AdminHome";
 		}
 		
 		// forward the request

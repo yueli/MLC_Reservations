@@ -180,7 +180,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				// if there is no buildingID from request, then display building drop down
 				if (buildingID == null || buildingID.equals("0")){
-					buildingID = "1";
+					buildingID = Integer.toString(bsq.getFirstBuildingID());
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
@@ -256,7 +256,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+			url = "AdminHome";
 		}
 		
 		// forward the request
