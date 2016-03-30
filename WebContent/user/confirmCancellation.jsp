@@ -59,6 +59,7 @@ form {
 	<br>
 <br>
 <br>
+<div align="center">
 <div class="container margin-vert-60" style="z-index:1;">
 	<div class="row text-center">
 	<h1>Cancel Confirmation for
@@ -70,6 +71,7 @@ form {
 	
 	<br />
 	<%= table %>
+</div>
 </div>
 </div>
 <div id="footer1"></div>
