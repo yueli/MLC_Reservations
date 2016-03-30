@@ -2,13 +2,8 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>MLC_Reservations</display-name>
   <welcome-file-list>
-<<<<<<< HEAD
-    <welcome-file>LoginController</welcome-file>
-    <welcome-file>/admin/</welcome-file>
-=======
-  	<welcome-file>CASLoginServlet</welcome-file>
-  	 <welcome-file>/user/LoginServlet</welcome-file>
->>>>>>> origin/master
+    <welcome-file>CASLoginServlet</welcome-file>
+    <welcome-file>/user/LoginServlet</welcome-file>
     <welcome-file>/user/login.jsp</welcome-file>
     <welcome-file>/user/home.jsp</welcome-file>
     <welcome-file>/user/index.html</welcome-file>
@@ -20,8 +15,6 @@
   <session-config>
     <session-timeout>10</session-timeout>
   </session-config>
-<<<<<<< HEAD
-=======
 
    <!-- CAS CONFIGURATION -->
 
@@ -89,6 +82,4 @@
   		<filter-name>loginFilter</filter-name>
   		<url-pattern>/servlet/SelfService/*</url-pattern>
 	</filter-mapping --> 
-
->>>>>>> origin/master
 </web-app>
