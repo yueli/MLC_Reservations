@@ -20,8 +20,8 @@
 	  	        $( "#tabs" ).tabs();
 	  	    });
 			$(function() {
-				$("#header1").load("./userheader.html"); 
-				$("#footer").load("../footer.html"); 
+				$("#header1").load("user/userheader.html"); 
+				$("#footer").load("footer.html"); 
 			});
 		</script> 
 	</head>

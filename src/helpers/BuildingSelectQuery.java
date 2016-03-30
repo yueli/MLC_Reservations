@@ -283,4 +283,30 @@ public class BuildingSelectQuery {
 		
 	}
 	
+	public int getFirstBuildingID(){
+		Integer buildingID = null;
+		
+		String query = "SELECT buildingID FROM tomcatdb.Building limit 1;";
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			
+			this.results = ps.executeQuery();
+			
+			this.results.next();
+			
+			buildingID = this.results.getInt("buildingID");
+			
+			System.out.println("BuildingSelectQuery getFirstBuildingID AFTER executing query building ID = " + buildingID);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("** Error in BuildingSelectQuery getFirstBuildingID query = " + query);
+		}
+		
+		return buildingID;
+		
+	}
+	
 }
