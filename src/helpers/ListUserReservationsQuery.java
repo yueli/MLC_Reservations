@@ -283,7 +283,7 @@ public class ListUserReservationsQuery {
 									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 									table += "<td> CHECK IN </td>"; //TODO add ink
 									table += "<tr><td><form action='/CheckInServlet' method = 'post'>" +
-											"<input type='hidden' name='resv_id' value='" + resv.getReserveID() + "'>" +
+									"<input type='hidden' name='resv_id' value='" + resv.getReserveID() + "'>" +
 											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
 											"</form></td>";	
 								

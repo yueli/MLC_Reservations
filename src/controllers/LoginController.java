@@ -77,18 +77,18 @@ public class LoginController extends HttpServlet {
 				String lname = "Nix";
 				String email = "ganix@uga.edu";
 				
-				User loggedInUser = new User(); // create the user object to pass forward
+				User user = new User(); // create the user object to pass forward
 				
-				loggedInUser.setMyID(userMyID);
-				loggedInUser.setUserFirstName(fname);
-				loggedInUser.setUserLastName(lname);
-				loggedInUser.setUserEmail(email);
+				user.setMyID(userMyID);
+				user.setUserFirstName(fname);
+				user.setUserLastName(lname);
+				user.setUserEmail(email);
 	
 				AdminUserHelper auh = new AdminUserHelper();
 				
 				Admin loggedInAdminUser = new Admin(); // create the user object to pass forward
 
-				loggedInAdminUser = auh.getAdminData(loggedInUser.getMyID());
+				loggedInAdminUser = auh.getAdminData(user.getMyID());
 				
 				//----------------
 				// once this person is authenticated as being UGA affiliated, check to is they have been banned
@@ -96,7 +96,7 @@ public class LoginController extends HttpServlet {
 								
 					// send the logged in user's myID  to check if in the user's table
 					
-					boolean inTable = uh.inUserTable(loggedInUser.getMyID());
+					boolean inTable = uh.inUserTable(user.getMyID());
 					
 					System.out.println("Login Controller returned from inUserTable " + inTable);				
 					
@@ -104,25 +104,22 @@ public class LoginController extends HttpServlet {
 	
 						// get the user's record ID from the user table to check to see if banned
 						
-						int recordID = uh.getRecordID(loggedInUser.getMyID());
+						int recordID = uh.getRecordID(user.getMyID());
 						
 						System.out.println("Login Controller get user Record ID 1 " + recordID);
 					
 						if(uh.alreadyBanned(recordID)) {
 							// since they have already been banned, send them to a page telling them 
 
-							session.setAttribute("loggedInUser", loggedInUser); //send info from CAS info
+							session.setAttribute("user", user); //send info from CAS info
 							System.out.println("Login Controller already banned! " + userMyID);
 							
 							url="user/bannedUser.jsp";
-							//forward our request along
-							RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-							dispatcher.forward(request, response);
 							
 						}else{ // they are in the table and not banned
 
 							//they have not been banned for this period, so update the last time they logged in
-							uh.updateLastLogin(loggedInUser.getMyID());	
+							uh.updateLastLogin(user.getMyID());	
 							
 						}
 						
@@ -131,7 +128,7 @@ public class LoginController extends HttpServlet {
 						// have logged in user's object populated above from CAS returned info
 						
 						//TODO last logged in date?		
-						uh.insertUserTable(loggedInUser.getMyID(), loggedInUser.getUserFirstName(), loggedInUser.getUserLastName(), loggedInUser.getUserEmail()); //need to send last logged in date?	
+						uh.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), user.getUserEmail()); //need to send last logged in date?	
 						
 					}
 
@@ -140,13 +137,17 @@ public class LoginController extends HttpServlet {
 					session.invalidate();
 					session=request.getSession(true);
 					
+					//url = "admin/adminHome.jsp";
+					url = "index.html";
+					
+					user.setUserRecordID(19);
+					
+					
+					System.out.println("Login Controller user recd id " + user.getUserRecordID() );
 					session.setAttribute("loggedInAdminUser", loggedInAdminUser);
-					session.setAttribute("loggedInUser", loggedInUser);
+					session.setAttribute("loggedInUser", user);
 					session.setAttribute("message", message);
-
-					//changed for testing
-					//url="index.html";
-					url = "admin/adminHome.jsp";
+					session.setAttribute("user", user);
 					
 					//forward our request along
 					RequestDispatcher dispatcher = request.getRequestDispatcher(url);
