@@ -92,6 +92,30 @@ public class CASLoginServlet extends HttpServlet {
 		    		loggedInUser.setMyID(attributeValue);    
 		    		//table += " ** using this attirbute CAN ** ";
 		      }
+		      if (Objects.equals("ugaEmail", attributeName)){
+		    	  	System.out.println("************************");
+		    	  	System.out.println();
+		    	  	System.out.println("CAS VARIABLE LOGGING IN ugaEmail: " + attributeValue); // TEST IN CAS STAGE
+		    	  	System.out.println();
+		    	  	System.out.println("************************");
+		    		//table += " ** using this attirbute CAN ** ";
+		      }
+		      if (Objects.equals("fsCode", attributeName)){
+		    	  	System.out.println("************************");
+		    	  	System.out.println();
+		    	  	System.out.println("CAS VARIABLE LOGGING IN fsCode: " + attributeValue); // TEST IN CAS STAGE
+		    	  	System.out.println();
+		    	  	System.out.println("************************");
+		    		//table += " ** using this attirbute CAN ** ";
+		      }
+		      if (Objects.equals("employeeType", attributeName)){
+		    	  	System.out.println("************************");
+		    	  	System.out.println();
+		    	  	System.out.println("CAS VARIABLE LOGGING IN employeeType: " + attributeValue); // THIS WORKED!!!!
+		    	  	System.out.println();
+		    	  	System.out.println("************************");
+		    		//table += " ** using this attirbute CAN ** ";
+		      }
 		      //=====================
 
 		}
