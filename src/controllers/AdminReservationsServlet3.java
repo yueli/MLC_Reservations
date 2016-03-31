@@ -82,7 +82,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				RoomsSelectQuery roomsq = new RoomsSelectQuery();
 				roomID = roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
 				
-				// TODO get hour increment
+				// get hour increment
 				int hourIncrement = tc.getHourIncrement(startTime, endTime);
 				
 				// check if reservation is available
@@ -105,13 +105,17 @@ public class AdminReservationsServlet3 extends HttpServlet {
 							startDate, endDate, startTime, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement,
 							reserveName, buildingIDInt, free);
 					ReservationInsertQuery riq = new ReservationInsertQuery();
-					riq.doReservationInsert(reservation);
+					riq.doAdminReservationInsert(reservation);
 					
 					
 					// set success message and forwarding URL
 					msg = "You have successfully made a reservation.";
-					url = "admin/confirmation.jsp";
+					url = "view-reservations";
+					
+					
 				}
+				
+				session.setAttribute("msg", msg);
 			} else { 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */

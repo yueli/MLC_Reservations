@@ -43,7 +43,7 @@ public class AdminViewReservations extends HttpServlet {
 		session = request.getSession();
 		
 		
-		
+		String msg = (String) session.getAttribute("msg");
 		String buildingList = request.getParameter("buildingList");
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		// set building & check if building is selected by user
@@ -85,6 +85,7 @@ public class AdminViewReservations extends HttpServlet {
 		String url = "admin/view-reservations.jsp";
 		
 		// set session and request variables
+		session.setAttribute("msg", msg);
 		session.setAttribute("buildings", buildings);
 		session.setAttribute("bldg", bldg);
 		session.setAttribute("currentDate", currentDate);

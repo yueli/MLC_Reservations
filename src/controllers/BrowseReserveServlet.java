@@ -67,7 +67,7 @@ public class BrowseReserveServlet extends HttpServlet {
 		HourCountSelectQuery hcsq = new HourCountSelectQuery();
 		hcsq.doIncrementRead(userID);
 		int incrementSum = hcsq.incrementResult();
-		System.out.println("PRINT OF THE HOUR INCREMENT SUM: " + incrementSum);
+		System.out.println("PRINT OF THE HOUR INCREMENT SUM in BrowseReserveServlet: " + incrementSum);
 		
 		// build HTML select
 		String incrementSelect = "<select id='userIncrementSelected' name='userIncrementSelected'>";

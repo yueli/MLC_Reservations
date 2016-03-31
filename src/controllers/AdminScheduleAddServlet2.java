@@ -225,12 +225,12 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
 					yesButton += "<input name ='update' type='hidden' value='yes'>";
 					yesButton += "<input name ='scheduleID' type='hidden' value='" + check + "'>";
-					yesButton += "<input type='submit' name='Yes' value='Yes'>";
+					yesButton += "<input class='btn btn-lg btn-red' type='submit' name='Yes' value='Yes'>";
 					yesButton += "</form>";
 					
 					noButton = "<form name='dontUpdate' action='new-schedule' method='post'>";
 					noButton += "<input name ='update' type='hidden' value='no'>";
-					noButton += "<input type='submit' name='No' value='No'>";
+					noButton += "<input class='btn btn-lg btn-red' type='submit' name='No' value='No'>";
 					noButton += "</form>";
 					
 					msg = "Entry for " + dtc.convertDateLong(startDate) + " exists, would you like to update the entry? ";
