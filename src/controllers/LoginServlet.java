@@ -22,7 +22,7 @@ import model.User;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String url;
-       
+	private HttpSession session;   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -42,8 +42,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		url = "UserHome";
+		session = request.getSession();
 		/*
 		Admin loggedInAdminUser = new Admin();
 		loggedInAdminUser.setAdminID(1);
@@ -53,12 +52,14 @@ public class LoginServlet extends HttpServlet {
 		loggedInAdminUser.setAdminMyID("bbo89");
 		
 		User user = new User();
-		user.setMyID("ganix");
+		user.setMyID("bbo89");
 		user.setUserEmail("bbo89@uga.edu");
 		user.setUserRecordID(1);
 		
 		session.setAttribute("user", user);
-		session.setAttribute("loggedInAdminUser", loggedInAdminUser); */
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser);*/
+		
+		url = "UserHome"; 
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response); 

@@ -233,6 +233,15 @@ public class RoomsSelectQuery {
 								if (tc.currentMinutes() > 10){
 									table += "<td id='yellow'>";
 									table += tc.convertTimeTo12(timeBlock[i]);
+								} else {
+									table += "<td id='green'>";
+									table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+									table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+									table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+									table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+									table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+									table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+									table += "</form> ";
 								}
 							} else {
 								table += "<td id='green'>";
@@ -283,6 +292,15 @@ public class RoomsSelectQuery {
 								if (tc.currentMinutes() > 10){
 									table += "<td id='yellow'>";
 									table += tc.convertTimeTo12(timeBlock[i]);
+								} else {
+									table += "<td id='green'>";
+									table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+									table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+									table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+									table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+									table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+									table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+									table += "</form> ";
 								}
 							} else {
 								table += "<td id='green'>";
