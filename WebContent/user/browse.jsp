@@ -29,13 +29,14 @@
 		<div id="header1"></div>
 		<br><br><br><br>
 		<div align="center">
+			<h2>${msg}</h2>
 			<form name="browseForm" action="BrowseFloors" method="post">
-				<h2>Please Select Building</h2>
+				<h2>${buildingHeader}</h2>
 				<p>${buildings}
-				<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p> 
+				${buildingSubmit}</p> 
 			</form>
 			<form name="browseForm2" action="BrowseRooms" method="post">
-				<h2>Please Select Floor</h2>
+				<h2>${floorHeader}</h2>
 				<p>${floor}</p>
 			</form>
 		</div>
