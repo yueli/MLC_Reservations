@@ -43,8 +43,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		url = "AdminHome";
-		
+		url = "UserHome";
+		/*
 		Admin loggedInAdminUser = new Admin();
 		loggedInAdminUser.setAdminID(1);
 		loggedInAdminUser.setAdminStatus(1);
@@ -53,13 +53,15 @@ public class LoginServlet extends HttpServlet {
 		loggedInAdminUser.setAdminMyID("bbo89");
 		
 		User user = new User();
-		
+		user.setMyID("ganix");
+		user.setUserEmail("bbo89@uga.edu");
+		user.setUserRecordID(1);
 		
 		session.setAttribute("user", user);
-		session.setAttribute("loggedInAdminUser", loggedInAdminUser);
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser); */
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response); 
 	}
 
 }

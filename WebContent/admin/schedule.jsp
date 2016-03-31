@@ -70,7 +70,7 @@
 		<form name="BuildingSelect" action="Schedule" method="post">
 			<p>${buildings}
 			<label for="from">From </label> <input type="text" id="from" name="from" placeholder="mm/dd/yyyy"> <label for="to">To </label> <input type="text" id="to" name="to" placeholder="mm/dd/yyyy">
-			<input name="enterBuilding" type="submit" value="Enter"></p>
+			<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
 		</form>
 		<p>${schedule}</p>
 		<div id="footer"></div>
