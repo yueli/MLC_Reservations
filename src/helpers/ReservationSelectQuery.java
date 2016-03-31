@@ -49,7 +49,7 @@ public class ReservationSelectQuery {
 	 * @param roomNumber String room number
 	 */
 	public void doReservationRead(String currentDate, String startTime, String roomNumber){
-		System.out.println("DATE: " + currentDate + " START: " + startTime + " ROOM# " + roomNumber);
+
 		String query = "SELECT Reservations.reserveID "
 				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
 				        + "WHERE ((Reservations.reserveStartDate = ? ) "
