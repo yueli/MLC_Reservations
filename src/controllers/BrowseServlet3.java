@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import helpers.BuildingSelectQuery;
 import helpers.FloorSelectQuery;
 import helpers.RoomsSelectQuery;
+import model.DbConnect;
+import model.User;
 
 /**
  * @author Brian Olaogun
@@ -46,49 +48,60 @@ public class BrowseServlet3 extends HttpServlet {
 		
 		// If session is active/valid
 		if(session != null){
+			User user = (User) session.getAttribute("user");
 			
-			// Check if any buildings are open
-			BuildingSelectQuery bsq = new BuildingSelectQuery();
-			boolean isOpen = bsq.buildingsOnline();
-			
-			if (isOpen){ // a building is open
+			if(user != null) { // run code if user object is not null
 				
-				// get session and request variables
-				int buildingSelected = (Integer) session.getAttribute("buildingSelected");
-				String floorSelected = (String) request.getParameter("floorList");
+				// Check if any buildings are open
+				BuildingSelectQuery bsq = new BuildingSelectQuery();
+				boolean isOpen = bsq.buildingsOnline();
 				
-				// loads floor list from database, create dropdown for list, and output as String
-				FloorSelectQuery fsq = new FloorSelectQuery();
-				fsq.doFloorRead(buildingSelected);
-				String floor = fsq.getFloorResults(floorSelected);
-				
-				// loads rooms from database, query reservation to get availability, outputs string table
-				RoomsSelectQuery rsq = new RoomsSelectQuery ();
-				rsq.doRoomRead(buildingSelected, floorSelected);
-				String table = rsq.getRoomsTable();
-				
-				// URL of the view to forward
-				url = "/user/browse.jsp";
-				
-				// set session attribute
-				session.setAttribute("floorSelected", floorSelected);
-				session.setAttribute("building", buildingSelected);
-				session.setAttribute("floor", floor); 
-				session.setAttribute("table", table);
-				
-			} else { // ALL buildings are closed
-				session.removeAttribute("buildingHeader");
-				session.removeAttribute("buildingSubmit");
-				session.removeAttribute("floorHeader");
-				
-				String msg = "No Buildings are currently open at this time.  Please check again.";
-				session.setAttribute("msg", msg);
-				url = "/user/browse.jsp";
+				if (isOpen){ // a building is open
+					session.removeAttribute("msg");
+					// get session and request variables
+					int buildingSelected = (Integer) session.getAttribute("buildingSelected");
+					String floorSelected = (String) request.getParameter("floorList");
+					
+					// loads floor list from database, create dropdown for list, and output as String
+					FloorSelectQuery fsq = new FloorSelectQuery();
+					fsq.doFloorRead(buildingSelected);
+					String floor = fsq.getFloorResults(floorSelected);
+					
+					// loads rooms from database, query reservation to get availability, outputs string table
+					RoomsSelectQuery rsq = new RoomsSelectQuery ();
+					rsq.doRoomRead(buildingSelected, floorSelected);
+					String table = rsq.getRoomsTable();
+					
+					// URL of the view to forward
+					url = "/user/browse.jsp";
+					
+					// set session attribute
+					session.setAttribute("floorSelected", floorSelected);
+					session.setAttribute("building", buildingSelected);
+					session.setAttribute("floor", floor); 
+					session.setAttribute("table", table);
+					
+				} else { // ALL buildings are closed
+					session.removeAttribute("buildingHeader");
+					session.removeAttribute("buildingSubmit");
+					session.removeAttribute("floorHeader");
+					
+					String msg = "No Buildings are currently open at this time.  Please check again.";
+					session.setAttribute("msg", msg);
+					url = "/user/browse.jsp";
+				}
+			} else {
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
 		} else {
 			// if session isnt active, go to home page
 			// the app should log them out.
-			url = "UserHome";
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
 		}
 		
 		// forward the request
