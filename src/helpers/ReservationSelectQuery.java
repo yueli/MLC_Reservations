@@ -154,7 +154,7 @@ public class ReservationSelectQuery {
 				}
 			}
 		}
-		System.out.println("Results = " + results);
+		//System.out.println("Results = " + results);
 		return results;
 	}
 	/**

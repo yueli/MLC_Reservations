@@ -1,5 +1,8 @@
 package model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class User {
 
 	private int userRecordID;
@@ -97,6 +100,16 @@ public class User {
 	 */
 	public void setLastLogin(String lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+	/**
+	 * Checking if text entered for myID is valid
+	 * @param myID
+	 * @return true if valid myID, false if not valid.
+	 */
+	public static boolean containsSpaces(String myID){
+		Pattern pattern = Pattern.compile("\\s");
+		Matcher matcher = pattern.matcher(myID);
+		return matcher.find();
 	}
 	
 }

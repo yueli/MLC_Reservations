@@ -35,14 +35,14 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
+		doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		session = request.getSession();
+		this.session = request.getSession();
 		/*
 		Admin loggedInAdminUser = new Admin();
 		loggedInAdminUser.setAdminID(1);
@@ -50,14 +50,17 @@ public class LoginServlet extends HttpServlet {
 		loggedInAdminUser.setRole("A");
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setAdminMyID("bbo89");
+		System.out.println("LOGIN SERVLET!");
 		
 		User user = new User();
 		user.setMyID("bbo89");
 		user.setUserEmail("bbo89@uga.edu");
 		user.setUserRecordID(1);
+		System.out.println("LoginServlet USER OBJECT " );
+		
 		
 		session.setAttribute("user", user);
-		session.setAttribute("loggedInAdminUser", loggedInAdminUser);*/
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser); */
 		
 		url = "UserHome"; 
 		//forward our request along
