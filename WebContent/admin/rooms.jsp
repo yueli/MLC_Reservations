@@ -58,7 +58,7 @@ form {
 		<form name="buildingForRoomsForm" action="RoomsListServlet" method="post">
 			<h2>Please Select A Building</h2>
 			<p>${buildings}
-			<input name="buildingSelected" type="submit" value="Enter"></p> 
+			<input class='btn btn-lg btn-red' name="buildingSelected" type="submit" value="Enter"></p> 
 		</form>
 
 		<div id="footer"></div>

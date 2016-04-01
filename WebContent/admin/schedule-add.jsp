@@ -67,7 +67,7 @@
 				Start Time: <input type="text" id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input type="text" id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Summary: <input type="text" name="summary" value="${summary}"><br>
-				<button class="btn btn-lg btn-red" onclick="goBack()">Go Back</button><input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter">
+				<button class="btn btn-lg btn-red" onclick="goBack()">Go Back</button>     <input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter">
 			</form>
 		</div>
 		<div id="footer"></div>

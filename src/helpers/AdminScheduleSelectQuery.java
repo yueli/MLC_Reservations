@@ -159,7 +159,7 @@ public class AdminScheduleSelectQuery {
 				table += "<input type='hidden' name='endDate' value='" + schedule.getEndDate() + "'>";
 				table += "<input type='hidden' name='summary' value='" + schedule.getSummary() + "'>";
 				table += "<input type='hidden' name='createdBy' value='" + schedule.getCreatedBy() + "'>";
-				table += "<input type='submit' value='Edit'>";
+				table += "<input class='btn btn-lg btn-red' type='submit' value='Edit'>";
 				table += "</form>";
 				table += "</td>";
 				table += "</tr>";
