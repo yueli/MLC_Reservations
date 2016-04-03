@@ -1,7 +1,6 @@
 /* @Author Victoria Chambers */
 
-/* #Tablet (Landscape)
-================================================== */
+/* #Tablet (Landscape) */
 
 @media only screen and (max-width: 1080px) {
 
@@ -26,16 +25,14 @@
 
 }
 
-/* #Tablet (Portrait)
-================================================== */
+/* #Tablet (Portrait) */
     
 @media only screen and (max-width: 959px) {
 
 
 }
 
-/* #Mobile (Landscape)
-================================================== */
+/* #Mobile (Landscape) */
 
 @media only screen and (max-width: 767px) {
 
@@ -48,8 +45,7 @@
 
 }
 
-/*  #Mobile (Portrait)
-================================================== */
+/*  #Mobile (Portrait) */
 
 @media only screen and (max-width: 440px) {
 

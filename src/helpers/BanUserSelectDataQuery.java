@@ -1,5 +1,5 @@
 package helpers;
-//**By Ronnie Xu~****/
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,7 +39,7 @@ public class BanUserSelectDataQuery {
 	public void doRead(String userID){
 
 		//String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
-		String query = "SELECT studentID , myID, fname, lname, lastLogin FROM tomcatdb.student";
+		String query = "SELECT userID , myID, fname, lname, lastLogin FROM tomcatdb.User";
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -61,7 +61,7 @@ public class BanUserSelectDataQuery {
 	public String getHTMLTable(){ 
 		//Return table of banned students
 		
-		String table = "<table id= '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+		String table = "<table>";
 		
 	
 		try{
@@ -71,7 +71,8 @@ public class BanUserSelectDataQuery {
 			table += "<td><a href=banUser><button type='submit' value=''>Unban A User(List)</button></a></td>";
 			table += "<td><a href=unbanall><button type='submit' value=''>Unban All</button></a></td></tr>";
 			
-			table += "<thead><tr><th>Ban#</th><th>Student ID</th><th>Admin ID</th><th>Ban Start</th><th>Ban End</th><th>Penalty Count</th><th>Description</th><th>Status</th></tr></thead>";while(results.next()){
+			table += "<tr><td>Ban#</td><td>Student ID</td><td>Admin ID</td><td>Ban Start</td><td>Ban End</td><td>Penalty Count</td><td>Description</td><td>Status</td></tr>";
+			while(results.next()){
 
 				
 				
@@ -87,7 +88,7 @@ public class BanUserSelectDataQuery {
 				
 				//show only banned
 				
-				table += "<tbody><tr>";
+				table += "<tr>";
 				
 				table += "<td>";
 				table += ban.getBanID();
@@ -117,7 +118,7 @@ public class BanUserSelectDataQuery {
 				table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
 
 				
-				table += "</tr></tbody>";
+				table += "</tr>";
 			}
 			table+="</table>";
 		}

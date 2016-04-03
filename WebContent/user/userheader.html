@@ -16,7 +16,7 @@
         <!-- Template CSS -->
         <link rel="stylesheet" type="text/css" href="../assets/css/animate.css">
         <link rel="stylesheet" type="text/css" href="../assets/css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="../assets/css/nexus.css">
+        <link rel="stylesheet" type="text/css" href="../assets/css/global.css">
         <link rel="stylesheet" type="text/css" href="../assets/css/responsive.css">
         <link rel="stylesheet" type="text/css" href="../assets/css/custom.css">
         <!-- Google Fonts-->
@@ -24,11 +24,8 @@
         
     </head>
     <body>
-    <div class="slicknav_menu hidden-lg"><a href="index.html" aria-haspopup="true" tabindex="0" 
-    class="slicknav_btn slicknav_collapsed" style="outline: none;"><span class="slicknav_menutxt">MENU</span>
-    	<span class="slicknav_icon"><span class="slicknav_icon-bar"></span>
-    	<span class="slicknav_icon-bar"></span>
-   		 <span class="slicknav_icon-bar"></span></span></a>
+    <div class="slicknav_menu hidden-lg">
+    	<span class="slicknav_icon"></span>
     	<ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
                                         <li>
                                             <a href="index.html" class="fa-home" role="menuitem" tabindex="-1">Home</a>
@@ -46,7 +43,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="https://cas.uga.edu/cas/logout" class="fa-ban" role="menuitem" tabindex="-1">Logout</a>
+                                            <a href="Logout" class="fa-ban" role="menuitem" tabindex="-1">Logout</a>
                                         </li>
                                     </ul></div>
         <div id="body_bg">
@@ -75,7 +72,7 @@
                             <!-- Logo -->
                             <div class="logo">
                                 <a href="index.html" title="">
-                                    <img src="../assets/img/UGA$!logo.png" alt="Logo">
+                                    <img src="assets/img/UGA$!logo.png" alt="Logo">
                                 </a>
                             </div>
                             <!-- End Logo -->
@@ -89,19 +86,24 @@
                                 <div class="pull-right visible-lg">
                                     <ul id="hornavmenu" class="nav navbar-nav">
                                         <li>
-                                            <a href="index.html">Home</a>
+                                            <a href="UserHome">Home</a>
+                                        </li>
+                                        <li class="parent">
+                                       	 <span>Reservations</span>
+                                           <ul>
+                                             <li>
+                                          		<a href="ViewServlet">View, Cancel, or Check-in</a>
+                                             </li>
+                                             <li>
+                                               	<a href="Browse">Browse</a>
+                                             </li>
+                                             <li>
+                                               	<a href="searchbuildings">Search</a>
+                                             </li>
+                                            </ul>
                                         </li>
                                         <li>
-                                            <a href="/Browse">Browse</a>
-                                        </li>
-                                        <li>
-                                            <a href="/searchbuildings">Search</a>
-                                        </li>
-                                        <li>
-                                            <a href="/ViewServlet">Reservations</a>
-                                        </li>
-                                        <li>
-                                            <a href="https://cas.uga.edu/cas/logout">Logout</a>
+                                            <a href="Logout">Logout</a>
                                         </li>
                                       </ul>
                                 </div>

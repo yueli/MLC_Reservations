@@ -16,7 +16,7 @@
         <!-- Template CSS -->
         <link rel="stylesheet" href="assets/css/animate.css">
         <link rel="stylesheet" href="assets/css/font-awesome.css">
-        <link rel="stylesheet" href="assets/css/nexus.css">
+        <link rel="stylesheet" href="assets/css/global.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
         <link rel="stylesheet" href="assets/css/custom.css">
         <!-- Google Fonts-->
@@ -24,11 +24,8 @@
         <link href="assets/css(1)" rel="stylesheet" type="text/css">
     </head>
     <body>
-    <div class="slicknav_menu hidden-lg"><a href="index.html" aria-haspopup="true" tabindex="0" 
-    class="slicknav_btn slicknav_collapsed" style="outline: none;"><span class="slicknav_menutxt">MENU</span>
-    	<span class="slicknav_icon"><span class="slicknav_icon-bar"></span>
-    	<span class="slicknav_icon-bar"></span>
-   		 <span class="slicknav_icon-bar"></span></span></a>
+    <div class="slicknav_menu hidden-lg">
+    	<span class="slicknav_icon"></span>
     	<ul class="slicknav_nav slicknav_hidden" aria-hidden="true" role="menu" style="display: none;">
                                         <li>
                                             <a href="index.html" class="fa-home" role="menuitem" tabindex="-1">Home</a>
@@ -46,7 +43,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="https://cas.uga.edu/cas/logout" class="fa-ban" role="menuitem" tabindex="-1">Logout</a>
+                                            <a href="Logout" class="fa-ban" role="menuitem" tabindex="-1">Logout</a>
                                         </li>
                                     </ul></div>
         <div id="body_bg">
@@ -91,17 +88,22 @@
                                         <li>
                                             <a href="index.html">Home</a>
                                         </li>
-                                        <li>
-                                            <a href="/Browse">Browse</a>
+                                        <li class="parent">
+                                       	 <span>Reservations</span>
+                                           <ul>
+                                             <li>
+                                          		<a href="ViewServlet">View, Cancel, or Check-in</a>
+                                             </li>
+                                             <li>
+                                               	<a href="Browse">Browse</a>
+                                             </li>
+                                             <li>
+                                               	<a href="searchbuildings">Search</a>
+                                             </li>
+                                            </ul>
                                         </li>
                                         <li>
-                                            <a href="/searchbuildings">Search</a>
-                                        </li>
-                                        <li>
-                                            <a href="/ViewServlet">Reservations</a>
-                                        </li>
-                                        <li>
-                                            <a href="https://cas.uga.edu/cas/logout">Logout</a>
+                                            <a href="Logout">Logout</a>
                                         </li>
                                       </ul>
                                 </div>
@@ -262,8 +264,6 @@
             <script type="text/javascript" src="assets/js/jquery.min.js"></script>
             <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
             <script type="text/javascript" src="assets/js/scripts.js"></script>
-            <!-- Isotope - Portfolio Sorting -->
-            <script type="text/javascript" src="assets/js/jquery.isotope.js"></script>
             <!-- Mobile Menu - Slicknav -->
             <script type="text/javascript" src="assets/js/jquery.slicknav.js"></script>
             <!-- Animate on Scroll-->
@@ -277,4 +277,4 @@
             <!-- End JS -->
     
 
-<!-- === END FOOTER === --></div><div id="lbOverlay" style="display: none;"></div><div id="lbCenter" style="display: none;"><div id="lbImage"><div style="position: relative;"><a id="lbPrevLink" href="file:///Users/victoria.chambers/Downloads/enlighten/HTML/index.html#"></a><a id="lbNextLink" href="file:///Users/victoria.chambers/Downloads/enlighten/HTML/index.html#"></a></div></div></div><div id="lbBottomContainer" style="display: none;"><div id="lbBottom"><a id="lbCloseLink" href="file:///Users/victoria.chambers/Downloads/enlighten/HTML/index.html#"></a><div id="lbCaption"></div><div id="lbNumber"></div><div style="clear: both;"></div></div></div></body></html>
+<!-- === END FOOTER === -->

@@ -50,7 +50,7 @@ public class SearchReservationsResultsQuery {
 
 	//Method to get all rooms in building
 	public ArrayList<Integer> getAllRooms(int buildingid){
-		String query = "SELECT rooms.roomID, rooms.Building_buildingID FROM tomcatdb.rooms WHERE rooms.Building_buildingID ='"+buildingid+"' ORDER BY rooms.roomNumber";
+		String query = "SELECT Rooms.roomID, Rooms.Building_buildingID FROM tomcatdb.Rooms WHERE Rooms.Building_buildingID ='"+buildingid+"' ORDER BY Rooms.roomNumber";
 		System.out.println("getAllRooms:");
 		System.out.println(query);
 		
@@ -74,13 +74,13 @@ public class SearchReservationsResultsQuery {
 	
 	//User Input for Results
 	public void doRead(int buildingid, String beginDate, String beginTime, String endDate, String endTime, int hourIncrement ){
-		String query = "SELECT reservations.Building_buildingID,  reservations.Rooms_roomID, reservations.hourIncrement, reservations.reserveStartDate, reservations.reserveEndDate, reservations.reserveStartTime, reservations.reserveEndTime"
-				+ " FROM tomcatdb.reservations WHERE reservations.Building_buildingID ='"+buildingid+"' AND "
-				+ "reservations.reserveStartDate>='"+ beginDate +"' AND "
-				+ "reservations.reserveendDate<='"+ endDate +"' AND "
-				+ "reservations.reserveStartTime>='"+ beginTime +"' AND "
-				+ "reservations.reserveEndTime<='"+ endTime +"' "
-				+ "ORDER BY reservations.reserveStartDate, reservations.reserveStartTime";	
+		String query = "SELECT Reservations.Building_buildingID,  Reservations.Rooms_roomID, Reservations.hourIncrement, Reservations.reserveStartDate, Reservations.reserveEndDate, Reservations.reserveStartTime, Reservations.reserveEndTime"
+				+ " FROM tomcatdb.Reservations WHERE Reservations.Building_buildingID ='"+buildingid+"' AND "
+				+ "Reservations.reserveStartDate>='"+ beginDate +"' AND "
+				+ "Reservations.reserveEndDate<='"+ endDate +"' AND "
+				+ "Reservations.reserveStartTime>='"+ beginTime +"' AND "
+				+ "Reservations.reserveEndTime<='"+ endTime +"' "
+				+ "ORDER BY Reservations.reserveStartDate, Reservations.reserveStartTime";	
 		System.out.println("doRead "+ query);
 		// securely run query
 		try {
@@ -137,7 +137,7 @@ public class SearchReservationsResultsQuery {
 	}
 	
 	
-	public String getHTMLTable(ArrayList<Integer> roomsArrayList, ArrayList<Reservation> reservationArrayList, String sDate , String sTime, String eDate, String eTime, int hrIncrement, int buildingid) throws ParseException{ 
+	public String getHTMLTable(ArrayList<Integer> roomsArrayList, ArrayList<Reservation> reservationArrayList, String sDate , String sTime, String eDate, String eTime, int hrIncrement) throws ParseException{ 
 		//Return tables of open Reservations
 		
 		
@@ -236,7 +236,7 @@ public class SearchReservationsResultsQuery {
 						
 				//5.Cycle to all rooms for the building
 						
-						//Creating OPEN/CLOSE rooms -- ADD ROOMS -row
+						//Creating OPEN/CLOSE rooms -- ADD ROOMS
 						for(int z=0;z<roomsAL.size();z++){
 							table += "<tr>";
 							table+="<td>"+roomsAL.get(z)+"</td>";
@@ -246,9 +246,9 @@ public class SearchReservationsResultsQuery {
 						
 						//Only searching for hours requested	
 						for(int i=hourbt;i<=houret;i++){
+						
 							
-							
-						int roomtaken=0;
+								
 								//Mark off all reserved spots
 								//if empty skip and fill table with Open
 								if(reservationAL.size()>0){
@@ -264,46 +264,27 @@ public class SearchReservationsResultsQuery {
 									String tempTime = reservationAL.get(y).getReserveStartTime();
 									int tempRoom = reservationAL.get(y).getRoomsID();
 									
-									//Date Match
 									int a = newDate.compareTo(tempDate);
-									//Time Match
 									int b = tempTime.compareTo(tempEndTime);
-									//Room Match
-									int hrInc = reservationAL.get(y).getHourIncrement();
 									
-									//Date & Time
-									if(a==1 && b==1 && tempRoom==tempRoomAL && roomtaken==0){
+									if(a==1 && b==1 && tempRoom==tempRoomAL){
 										table +="<td>";
 										table +="TAKEN";
 										table +="</td>";
-								
-										
-										roomtaken=1;
+										System.out.println("match");
 										
 									}
-									
-									
-									else if(y==(reservationAL.size()-1) && roomtaken==0){
+									else{
 										table +="<td>";
-										table +="<a href=/searchconfrimresults"
-												+ "?Rooms_roomID="+ tempRoomAL +"&"
-												+ "?reserveStartDate="+ newDate +"&"
-												+ "?reserveEndDate=01-01-2001&"
-												+ "?reserveStartTime="+ tempEndTime +"&"
-												+ "?reserveEndTime=11:11:1111&"
-												+ "?hourIncrement="+ hrIncrement +"&"
-												+ "?Building_buildingID="+ buildingid +"&"
-												+ "?free=N&"
-												+ ">OPEN</a>";
+										table +="<a href='#?'>OPEN</a>";
 										table +="</td>";
 									}
-								
-								}
+									}
 								}
 								//Else will fill empty slots instead of skipping
 								else{
 										table +="<td>";
-										table +="OPEN";
+										table +="<a href='#'>OPEN</a>";
 										table +="</td>";
 									}
 									

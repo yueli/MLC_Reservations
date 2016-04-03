@@ -9,10 +9,10 @@
 <title>MLC Reservation System – Administrative View</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
-
+	//Importing Header & Fotter
 	$(function() {
-		$("#header1").load("./adminheader.html"); 
-		$("#footer").load("../footer.html"); 
+		$("#header1").load("admin/adminheader.html"); 
+		$("#footer").load("footer.html"); 
 	});
 		</script> 
 </head>
@@ -36,16 +36,16 @@
                                     <!-- Carousel Images -->
                                     <div class="carousel-inner">
                                         <div class="item">
-                                            <img src="../assets/img/fillers/mlc1.jpg">
+                                            <img src="assets/img/fillers/mlc1.jpg">
                                         </div>
                                         <div class="item">
-                                            <img src="../assets/img/fillers/mlc2.jpg">
+                                            <img src="assets/img/fillers/mlc2.jpg">
                                         </div>
                                         <div class="item active">
-                                            <img src="../assets/img/fillers/mlc3.jpg">
+                                            <img src="assets/img/fillers/mlc3.jpg">
                                         </div>
                                         <div class="item">
-                                            <img src="../assets/img/fillers/mlc4.jpg">
+                                            <img src="assets/img/fillers/mlc4.jpg">
                                         </div>
                                     </div>
                                     <!-- End Carousel Images -->
@@ -84,7 +84,7 @@ room: ${room}-->
 			<!-- <p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='AdminListServlet'>List Admin Users</a></p>-->
 			
 			<div align="Center">
-		 		<p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='https://cas.uga.edu/cas/logout'>Logout</a></p>
+		 		<p class="animate fadeIn text-center animated"><a class="btn btn-lg btn-red" href='Logout'>Logout</a></p>
          		<br><br>
  			</div>                      
                             </div>
@@ -94,7 +94,7 @@ room: ${room}-->
                                 <!-- Main Column -->
                                 <div class="col-md-9">
                                     <img class="visible-lg animate fadeInUp animated" style="bottom: -50px; position: relative; 
-                                    left: 85px; margin-top: -20px;" src="../assets/img/mlc_head_terrace_unoccupied.jpg" alt="">
+                                    left: 85px; margin-top: -20px;" src="assets/img/mlc_head_terrace_unoccupied.jpg" alt="">
                                 </div>
                                 <!-- End Main Column -->
                                 <!-- Side Column -->

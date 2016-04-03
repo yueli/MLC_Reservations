@@ -58,7 +58,7 @@ public class AdminUserHelper {
 		table += "<th> Status</th>"; 
 		table += "<th>&nbsp;</th>"; 
 		table += "</thead>";
-			
+		table += "<tbody>";	
 		String query = "SELECT * FROM tomcatdb.Admin ORDER BY lname";
 
 		try {
@@ -95,7 +95,7 @@ public class AdminUserHelper {
 				
 				System.out.println("AdminUserHelper: ListAdmins: adminID for user to list from table=  " + adminID);
 				
-				table += "<tbody>";
+				
 				table += "<tr>";
 				table += "<td>" + adminMyID + "</td>";
 				table += "<td>" + fname + "</td>";	
@@ -105,7 +105,7 @@ public class AdminUserHelper {
 				
 				table += "<td><form action='AdminEditServlet' method = 'post'>" +
 						"<input type='hidden' name='adminID' value='" + adminID + "'>" +
-						"<input type='submit' value='Edit Admin'>" +
+						"<input class='btn btn-lg btn-red' type='submit' value='Edit Admin'>" +
 						"</form></td>";		
 			
 				table += "</tr>";
@@ -122,7 +122,7 @@ public class AdminUserHelper {
 			table += "<td></td>";
 			table += "<td align:center >";
 			table += "<form action='AdminAddServlet' method = 'post'>" +
-					"<input type='submit' value='Add An Admin'>" +
+					"<input class='btn btn-lg btn-red' type='submit' value='Add An Admin'>" +
 					"</form>";
 			
 			table += "</td>";
@@ -310,13 +310,13 @@ public class AdminUserHelper {
 			System.out.println("AdminUserHelper: getAdminInfo adminID = " + adminID);
 			
 					
-			table += "<input type = 'submit' value = 'Save'>";
+			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";
 			table += "<input type = 'hidden' name = 'adminID' value='" + adminID + "'>";
 			table += "</form>";
 			
 			table += "<br /><br />";
 			table += "<form action='AdminListServlet' method = 'post'>";
-			table += "<input type = 'submit' value = 'Cancel'>";
+			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			table += "</form>";
 	
 	
@@ -481,12 +481,12 @@ public class AdminUserHelper {
 		table += "<br />";	
 		table += "<br />";		
 				
-		table += "<input type = 'submit' value = 'Add Admin'>";
+		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Add Admin'>";
 		table += "</form>";
 		
 		table += "<br /><br />";
 		table += "<form action='AdminListServlet' method = 'post'>";
-		table += "<input type = 'submit' value = 'Cancel'>";
+		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 		table += "</form>";
 				
 		return table;

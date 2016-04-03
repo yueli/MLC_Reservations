@@ -54,7 +54,7 @@ public class AdminScheduleEditServlet extends HttpServlet {
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		// if there is no buildingID from request, then display building dropdown
 		if (buildingID == null || buildingID.equals("0")){
-			buildingID = "1";
+			buildingID = Integer.toString(bsq.getFirstBuildingID());
 			int bldg = Integer.parseInt(buildingID);
 			// query building
 			

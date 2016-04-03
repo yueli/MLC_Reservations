@@ -12,8 +12,8 @@
 		<script> 
 
 			$(function() {
-				$("#header1").load("./adminheader.html"); 
-				$("#footer").load("../footer.html"); 
+				$("#header1").load("admin/adminheader.html"); 
+				$("#footer").load("footer.html"); 
 			});
 		</script> 
 	</head>

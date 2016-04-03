@@ -29,7 +29,7 @@ form {
 		<script> 
 			// used to load header and footer html
 			$(function() {
-				$("#header").load("admin/adminheader.html"); 
+				$("#header1").load("admin/adminheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 			// jQuery for Datatable plugin for pagination, sort, and search
@@ -46,7 +46,7 @@ form {
 		</script> 
 	</head>
 	<body>
-		<div id="header"></div>
+		<div id="header1"></div>
 		<br>
 		<br>
 		<br>
@@ -58,7 +58,7 @@ form {
 		<form name="buildingForRoomsForm" action="RoomsListServlet" method="post">
 			<h2>Please Select A Building</h2>
 			<p>${buildings}
-			<input name="buildingSelected" type="submit" value="Enter"></p> 
+			<input class='btn btn-lg btn-red' name="buildingSelected" type="submit" value="Enter"></p> 
 		</form>
 
 		<div id="footer"></div>

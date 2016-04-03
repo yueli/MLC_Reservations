@@ -1,5 +1,5 @@
 package helpers;
-//**By Ronnie Xu~****/
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,13 +44,13 @@ public class BuildingListQuery {
 
 		public void doRead(){
 
-			String query = "SELECT building.buildingID, "
-					+ "building.buildingName, "
-					+ "building.buildingStatus, "
-					+ "building.buildingCalName, "
-					+ "building.buildingCalUrl, "
-					+ "building.Admin_adminID "
-					+ "FROM building";
+			String query = "SELECT Building.buildingID, "
+					+ "Building.buildingName, "
+					+ "Building.buildingStatus, "
+					+ "Building.buildingCalName, "
+					+ "Building.buildingCalUrl, "
+					+ "Building.Admin_adminID "
+					+ "FROM tomcatdb.Building";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
@@ -70,7 +70,7 @@ public class BuildingListQuery {
 			String table = "";
 				  
 			try {
-				table += "<table id='' class='display'>";
+				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 				table += "<thead>"
 						+ "<tr>"
 						+ "<th>Building ID#</th>"
@@ -125,8 +125,8 @@ public class BuildingListQuery {
 					table += "admin?";
 					table += "</td>";
 					
-					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button type='submit' value='Edit'>Edit Building</button></a></td>";
-					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
+					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
+					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
 					
 					table += "</tr>";
 				}

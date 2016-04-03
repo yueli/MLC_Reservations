@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import helpers.BuildingListAddQuery;
 import model.Building;
-//**By Ronnie Xu~****/
+
 /**
  * Servlet implementation class BuildingListAddServlet
  */

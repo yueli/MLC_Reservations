@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
+import model.Admin;
 
 /**
  * Servlet implementation class AdminScheduleAddServlet2
@@ -41,55 +42,72 @@ public class AdminScheduleAddServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		//this.session = request.getSession(false); 
-		this.session = request.getSession();
+		this.session = request.getSession(false); 
+		
 		// if this session is not null (active/valid)
-		//if(this.session != null){
-			// get session and request variables + initialization of others
-			String buildings = ""; // the string that contains the HTML drop down list
-			String buildingID = request.getParameter("buildingID"); // get the value from 
-			String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
-			String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
-			String msg = (String) session.getAttribute("msg");
+		if(this.session != null){
+			// get admin user from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
 			
-			//------------------------------------------------//
-			/*            BUILDING INFORMATION                */
-			//------------------------------------------------//
-			BuildingSelectQuery bsq = new BuildingSelectQuery();
-			// if there is no buildingID from request, then display building drop down
-			if (buildingID == null){
-				buildingID = "1";
-				int bldg = Integer.parseInt(buildingID);
-				// query building
+			// push content based off role
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+				// get session and request variables + initialization of others
+				String buildings = ""; // the string that contains the HTML drop down list
+				String buildingID = request.getParameter("buildingID"); // get the value from 
+				String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
+				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
+				String msg = (String) session.getAttribute("msg");
 				
-				bsq.doAdminBuildingRead();
-				buildings = bsq.getBuildingResults(bldg);
-	
+				//------------------------------------------------//
+				/*            BUILDING INFORMATION                */
+				//------------------------------------------------//
+				BuildingSelectQuery bsq = new BuildingSelectQuery();
+				// if there is no buildingID from request, then display building drop down
+				if (buildingID == null){
+					buildingID = Integer.toString(bsq.getFirstBuildingID());
+					int bldg = Integer.parseInt(buildingID);
+					// query building
+					
+					bsq.doAdminBuildingRead();
+					buildings = bsq.getBuildingResults(bldg);
+		
+				}
+				// if there is a buildingID from session, it becomes the buildingID
+				// if there is a buildingID selected from drop down, it becomes the buildingID
+				if (buildingIDSelect != null){
+					buildingID = buildingIDSelect;
+					buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
+				} else if (buildingIDSession != null){
+					buildingID = buildingIDSession;
+				} 
+				
+				// forward the URL
+				url = "admin/schedule-add.jsp";
+				
+				// set session and request variables
+				session.setAttribute("buildingID", buildingID);
+				session.setAttribute("buildings", buildings);
+				session.setAttribute("msg", msg);
+			
+			} else { 
+				//------------------------------------------------//
+				/*                VIEW FOR CLERK                  */
+				//------------------------------------------------//
+				
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+				// set session attributes
 			}
-			// if there is a buildingID from session, it becomes the buildingID
-			// if there is a buildingID selected from drop down, it becomes the buildingID
-			if (buildingIDSelect != null){
-				buildingID = buildingIDSelect;
-				buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
-			} else if (buildingIDSession != null){
-				buildingID = buildingIDSession;
-			} 
 			
-			// forward the URL
-			url = "admin/schedule-add.jsp";
-			
-			// set session and request variables
-			session.setAttribute("buildingID", buildingID);
-			session.setAttribute("buildings", buildings);
-			session.setAttribute("msg", msg);
-			
-		// if session is null (not active/valid)	
-		//} else {
-			
-			// go back to login
-			//url = "[INSERT LOGIN PAGE HERE]";
-			
-		//}
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*           VIEW FOR INVALID SESSION             */
+			//------------------------------------------------//
+			url = "AdminHome";
+		}
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

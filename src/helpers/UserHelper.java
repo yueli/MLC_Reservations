@@ -347,6 +347,12 @@ public class UserHelper {
 		
 	}
 	
+	/**
+	 * 
+	 * @param myID of the user/student
+	 * @return all of their info in a user object
+	 * @author Brian Olaogun
+	 */
 	public User getUserInfo(String myID){
 		User user = new User();
 		String query = "SELECT * FROM tomcatdb.User WHERE myID = ? LIMIT 1";
@@ -362,6 +368,7 @@ public class UserHelper {
 				user.setUserFirstName(this.results.getString("fname"));
 				user.setUserLastName(this.results.getString("lname"));
 				user.setLastLogin(this.results.getString("lastLogin"));
+				
 			}
 			
 			

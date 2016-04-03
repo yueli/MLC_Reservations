@@ -45,20 +45,21 @@ public class AdminReservationsServlet extends HttpServlet {
 		
 		
 		// check to see if there is a valid session
-		//if (session != null){ // there is an active session
+		if (session != null){ // there is an active session
 			
 			// get the role for the currently logged in admin user.
-			//Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			/*
 			Admin loggedInAdminUser = new Admin();
 			loggedInAdminUser.setAdminID(1);
 			loggedInAdminUser.setAdminMyID("bbo89");
 			loggedInAdminUser.setAdminStatus(1);
-			loggedInAdminUser.setRole("admin");
-			//String role = loggedInAdminUser.getRole();
-			//int status = loggedInAdminUser.getAdminStatus();
+			loggedInAdminUser.setRole("admin"); */
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
-			//if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 				//------------------------------------------------//
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//
@@ -75,7 +76,7 @@ public class AdminReservationsServlet extends HttpServlet {
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				// if there is no buildingID from request, then display building drop down
 				if (buildingID == null){
-					buildingID = "1";
+					buildingID = Integer.toString(bsq.getFirstBuildingID());
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
@@ -100,23 +101,23 @@ public class AdminReservationsServlet extends HttpServlet {
 				session.setAttribute("adminUser", loggedInAdminUser);
 				session.setAttribute("buildingID", buildingID);
 				session.setAttribute("buildings", buildings);
-			//} else { 
+			} else { 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
 				
 				// forwarding URL
-				//url = "AdminViewReservations";
+				url = "AdminViewReservations";
 				
 				// set session attributes
-			//}
+			}
 			
-		//} else { // there isn't an active session.
+		} else { // there isn't an active session.
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			//url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
-		//}
+			url = "AdminHome";
+		}
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

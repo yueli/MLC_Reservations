@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.AdminScheduleInsertQuery;
 import helpers.AdminScheduleUpdateQuery;
 import helpers.BuildingSelectQuery;
+import model.Admin;
 import model.DateTimeConverter;
 import model.Schedule;
 import model.TimeConverter;
@@ -45,8 +46,17 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
-		//if(this.session != null){
+		this.session = request.getSession(false); 
+		
+		// if this session is not null (active/valid)
+		if(this.session != null){
+			// get admin user from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
+			
+			// push content based off role
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 			
 				// TODO Looping in multiple dates.
 		
@@ -169,8 +179,9 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				// if there is no buildingID from request, then display building drop down
-				if (buildingID == null || buildingID.equals("0")){
-					buildingID = "1";
+				if (buildingID == null){
+					buildingID = Integer.toString(bsq.getFirstBuildingID());
+					System.out.println("BuildingID in Schedule add 2: getFirstBuilding: " + buildingID);
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
@@ -186,7 +197,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				} else if (buildingIDSession != null){
 					buildingID = buildingIDSession;
 				} 
-				
+				System.out.println("BuildingID in Schedule add 2: " + buildingID);
 				//------------------------------------------------//
 				/*               SCHEDULE INSERT                  */
 				//------------------------------------------------//
@@ -199,18 +210,27 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					// match parameters user entered
 					msg = "Successfully added schedule!";
 					siq.doScheduleInsert(schedule);
-					url = "schedule";
+					
+					session.removeAttribute("buildingID");
+					session.removeAttribute("startDate");
+					session.removeAttribute("endDate");
+					session.removeAttribute("startTime");
+					session.removeAttribute("endTime");
+					session.removeAttribute("summary");
+					session.removeAttribute("yesButton");
+					session.removeAttribute("noButton");
+					url = "admin/schedule-add.jsp";
 				} else {
 					// create a button that says yes or no
 					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
 					yesButton += "<input name ='update' type='hidden' value='yes'>";
 					yesButton += "<input name ='scheduleID' type='hidden' value='" + check + "'>";
-					yesButton += "<input type='submit' name='Yes' value='Yes'>";
+					yesButton += "<input class='btn btn-lg btn-red' type='submit' name='Yes' value='Yes'>";
 					yesButton += "</form>";
 					
 					noButton = "<form name='dontUpdate' action='new-schedule' method='post'>";
 					noButton += "<input name ='update' type='hidden' value='no'>";
-					noButton += "<input type='submit' name='No' value='No'>";
+					noButton += "<input class='btn btn-lg btn-red' type='submit' name='No' value='No'>";
 					noButton += "</form>";
 					
 					msg = "Entry for " + dtc.convertDateLong(startDate) + " exists, would you like to update the entry? ";
@@ -231,11 +251,23 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				session.setAttribute("noButton", noButton);
 				session.setAttribute("tc", tc);
 				}
-		//} else {
-			// go back to login
+			} else { 
+				//------------------------------------------------//
+				/*                VIEW FOR CLERK                  */
+				//------------------------------------------------//
+				
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+				// set session attributes
+			}
 			
-			//url = "[insert login controller or login url here]";
-		//}
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*           VIEW FOR INVALID SESSION             */
+			//------------------------------------------------//
+			url = "AdminHome";
+		}
 		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

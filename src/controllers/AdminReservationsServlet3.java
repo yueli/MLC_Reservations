@@ -14,6 +14,7 @@ import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.RoomsSelectQuery;
 import model.Admin;
+import model.Email;
 import model.Reservation;
 import model.TimeConverter;
 
@@ -50,12 +51,11 @@ public class AdminReservationsServlet3 extends HttpServlet {
 			
 			// get the role for the currently logged in admin user.
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); // USED FOR TESTING
-			//Admin adminUser = (Admin) session.getAttribute("loggedInAdminUser");
 			String role = loggedInAdminUser.getRole();
 			int status = loggedInAdminUser.getAdminStatus();
 			
 			// push content based off role
-			if((role.equalsIgnoreCase("admin") || role.equalsIgnoreCase("super admin")) && status == 1){
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 				//------------------------------------------------//
 				/*               VIEW FOR ADMIN                   */
 				//------------------------------------------------//
@@ -82,7 +82,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				RoomsSelectQuery roomsq = new RoomsSelectQuery();
 				roomID = roomsq.getRoomID(Integer.parseInt(buildingID), roomNumber);
 				
-				// TODO get hour increment
+				// get hour increment
 				int hourIncrement = tc.getHourIncrement(startTime, endTime);
 				
 				// check if reservation is available
@@ -110,24 +110,28 @@ public class AdminReservationsServlet3 extends HttpServlet {
 					
 					// set success message and forwarding URL
 					msg = "You have successfully made a reservation.";
-					url = "admin/confirmation.jsp";
+					url = "view-reservations";
+					
+					
 				}
+				
 				session.setAttribute("msg", msg);
 			} else { 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
 				
-				 //forwarding URL
-				 url = "AdminViewReservations";
-			
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+				// set session attributes
 			}
 			
 		} else { // there isn't an active session.
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			url = "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+			url = "AdminHome";
 		}
 		
 		// forward the request
