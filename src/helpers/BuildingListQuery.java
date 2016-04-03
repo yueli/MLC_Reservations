@@ -70,7 +70,7 @@ public class BuildingListQuery {
 			String table = "";
 				  
 			try {
-				table += "<table id='' class='display'>";
+				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 				table += "<thead>"
 						+ "<tr>"
 						+ "<th>Building ID#</th>"
@@ -125,8 +125,8 @@ public class BuildingListQuery {
 					table += "admin?";
 					table += "</td>";
 					
-					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button type='submit' value='Edit'>Edit Building</button></a></td>";
-					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
+					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
+					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
 					
 					table += "</tr>";
 				}

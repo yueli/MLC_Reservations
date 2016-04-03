@@ -42,7 +42,11 @@ public class BuildingSelectQuery {
 		
 	}
 	
-	
+	/**
+	 * Query to get buildings with an online status for the current day
+	 * and check to see if the building is open at the current time.
+	 * @author Brian Olaogun
+	 */
 	public void doBuildingRead(){
 		// query to use for testing
 		//String query = "SELECT buildingID, buildingName FROM tomcatdb.Building";
@@ -95,7 +99,10 @@ public class BuildingSelectQuery {
 		}
 		
 	}
-	
+	/**
+	 * Results of doBuildingRead & doAdminBuildingRead
+	 * @return a new String HTML drop down list with the selected value listed first
+	 */
 	public String getBuildingResults(){
 		// Create the String for HTML
 		String select = "";
@@ -133,7 +140,12 @@ public class BuildingSelectQuery {
 		
 		return select;
 	}
-	
+	/**
+	 * Results of doBuildingRead & doAdminBuildingRead
+	 * @param selected value from the HTML building drop down list
+	 * @return a new String HTML drop down list with the selected value listed first
+	 * @author Brian Olaogun
+	 */
 	public String getBuildingResults(int selected){
 		// Create the String for HTML
 		String select = "";
@@ -175,8 +187,9 @@ public class BuildingSelectQuery {
 	/**
 	 * This method takes into account the building schedule.  
 	 * We get the building name from inputted buildingID
-	 * @param buildingID
-	 * @return buildingName
+	 * @param buildingID ID of the building	
+	 * @return buildingName Name of the building
+	 * @author Brian Olaogun
 	 * 
 	 */
 	public String buildingName(int buildingID){
@@ -283,8 +296,10 @@ public class BuildingSelectQuery {
 		
 	}
 	/**
-	 * 
+	 * Return the building ID of the first value in the Building table.
+	 * This is for admin functionality.
 	 * @return first row's buildingID
+	 * @author Brian Olaogun
 	 */
 	public int getFirstBuildingID(){
 		Integer buildingID = null;
@@ -311,5 +326,60 @@ public class BuildingSelectQuery {
 		return buildingID;
 		
 	}
-	
+	/**
+	 * This method will check to see if a building is online or not.
+	 * If any buildings are online, the returned value will be true.
+	 * If NO BUILDINGS are online, it will return false.
+	 * @return boolean
+	 * @author Brian Olaogun
+	 */
+	public boolean buildingsOnline() {
+		// query to use for testing
+		//String query = "SELECT buildingID, buildingName FROM tomcatdb.Building";
+		
+		// actual query to use when there are times in tomcatdb.Schedule.
+		DateTimeConverter dtc = new DateTimeConverter();
+		String currentDate = dtc.parseDate(dtc.datetimeStamp());
+		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp()); // time in 24 hour format
+		
+		String query = "SELECT tomcatdb.Building.buildingID, "
+				+ "tomcatdb.Building.buildingName "
+				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
+				+ "WHERE tomcatdb.Building.buildingStatus = ? "
+				+ "AND tomcatdb.Building.buildingID = tomcatdb.Schedule.Building_buildingID "
+				+ "AND tomcatdb.Schedule.startDate = ? "
+				+ "AND ((tomcatdb.Schedule.startTime = ?) OR (? BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, "1");
+			ps.setString(2, currentDate);
+			ps.setString(3, currentTime);
+			ps.setString(4, currentTime);
+			this.results = ps.executeQuery();
+			
+			// get the results of the query
+			if(!this.results.next()){
+				return false;
+			} else {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in BuildingSelectQuery.java: buildingOnline method. Please check connection or SQL statement: " + query);
+		}
+		
+		return false;
+	}
+	/**
+	 * Java Main Method used to test methods above.
+	 * @param args Java Main Method
+	 * @author Brian Olaogun
+	 */
+	public static void main (String [] args){
+		BuildingSelectQuery bsq = new BuildingSelectQuery();
+		boolean buildingsCheck = bsq.buildingsOnline();
+		System.out.println("Are there any buildings online? " + buildingsCheck);
+		
+	}
 }

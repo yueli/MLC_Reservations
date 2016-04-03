@@ -9,14 +9,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
-	<script type="text/javascript" charset="utf8" src="jquery/DataTables/dataTables.material.js"></script>
 	<script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
    
     <!-- CSS -->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="user/browse.css">
+    <link rel="stylesheet" type="text/css" href="table.css">
 	<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.material.css">
+    <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js">
     <link rel="stylesheet" type="text/css" href="jquery/Timepicker/jquery.timepicker.css">
 
 	<script>
@@ -56,7 +55,7 @@
 			Start Time: <input type="text" id="startTime" name="startTimeEdit" value="${tc.convertTimeTo12(startTime)}"><br>
 			End Time: <input type="text" id="endTime" name="endTimeEdit" value="${tc.convertTimeTo12(endTime)}"><br>
 			Summary: <input type="text" name="summaryEdit" value="${summary}"><br>
-			<button onclick="goBack()">Go Back</button><input type="submit" value="Submit">
+			<button class="btn btn-lg btn-red" onclick="goBack()">Go Back</button><input class="btn btn-lg btn-red" type="submit" value="Submit">
 		</form>
 		<div id="footer"></div>
 	</body>

@@ -233,6 +233,15 @@ public class RoomsSelectQuery {
 								if (tc.currentMinutes() > 10){
 									table += "<td id='yellow'>";
 									table += tc.convertTimeTo12(timeBlock[i]);
+								} else {
+									table += "<td id='green'>";
+									table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+									table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+									table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+									table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+									table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+									table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+									table += "</form> ";
 								}
 							} else {
 								table += "<td id='green'>";
@@ -283,6 +292,15 @@ public class RoomsSelectQuery {
 								if (tc.currentMinutes() > 10){
 									table += "<td id='yellow'>";
 									table += tc.convertTimeTo12(timeBlock[i]);
+								} else {
+									table += "<td id='green'>";
+									table += "<form name='fwdReserve' id='fwdReserve" + i + room.getRoomNumber() + "' action='BrowseReserve' method='post'>";
+									table += "<input type='hidden' name='roomID' value='" + room.getRoomID() + "'>";
+									table += "<input type='hidden' name='startTime' value='" + timeBlock[i] + "'>";
+									table += "<input type='hidden' name='roomNumber' value='" + room.getRoomNumber() + "'>";
+									table += "<input type='hidden' name='currentDate' value='" + dtc.parseDate(dtc.datetimeStamp()) + "'>";
+									table += "<a href='javascript: submitform(" + i + ", " + room.getRoomNumber() + ")'>" + tc.convertTimeTo12(timeBlock[i]) + "</a>";
+									table += "</form> ";
 								}
 							} else {
 								table += "<td id='green'>";
@@ -398,7 +416,7 @@ public class RoomsSelectQuery {
 					table += "<td><form action='RoomEditServlet' method = 'post'>" +
 							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'/>" +
 							"<input type='hidden' name='buildingList' value='" + buildingID + "'/>" +
-							"<input type='submit' value='Edit Room' />" +
+							"<input class='btn btn-lg btn-red' type='submit' value='Edit Room' />" +
 							"</form></td>";		
 				
 					table += "</tr>";
@@ -414,7 +432,7 @@ public class RoomsSelectQuery {
 				table += "<td align:center >";
 				table += "<form action='RoomAddServlet' method = 'post'>" +
 						"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
-						"<input type='submit' value='Add A Room'>" +
+						"<input class='btn btn-lg btn-red' type='submit' value='Add A Room'>" +
 						"</form>";
 				
 				table += "</td>";
@@ -501,7 +519,7 @@ public class RoomsSelectQuery {
 				table += "</select>";	
 				
 				table += "<br /><br />";
-				table += "<input type = 'submit' value = 'Save'>";
+				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";
 				table += "<input type = 'hidden' name = 'roomID' value='" + roomID + "'>";
 				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
 				
@@ -510,7 +528,7 @@ public class RoomsSelectQuery {
 				table += "<br /><br />";
 				table += "<form action='RoomsListServlet' method = 'post'>";
 				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
-				table += "<input type = 'submit' value = 'Cancel'>";
+				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 				table += "</form>";
 	
 				System.out.println("RoomsSelectQuery: createEditRoomForm: buildingID END = " + buildingID);
@@ -591,7 +609,7 @@ public class RoomsSelectQuery {
 					
 					table += "<br /><br />";
 					
-					table += "<input type = 'submit' value = 'Save'>";	
+					table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";	
 					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
 					
 					table += "</form>";
@@ -599,7 +617,7 @@ public class RoomsSelectQuery {
 					table += "<br /><br />";
 					table += "<form action='RoomsListServlet' method = 'post'>";
 					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
-					table += "<input type = 'submit' value = 'Cancel'>";
+					table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 					table += "</form>";
 		
 					System.out.println("RoomsSelectQuery: createAddRoomForm: buildingID END = " + buildingID);
