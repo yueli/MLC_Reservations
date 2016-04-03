@@ -28,7 +28,7 @@
 	<br>
 	<!-- Button to call the downloads servlet -->
 	<div align="center">
-	    <form id="downloadBanned" action="/ReportsExcelDownloadServlet" method="GET">
+	    <form id="downloadBanned" action="/ExcelCreatorBanned" method="GET">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
     </form>
       
