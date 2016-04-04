@@ -59,7 +59,7 @@
 	<br>
 	<br>
 		<div align="center">
-			<h2>${msg}</h2> ${noButton} ${yesButton}
+			<h2>${msg}</h2>
 			<p>${buildings}</p>
 			<form name="scheduleForm" action="new-schedule" method="post">
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
