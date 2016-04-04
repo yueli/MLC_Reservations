@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import helpers.AdminScheduleUpdateQuery;
 import helpers.BuildingSelectQuery;
 import model.Admin;
 import model.DateTimeConverter;
+import model.DbConnect;
 import model.Schedule;
 import model.TimeConverter;
 
@@ -93,12 +95,17 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				DateTimeConverter dtc = new DateTimeConverter();
 				
 				if (startDate != null && !startDate.isEmpty()){
+					// if start date isnt null, convert to SQL format
 					startDate = dtc.slashDateConvert(startDate);
 				} else {
+					// if start date is null, start date is the current date
 					startDate = dtc.parseDate(dtc.datetimeStamp());
 				}
 				if (endDate != null && !endDate.isEmpty()){
+					// if end date isnt null, convert to SQL format
 					endDate =  dtc.slashDateConvert(endDate);
+				} else {
+					endDate = startDate;
 				}
 				
 				// convert time to SQL format
@@ -121,7 +128,10 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				if (summarySession != null){
 					summary = summarySession;
 				}
-				
+				System.out.println();
+				System.out.println("Start Date in Schedule Add 2: " + startDate);
+				System.out.println("Start Date in Schedule Add 2: " + endDate);
+				System.out.println();
 				//------------------------------------------------//
 				/*               SCHEDULE UPDATE                  */
 				//------------------------------------------------//
@@ -198,45 +208,60 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					buildingID = buildingIDSession;
 				} 
 				System.out.println("BuildingID in Schedule add 2: " + buildingID);
+				
 				//------------------------------------------------//
 				/*               SCHEDULE INSERT                  */
 				//------------------------------------------------//
-				int buildingIDInt = Integer.parseInt(buildingID);
-				Schedule schedule = new Schedule(startDate, endDate, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy, allDayEvent, buildingIDInt);
-				AdminScheduleInsertQuery siq = new AdminScheduleInsertQuery();
-				String check = siq.scheduleInsertCheck(schedule);
-				if (check.equalsIgnoreCase("false")){
-					// if false, no entries in schedule table exist that
-					// match parameters user entered
-					msg = "Successfully added schedule!";
-					siq.doScheduleInsert(schedule);
+				
+				// date range
+				List<String> dates = dtc.dateRangeList(startDate, endDate);
+				for(int i=0; i < dates.size(); i++){
+					String date = dates.get(i);
+				    System.out.println("Print of Date range in Schedule Add 2:  " + date);
+				    
+				    int buildingIDInt = Integer.parseInt(buildingID);
+					Schedule schedule = new Schedule(date, date, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy, allDayEvent, buildingIDInt);
 					
-					session.removeAttribute("buildingID");
-					session.removeAttribute("startDate");
-					session.removeAttribute("endDate");
-					session.removeAttribute("startTime");
-					session.removeAttribute("endTime");
-					session.removeAttribute("summary");
-					session.removeAttribute("yesButton");
-					session.removeAttribute("noButton");
-					url = "admin/schedule-add.jsp";
-				} else {
-					// create a button that says yes or no
-					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
-					yesButton += "<input name ='update' type='hidden' value='yes'>";
-					yesButton += "<input name ='scheduleID' type='hidden' value='" + check + "'>";
-					yesButton += "<input class='btn btn-lg btn-red' type='submit' name='Yes' value='Yes'>";
-					yesButton += "</form>";
+					// class used to check schedule entries and add schedule entries
+					AdminScheduleInsertQuery siq = new AdminScheduleInsertQuery();
 					
-					noButton = "<form name='dontUpdate' action='new-schedule' method='post'>";
-					noButton += "<input name ='update' type='hidden' value='no'>";
-					noButton += "<input class='btn btn-lg btn-red' type='submit' name='No' value='No'>";
-					noButton += "</form>";
+					// check entries before inserting
+					String check = siq.scheduleInsertCheck(schedule);
 					
-					msg = "Entry for " + dtc.convertDateLong(startDate) + " exists, would you like to update the entry? ";
-					
-					url = "admin/schedule-add.jsp";
+					if (check.equalsIgnoreCase("false")){
+						// if false, no entries in schedule table exist that
+						// match parameters user entered
+						msg = "Successfully added schedule!";
+						siq.doScheduleInsert(schedule);
+						
+						session.removeAttribute("buildingID");
+						session.removeAttribute("startDate");
+						session.removeAttribute("endDate");
+						session.removeAttribute("startTime");
+						session.removeAttribute("endTime");
+						session.removeAttribute("summary");
+						session.removeAttribute("yesButton");
+						session.removeAttribute("noButton");
+						url = "admin/schedule-add.jsp";
+					} else {
+						// create a button that says yes or no
+						yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
+						yesButton += "<input name ='update' type='hidden' value='yes'>";
+						yesButton += "<input name ='scheduleID' type='hidden' value='" + check + "'>";
+						yesButton += "<input class='btn btn-lg btn-red' type='submit' name='Yes' value='Yes'>";
+						yesButton += "</form>";
+						
+						noButton = "<form name='dontUpdate' action='new-schedule' method='post'>";
+						noButton += "<input name ='update' type='hidden' value='no'>";
+						noButton += "<input class='btn btn-lg btn-red' type='submit' name='No' value='No'>";
+						noButton += "</form>";
+						
+						msg = "Entry for " + dtc.convertDateLong(date) + " exists, would you like to update the entry? ";
+						
+						url = "admin/schedule-add.jsp";
+					}
 				}
+				
 				
 				// set session and request variables
 				session.setAttribute("buildingID", buildingID);
@@ -251,7 +276,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				session.setAttribute("noButton", noButton);
 				session.setAttribute("tc", tc);
 				}
-			} else { 
+			} else if (role.equalsIgnoreCase("C") && status == 1){ 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
@@ -260,13 +285,22 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				url = "AdminViewReservations";
 				
 				// set session attributes
+			} else {
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
 			
 		} else { // there isn't an active session.
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			url = "AdminHome";
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
 		}
 		
 		// forward the request

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminScheduleAddServlet2
@@ -91,7 +92,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 				session.setAttribute("buildings", buildings);
 				session.setAttribute("msg", msg);
 			
-			} else { 
+			} else if (role.equalsIgnoreCase("C") && status == 1) { 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
@@ -100,13 +101,22 @@ public class AdminScheduleAddServlet extends HttpServlet {
 				url = "AdminViewReservations";
 				
 				// set session attributes
+			} else {
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
 			
 		} else { // there isn't an active session.
 			//------------------------------------------------//
 			/*           VIEW FOR INVALID SESSION             */
 			//------------------------------------------------//
-			url = "AdminHome";
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
 		}
 		
 		// forward the request

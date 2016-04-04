@@ -82,7 +82,7 @@
 				<h2>Please select a building, date, start and end time for your reservation.</h2>
 				<p>${msg}</p>
 				Building ${buildings}<br>
-				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
+				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				<!--  End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br> -->
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
