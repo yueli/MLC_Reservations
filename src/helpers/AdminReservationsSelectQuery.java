@@ -191,7 +191,6 @@ public class AdminReservationsSelectQuery {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-		System.out.println(table);
 		return table;
 	}
 	/**

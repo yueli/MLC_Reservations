@@ -122,6 +122,9 @@ public class BrowseReserveServlet extends HttpServlet {
 				session.setAttribute("buildingName", buildingName);
 				session.setAttribute("incrementSelect", incrementSelect);
 			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
@@ -130,6 +133,9 @@ public class BrowseReserveServlet extends HttpServlet {
 			}
 			
 		} else {
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
 			//url = "LoginServlet";

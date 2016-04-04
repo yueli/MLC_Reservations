@@ -96,6 +96,9 @@ public class BrowseServlet2 extends HttpServlet {
 					url = "/user/browse.jsp";
 				}
 			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
@@ -103,6 +106,9 @@ public class BrowseServlet2 extends HttpServlet {
 				response.sendRedirect(DbConnect.urlRedirect());
 			}
 		} else {
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
 			//url = "LoginServlet";

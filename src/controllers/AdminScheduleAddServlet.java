@@ -102,6 +102,9 @@ public class AdminScheduleAddServlet extends HttpServlet {
 				
 				// set session attributes
 			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
@@ -111,7 +114,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			
 		} else { // there isn't an active session.
 			//------------------------------------------------//
-			/*           VIEW FOR INVALID SESSION             */
+			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.

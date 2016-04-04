@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminReservations
@@ -41,7 +42,7 @@ public class AdminReservationsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
+		this.session = request.getSession(false);
 		
 		
 		// check to see if there is a valid session
@@ -49,12 +50,7 @@ public class AdminReservationsServlet extends HttpServlet {
 			
 			// get the role for the currently logged in admin user.
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-			/*
-			Admin loggedInAdminUser = new Admin();
-			loggedInAdminUser.setAdminID(1);
-			loggedInAdminUser.setAdminMyID("bbo89");
-			loggedInAdminUser.setAdminStatus(1);
-			loggedInAdminUser.setRole("admin"); */
+			
 			String role = loggedInAdminUser.getRole();
 			int status = loggedInAdminUser.getAdminStatus();
 			
@@ -101,7 +97,7 @@ public class AdminReservationsServlet extends HttpServlet {
 				session.setAttribute("adminUser", loggedInAdminUser);
 				session.setAttribute("buildingID", buildingID);
 				session.setAttribute("buildings", buildings);
-			} else { 
+			}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
@@ -109,14 +105,25 @@ public class AdminReservationsServlet extends HttpServlet {
 				// forwarding URL
 				url = "AdminViewReservations";
 				
-				// set session attributes
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
-			
-		} else { // there isn't an active session.
+		
+		} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
-			/*           VIEW FOR INVALID SESSION             */
+			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
-			url = "AdminHome";
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
 		}
 		
 		// forward the request
