@@ -16,43 +16,6 @@ table th {
 	background: #CC0000;
 	color: #fff;
 	}
-/* used for table cell colors */
-#red { /* used/not available */
-	background: #fbcfd0;
-	color: #999;
- 	border: 1px solid #d8d8dd;
-  	padding: 7px 20px;
-  	border-collapse: collapse;
-	}
-	
-#gray { /* not available */
-	background: #c9c9c9;
-	color: #999;
- 	border: 1px solid #d8d8dd;
-  	padding: 7px 20px;
-  	border-collapse: collapse;
-	}
-
-#green { /* available */
-	background: #e3f2e0;
-	color: #999;
- 	border: 1px solid #d8d8dd;
-  	padding: 7px 20px;
-  	border-collapse: collapse;
-	}
-
-#green a {
-	text-decoration: none;
-	color: #555;
-	}
-
-#green:hover {
-  	background: #f4f4f4;
-	}
-	
-#green:hover td {
-  	color: #555;
-	}
 	
 /* CSS FOR RESPONSIVE TABLES */
 @media only screen and (max-width: 760px),

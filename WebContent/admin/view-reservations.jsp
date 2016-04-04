@@ -5,17 +5,13 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Reservations</title>
+		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/Responsive/js/dataTables.responsive.js"></script>
-		<!-- Meta -->
-        
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
        
-        <!-- Template CSS -->
+        <!-- CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="admin/table-view-reservation.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
@@ -48,11 +44,10 @@
 	<br>
 	<br>
 			<div id="search-container">
-				<form name="adminViewForm" action="view-reservations?building?date" method="post">
-					<p>Building ${buildings}<input name="enterBuilding" type="submit" value="Enter"></p>
-				</form>
-				<form name="adminViewForm2" action="view-reservations?building?date" method="post">
-					<p>Date <input type="text" name="datepicker" id="datepicker"><input name="dateSort" type="submit" value="Enter"></p>
+				<h2>${msg}</h2>
+				<form name="adminViewForm" action="view-reservations?update" method="post">
+					<p>Building ${buildings} Date <input type="text" name="datepicker" id="datepicker">
+					<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
 				</form>
 			</div>
 			<div>

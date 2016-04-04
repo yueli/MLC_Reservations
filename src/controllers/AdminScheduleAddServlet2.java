@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import helpers.AdminScheduleUpdateQuery;
 import helpers.BuildingSelectQuery;
 import model.Admin;
 import model.DateTimeConverter;
+import model.DbConnect;
 import model.Schedule;
 import model.TimeConverter;
 
@@ -85,20 +87,22 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				String summarySession = (String) session.getAttribute("summary");
 				// others
 				String msg = "";
-				String yesButton = "";
-				String noButton = "";
-				String update = request.getParameter("update");
 				
 				// convert date and time to SQL format
 				DateTimeConverter dtc = new DateTimeConverter();
 				
 				if (startDate != null && !startDate.isEmpty()){
+					// if start date isn't null, convert to SQL format
 					startDate = dtc.slashDateConvert(startDate);
 				} else {
+					// if start date is null, start date is the current date
 					startDate = dtc.parseDate(dtc.datetimeStamp());
 				}
 				if (endDate != null && !endDate.isEmpty()){
+					// if end date isn't null, convert to SQL format
 					endDate =  dtc.slashDateConvert(endDate);
+				} else {
+					endDate = startDate;
 				}
 				
 				// convert time to SQL format
@@ -121,66 +125,19 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				if (summarySession != null){
 					summary = summarySession;
 				}
+				System.out.println();
+				System.out.println("Start Date in Schedule Add 2: " + startDate);
+				System.out.println("Start Date in Schedule Add 2: " + endDate);
+				System.out.println();
 				
-				//------------------------------------------------//
-				/*               SCHEDULE UPDATE                  */
-				//------------------------------------------------//
-				/*
-				 * If the schedule entry already exist, the user will see a prompt asking 
-				 * if they want to update the entry or not
-				 * 
-				 * if the user says yes, the schedule will be updated
-				 */
-				if (update != null && !update.isEmpty()){
-					if(update.equalsIgnoreCase("yes")){
-						// get schedule ID from request
-						scheduleID = Integer.parseInt(request.getParameter("scheduleID"));
-						
-						// query to update entry instead
-						AdminScheduleUpdateQuery suq = new AdminScheduleUpdateQuery();
-						Schedule schedule = new Schedule(scheduleID, startDate, endDate, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy);
-						suq.doScheduleUpdate(schedule);
-						
-						msg = "Schedule Updated!";
-						
-						session.removeAttribute("buildingID");
-						session.removeAttribute("startDate");
-						session.removeAttribute("endDate");
-						session.removeAttribute("startTime");
-						session.removeAttribute("endTime");
-						session.removeAttribute("summary");
-						session.removeAttribute("yesButton");
-						session.removeAttribute("noButton");
-						
-						session.setAttribute("msg", msg);
-						
-						
-						url = "add-schedule";
-						
-					} else if (update.equalsIgnoreCase("no")){
-						msg = "Schedule was not updated.";
-						
-						session.removeAttribute("buildingID");
-						session.removeAttribute("startDate");
-						session.removeAttribute("endDate");
-						session.removeAttribute("startTime");
-						session.removeAttribute("endTime");
-						session.removeAttribute("summary");
-						session.removeAttribute("yesButton");
-						session.removeAttribute("noButton");
-						
-						session.setAttribute("msg", msg);
-						
-						url = "add-schedule";
-					}
-				} else {
 				//------------------------------------------------//
 				/*            BUILDING INFORMATION                */
 				//------------------------------------------------//
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				// if there is no buildingID from request, then display building drop down
-				if (buildingID == null || buildingID.equals("0")){
+				if (buildingID == null){
 					buildingID = Integer.toString(bsq.getFirstBuildingID());
+					System.out.println("BuildingID in Schedule add 2: getFirstBuilding: " + buildingID);
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
@@ -196,36 +153,62 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				} else if (buildingIDSession != null){
 					buildingID = buildingIDSession;
 				} 
+				System.out.println("BuildingID in Schedule add 2: " + buildingID);
 				
 				//------------------------------------------------//
 				/*               SCHEDULE INSERT                  */
 				//------------------------------------------------//
-				int buildingIDInt = Integer.parseInt(buildingID);
-				Schedule schedule = new Schedule(startDate, endDate, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy, allDayEvent, buildingIDInt);
-				AdminScheduleInsertQuery siq = new AdminScheduleInsertQuery();
-				String check = siq.scheduleInsertCheck(schedule);
-				if (check.equalsIgnoreCase("false")){
-					// if false, no entries in schedule table exist that
-					// match parameters user entered
-					msg = "Successfully added schedule!";
-					siq.doScheduleInsert(schedule);
-					url = "schedule";
-				} else {
-					// create a button that says yes or no
-					yesButton = "<form name='doUpdate' action='new-schedule' method='post'>";
-					yesButton += "<input name ='update' type='hidden' value='yes'>";
-					yesButton += "<input name ='scheduleID' type='hidden' value='" + check + "'>";
-					yesButton += "<input type='submit' name='Yes' value='Yes'>";
-					yesButton += "</form>";
+				
+				// date range
+				List<String> dates = dtc.dateRangeList(startDate, endDate);
+				for(int i=0; i < dates.size(); i++){
+					String date = dates.get(i);
+				    System.out.println("Print of Date range in Schedule Add 2:  " + date);
+				    
+				    int buildingIDInt = Integer.parseInt(buildingID);
+					Schedule schedule = new Schedule(date, date, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy, allDayEvent, buildingIDInt);
 					
-					noButton = "<form name='dontUpdate' action='new-schedule' method='post'>";
-					noButton += "<input name ='update' type='hidden' value='no'>";
-					noButton += "<input type='submit' name='No' value='No'>";
-					noButton += "</form>";
+					// class used to check schedule entries and add schedule entries
+					AdminScheduleInsertQuery siq = new AdminScheduleInsertQuery();
 					
-					msg = "Entry for " + dtc.convertDateLong(startDate) + " exists, would you like to update the entry? ";
+					// check entries before inserting
+					String check = siq.scheduleInsertCheck(schedule);
 					
-					url = "admin/schedule-add.jsp";
+					if (check.equalsIgnoreCase("false")){
+						// if false, no entries in schedule table exist that
+						// match parameters user entered
+						msg = "Successfully added schedule for dates " + dtc.convertDateLong(startDate) + " - " + dtc.convertDateLong(endDate) + "!";
+						siq.doScheduleInsert(schedule);
+						
+						session.removeAttribute("buildingID");
+						session.removeAttribute("startDate");
+						session.removeAttribute("endDate");
+						session.removeAttribute("startTime");
+						session.removeAttribute("endTime");
+						session.removeAttribute("summary");
+						
+						url = "admin/schedule-add.jsp";
+					} else {
+						// entry in schedule table exist, get schedule ID and do an update
+						scheduleID = Integer.parseInt(check);
+						
+						Schedule updateSchedule = new Schedule(scheduleID, date, date, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy);
+						AdminScheduleUpdateQuery suq = new AdminScheduleUpdateQuery();
+						
+						msg += "\nSuccessfully updated schedule for " + dtc.convertDateLong(date)+ ".";
+						suq.doScheduleUpdate(updateSchedule);
+						
+						session.removeAttribute("buildingID");
+						session.removeAttribute("startDate");
+						session.removeAttribute("endDate");
+						session.removeAttribute("startTime");
+						session.removeAttribute("endTime");
+						session.removeAttribute("summary");
+						
+						session.setAttribute("msg", msg);
+						url = "admin/schedule-add.jsp";
+						
+					}
 				}
 				
 				// set session and request variables
@@ -237,11 +220,9 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				session.setAttribute("endTime", endTime);
 				session.setAttribute("summary", summary);
 				session.setAttribute("msg", msg);
-				session.setAttribute("yesButton", yesButton);
-				session.setAttribute("noButton", noButton);
 				session.setAttribute("tc", tc);
-				}
-			} else { 
+				
+			} else if (role.equalsIgnoreCase("C") && status == 1){ 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
@@ -249,16 +230,27 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				// forwarding URL
 				url = "AdminViewReservations";
 				
-				// set session attributes
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
-			
-		} else { // there isn't an active session.
-			//------------------------------------------------//
-			/*           VIEW FOR INVALID SESSION             */
-			//------------------------------------------------//
-			url = "AdminHome";
-		}
 		
+		} else { // there isn't an active session
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
+		}
+	
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

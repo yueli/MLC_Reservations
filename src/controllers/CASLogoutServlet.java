@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +38,9 @@ public class CASLogoutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession(false);
 		this.session.invalidate();
-		
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        response.setDateHeader("Expires", 0); // Proxies
 		response.sendRedirect("https://cas.dev.uga.edu/cas/logout");
 		
 	}

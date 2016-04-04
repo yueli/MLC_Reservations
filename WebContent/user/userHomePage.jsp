@@ -2,11 +2,12 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MLC Reservations – Student View</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 	<script> 
 			// Importing Header and Footer
 			$(function() {
@@ -17,13 +18,6 @@
 </head>
 <body>
 		<div id="header1"></div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
 <!-- === BEGIN CONTENT === -->
                     <div id="content">
                         <div class="container no-padding">
@@ -76,7 +70,7 @@
                                 <hr class="margin-top-15">
                                 <p class="animate fadeIn text-center animated">This website will enable you to reserve a room in the Zell B. Miller Learning Center for study purposes or group meetings.</p>
                                 <p class="text-center animate fadeInUp margin-bottom-50 animated">
-                                    <button type="button" class="btn btn-lg btn-red" href="browse.jsp">Reserve a Room</button>
+                                    <button type="button" class="btn btn-lg btn-red" href="Browse">Reserve a Room</button>
                                 </p>
                             </div>
                         </div>

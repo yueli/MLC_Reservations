@@ -128,5 +128,12 @@ public class DbConnect {
 		return null;
 		
 	}
+	/**
+	 * 
+	 * @return String of the url redirect if the session is null.
+	 */
+	public static String urlRedirect(){
+		return "http://ebus.terry.uga.edu:8080/MLC_Reservations";
+	}
 	
 }
