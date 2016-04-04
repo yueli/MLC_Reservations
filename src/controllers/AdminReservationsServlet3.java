@@ -14,7 +14,7 @@ import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.RoomsSelectQuery;
 import model.Admin;
-import model.Email;
+import model.DbConnect;
 import model.Reservation;
 import model.TimeConverter;
 
@@ -116,7 +116,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				}
 				
 				session.setAttribute("msg", msg);
-			} else { 
+			}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
@@ -124,14 +124,25 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				// forwarding URL
 				url = "AdminViewReservations";
 				
-				// set session attributes
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
-			
-		} else { // there isn't an active session.
+		
+		} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
-			/*           VIEW FOR INVALID SESSION             */
+			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
-			url = "AdminHome";
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
 		}
 		
 		// forward the request

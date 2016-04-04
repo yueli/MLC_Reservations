@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.AdminScheduleUpdateQuery;
+import model.Admin;
+import model.DbConnect;
 import model.Schedule;
 import model.TimeConverter;
 
@@ -21,7 +23,7 @@ import model.TimeConverter;
 public class AdminScheduleEditServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private HttpSession session;
-    
+    private String url;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -41,95 +43,131 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
-		System.out.println(request.getRequestURI());
-		String url = "";
-		String msg = "";
+		this.session = request.getSession(false);
 		
-		TimeConverter tc = new TimeConverter();
-		
-		// values passed from schedule.jsp/AdminScheduleSelectQuery
-		String scheduleID = request.getParameter("scheduleID");
-		System.out.println("ScheduleID: " +  scheduleID);
-		String buildingName = request.getParameter("buildingName");
-		String buildingID = request.getParameter("buildingID");
-		String startTime = request.getParameter("startTime");
-		String endTime = request.getParameter("endTime");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		String summary = request.getParameter("summary");
-		String createdBy = request.getParameter("createdBy");
-		
-		// edited values from schedule-edit.jsp
-		String startDateEdit  = request.getParameter("startDateEdit");
-		String startTimeEdit  = request.getParameter("startTimeEdit");
-		String endTimeEdit  = request.getParameter("endTimeEdit");
-		String summaryEdit  = request.getParameter("summaryEdit");
-		
-		
-		// null check for variables coming in from Admin Schedule Edit Servlet & schedule-edit.jsp
-		if (buildingName != null && buildingID != null && startTime != null && 
-				endTime != null && startDate != null && endDate != null &&
-				summary != null && createdBy != null &&
-				scheduleID != null || startDateEdit != null && startTimeEdit != null && 
-				endTimeEdit != null && summaryEdit != null){
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
 			
-			// forward to edit the schedule 
-			url = "admin/schedule-edit.jsp";
+			// get the role for the currently logged in admin user.
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); // USED FOR TESTING
+			String role = loggedInAdminUser.getRole();
+			int status = loggedInAdminUser.getAdminStatus();
 			
-			// null check for variables coming in from schedule-edit.jsp (admin edited variables)
-			if (startDateEdit != null && startTimeEdit != null && endTimeEdit != null && summaryEdit != null){
-				// get scheduleID from session
-				scheduleID = (String) session.getAttribute("scheduleID");
+			// push content based off role
+			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+		
+				System.out.println(request.getRequestURI());
+				String msg = "";
 				
-				// place variables from jsp (user altered) into standard variables
-				// the start and end date have to be the same
-				startDate = startDateEdit;
-				endDate = startDateEdit;
+				TimeConverter tc = new TimeConverter();
 				
-				// convert from 24-hour time
-				startTimeEdit = tc.convertTimeTo24(startTimeEdit);
-				startTime = startTimeEdit;
-			
-				// convert to 24-hour time
-				endTimeEdit = tc.convertTimeTo24(endTimeEdit);
-				endTime = endTimeEdit;
+				// values passed from schedule.jsp/AdminScheduleSelectQuery
+				String scheduleID = request.getParameter("scheduleID");
+				System.out.println("ScheduleID: " +  scheduleID);
+				String buildingName = request.getParameter("buildingName");
+				String buildingID = request.getParameter("buildingID");
+				String startTime = request.getParameter("startTime");
+				String endTime = request.getParameter("endTime");
+				String startDate = request.getParameter("startDate");
+				String endDate = request.getParameter("endDate");
+				String summary = request.getParameter("summary");
+				String createdBy = request.getParameter("createdBy");
 				
-				summary = summaryEdit;
-				createdBy = "admin"; // notate that admin made a change in database
+				// edited values from schedule-edit.jsp
+				String startDateEdit  = request.getParameter("startDateEdit");
+				String startTimeEdit  = request.getParameter("startTimeEdit");
+				String endTimeEdit  = request.getParameter("endTimeEdit");
+				String summaryEdit  = request.getParameter("summaryEdit");
 				
-				msg = "Successfully edited";
 				
-				// Update Schedule edits into database
-				int scheduleInt = Integer.parseInt(scheduleID);
-				Schedule schedule = new Schedule(scheduleInt, startDate, endDate,
-						startTime, endTime, summary, createdBy);
-				AdminScheduleUpdateQuery suq = new AdminScheduleUpdateQuery();
-				suq.doScheduleUpdate(schedule);
+				// null check for variables coming in from Admin Schedule Edit Servlet & schedule-edit.jsp
+				if (buildingName != null && buildingID != null && startTime != null && 
+						endTime != null && startDate != null && endDate != null &&
+						summary != null && createdBy != null &&
+						scheduleID != null || startDateEdit != null && startTimeEdit != null && 
+						endTimeEdit != null && summaryEdit != null){
+					
+					// forward to edit the schedule 
+					url = "admin/schedule-edit.jsp";
+					
+					// null check for variables coming in from schedule-edit.jsp (admin edited variables)
+					if (startDateEdit != null && startTimeEdit != null && endTimeEdit != null && summaryEdit != null){
+						// get scheduleID from session
+						scheduleID = (String) session.getAttribute("scheduleID");
+						
+						// place variables from jsp (user altered) into standard variables
+						// the start and end date have to be the same
+						startDate = startDateEdit;
+						endDate = startDateEdit;
+						
+						// convert from 24-hour time
+						startTimeEdit = tc.convertTimeTo24(startTimeEdit);
+						startTime = startTimeEdit;
+					
+						// convert to 24-hour time
+						endTimeEdit = tc.convertTimeTo24(endTimeEdit);
+						endTime = endTimeEdit;
+						
+						summary = summaryEdit;
+						createdBy = "admin"; // notate that admin made a change in database
+						
+						msg = "Successfully edited";
+						
+						// Update Schedule edits into database
+						int scheduleInt = Integer.parseInt(scheduleID);
+						Schedule schedule = new Schedule(scheduleInt, startDate, endDate,
+								startTime, endTime, summary, createdBy);
+						AdminScheduleUpdateQuery suq = new AdminScheduleUpdateQuery();
+						suq.doScheduleUpdate(schedule);
+						
+						url = "Schedule";
+					} else {
+						//msg = "All values must be entered.";
+						url = "admin/schedule-edit.jsp";
+					}
+					System.out.println("Print of: " + startDate + " " + tc.convertTimeTo12(startTime) + " " + tc.convertTimeTo12(endTime) + " " + summary);
+					this.session.setAttribute("msg", msg);
+					this.session.setAttribute("tc", tc);
+					this.session.setAttribute("scheduleID", scheduleID);
+					this.session.setAttribute("buildingName", buildingName);
+					this.session.setAttribute("buildingID", buildingID);
+					this.session.setAttribute("startTime", startTime);
+					this.session.setAttribute("endTime", endTime);
+					this.session.setAttribute("startDate", startDate);
+					this.session.setAttribute("endDate", endDate);
+					this.session.setAttribute("summary", summary);
+					this.session.setAttribute("createdBy", createdBy);
+				}
+					
+			}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+				//------------------------------------------------//
+				/*                VIEW FOR CLERK                  */
+				//------------------------------------------------//
 				
-				url = "Schedule";
+				// forwarding URL
+				url = "AdminViewReservations";
+				
 			} else {
-				//msg = "All values must be entered.";
-				url = "admin/schedule-edit.jsp";
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
-			System.out.println("Print of: " + startDate + " " + tc.convertTimeTo12(startTime) + " " + tc.convertTimeTo12(endTime) + " " + summary);
-			this.session.setAttribute("msg", msg);
-			this.session.setAttribute("tc", tc);
-			this.session.setAttribute("scheduleID", scheduleID);
-			this.session.setAttribute("buildingName", buildingName);
-			this.session.setAttribute("buildingID", buildingID);
-			this.session.setAttribute("startTime", startTime);
-			this.session.setAttribute("endTime", endTime);
-			this.session.setAttribute("startDate", startDate);
-			this.session.setAttribute("endDate", endDate);
-			this.session.setAttribute("summary", summary);
-			this.session.setAttribute("createdBy", createdBy);
-			
-		} else {
-			// send back to schedule list (Admin Schedule Edit Servlet)
-			url = "Schedule";
-		}
 		
+		} else { // there isn't an active session (session == null).
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
+		}
+				
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

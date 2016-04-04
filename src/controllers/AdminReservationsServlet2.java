@@ -16,6 +16,7 @@ import helpers.ReservationSelectQuery;
 import helpers.RoomsSelectQuery;
 import model.Admin;
 import model.DateTimeConverter;
+import model.DbConnect;
 import model.TimeConverter;
 
 /**
@@ -109,7 +110,6 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				String endTimeSession = (String) session.getAttribute("endTime");
 				
 				// others
-				String roomID = (String) request.getParameter("roomID");
 				String reserveName = request.getParameter("reserveName");
 
 				// convert date and time to SQL format
@@ -139,8 +139,8 @@ public class AdminReservationsServlet2 extends HttpServlet {
 					session.removeAttribute(endTime);
 					//endTime = endTimeSession;
 				}
-				System.out.println("ST:" + startTime);
-				System.out.println("ET:" + endTime);
+				System.out.println("Start Time in Admin Res Servlet 2: " + startTime);
+				System.out.println("End Time in Admin Res Servlet 2: " + endTime);
 				
 				// query for reservation check and listing of all rooms in a building.
 				ReservationSelectQuery res = new ReservationSelectQuery();
@@ -175,7 +175,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 						//TODO change to do admin read.
 						res.doReservationRead(dtc.slashDateConvert(startDate), times.get(j), roomNumber.get(i));
 						String reservationCheck = res.doReservationResults2();
-						System.out.println("RES CHECK = " + reservationCheck);
+						
 						if(reservationCheck.isEmpty()){
 							// index 0 is the start time of the reservation
 							if(j == 0){
@@ -255,7 +255,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				session.setAttribute("table", table);
 				
 				
-			} else { 
+			}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 				//------------------------------------------------//
 				/*                VIEW FOR CLERK                  */
 				//------------------------------------------------//
@@ -263,14 +263,25 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				// forwarding URL
 				url = "AdminViewReservations";
 				
-				// set session attributes
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
 			}
-			
-		} else { // there isn't an active session.
+		
+		} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
-			/*           VIEW FOR INVALID SESSION             */
+			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
-			url = "AdminHome";
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
 		}
 		
 		// forward the request
