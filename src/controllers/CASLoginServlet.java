@@ -69,7 +69,9 @@ public class CASLoginServlet extends HttpServlet {
 		}
 		
 		User loggedInUser = new User(); // create the user object to pass forward		
-				
+		
+		String employeeType = ""; /*used for grabbing the employee type from CAS */
+		
 		AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal();
 		Map attributes = principal.getAttributes();
 		Iterator attributeNames = attributes.keySet().iterator();
@@ -90,7 +92,7 @@ public class CASLoginServlet extends HttpServlet {
 		      }
 		      if (Objects.equals("CN", attributeName)){
 		    		loggedInUser.setMyID(attributeValue);    
-		    		//table += " ** using this attirbute CAN ** ";
+		    		//table += " ** using this attribute CAN ** ";
 		      }
 		      if (Objects.equals("ugaEmail", attributeName)){
 		    	  	System.out.println("************************");
@@ -98,7 +100,7 @@ public class CASLoginServlet extends HttpServlet {
 		    	  	System.out.println("CAS VARIABLE LOGGING IN ugaEmail: " + attributeValue); // TEST IN CAS STAGE
 		    	  	System.out.println();
 		    	  	System.out.println("************************");
-		    		//table += " ** using this attirbute CAN ** ";
+		    		
 		      }
 		      if (Objects.equals("fsCode", attributeName)){
 		    	  	System.out.println("************************");
@@ -106,7 +108,7 @@ public class CASLoginServlet extends HttpServlet {
 		    	  	System.out.println("CAS VARIABLE LOGGING IN fsCode: " + attributeValue); // TEST IN CAS STAGE
 		    	  	System.out.println();
 		    	  	System.out.println("************************");
-		    		//table += " ** using this attirbute CAN ** ";
+		    		
 		      }
 		      if (Objects.equals("employeeType", attributeName)){
 		    	  	System.out.println("************************");
@@ -114,7 +116,13 @@ public class CASLoginServlet extends HttpServlet {
 		    	  	System.out.println("CAS VARIABLE LOGGING IN employeeType: " + attributeValue); // THIS WORKED!!!!
 		    	  	System.out.println();
 		    	  	System.out.println("************************");
-		    		//table += " ** using this attirbute CAN ** ";
+		    		
+		    	  	/* grabbing the employee's type to see if they are a student
+		    	  	 * not going to store it in the object since only needed during logging in
+		    	  	 */
+		    	  	
+		    	  	employeeType = attributeValue;
+		    	  	
 		      }
 		      //=====================
 
@@ -124,7 +132,9 @@ public class CASLoginServlet extends HttpServlet {
 
 		AdminUserHelper adminUserHelper = new AdminUserHelper();
 		
-		System.out.println("QR Login Servlet logged in user my id = " + loggedInUser.getMyID());
+		System.out.println("Login Servlet logged in user my id = " + loggedInUser.getMyID());
+
+		System.out.println("Login Servlet logged in user employee type = " + employeeType);
 		 
 		boolean inAdminUserTable = false;	
 		inAdminUserTable = adminUserHelper.inAdminTable(loggedInUser.getMyID());
