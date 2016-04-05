@@ -1,3 +1,8 @@
+<%-- 
+	@author: Ginger Nix
+	This page displays all a user's reservations.	
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 

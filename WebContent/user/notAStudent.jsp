@@ -1,5 +1,9 @@
-<!--@author: Ginger Nix -->
-<!-- called when a person logging in is not a UGA student -->
+<%--
+@author: Ginger Nix
+
+This page is called from the CAS login servlet when a person logging in is not a UGA student.
+
+ --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

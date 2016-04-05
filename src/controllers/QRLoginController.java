@@ -1,3 +1,12 @@
+/* @author: Ginger Nix
+ * 
+ * This controller is called when someone checks into a room by scanning the QR code. They
+ * have to login through CAS and if authenticated they are checked into a reserved room.
+ * The code checks to see if the building exists, the room exists, the user is banned, and if they actually 
+ * are on the reservation. If they pass all these checks they are sent to a QR success jsp page.
+ * 
+ */
+
 package controllers;
 
 import java.io.IOException;
@@ -211,6 +220,5 @@ public class QRLoginController extends HttpServlet {
 			dispatcher.forward(request, response);
         
     } // end do post
-    
- //end servlet
+
 }

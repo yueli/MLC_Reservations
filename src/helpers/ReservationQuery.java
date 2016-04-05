@@ -1,3 +1,9 @@
+/* @author: Ginger Nix
+ * 
+ * This helper has several methods that help the servlets for canceling a reservation, checking into
+ * a reservation, and getting the building and room record id's.
+ */
+
 package helpers;
 
 import java.sql.PreparedStatement;

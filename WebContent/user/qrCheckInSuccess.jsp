@@ -1,3 +1,9 @@
+<%-- 
+	@author: Ginger Nix
+	
+	This page displays to the user that they checked in successfully.
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

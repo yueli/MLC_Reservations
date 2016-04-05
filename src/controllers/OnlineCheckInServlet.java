@@ -1,4 +1,5 @@
 /* @author: Ginger Nix
+ * 
  * Checks in a user online
  */
 package controllers;
