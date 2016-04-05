@@ -99,6 +99,7 @@ public class BrowseServlet3 extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 		} else {
 			//------------------------------------------------//
@@ -108,6 +109,7 @@ public class BrowseServlet3 extends HttpServlet {
 			// the app should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
 		// forward the request

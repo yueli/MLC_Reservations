@@ -74,6 +74,7 @@ public class AdminReserveCancelServlet extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 			
 			
@@ -85,6 +86,7 @@ public class AdminReserveCancelServlet extends HttpServlet {
 			// the site should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
 		// forward the URL

@@ -113,6 +113,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 					session.invalidate();
 					//url = "LoginServlet"; // USED TO TEST LOCALLY
 					response.sendRedirect(DbConnect.urlRedirect());
+					return;
 				}
 					
 			
@@ -125,6 +126,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 			
 		} else { // there isn't an active session.
@@ -135,6 +137,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			// the site should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
 		// forward the request
