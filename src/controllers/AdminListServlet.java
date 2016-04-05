@@ -1,3 +1,8 @@
+/* @author: Ginger Nix
+ * 
+ * This servlet lists all the admins in the admin table
+ * 
+ */
 package controllers;
 
 import java.io.IOException;

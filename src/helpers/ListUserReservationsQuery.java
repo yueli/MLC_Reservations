@@ -371,7 +371,6 @@ public class ListUserReservationsQuery {
 	}
 	
 	
-// USING THIS??
 	public String GetUserReservation(int resv_id, int userRecdID){
 		String table = "";
 		
