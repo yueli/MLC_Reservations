@@ -274,6 +274,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 					session.invalidate();
 					//url = "LoginServlet"; // USED TO TEST LOCALLY
 					response.sendRedirect(DbConnect.urlRedirect());
+					return;
 				}
 			} else {
 				//------------------------------------------------//
@@ -284,6 +285,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 		
 		} else { // there isn't an active session (session == null).
@@ -294,6 +296,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 			// the site should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
 		// forward the request

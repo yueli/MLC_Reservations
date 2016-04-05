@@ -217,6 +217,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 		} else {
 			//------------------------------------------------//
@@ -226,6 +227,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 			// the app should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 			
 		}
 		
