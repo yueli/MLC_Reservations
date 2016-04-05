@@ -80,7 +80,6 @@ public class BuildingListQuery {
 						+ "<th>Building Cal URL</th>"
 						+ "<th></th>"
 						+ "<th></th>"
-						+ "<th></th>"
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>";
@@ -121,12 +120,9 @@ public class BuildingListQuery {
 					table += "<td>";
 					table += building.getBuildingCalUrl();
 					table += "</td>";
-					table += "<td>";
-					table += "admin?";
-					table += "</td>";
 					
 					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
-					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
+					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>Edit Hours</button></a></td>";
 					
 					table += "</tr>";
 				}

@@ -13,7 +13,7 @@ public class Building {
 	private int buildingStatus;
 	private String buildingCalName;
 	private String buildingCalUrl;
-	private Admin admin = new Admin();
+	private String admin;
 	private String buildingQRName; //Ginger added this for QR checking in - needed on the url sent to QR login to check reservation
 	
 	/**
@@ -26,7 +26,7 @@ public class Building {
 	 * @param admin
 	 */
 	public Building(int buildingID, String buildingName, int buildingStatus, String buildingCalName,
-			String buildingCalUrl, Admin admin) {
+			String buildingCalUrl, String admin) {
 		this.buildingID = buildingID;
 		this.buildingName = buildingName;
 		this.buildingStatus = buildingStatus;
@@ -44,7 +44,7 @@ public class Building {
 	 * @param admin
 	 */
 	public Building(String buildingName, int buildingStatus, String buildingCalName,
-			String buildingCalUrl, Admin admin) {
+			String buildingCalUrl, String admin) {
 		this.buildingName = buildingName;
 		this.buildingStatus = buildingStatus;
 		this.buildingCalName = buildingCalName;
@@ -58,7 +58,7 @@ public class Building {
 	 * @param buildingStatus
 	 * @param admin
 	 */
-	public Building(String buildingName, int buildingStatus, Admin admin) {
+	public Building(String buildingName, int buildingStatus, String admin) {
 		this.buildingName = buildingName;
 		this.buildingStatus = buildingStatus;
 		this.admin = admin;
@@ -145,14 +145,14 @@ public class Building {
 	/**
 	 * @return the admin
 	 */
-	public Admin getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
 
 	/**
 	 * @param admin the admin to set
 	 */
-	public void setAdmin(Admin admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
 

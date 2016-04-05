@@ -22,6 +22,7 @@ import model.User;
 
 /**
  * Servlet implementation class BrowseConfirmServlet
+ * @author Brian Olaogun
  */
 @WebServlet({ "/BrowseConfirmation", "/BrowseConfirm" })
 public class BrowseConfirmServlet extends HttpServlet {
@@ -152,8 +153,16 @@ public class BrowseConfirmServlet extends HttpServlet {
 							riq.doReservationInsert(reservation);
 							
 							// send confirmation email
-							String primaryEmail = primaryUser.getUserEmail();
+							String primaryEmail;
 							String secondaryEmail;
+							
+							// make sure an email exists in our local database for primary user. 
+							// if not, use MyID@uga.edu as email.
+							if (primaryUser.getUserEmail() == null || primaryUser.getUserEmail().isEmpty()){
+								primaryEmail = primaryUser.getMyID() + "@uga.edu";
+							} else {
+								primaryEmail = primaryUser.getUserEmail();
+							}
 							
 							// make sure an email exists in our local database for secondary user. 
 							// if not, use MyID@uga.edu as email.

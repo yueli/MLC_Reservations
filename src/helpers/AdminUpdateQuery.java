@@ -14,13 +14,13 @@ import model.Schedule;
  * @author Brian-MBP
  *
  */
-public class AdminScheduleUpdateQuery {
+public class AdminUpdateQuery {
 	private Connection connection;
 	
 	/**
 	 * Database connection
 	 */
-	public AdminScheduleUpdateQuery() {
+	public AdminUpdateQuery() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			// hard coded the connection in DbConnect class
@@ -57,7 +57,32 @@ public class AdminScheduleUpdateQuery {
 			ps.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();
-			System.out.println("Error in AdminScheduleUpdateQuery.java: doScheduleUpdate method. Please check connection or SQL statement: " + query);
+			System.out.println("Error in AdminUpdateQuery.java: doScheduleUpdate method. Please check connection or SQL statement. ");
+			System.out.println();
+		}
+	}
+	/**
+	 * This query is used to cancel an admin reservation
+	 * @param reserveID reservation id of the reservation the admin wants to cancel
+	 * @param free this value cancels a reservation and opens up a room.  
+	 * Y = room is free and reservation is canceled.
+	 */
+	public void cancelAdminReservation(int reserveID, String free){
+		
+		String query = "UPDATE tomcatdb.Reservations "
+				+ "SET free = ? "
+				+ "WHERE reserveID = ?";
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, free);
+			ps.setInt(2, reserveID);
+			ps.executeUpdate();
+			
+		} catch (SQLException e){
+			e.printStackTrace();
+			System.out.println("Error in AdminUpdateQuery.java: cancelAdminReservation method. Please check connection or SQL statement. ");
+			System.out.println();
 		}
 	}
 	

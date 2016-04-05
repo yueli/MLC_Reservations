@@ -98,7 +98,8 @@ public class AdminReservationsSelectQuery {
 		
 		// The query below pulls shows the primary & secondary's myID
 		// TODO add the current date / date range of current date - 2 weeks from current date.
-		String query = "SELECT tomcatdb.Admin.adminMyID, "
+		String query = "SELECT tomcatdb.Reservations.reserveID, "
+				+ "tomcatdb.Admin.adminMyID, "
 				+ "tomcatdb.Admin.fname, "
 				+ "tomcatdb.Admin.lname, "
 				+ "tomcatdb.Reservations.reserveName, "
@@ -113,6 +114,7 @@ public class AdminReservationsSelectQuery {
 				+ "AND tomcatdb.Building.buildingID = ? "
 				+ "AND tomcatdb.Reservations.Rooms_roomID = tomcatdb.Rooms.roomID "
 				+ "AND tomcatdb.Reservations.Admin_adminID = tomcatdb.Admin.adminID "
+				+ "AND tomcatdb.Reservations.free = 'N' "
 				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
 				+ "ORDER BY tomcatdb.Rooms.roomNumber ASC, "
 				+ "tomcatdb.Reservations.reserveStartDate, "
@@ -134,7 +136,82 @@ public class AdminReservationsSelectQuery {
 	 * 
 	 * @return Resultset from doReservationRead method/query.
 	 */
-	public String doAdminReservationResults(){
+	public String doAdminReservationResults(String role){
+		String table = "";
+		if (role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")){
+			System.out.println("FORWARD TO doAdminReservationsWithCancel");
+			table = doAdminReservationResultsWithCancel();
+			return table;
+			
+		} else {
+			
+			
+			try {
+				table += "<table id='' class='display'>";
+				table += "<thead>";
+				table += "<tr>";
+				table += "<th>Room Number </th>";
+				table += "<th>MyID </th>";
+				table += "<th>First</th>";
+				table += "<th>Last</th>";
+				table += "<th>Reserve Name</th>";
+				table += "<th>Start Date</th>";
+				table += "<th>End Date</th>";
+				table += "<th>Start Time</th>";
+				table += "<th>End Time</th>";
+				table += "<th>Hours</th>";
+				table += "</tr>";
+				table += "</thead>";
+				table += "<tbody>";
+				while(this.results2.next()){
+					Admin admin = new Admin();
+					Reservation reservation = new Reservation();
+					Rooms room = new Rooms();
+					
+					DateTimeConverter dtc = new DateTimeConverter();
+					TimeConverter tc = new TimeConverter();
+					
+
+					admin.setAdminMyID(this.results2.getString("adminMyID"));
+					admin.setFname(this.results2.getString("fname"));
+					admin.setLname(this.results2.getString("lname"));
+					reservation.setReserveName(this.results2.getString("reserveName"));
+					room.setRoomNumber(this.results2.getString("roomNumber"));
+					reservation.setReserveStartDate(this.results2.getString("reserveStartDate"));
+					reservation.setReserveEndDate(this.results2.getString("reserveEndDate"));
+					reservation.setReserveStartTime(this.results2.getString("reserveStartTime"));
+					reservation.setReserveEndTime(TimeConverter.addOneSecondToTime(this.results2.getString("reserveEndTime")));
+					reservation.setHourIncrement(this.results2.getInt("hourIncrement"));
+					
+					table += "<tr>";
+					table += "<td>" + room.getRoomNumber() + "</td>";
+					table += "<td data-search='" + admin.getAdminID() + "'>" + admin.getAdminMyID() + "</td>";
+					table += "<td data-search='" + admin.getFname() + "'>" + admin.getFname() + "</td>";
+					table += "<td data-search='" + admin.getLname() + "'>" + admin.getLname() + "</td>";
+					table += "<td data-search='" + reservation.getReserveName() + "'>" + reservation.getReserveName() + "</td>";
+					table += "<td>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
+					table += "<td>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
+					table += "<td data-order='" + reservation.getReserveStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
+					table += "<td data-order='" + reservation.getReserveEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
+					table += "<td>" + reservation.getHourIncrement() + "</td>";
+					table += "</tr>";
+				} this.results2.beforeFirst();
+				table += "</tbody>";
+				table += "</table>";
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} 
+			return table;
+		}
+		
+	}
+	/**
+	 * 
+	 * @return table of admin reservations with a cancellation button for admin and super admins
+	 * to cancel admin reservations.
+	 */
+	public String doAdminReservationResultsWithCancel(){
+		System.out.println("IN doAdminReservationResultsWithCancel");
 		String table = "";
 		try {
 			table += "<table id='' class='display'>";
@@ -150,9 +227,11 @@ public class AdminReservationsSelectQuery {
 			table += "<th>Start Time</th>";
 			table += "<th>End Time</th>";
 			table += "<th>Hours</th>";
+			table += "<th></th>";
 			table += "</tr>";
 			table += "</thead>";
 			table += "<tbody>";
+			int j = 0;
 			while(this.results2.next()){
 				Admin admin = new Admin();
 				Reservation reservation = new Reservation();
@@ -161,7 +240,7 @@ public class AdminReservationsSelectQuery {
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
 				
-
+				reservation.setReserveID(this.results2.getInt("reserveID"));
 				admin.setAdminMyID(this.results2.getString("adminMyID"));
 				admin.setFname(this.results2.getString("fname"));
 				admin.setLname(this.results2.getString("lname"));
@@ -184,7 +263,15 @@ public class AdminReservationsSelectQuery {
 				table += "<td data-order='" + reservation.getReserveStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
 				table += "<td data-order='" + reservation.getReserveEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
 				table += "<td>" + reservation.getHourIncrement() + "</td>";
+				table += "<td>";
+				table += "<form name='adminCancel' id='cancelReserve" + j + "' action='AdminCancel' method='post'>";
+				table += "<input type='hidden' name='reserveID' value='" + reservation.getReserveID() + "'>";
+				table += "<input type='hidden' name='free' value='Y'>";
+				table += "<input class='btn btn-lg btn-red' type='submit' value='Cancel'>";
+				table += "</form>";
+				table += "</td>";
 				table += "</tr>";
+				j++;
 			} this.results2.beforeFirst();
 			table += "</tbody>";
 			table += "</table>";
