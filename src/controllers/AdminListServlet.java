@@ -1,4 +1,5 @@
-/* @author: Ginger Nix
+/** 
+ * @author: Ginger Nix
  * 
  * This servlet lists all the admins in the admin table
  * 

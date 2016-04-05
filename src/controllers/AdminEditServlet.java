@@ -1,4 +1,5 @@
-/* @author: Ginger Nix
+/**
+ * @author: Ginger Nix
  * 
  * This servlet creates a form for admins to add other admins
  * 

@@ -1,4 +1,5 @@
-/* @author: Ginger Nix
+/**
+ * @author: Ginger Nix
  * 
  * This servlet is called then sends the user to the admin's home page
  * 
