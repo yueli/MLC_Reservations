@@ -29,7 +29,7 @@ public class AdminReserveCancelServlet extends HttpServlet {
      */
     public AdminReserveCancelServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**

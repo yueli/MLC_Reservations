@@ -175,7 +175,6 @@ public class AdminReservationsServlet2 extends HttpServlet {
 							 * Check if there is a reservation at the time.
 							 * If there isn't then returned is an empty string.
 							 */
-							//TODO change to do admin read.
 							res.doReservationRead(dtc.slashDateConvert(startDate), times.get(j), roomNumber.get(i));
 							String reservationCheck = res.doReservationResults2();
 							
@@ -206,7 +205,6 @@ public class AdminReservationsServlet2 extends HttpServlet {
 									table += "<input type='hidden' name='endDate' value='" + dtc.slashDateConvert(endDate) + "'>";
 									table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 									table += "<input type='hidden' name='reserveName' value='" + reserveName + "'>";
-									// TODO get admin ID from session in all servlets.
 									table += "<input type='submit' value='Make Reservation'>";
 									table += "</form>";
 									table += "</td>";

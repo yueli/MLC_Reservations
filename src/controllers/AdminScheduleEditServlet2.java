@@ -30,7 +30,7 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
      */
     public AdminScheduleEditServlet2() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
