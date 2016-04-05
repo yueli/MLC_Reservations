@@ -126,11 +126,12 @@ public class BrowseConfirmServlet extends HttpServlet {
 						       // primary user
 						int primaryUserID = primaryUser.getUserRecordID();
 						
-						      // TODO secondary user
+							  // secondary user 
 						User secondaryUser = uh.getUserInfo(secondaryMyID);
+						int secondaryUserID = secondaryUser.getUserRecordID();
+						
 						System.out.println("SECONDARY USER INFO FROM BROWSE CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
 						System.out.println();
-						int secondaryUserID = secondaryUser.getUserRecordID();
 						System.out.println("PRINT of secondary ID: " + secondaryUserID);
 						
 						// check if reservation is available

@@ -31,7 +31,7 @@ public class BrowseReserveServlet extends HttpServlet {
      */
     public BrowseReserveServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**

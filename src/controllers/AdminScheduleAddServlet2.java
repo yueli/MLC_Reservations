@@ -63,8 +63,6 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-				
-					// TODO Looping in multiple dates.
 			
 					// get session and request variables + initialization of others
 					String buildings = ""; // the string that contains the HTML drop down list

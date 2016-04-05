@@ -22,7 +22,7 @@ public class CASLogoutServlet extends HttpServlet {
      */
     public CASLogoutServlet() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 	/**
