@@ -47,60 +47,76 @@ public class AdminScheduleAddServlet extends HttpServlet {
 		
 		// if this session is not null (active/valid)
 		if(this.session != null){
-			// get admin user from session
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-			String role = loggedInAdminUser.getRole();
-			int status = loggedInAdminUser.getAdminStatus();
-			
-			// push content based off role
-			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-				// get session and request variables + initialization of others
-				String buildings = ""; // the string that contains the HTML drop down list
-				String buildingID = request.getParameter("buildingID"); // get the value from 
-				String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
-				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
-				String msg = (String) session.getAttribute("msg");
+
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
 				
-				//------------------------------------------------//
-				/*            BUILDING INFORMATION                */
-				//------------------------------------------------//
-				BuildingSelectQuery bsq = new BuildingSelectQuery();
-				// if there is no buildingID from request, then display building drop down
-				if (buildingID == null){
-					buildingID = Integer.toString(bsq.getFirstBuildingID());
-					int bldg = Integer.parseInt(buildingID);
-					// query building
+				// get the role for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
 					
-					bsq.doAdminBuildingRead();
-					buildings = bsq.getBuildingResults(bldg);
-		
-				}
-				// if there is a buildingID from session, it becomes the buildingID
-				// if there is a buildingID selected from drop down, it becomes the buildingID
-				if (buildingIDSelect != null){
-					buildingID = buildingIDSelect;
-					buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
-				} else if (buildingIDSession != null){
-					buildingID = buildingIDSession;
-				} 
-				
-				// forward the URL
-				url = "admin/schedule-add.jsp";
-				
-				// set session and request variables
-				session.setAttribute("buildingID", buildingID);
-				session.setAttribute("buildings", buildings);
-				session.setAttribute("msg", msg);
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+					// get session and request variables + initialization of others
+					String buildings = ""; // the string that contains the HTML drop down list
+					String buildingID = request.getParameter("buildingID"); // get the value from 
+					String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
+					String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
+					String msg = (String) session.getAttribute("msg");
+					
+					//------------------------------------------------//
+					/*            BUILDING INFORMATION                */
+					//------------------------------------------------//
+					BuildingSelectQuery bsq = new BuildingSelectQuery();
+					// if there is no buildingID from request, then display building drop down
+					if (buildingID == null){
+						buildingID = Integer.toString(bsq.getFirstBuildingID());
+						int bldg = Integer.parseInt(buildingID);
+						// query building
+						
+						bsq.doAdminBuildingRead();
+						buildings = bsq.getBuildingResults(bldg);
 			
-			} else if (role.equalsIgnoreCase("C") && status == 1) { 
-				//------------------------------------------------//
-				/*                VIEW FOR CLERK                  */
-				//------------------------------------------------//
+					}
+					// if there is a buildingID from session, it becomes the buildingID
+					// if there is a buildingID selected from drop down, it becomes the buildingID
+					if (buildingIDSelect != null){
+						buildingID = buildingIDSelect;
+						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
+					} else if (buildingIDSession != null){
+						buildingID = buildingIDSession;
+					} 
+					
+					// forward the URL
+					url = "admin/schedule-add.jsp";
+					
+					// set session and request variables
+					session.setAttribute("buildingID", buildingID);
+					session.setAttribute("buildings", buildings);
+					session.setAttribute("msg", msg);
 				
-				// forwarding URL
-				url = "AdminViewReservations";
-				
-				// set session attributes
+				} else if (role.equalsIgnoreCase("C") && status == 1) { 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+					
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
+				}
+					
+			
 			} else {
 				//------------------------------------------------//
 				/*            ADMIN USER INFO EXPIRED             */
@@ -110,6 +126,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 			
 		} else { // there isn't an active session.
@@ -120,6 +137,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			// the site should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
 		// forward the request

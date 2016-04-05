@@ -336,7 +336,7 @@ public class TimeConverter {
 			minutes = Integer.parseInt(minuteFormat.format(convertStringTimeToDate_Minute));
 			return minutes;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

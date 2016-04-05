@@ -31,7 +31,7 @@ public class BrowseReserveServlet extends HttpServlet {
      */
     public BrowseReserveServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
@@ -130,6 +130,7 @@ public class BrowseReserveServlet extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 			
 		} else {
@@ -140,6 +141,7 @@ public class BrowseReserveServlet extends HttpServlet {
 			// the app should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 			
 		}
 		

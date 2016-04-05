@@ -18,6 +18,7 @@ import model.DbConnect;
 
 /**
  * Servlet implementation class AdminViewReservations2
+ * @author Brian Olaogun
  */
 @WebServlet({ "/AdminViewReservations2", "/view-reservations?update" })
 public class AdminViewReservations2 extends HttpServlet {
@@ -48,49 +49,68 @@ public class AdminViewReservations2 extends HttpServlet {
 		// check to see if there is a valid session
 		if (session != null){ // there is an active session
 			
-			// get the role for the currently logged in admin user.
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); // USED FOR TESTING
-			String role = loggedInAdminUser.getRole();
-			int status = loggedInAdminUser.getAdminStatus();
-			
-			// push content based off role
-			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S") || role.equalsIgnoreCase("C")) && status == 1){
-		
-				// get session variables
-				int bldg = (Integer) session.getAttribute("bldg");
-				String currentDate = (String) session.getAttribute("currentDate");
-				String inputtedDate = request.getParameter("datepicker");
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
 				
-				if (inputtedDate != null){
-					currentDate = inputtedDate;
+				// get the role for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S") || role.equalsIgnoreCase("C")) && status == 1){
+					
+					//------------------------------------------------//
+					/*             VIEW RESERVATIONS CONT.            */
+					//------------------------------------------------//
+					
+					// get session variables
+					int bldg = (Integer) session.getAttribute("bldg");
+					String currentDate = (String) session.getAttribute("currentDate");
+					String inputtedDate = request.getParameter("datepicker");
+					
+					if (inputtedDate != null){
+						currentDate = inputtedDate;
+					}
+					// transform date into long format for displaying
+					DateTimeConverter dtc = new DateTimeConverter();
+					String currentDateLong = dtc.convertDateLong(currentDate);
+					
+					// query building
+					BuildingSelectQuery bsq = new BuildingSelectQuery();
+					bsq.doAdminBuildingRead();
+					String buildings = bsq.getBuildingResults(bldg);
+					
+					// query reservations
+					AdminReservationsSelectQuery arsq = new AdminReservationsSelectQuery();
+					arsq.doUserReservationRead(bldg, currentDate);
+					arsq.doAdminReservationRead(bldg, currentDate);
+					
+					String userReservations = arsq.doUserReservationResults();
+					String adminReservations = arsq.doAdminReservationResults(role);
+					
+					// set the forwarding URL
+					url = "admin/view-reservations.jsp";
+					
+					// set session and request variables
+					session.setAttribute("buildings", buildings);
+					session.setAttribute("bldg", bldg);
+					session.setAttribute("currentDate", currentDate);
+					session.setAttribute("currentDateLong", currentDateLong);
+					session.setAttribute("adminReservations", adminReservations);
+					session.setAttribute("userReservations", userReservations);
+					
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
 				}
-				// transform date into long format for displaying
-				DateTimeConverter dtc = new DateTimeConverter();
-				String currentDateLong = dtc.convertDateLong(currentDate);
-				
-				// query building
-				BuildingSelectQuery bsq = new BuildingSelectQuery();
-				bsq.doAdminBuildingRead();
-				String buildings = bsq.getBuildingResults(bldg);
-				
-				// query reservations
-				AdminReservationsSelectQuery arsq = new AdminReservationsSelectQuery();
-				arsq.doUserReservationRead(bldg, currentDate);
-				arsq.doAdminReservationRead(bldg, currentDate);
-				
-				String userReservations = arsq.doUserReservationResults();
-				String adminReservations = arsq.doAdminReservationResults();
-				
-				// set the forwarding URL
-				url = "admin/view-reservations.jsp";
-				
-				// set session and request variables
-				session.setAttribute("buildings", buildings);
-				session.setAttribute("bldg", bldg);
-				session.setAttribute("currentDate", currentDate);
-				session.setAttribute("currentDateLong", currentDateLong);
-				session.setAttribute("adminReservations", adminReservations);
-				session.setAttribute("userReservations", userReservations);
 			} else {
 				//------------------------------------------------//
 				/*            ADMIN USER INFO EXPIRED             */
@@ -100,8 +120,9 @@ public class AdminViewReservations2 extends HttpServlet {
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
-		
+	
 		} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
@@ -110,6 +131,7 @@ public class AdminViewReservations2 extends HttpServlet {
 			// the site should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 				
 				
