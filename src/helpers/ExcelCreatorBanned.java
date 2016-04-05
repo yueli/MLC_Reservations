@@ -55,7 +55,7 @@ public class ExcelCreatorBanned {
                   while (rs.next()) {
                   int BannedId = rs.getInt(1);
                   int UserID = rs.getInt(2); */
-                         
+ /** UNCOMMENT HERE - BRIAN - ADDED COMMENT SO THAT THERE WONT BE AN ERROR WHEN RUNNIN ON SERVER                        
                   String Status = rs.getString(8);
                   System.out.println(BannedId + "\t" + UserID + "\t" + AdminID + "\t" + BanStartDate + "\t" + 
                   BanEndDate + "\t" + PenaltyCount + "\t" + Description + "\t" + Status);   
@@ -69,11 +69,12 @@ public class ExcelCreatorBanned {
                    
                    out.close();  
                    
-                  }
-                  
+                  } */
+                 
           } catch (Exception e) {
         	  System.err.println("Got an exception!");
               System.err.println(e.getMessage());
           }
-	
+			return strQuery;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
+     }
 }

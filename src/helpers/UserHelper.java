@@ -115,7 +115,7 @@ public class UserHelper {
 		System.out.println(dateFormat.format(date)); //2014/08/06  
 		System.out.println(today); //2014/08/06  
 		
-		String query = "Update tomcatdb.user SET user.lastLogin = '" + today + "' WHERE myID = '" + myID + "'";
+		String query = "Update tomcatdb.User SET User.lastLogin = '" + today + "' WHERE myID = '" + myID + "'";
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
