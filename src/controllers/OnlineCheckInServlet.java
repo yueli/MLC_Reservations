@@ -63,7 +63,7 @@ public class OnlineCheckInServlet extends HttpServlet {
 		
 		if (resvQuery.checkInUser(reservationRecdId, userRecdId)) { //if successfully checked in user
 			
-			message += "Successfully checked in!";
+			message += "<div align='center'><h2> Successfully checked in! </h2></div>";
 			
 			url = "user/qrCheckInSuccess.jsp";
 		
