@@ -36,7 +36,10 @@ public class FloorSelectQuery {
 		} 
 		
 	}
-	
+	/**
+	 * This will run a query to get the floors of a building
+	 * @param building Integer building ID of the building
+	 */
 	public void doFloorRead(int building){
 		String query = "SELECT roomFloor "
 				+ "FROM tomcatdb.Rooms, tomcatdb.Building "
@@ -55,6 +58,9 @@ public class FloorSelectQuery {
 			System.out.println("Error in FloorSelectQuery.java: doFloorRead method. Please check connection or SQL statement.");
 		}
 	}
+	/**
+	 * String result set of the query above placed in an html select (drop down) list
+	 */
 	public String getFloorResults(){
 		// Create the String for HTML
 		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";
@@ -82,7 +88,11 @@ public class FloorSelectQuery {
 		return select;
 	}
 	
-	
+	/**
+	 * 
+	 * @param selected the floor the user select
+	 * @return new html select with the floor the user selected still displayed
+	 */
 	public String getFloorResults(String selected){
 		// Create the String for HTML
 		String select = "<select id='floorList' name='floorList' onchange='this.form.submit()'>";

@@ -1,5 +1,9 @@
 package model;
-
+/**
+ * 
+ * @author Brian Olaogun
+ *
+ */
 public class Admin {
 	// Fields
 	private int adminID;

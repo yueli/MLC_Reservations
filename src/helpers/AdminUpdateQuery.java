@@ -11,7 +11,7 @@ import model.DbConnect;
 import model.Schedule;
 
 /**
- * @author Brian-MBP
+ * @author Brian Olaogun
  *
  */
 public class AdminUpdateQuery {
