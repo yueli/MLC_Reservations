@@ -11,9 +11,9 @@ import model.DbConnect;
 
 /**
  * @author Brian Olaogun
- * Helper for the Student side of the website.
+ * Helper for the Student & Admin side of the website.
  *
- *@contributer: Ginger Nix
+ * @contributer: Ginger Nix
  *
  */
 public class BuildingSelectQuery {
@@ -102,6 +102,7 @@ public class BuildingSelectQuery {
 	/**
 	 * Results of doBuildingRead & doAdminBuildingRead
 	 * @return a new String HTML drop down list with the selected value listed first
+	 * @author Brian Olaogun
 	 */
 	public String getBuildingResults(){
 		// Create the String for HTML
@@ -263,7 +264,7 @@ public class BuildingSelectQuery {
 	 * This method takes just a building record id and returns the human readable name
 	 * @author: Ginger Nix
 	 * @param buildingID
-	 * @return
+	 * @return the building Name
 	 */
 	public String getBuildingNameFromID (int buildingID){
 		

@@ -49,6 +49,7 @@ public class AdminReservationsSelectQuery {
 		}
 	}
 	/**
+	 * This is the query to get all user/student reservations
 	 * @param buildingID the primary key ID of the building
 	 * @param currentDate String date in sql format
 	 */
@@ -90,7 +91,7 @@ public class AdminReservationsSelectQuery {
 		} 
 	}
 	/**
-	 * 
+	 * This is the query to get all admin reservations
 	 * @param buildingID int buildingID primary key
 	 * @param currentDate String date in sql format
 	 */
@@ -133,8 +134,8 @@ public class AdminReservationsSelectQuery {
 		} 
 	}
 	/**
-	 * 
-	 * @return Resultset from doReservationRead method/query.
+	 * This will be the results of admin reservations for the clerk (read only view)
+	 * @return Resultset from doAdminReservationRead method/query.
 	 */
 	public String doAdminReservationResults(String role){
 		String table = "";
@@ -206,7 +207,8 @@ public class AdminReservationsSelectQuery {
 		
 	}
 	/**
-	 * 
+	 * This is the result set for admins and super admins for admin reservations.  
+	 * This table includes a cancel button to cancel an admins reservation.
 	 * @return table of admin reservations with a cancellation button for admin and super admins
 	 * to cancel admin reservations.
 	 */
@@ -281,7 +283,7 @@ public class AdminReservationsSelectQuery {
 		return table;
 	}
 	/**
-	 * 
+	 * The user reservations query result set is put into an html table
 	 * @return String HTML table with query resultset
 	 */
 	public String doUserReservationResults(){

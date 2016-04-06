@@ -50,6 +50,7 @@ public class RoomsSelectQuery {
 		 * @param buildingID Integer buildingID
 		 * @param roomNumber String roomNumber
 		 * @return Integer roomID
+		 * @author Brian Olaogun
 		 */
 		public Integer getRoomID (int buildingID, String roomNumber){
 			int roomID;
@@ -82,6 +83,7 @@ public class RoomsSelectQuery {
 		 * This method will return an array list of all rooms in a building.
 		 * @param buildingID Integer buildingID of building
 		 * @return String Array List
+		 * @author Brian Olaogun
 		 */
 		public List<String> roomList (int buildingID){
 			String query = "SELECT roomNumber FROM tomcatdb.Rooms, tomcatdb.Building "
@@ -112,6 +114,7 @@ public class RoomsSelectQuery {
 		 * Run the query to get roomID and roomNumber for getRoomsTable method.
 		 * @param buildingID Integer buildingID of building
 		 * @param floor String floor number
+		 * @author Brian Olaogun
 		 */
 		public void doRoomRead(int buildingID, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
@@ -152,7 +155,7 @@ public class RoomsSelectQuery {
 		 * information is sent via hidden forms to make a Browse Reserve Servlet 
 		 * uses Date Time Converter and Time converter classes to convert, parse, of format date or times
 		 * a key table is at the bottom of each schedule table in the tabs.
-		 * 
+		 * @author Brian Olaogun
 		 * @return String HTML table
 		 */
 		public String getRoomsTable(){
@@ -455,13 +458,13 @@ public class RoomsSelectQuery {
 			
 		}
 		
-/*
- * @author: Ginger Nix
- * 
- * This method takes the room ID and creates a form already populated
- * with the room info. The form is meant to edit the room data by an amin.	
- */
-		
+		/**
+		 * This method takes the room ID and creates a form already populated
+		 * with the room info. The form is meant to edit the room data by an amin.	 
+		 * @param roomID ID of the room the user wants to edit
+		 * @return String HTML table for the edited room
+		 * @author: Ginger Nix
+		 */
 		public String createEditRoomForm (int roomID){
 		
 			String table = "";
@@ -545,13 +548,16 @@ public class RoomsSelectQuery {
 		
 			
 		}
-/*
- * @author: Ginger Nix
- * 
- * This method takes the data about the room and updates the room's record in the Rooms table
- * 
- */
 		
+		/**
+		 * This method takes the data about the room and updates the room's record in the Rooms table
+		 * @author Ginger Nix
+		 * @param roomID
+		 * @param roomNumber
+		 * @param roomFloor
+		 * @param roomStatus
+		 * @param adminID
+		 */
 		public void updateRoomTable(int roomID, String roomNumber, int roomFloor, int roomStatus, int adminID) {
 
 			String query = "UPDATE tomcatdb.Rooms SET "
@@ -577,126 +583,124 @@ public class RoomsSelectQuery {
 			
 		}
 
-/*
- * @author: Ginger Nix
- * This method creates a blank form to add a new room to the building ID provided
-*/
+		/**
+		 * This method creates a blank form to add a new room to the building ID provided
+		 * @param buildingID
+		 * @return
+		 * @author: Ginger Nix
+		 */
+		public String createAddRoomForm(int buildingID){
 			
-			public String createAddRoomForm(int buildingID){
+			String table = "";
 				
-				String table = "";
-					
-					BuildingSelectQuery bsq = new BuildingSelectQuery();
-					String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
+				BuildingSelectQuery bsq = new BuildingSelectQuery();
+				String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
 
-					table += "<center><p>Building: " + buildingName + "</p></center>";
-					
-					table += "<form action='RoomAddSaveServlet' method = 'post'>";
-					
-					table += "Room Number:<br>";
-					table +=  "<input type='text' name = 'roomNumber' required>";
-					table += "<br />";
-					
-					table += "Room Floor:<br>";
-					table +=  "<input type='text' name = 'roomFloor' required>";
-					table += "<br />";
-						
-					table += "Room Status:<br>";
-					table += "<select name = 'roomStatus' required>";
-					table += "<option value='1' selected>Active</option>";
-					table += "<option value='0'>Inactive</option>";							
-					table += "</select>";	
-					
-					table += "<br /><br />";
-					
-					table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";	
-					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
-					
-					table += "</form>";
-					
-					table += "<br /><br />";
-					table += "<form action='RoomsListServlet' method = 'post'>";
-					table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
-					table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
-					table += "</form>";
-		
-					System.out.println("RoomsSelectQuery: createAddRoomForm: buildingID END = " + buildingID);
-			
-				return table;
-			
+				table += "<center><p>Building: " + buildingName + "</p></center>";
 				
-			}
-
-			
-/*
- * @author: Ginger Nix
- * 
- * This method takes the room object and see if this room already exists in the rooms table
- * having the same room number, room floor, and building
- * 			
- */
-			public boolean roomAlreadExists (Rooms room){
+				table += "<form action='RoomAddSaveServlet' method = 'post'>";
 				
-				String query = "SELECT * FROM tomcatdb.Rooms "
-								+ "WHERE Building_buildingID = ? "
-								+ "AND roomNumber = ? "
-								+ "AND roomFloor = ? "
-								+ "LIMIT 1";
-								
-				try {
-					PreparedStatement ps = this.connection.prepareStatement(query);		
-					ps.setInt(1, room.getBuildingID());
-					ps.setString(2, room.getRoomNumber());
-					ps.setInt(3, room.getRoomFloor());
-
-					ps.executeUpdate();
-
-					boolean results = this.results.next();
+				table += "Room Number:<br>";
+				table +=  "<input type='text' name = 'roomNumber' required>";
+				table += "<br />";
+				
+				table += "Room Floor:<br>";
+				table +=  "<input type='text' name = 'roomFloor' required>";
+				table += "<br />";
 					
-					if (results) {//the room is in the room table already
-						return true;
-					}else{
-						return false;
-					}
-
-						
-				} catch (SQLException e) {
-					e.printStackTrace();
-					System.out.println("***Error in RoomsSelectQuery updateRoomTable:  Query = " + query);
-				}
+				table += "Room Status:<br>";
+				table += "<select name = 'roomStatus' required>";
+				table += "<option value='1' selected>Active</option>";
+				table += "<option value='0'>Inactive</option>";							
+				table += "</select>";	
 				
-				return false;
-								
-			}
-
-			
-/*
- * @author: Ginger Nix
- * 
- * This method take the room info and adds it to the rooms table
- * 
-*/
-			public void insertRoomsTable(Rooms room) {
+				table += "<br /><br />";
 				
-				String query = "INSERT INTO tomcatdb.Rooms "
-						+ "(Admin_adminID, Building_buildingID, roomNumber, roomFloor, roomStatus) "
-						+ "VALUES (?, ?, ?, ?, ?)";
+				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";	
+				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
 				
-				try {
-					PreparedStatement ps = this.connection.prepareStatement(query);		
-					ps.setInt(1, room.getAdminID());
-					ps.setInt(2, room.getBuildingID());
-					ps.setString(3, room.getRoomNumber());
-					ps.setInt(4, room.getRoomFloor());
-					ps.setInt(5, room.getRoomStatus());
+				table += "</form>";
+				
+				table += "<br /><br />";
+				table += "<form action='RoomsListServlet' method = 'post'>";
+				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
+				table += "</form>";
 	
-					ps.executeUpdate();
-					
+				System.out.println("RoomsSelectQuery: createAddRoomForm: buildingID END = " + buildingID);
+		
+			return table;
+		
+			
+		}
 
-				} catch (SQLException e) {
-					e.printStackTrace();
-					System.out.println("***Error in RoomSelectQuery insert into rooms method. Query = " + query);
-				}
+		/**
+		 * This method takes the room object and see if this room already exists in the rooms table
+		 * having the same room number, room floor, and building
+		 * @param room Room object
+		 * @return boolean value of if the room exists in the room table
+		 * @author: Ginger Nix
+		 */
+		public boolean roomAlreadExists (Rooms room){
+			
+			String query = "SELECT * FROM tomcatdb.Rooms "
+							+ "WHERE Building_buildingID = ? "
+							+ "AND roomNumber = ? "
+							+ "AND roomFloor = ? "
+							+ "LIMIT 1";
+							
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);		
+				ps.setInt(1, room.getBuildingID());
+				ps.setString(2, room.getRoomNumber());
+				ps.setInt(3, room.getRoomFloor());
+
+				ps.executeUpdate();
+
+				boolean results = this.results.next();
 				
+				if (results) {//the room is in the room table already
+					return true;
+				}else{
+					return false;
+				}
+
+					
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("***Error in RoomsSelectQuery updateRoomTable:  Query = " + query);
 			}
+			
+			return false;
+							
+		}
+
+		/**
+		 * This method take the room info and adds it to the rooms table
+		 * @param room Room object with the adminID, buildingID, room number, room floor, and room status set
+		 * @author: Ginger Nix
+		 */
+		public void insertRoomsTable(Rooms room) {
+			
+			String query = "INSERT INTO tomcatdb.Rooms "
+					+ "(Admin_adminID, Building_buildingID, roomNumber, roomFloor, roomStatus) "
+					+ "VALUES (?, ?, ?, ?, ?)";
+			
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);		
+				ps.setInt(1, room.getAdminID());
+				ps.setInt(2, room.getBuildingID());
+				ps.setString(3, room.getRoomNumber());
+				ps.setInt(4, room.getRoomFloor());
+				ps.setInt(5, room.getRoomStatus());
+
+				ps.executeUpdate();
+				
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("***Error in RoomSelectQuery insert into rooms method. Query = " + query);
+			}
+			
+		}
 }

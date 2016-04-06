@@ -15,7 +15,7 @@ import model.Reservation;
 
 /**
  * @author Brian Olaogun
- * Helper for the Student side of the website.  This is for Student Browse.
+ * Helper for the Student and Admin side of the website.  This is for Student Browse.
  *
  */
 public class ReservationSelectQuery {
@@ -73,63 +73,7 @@ public class ReservationSelectQuery {
 			System.out.println("Error in ReservationSelectQuery.java: doReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
-	/**
-	 * NOT USING
-	 * @param currentDate Sring current date in sql format
-	 * @param startTime string start time in 24-hour sql format
-	 * @param roomNumber String room number
-	 */
-	public void doAdminReservationRead(String startDate, String endDate, String startTime, String roomNumber){
-		String query = "";
-		if(startDate.equalsIgnoreCase(endDate)){
-			query = "SELECT Reservations.reserveID "
-				        + "FROM tomcatdb.Reservations, tomcatdb.Rooms "
-				        + "WHERE Reservations.reserveStartDate = ? "
-				        + "AND Reservations.reserveEndDate = ? "
-				       	+ "AND ((Reservations.reserveStartTime = ?) AND (? BETWEEN reserveStartTime AND reserveEndTime)) "
-				       	+ "AND Rooms.roomID = Reservations.Rooms_roomID and Rooms.roomNumber = ? "
-						+ "AND tomcatdb.Reservations.free = ?";
-		} else {
-			query =	"SELECT Reservations.reserveID " 
-						+ "FROM tomcatdb.Reservations, tomcatdb.Rooms "
-						+ "WHERE ((Reservations.reserveStartDate = '2016-03-17' AND Reservations.reserveEndDate = '2016-03-17') "
-						+ "OR (Reservations.reserveStartDate = '2016-03-17' AND Reservations.reserveEndDate = '2016-03-18')) "
-						+ "AND ((Reservations.reserveStartTime = '11:00:00') AND ('11:00:00' BETWEEN reserveStartTime AND reserveEndTime)) "
-						+ "AND Rooms.roomID = Reservations.Rooms_roomID "
-						+ "AND Rooms.roomNumber = '208' "
-						+ "AND tomcatdb.Reservations.free = 'N'";
-		}
-		
-		
-		/* */
-		
-		// securely run query
-		try {
-			PreparedStatement ps = this.connection.prepareStatement(query);
-			if (startDate.equalsIgnoreCase(endDate)){
-				ps.setString(1, startDate);
-				ps.setString(2, endDate);
-				ps.setString(3, startTime);
-				ps.setString(4, startTime);
-				ps.setString(5, roomNumber);
-				ps.setString(6, "N");
-			} else {
-				ps.setString(1, startDate);
-				ps.setString(2, startDate);
-				ps.setString(3, startDate);
-				ps.setString(4, endDate);
-				ps.setString(5, startTime);
-				ps.setString(6, startTime);
-				ps.setString(7, roomNumber);
-				ps.setString(8, "N");
-			}
-			
-			this.results = ps.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error in ReservationSelectQuery.java: doAdminReservationRead method. Please check connection or SQL statement: " + query);
-		} 
-	}
+	
 	/**
 	 * Different from the version below.  The connection has to be closed
 	 * since there are too many open connections in RoomsSelectQuery.
