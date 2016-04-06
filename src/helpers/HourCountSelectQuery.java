@@ -7,7 +7,11 @@ import java.sql.SQLException;
 
 import model.DateTimeConverter;
 import model.DbConnect;
-
+/**
+ * Used to sum the hour count of a reservations a user has.
+ * @author Brian Olaogun
+ *
+ */
 public class HourCountSelectQuery {
 	private Connection connection;
 	private ResultSet results;
@@ -27,7 +31,11 @@ public class HourCountSelectQuery {
 		} 
 		
 	}
-	
+	/**
+	 * This query will sum the hours of reservations for a user for the date selected. 
+	 * 0 == no reservations made for that day.
+	 * @param userID User ID of the person who wants to reserve room (primary user)
+	 */
 	public void doIncrementRead(int userID){
 		DateTimeConverter dtc = new DateTimeConverter();
 		String currentDate = dtc.parseDate(dtc.datetimeStamp());
@@ -52,7 +60,10 @@ public class HourCountSelectQuery {
 			System.out.println("Error in HourCountSelectQuery.java: doIncrementRead method. Please check connection or SQL statement: " + query);
 		}
 	}
-	
+	/**
+	 * 
+	 * @return sum of the hours of the reservation the user made for the date selected
+	 */
 	public int incrementResult(){
 		int incrementSum = 0;
 	
