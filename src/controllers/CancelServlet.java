@@ -1,3 +1,9 @@
+/* @author: Ginger Nix
+ * 
+ * This servlet cancels the user's reservations and sends them back to the 
+ * view reservations servlet
+ * 
+ */
 package controllers;
 
 import java.io.IOException;

@@ -1,3 +1,8 @@
+<%-- 
+	@author: Ginger Nix
+	This page displays all a user's reservations.	
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -54,11 +59,7 @@ form {
 		<div id="header1"></div>
 		<br>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+
 <div align="center">
 		<h2>Reservations for: 
 			${user.userFirstName} 
@@ -67,6 +68,7 @@ form {
 			<%= message %>
 			<%= table %>
 </div>
+
 		<div id="footer1"></div>
 	</body>
 </html>

@@ -1,5 +1,9 @@
 /*
  *  @author: Ginger Nix
+ *  
+ *  This servlet gets the building record id from the RoomsServlet -> rooms.jsp which
+ *  links to this servlet.
+ *  
  */
 
 
