@@ -1,5 +1,7 @@
 /*
  * @author: Ginger Nix
+ * 
+ * This servlet displays an empty form for the admin to add a room to a building.
  */
 
 package controllers;
@@ -72,12 +74,10 @@ public class RoomAddServlet extends HttpServlet {
 		table = rsq.createAddRoomForm(buildingID);
 
 		
-/*		AdminUserHelper adminUserHelper = new AdminUserHelper();
+/*		
+	creates table to display an empty form
+	some of the pull down options are determined by the logged in admin's role
 		
-		// creates table to display an empty form
-		// some of the pull down options are determined by the logged in admin's role
-		
-       table = adminUserHelper.createAddAdminForm(loggedInAdminUser);
 */
     	request.setAttribute("message", message);
         request.setAttribute("loggedInAdminUser", loggedInAdminUser);

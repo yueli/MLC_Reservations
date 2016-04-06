@@ -1,3 +1,9 @@
+<%-- 
+	
+	@author: Ginger Nix
+	This page displays a form for the admin to add a room to a building.
+	
+ --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

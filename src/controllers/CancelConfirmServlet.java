@@ -1,3 +1,9 @@
+/* @author: Ginger Nix
+ * 
+ * This servlet gets the user's reservation and sends it to a jsp
+ * where the user confirms that they want to cancel this reservation.
+ * 
+ */
 package controllers;
 
 import java.io.IOException;

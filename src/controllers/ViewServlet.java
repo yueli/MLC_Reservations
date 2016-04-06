@@ -1,6 +1,11 @@
-/* MLC View Servlet */
-
 /* @Author Ginger Nix & Victoria Chambers */
+/* 
+ * This servlet lists all the reservations that a user has from this hour forward.
+ * Each line for the reservation can have a 'too late to check in' message, a button to cancel the reservation,
+ * and a button to check into a room.
+ * 
+ * 
+ */
 
 package controllers;
 

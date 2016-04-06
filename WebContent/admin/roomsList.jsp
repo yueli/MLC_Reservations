@@ -1,3 +1,9 @@
+<%-- 
+	@author: Ginger Nix
+	
+	This page displays all the rooms in a selected building for the admin.
+--%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     

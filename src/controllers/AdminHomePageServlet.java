@@ -1,3 +1,9 @@
+/**
+ * @author: Ginger Nix
+ * 
+ * This servlet is called then sends the user to the admin's home page
+ * 
+ */
 package controllers;
 
 import java.io.IOException;

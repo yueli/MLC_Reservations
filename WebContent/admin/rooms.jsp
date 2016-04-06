@@ -1,3 +1,9 @@
+<%--
+	@author: Ginger Nix
+	This page is where the user selects a building to
+	view the rooms for that building.
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

@@ -1,3 +1,9 @@
+<%-- 
+	@author: Ginger Nix
+
+	This page is a confirmation page when a user cancels their reservation.
+		
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
