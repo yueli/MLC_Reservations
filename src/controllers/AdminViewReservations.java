@@ -91,7 +91,6 @@ public class AdminViewReservations extends HttpServlet {
 					String currentDateLong = dtc.convertDateLong(currentDate);
 					
 					// query building
-					//BuildingSelectQuery bsq = new BuildingSelectQuery();
 					bsq.doAdminBuildingRead();
 					String buildings = bsq.getBuildingResults(bldg); // contains the HTML drop down building list.
 					
@@ -103,7 +102,7 @@ public class AdminViewReservations extends HttpServlet {
 					// contains the html table with the query results
 					String userReservations = arsq.doUserReservationResults();
 					String adminReservations = arsq.doAdminReservationResults(role);
-					System.out.println(adminReservations);
+		
 					// set the forwarding URL
 					url = "admin/view-reservations.jsp";
 					
