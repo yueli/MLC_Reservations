@@ -28,8 +28,8 @@
 			});
 			// function for Time Picker plugin
 			$(function(){
-				$('#startTime').timepicker( { useSelect: true });
-				$('#endTime').timepicker( {useSelect: true} );
+				$('#startTime').timepicker( { useSelect: true, 'timeFormat': 'h:ia', 'step': 60 });
+				$('#endTime').timepicker( {useSelect: true, 'timeFormat': 'h:ia', 'step': 60 } );
 			});	
 			// jQuery for datepicker plugin
 			$(function() {
@@ -86,7 +86,7 @@
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br>
-				<input name="makeReservation" type="submit" value="Enter"> 
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
 			</form>
 			<p>${table}</p>
 		</div>
