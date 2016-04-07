@@ -21,7 +21,8 @@ import model.Schedule;
 import model.TimeConverter;
 
 /**
- * Servlet implementation class AdminScheduleAddServlet
+ * Servlet implementation class AdminScheduleAddServlet2
+ * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleAddServlet2", "/new-schedule" })
 public class AdminScheduleAddServlet2 extends HttpServlet {

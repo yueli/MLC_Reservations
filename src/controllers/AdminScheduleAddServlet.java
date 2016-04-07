@@ -15,7 +15,8 @@ import model.Admin;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminScheduleAddServlet2
+ * Servlet implementation class AdminScheduleAddServlet
+ * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleAddServlet", "/add-schedule" })
 public class AdminScheduleAddServlet extends HttpServlet {
