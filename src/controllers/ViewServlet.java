@@ -69,12 +69,21 @@ public class ViewServlet extends HttpServlet {
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
 			
+		message = (String) session.getAttribute("message"); 
+		System.out.println("+++++:View Servlet: message BEFORE= " + message);
+
+		// blank message if nothing gotten in message attribute
 		
-		System.out.println("view servlet user recd id = " + user.getUserRecordID());
+		if (message == null || message.isEmpty()) {
+			 message = "";
+		}
+		
+		System.out.println("+++++:View Servlet: message AFTER = " + message);
+
+		
 		ListUserReservationsQuery lurq = new ListUserReservationsQuery();
 		
-		System.out.println("View Servlet: just set up database connection 2");
-	
+		
 		
 		//see how many records the student has, and if none, set error message, and if has at least one, 
 		//put reservations found in a table
@@ -92,7 +101,7 @@ public class ViewServlet extends HttpServlet {
 		System.out.println("After try/catch");
 		
 		if(table == null || table.isEmpty()){
-			message="You have no current reservations.";
+			message="<div align='center'><h3> You have no current reservations. </h3></div>";
 			System.out.println("View Servlet: no records found");
 			
 		}

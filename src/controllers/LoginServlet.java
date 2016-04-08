@@ -77,7 +77,9 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("user", user);
 		
 		url = "UserHome"; 
-	
+		//url = "user/userHomePage.jsp"; 
+
+		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response); 

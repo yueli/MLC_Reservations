@@ -49,6 +49,8 @@ public class CancelServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String message = "";
+		
 		//get our current session
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
@@ -63,6 +65,7 @@ public class CancelServlet extends HttpServlet {
 		// the user's reservations to list again
 		
 		//forward our request along
+		request.setAttribute("message", message);
 		request.setAttribute("user", user);
 			
 		url = "ViewServlet";
