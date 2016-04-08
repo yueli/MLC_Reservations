@@ -221,18 +221,31 @@ public class ReservationQuery {
 					String query = "SELECT * FROM tomcatdb.CheckIn "
 							+ "WHERE Reservation_reserveID = '" + reservationID +"'";
 							
+					System.out.println("~~~~~~~~~~Resv Query: already checked in " + query);
+					
 					try {
 						PreparedStatement ps = this.connection.prepareStatement(query);
 					
-						ps.executeUpdate();
+						this.results = ps.executeQuery();
 						
+						if (this.results.next()) {
+							// found user's reservation is checked in
+							System.out.println("~~~~~~~~~~Resv Query: already checked in returning TRUE");
+							return true;
+							
+						}else{
+							System.out.println("~~~~~~~~~~Resv Query: already checked in returning FALSE");
+							
+							return false;
+						}
+
 					} catch (SQLException e) {
 						e.printStackTrace();
-					
+
+						System.out.println("~~~~~~~~~~ERROR: Resv Query: " + query);
+						
 						return false;
 					}
-					
-					return true;
 					
 			}
 				
