@@ -58,11 +58,7 @@ form {
 <div id="header1"></div>
 <br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
 <br>
 <br>
 <div align="center">
@@ -73,7 +69,7 @@ form {
 		${user.userLastName}
 	</h1>
 	
-	<p>Are you sure you want to cancel this reservation?</p>
+	<h3>Are you sure you want to cancel this reservation?</h3>
 	
 	<br />
 	<%= table %>
