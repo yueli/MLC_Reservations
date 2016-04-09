@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession();
-		/*
+		
 		Admin loggedInAdminUser = new Admin();
 		loggedInAdminUser.setAdminID(1);
 		loggedInAdminUser.setAdminStatus(1);
@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser); */
 		
 		System.out.println("LOGIN SERVLET!");
-		
+		/*
 		User user = new User();
 		user.setMyID("ganix");
 		user.setUserEmail("ganix@uga.edu");
@@ -75,11 +75,25 @@ public class LoginServlet extends HttpServlet {
 		user.setUserRecordID(19);
 		
 		session.setAttribute("user", user);
+		*/
 		
 		url = "UserHome"; 
 		//url = "user/userHomePage.jsp"; 
 
 		
+		//----------
+		// TESTING ADMINS SECTION
+/*		loggedInAdminUser.setAdminID(2);
+		loggedInAdminUser.setAdminStatus(1);
+		loggedInAdminUser.setRole("S");
+		loggedInAdminUser.setAdminMyID("ganix");
+		
+
+		url = "admin/adminHomePage.jsp";
+		
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser);
+		
+*/		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response); 
