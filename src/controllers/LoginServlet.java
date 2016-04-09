@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("user", user);
 		*/
 		
-		url = "UserHome"; 
+		url = "AdminHome"; 
 		//url = "user/userHomePage.jsp"; 
 
 		
