@@ -68,14 +68,24 @@ public class ViewServlet extends HttpServlet {
 		//get our current session
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
-			
+		
+		System.out.println("+++++:View Servlet: message BEFORE GETTING FROM SESSION= " + message);
+	
 		message = (String) session.getAttribute("message"); 
-		System.out.println("+++++:View Servlet: message BEFORE= " + message);
+		System.out.println("+++++:View Servlet: message AFTER GETTING FROM SESSION= " + message);
 
 		// blank message if nothing gotten in message attribute
 		
 		if (message == null || message.isEmpty()) {
 			 message = "";
+		}
+		
+		// if from the Cancel Confirmation Servlet via go back to view w/o cancelling
+		// need to clear out message
+		String noCancel = request.getParameter("noCancel");
+
+		if(noCancel == null || noCancel.isEmpty()){
+			session.removeAttribute("message");
 		}
 		
 		System.out.println("+++++:View Servlet: message AFTER = " + message);
@@ -115,9 +125,13 @@ public class ViewServlet extends HttpServlet {
 		request.setAttribute("table", table);
 		request.setAttribute("message", message);
 		
+		System.out.println("+++++:View Servlet: message AT END = " + message);
+
 		url = "user/view.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+		
+		
 	}
 
 }
