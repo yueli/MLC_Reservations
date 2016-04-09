@@ -1,5 +1,5 @@
 /**
- * @author: Ginger Nix
+ * @author: Brian Olaogun
  * 
  * This servlet is called then sends the user to the admin's home page
  * 
