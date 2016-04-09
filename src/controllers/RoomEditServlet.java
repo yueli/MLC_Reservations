@@ -1,8 +1,8 @@
 /*
  * @author: Ginger Nix
  * 
- * create a table of a form with all the room's data pre-populated
- * in it to edit
+ * This servlet creates a form with all the room's data pre-populated
+ * in it for the admin to edit.
  * 
 */
 

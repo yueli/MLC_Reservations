@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * This class will be used to convert time from 24 hour format to 12 hour format. This class will also be used to convert from 12 hour format to 24 hour format.
  * @author Brian Olaogun
  */
@@ -336,7 +335,7 @@ public class TimeConverter {
 			minutes = Integer.parseInt(minuteFormat.format(convertStringTimeToDate_Minute));
 			return minutes;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

@@ -1,3 +1,9 @@
+/**
+ * @author: Ginger Nix
+ * 
+ * This servlet is called then sends the user to the admin's home page
+ * 
+ */
 package controllers;
 
 import java.io.IOException;
@@ -9,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminHomePageServlet
@@ -39,8 +48,35 @@ public class AdminHomePageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession(false);
 		
-		url = "admin/adminHomePage.jsp";
-		
+		if(this.session != null) {
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			
+			if (loggedInAdminUser != null){
+				
+				url = "admin/adminHomePage.jsp";
+				
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
+			
+		} else {
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
+		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}

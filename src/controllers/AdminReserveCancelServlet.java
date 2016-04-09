@@ -10,24 +10,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.AdminUpdateQuery;
+import model.Admin;
 import model.DbConnect;
-import model.User;
 
 /**
- * Servlet implementation class UserHomePageServlet
+ * Servlet implementation class AdminReserveCancelServlet
+ * @author Brian Olaogun
  */
-@WebServlet({ "/UserHomePageServlet", "/UserHome" })
-public class UserHomePageServlet extends HttpServlet {
+@WebServlet({"/AdminReserveCancelServlet", "/AdminCancel"})
+public class AdminReserveCancelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session;
-	String url;
+	private String url;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserHomePageServlet() {
+    public AdminReserveCancelServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
@@ -43,16 +45,29 @@ public class UserHomePageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession(false);
 		
-		if(this.session != null) {
-			User user = (User) session.getAttribute("user");
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
+					
+			// check to see if logged in user session is still active.
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
 			
-			if(user != null){
+			if(loggedInAdminUser != null){ // there is an admin session object not expired
+				//------------------------------------------------//
+				/*           CANCEL ADMIN RESERVATION             */
+				//------------------------------------------------//
+				// get fields from form
+				int reserveID = Integer.parseInt(request.getParameter("reserveID"));
+				String free = request.getParameter("free");
 				
-				url = "user/userHomePage.jsp";
+				// update reservation to show cancellation
+				AdminUpdateQuery auq = new AdminUpdateQuery();
+				auq.cancelAdminReservation(reserveID, free);
+				
+				url = "view-reservations";
 				
 			} else {
 				//------------------------------------------------//
-				/*               USER INFO EXPIRED                */
+				/*            ADMIN USER INFO EXPIRED             */
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
@@ -61,6 +76,7 @@ public class UserHomePageServlet extends HttpServlet {
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
+			
 			
 		} else {
 			//------------------------------------------------//
@@ -73,9 +89,10 @@ public class UserHomePageServlet extends HttpServlet {
 			return;
 		}
 		
+		// forward the URL
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-	
+		
 	}
 
 }

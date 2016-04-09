@@ -1,3 +1,9 @@
+/* @author: Ginger Nix
+ * 
+ * This servlet cancels the user's reservations and sends them back to the 
+ * view reservations servlet
+ * 
+ */
 package controllers;
 
 import java.io.IOException;
@@ -43,6 +49,8 @@ public class CancelServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String message = "";
+		
 		//get our current session
 		session = request.getSession();
 		User user = (User) session.getAttribute("user");
@@ -57,6 +65,7 @@ public class CancelServlet extends HttpServlet {
 		// the user's reservations to list again
 		
 		//forward our request along
+		request.setAttribute("message", message);
 		request.setAttribute("user", user);
 			
 		url = "ViewServlet";

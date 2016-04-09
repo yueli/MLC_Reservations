@@ -22,6 +22,7 @@ import model.User;
 
 /**
  * Servlet implementation class BrowseConfirmServlet
+ * @author Brian Olaogun
  */
 @WebServlet({ "/BrowseConfirmation", "/BrowseConfirm" })
 public class BrowseConfirmServlet extends HttpServlet {
@@ -125,11 +126,12 @@ public class BrowseConfirmServlet extends HttpServlet {
 						       // primary user
 						int primaryUserID = primaryUser.getUserRecordID();
 						
-						      // TODO secondary user
+							  // secondary user 
 						User secondaryUser = uh.getUserInfo(secondaryMyID);
+						int secondaryUserID = secondaryUser.getUserRecordID();
+						
 						System.out.println("SECONDARY USER INFO FROM BROWSE CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
 						System.out.println();
-						int secondaryUserID = secondaryUser.getUserRecordID();
 						System.out.println("PRINT of secondary ID: " + secondaryUserID);
 						
 						// check if reservation is available
@@ -152,8 +154,16 @@ public class BrowseConfirmServlet extends HttpServlet {
 							riq.doReservationInsert(reservation);
 							
 							// send confirmation email
-							String primaryEmail = primaryUser.getUserEmail();
+							String primaryEmail;
 							String secondaryEmail;
+							
+							// make sure an email exists in our local database for primary user. 
+							// if not, use MyID@uga.edu as email.
+							if (primaryUser.getUserEmail() == null || primaryUser.getUserEmail().isEmpty()){
+								primaryEmail = primaryUser.getMyID() + "@uga.edu";
+							} else {
+								primaryEmail = primaryUser.getUserEmail();
+							}
 							
 							// make sure an email exists in our local database for secondary user. 
 							// if not, use MyID@uga.edu as email.
@@ -200,17 +210,25 @@ public class BrowseConfirmServlet extends HttpServlet {
 					session.setAttribute("msg", msg);
 				}
 			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
 				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 		} else {
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
 			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 			
 		}
 		

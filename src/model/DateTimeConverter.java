@@ -317,12 +317,15 @@ public class DateTimeConverter {
 		return currentDateTime;
 	}
 	/**
-	 * 
+	 * Method will print dates between range inclusive.  Parameters can be in MM/dd/yyy format
+	 * for both start and end or yyyy-MM-dd for both start and end.  If using a combination for start
+	 * and end, the methdo will throw an error.
 	 * @param stringStartDate String start date
 	 * @param stringEndDate String end date
 	 * @return an arraylist of all dates in range of start date and end date inclusive.
 	 */
 	public List<String> dateRangeList(String stringStartDate, String stringEndDate){
+		
 		// convert string date to date object
 		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -333,21 +336,43 @@ public class DateTimeConverter {
 		Date enddate;
 		
 		try {
-			startdate = format.parse(stringStartDate);
-			enddate = format.parse(stringEndDate);
-			
-			
-		    Calendar calendar = new GregorianCalendar();
-		    calendar.setTime(startdate);
+			if(stringStartDate.contains("/") && stringEndDate.contains("/")){
+				startdate = format.parse(stringStartDate);
+				enddate = format.parse(stringEndDate);
+				Calendar calendar = new GregorianCalendar();
+			    calendar.setTime(startdate);
 
-		    while (calendar.getTime().getTime() <= enddate.getTime())
-		    {
-		        Date result = calendar.getTime();
-		        String sqlFormattedResult = sqlFormat.format(result); 
-		        dates.add(sqlFormattedResult);
-		        calendar.add(Calendar.DATE, 1);
-		    }
-		    return dates;
+			    while (calendar.getTime().getTime() <= enddate.getTime())
+			    {
+			        Date result = calendar.getTime();
+			        String sqlFormattedResult = sqlFormat.format(result); 
+			        dates.add(sqlFormattedResult);
+			        calendar.add(Calendar.DATE, 1);
+			    }
+			    return dates;
+			    
+			} else if (stringStartDate.contains("-") && stringEndDate.contains("-")){
+				startdate = format.parse(format.format(sqlFormat.parse(stringStartDate)));
+				enddate = format.parse(format.format(sqlFormat.parse(stringEndDate)));
+				
+				
+				Calendar calendar = new GregorianCalendar();
+			    calendar.setTime(startdate);
+
+			    while (calendar.getTime().getTime() <= enddate.getTime())
+			    {
+			        Date result = calendar.getTime();
+			        String sqlFormattedResult = sqlFormat.format(result); 
+			        dates.add(sqlFormattedResult);
+			        calendar.add(Calendar.DATE, 1);
+			    }
+			    return dates;
+			    
+			} else {
+				System.out.println("ERROR in DateTimeConverter.dateRangeList. Please use the same date format.");
+			}
+			
+		    
 		} catch (ParseException e) {
 			e.printStackTrace();
 			System.out.println("DateTimeConverter.dateRangeList - Error printing date range: " + dates);
@@ -374,7 +399,7 @@ public class DateTimeConverter {
 		System.out.println("LONG FORMAT of 2015-09-22 20:00:00 = " + dtc.dateTimeTo12Long("2015-09-22 20:00:00"));
 		
 		// date range
-		List<String> dates = dtc.dateRangeList("02/27/2016", "03/16/2016");
+		List<String> dates = dtc.dateRangeList("2016-02-27", "2016-02-27");
 		for(int i=0; i<dates.size(); i++){
 		    String date = dates.get(i);
 		    System.out.println(" Date is ..." + date);

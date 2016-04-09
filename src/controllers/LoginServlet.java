@@ -1,5 +1,8 @@
-// MLC LOGIN SERVLET
-
+/* @author: Ginger Nix
+ * 
+ * This is only used for testing purposes. I'll delete it after I finish.
+ * 
+ */
 package controllers;
 
 import java.io.IOException;
@@ -62,7 +65,21 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("user", user);
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser); */
 		
+		System.out.println("LOGIN SERVLET!");
+		
+		User user = new User();
+		user.setMyID("ganix");
+		user.setUserEmail("ganix@uga.edu");
+		user.setUserFirstName("Ginger");
+		user.setUserLastName("Nix");
+		user.setUserRecordID(19);
+		
+		session.setAttribute("user", user);
+		
 		url = "UserHome"; 
+		//url = "user/userHomePage.jsp"; 
+
+		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response); 

@@ -1,3 +1,8 @@
+<%-- 
+	@author: Ginger Nix
+	This page displays all a user's reservations.	
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -18,7 +23,7 @@ form {
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>QR Login</title>
+<title>Reservations View</title>
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -54,11 +59,7 @@ form {
 		<div id="header1"></div>
 		<br>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+
 <div align="center">
 		<h2>Reservations for: 
 			${user.userFirstName} 
@@ -67,6 +68,7 @@ form {
 			<%= message %>
 			<%= table %>
 </div>
+
 		<div id="footer1"></div>
 	</body>
 </html>

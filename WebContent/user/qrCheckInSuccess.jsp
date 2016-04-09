@@ -1,3 +1,9 @@
+<%-- 
+	@author: Ginger Nix
+	
+	This page displays to the user that they checked in successfully.
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -50,11 +56,7 @@ form {
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-
-<h3>Reservation Check In Success</h3>
+	
 
 <p> ${message}</p>
 

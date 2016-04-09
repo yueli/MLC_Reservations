@@ -100,7 +100,7 @@ public class AdminScheduleSelectQuery {
 		} 
 	}
 	/**
-	 * 
+	 * This method will put the sql result set into a HTML table for the building schedule
 	 * @return String HTML table of the query resultset.
 	 */
 	public String listSchedule(){

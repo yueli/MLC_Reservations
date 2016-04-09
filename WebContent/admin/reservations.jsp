@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<!-- @author Brian Olaogun -->
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Make Reservations</title>
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf8" src="jquery/DataTables/dataTables.material.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/Responsive/js/dataTables.responsive.js"></script>
        <script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
        
@@ -17,8 +17,7 @@
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="admin/table-view-reservation.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
-        <!--link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js"-->
-        <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.material.css">
+        <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js">
         <link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
         <link rel="stylesheet" type="text/css" href="jquery/Timepicker/jquery.timepicker.css">
 		<script> 
@@ -29,8 +28,8 @@
 			});
 			// function for Time Picker plugin
 			$(function(){
-				$('#startTime').timepicker( { useSelect: true });
-				$('#endTime').timepicker( {useSelect: true} );
+				$('#startTime').timepicker( { useSelect: true, 'timeFormat': 'h:ia', 'step': 60 });
+				$('#endTime').timepicker( {useSelect: true, 'timeFormat': 'h:ia', 'step': 60 } );
 			});	
 			// jQuery for datepicker plugin
 			$(function() {
@@ -82,12 +81,12 @@
 				<h2>Please select a building, date, start and end time for your reservation.</h2>
 				<p>${msg}</p>
 				Building ${buildings}<br>
-				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
+				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				<!--  End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br> -->
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br>
-				<input name="makeReservation" type="submit" value="Enter"> 
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
 			</form>
 			<p>${table}</p>
 		</div>

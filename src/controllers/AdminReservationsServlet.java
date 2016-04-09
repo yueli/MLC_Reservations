@@ -12,9 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminReservations
+ * @author Brian Olaogun
  */
 @WebServlet({ "/AdminReservations", "/make-reservations" })
 public class AdminReservationsServlet extends HttpServlet {
@@ -41,82 +43,103 @@ public class AdminReservationsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.session = request.getSession();
+		this.session = request.getSession(false);
 		
 		
 		// check to see if there is a valid session
 		if (session != null){ // there is an active session
-			
-			// get the role for the currently logged in admin user.
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-			/*
-			Admin loggedInAdminUser = new Admin();
-			loggedInAdminUser.setAdminID(1);
-			loggedInAdminUser.setAdminMyID("bbo89");
-			loggedInAdminUser.setAdminStatus(1);
-			loggedInAdminUser.setRole("admin"); */
-			String role = loggedInAdminUser.getRole();
-			int status = loggedInAdminUser.getAdminStatus();
-			
-			// push content based off role
-			if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-				//------------------------------------------------//
-				/*               VIEW FOR ADMIN                   */
-				//------------------------------------------------//
+
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
 				
-				// get session and request variables + initialization of others
-				String buildings = ""; // the string that contains the HTML drop down list
-				String buildingID = request.getParameter("buildingID"); // get the value from request
-				String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
-				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
+				// get the role for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
 				
-				//------------------------------------------------//
-				/*            BUILDING INFORMATION                */
-				//------------------------------------------------//
-				BuildingSelectQuery bsq = new BuildingSelectQuery();
-				// if there is no buildingID from request, then display building drop down
-				if (buildingID == null){
-					buildingID = Integer.toString(bsq.getFirstBuildingID());
-					int bldg = Integer.parseInt(buildingID);
-					// query building
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+					//------------------------------------------------//
+					/*               VIEW FOR ADMIN                   */
+					//------------------------------------------------//
 					
-					bsq.doAdminBuildingRead();
-					buildings = bsq.getBuildingResults(bldg);
-		
-				}
-				// if there is a buildingID from session, it becomes the buildingID
-				// if there is a buildingID selected from drop down, it becomes the buildingID
-				if (buildingIDSelect != null){
-					buildingID = buildingIDSelect;
-					buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
-				} else if (buildingIDSession != null){
-					buildingID = buildingIDSession;
-				} 
-				
-				
-				// forwarding URL
-				url = "admin/reservations.jsp";
-				
-				// set session and request variables
-				session.setAttribute("adminUser", loggedInAdminUser);
-				session.setAttribute("buildingID", buildingID);
-				session.setAttribute("buildings", buildings);
-			} else { 
-				//------------------------------------------------//
-				/*                VIEW FOR CLERK                  */
-				//------------------------------------------------//
-				
-				// forwarding URL
-				url = "AdminViewReservations";
-				
-				// set session attributes
-			}
+					// get session and request variables + initialization of others
+					String buildings = ""; // the string that contains the HTML drop down list
+					String buildingID = request.getParameter("buildingID"); // get the value from request
+					String buildingIDSelect = request.getParameter("buildingList"); // get the value selected from the drop down list
+					String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
+					
+					//------------------------------------------------//
+					/*            BUILDING INFORMATION                */
+					//------------------------------------------------//
+					BuildingSelectQuery bsq = new BuildingSelectQuery();
+					// if there is no buildingID from request, then display building drop down
+					if (buildingID == null){
+						buildingID = Integer.toString(bsq.getFirstBuildingID());
+						int bldg = Integer.parseInt(buildingID);
+						// query building
+						
+						bsq.doAdminBuildingRead();
+						buildings = bsq.getBuildingResults(bldg);
 			
-		} else { // there isn't an active session.
+					}
+					// if there is a buildingID from session, it becomes the buildingID
+					// if there is a buildingID selected from drop down, it becomes the buildingID
+					if (buildingIDSelect != null){
+						buildingID = buildingIDSelect;
+						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
+					} else if (buildingIDSession != null){
+						buildingID = buildingIDSession;
+					} 
+					
+					
+					// forwarding URL
+					url = "admin/reservations.jsp";
+					
+					// set session and request variables
+					session.setAttribute("adminUser", loggedInAdminUser);
+					session.setAttribute("buildingID", buildingID);
+					session.setAttribute("buildings", buildings);
+				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+					
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
+				}
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
+		
+		} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
-			/*           VIEW FOR INVALID SESSION             */
+			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
-			url = "AdminHome";
+			// if session has timed out, go to home page
+			// the site should log them out.
+			//url = "LoginServlet";
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
 		// forward the request

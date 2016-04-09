@@ -213,11 +213,11 @@ public class Email {
 		// EMAIL ADDRESSES
         this.cc = cc;
         this.to = to;
-        String from = "example@email.com"; //TODO change from Email
+        String from = "learnctr@uga.edu"; // Reply Email for the MLC
         
         // MAIL SERVER
-       // String host = "smtp.office365.com";
-        String host = "smtp.gmail.com";
+        //String host = "smtp.office365.com";
+        String host = ""; 
 
         // Create properties for the Session
         Properties props = new Properties();
@@ -237,7 +237,8 @@ public class Email {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
         		   //TODO Set Username & Password
-                   private String username = "study.room.reserve@gmail.com";
+                   //private String username = "study.room.reserve@gmail.com"; // Used for testing
+                   private String username = "";
                    private String password = "";
 
 				protected PasswordAuthentication getPasswordAuthentication() {
@@ -300,7 +301,8 @@ public class Email {
     // Set a single part html content.
     // Sending data of any type is similar.
 	/**
-	 * 
+	 * This class builds the html email that is being sent to the logged in user as well
+	 * as the user that they put as the secondary on the reservation.
 	 * @param msg email message contents
 	 * @param reserveDate start date of the reservation
 	 * @param startTime reservation start time

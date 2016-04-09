@@ -1,3 +1,9 @@
+/**
+ * @author: Ginger Nix
+ * 
+ * This servlet creates a form for admins to add other admins
+ * 
+ */
 package controllers;
 
 import java.io.IOException;

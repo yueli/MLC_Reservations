@@ -1,3 +1,9 @@
+<%-- 
+	@author: Ginger Nix
+
+	This page is a confirmation page when a user cancels their reservation.
+		
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -52,11 +58,7 @@ form {
 <div id="header1"></div>
 <br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
 <br>
 <br>
 <div align="center">
@@ -67,7 +69,7 @@ form {
 		${user.userLastName}
 	</h1>
 	
-	<p>Are you sure you want to cancel this reservation?</p>
+	<h3>Are you sure you want to cancel this reservation?</h3>
 	
 	<br />
 	<%= table %>

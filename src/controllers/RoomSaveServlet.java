@@ -1,8 +1,8 @@
 /*
  * @author: Ginger Nix
  * 
- * Servlet to take the room edit form, save it, and go back to listing the rooms
- * where the edited room will be listed with the new data 
+ * Servlet to take the room data in the edit form, save it, and go back to listing the rooms
+ * where the edited room will be listed with the new data. 
  * 
  */
 
