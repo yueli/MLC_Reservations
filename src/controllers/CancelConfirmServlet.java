@@ -50,6 +50,9 @@ public class CancelConfirmServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String table = "";
+		String message = " ";
+		
+		//session.removeAttribute("message"); // null error
 		
 		//get our current session
 		session = request.getSession();
@@ -70,8 +73,11 @@ public class CancelConfirmServlet extends HttpServlet {
 		//forward our request along
 		request.setAttribute("user", user);
 		request.setAttribute("table",table);
+		request.setAttribute("message",message); 
 		
 		url = "user/confirmCancellation.jsp";	
+		
+		System.out.println("HERE: CancelConfirmServlet: message = " + message);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
