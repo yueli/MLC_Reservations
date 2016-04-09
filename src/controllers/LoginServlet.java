@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 		
 		
 		session.setAttribute("user", user);
-		session.setAttribute("loggedInAdminUser", loggedInAdminUser); */
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
 		
 		System.out.println("LOGIN SERVLET!");
 		/*
