@@ -19,8 +19,10 @@ import java.sql.Statement;
 
 public class ExcelCreatorBanned {
 
-          public String downloadExcel(ServletOutputStream out){
+          public String downloadExcel( ) { //ServletOutputStream out){
+        	  
            
+        	System.out.println("At the very top");
     	  	int nRow = 1;
             String strQuery = null;
             Connection con = null;

@@ -28,10 +28,11 @@
 	<br>
 	<!-- Button to call the downloads servlet -->
 	<div align="center">
-	    <form id="downloadBanned" action="/ExcelCreatorBanned" method="GET">
+	    <form id="downloadBanned" action="../controllers/Reports" method="post">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
+            
     </form>
-      
+
 	</div>
 	<div id="footer"></div>
 	</body>
