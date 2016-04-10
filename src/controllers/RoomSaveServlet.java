@@ -75,7 +75,7 @@ public class RoomSaveServlet extends HttpServlet {
 		
 		//pull the hidden field for the user being edited's record id from the form adminEdit.jsp
 		room.setRoomID(Integer.parseInt(request.getParameter("roomID")));
-		room.setBuildingID(Integer.parseInt(request.getParameter("buildingList")));
+		room.setBuildingID(Integer.parseInt(request.getParameter("buildingID")));
 		
 		System.out.println("In Room Save Servlet: buildingID = " + room.getBuildingID());
 		
