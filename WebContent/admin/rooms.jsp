@@ -1,4 +1,5 @@
 <%--
+MAY NOT USED THIS JSP
 	@author: Ginger Nix
 	This page is where the user selects a building to
 	view the rooms for that building.

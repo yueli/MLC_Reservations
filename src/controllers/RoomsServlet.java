@@ -1,4 +1,7 @@
-//@author: Ginger Nix
+/*@author: Ginger Nix
+ * 
+ * NOT SURE THIS WILL BE USED ANYMORE
+ */
 
 package controllers;
 

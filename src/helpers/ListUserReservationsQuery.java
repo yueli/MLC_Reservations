@@ -287,7 +287,7 @@ public class ListUserReservationsQuery {
 									System.out.println("*******List User Resv.java: in cur min <= 10 and not checked in w/ resv id= " + resv.getReserveID());	
 									
 								}else if (rq.alreadyCheckedIn(resv.getReserveID())) {
-									table += "<td><h4> *Already Checked In* </h4></td>";
+									table += "<td><h4> *Successfully Checked In* </h4></td>";
 									System.out.println("*******List User Resv.java: in cur min <= 10 and already checked in w/ resv id= " + resv.getReserveID());	
 									
 								}else{
