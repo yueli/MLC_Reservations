@@ -218,8 +218,9 @@ public class BuildingSelectQuery {
 	 */
 	public String getAllActiveBuildings(){
 		
-		String select = "<select id='buildingList' name='buildingList'>";
-
+		//String select = "<select id='buildingList' name='buildingList'>";
+		String select = "<select id='buildingList' name='buildingID'>"; //GINGER CHANGED 04-09-16
+		
 		// go through all the active buildings to put into a list
 		String query = "SELECT * FROM tomcatdb.Building "
 						+ "WHERE buildingStatus = ?";

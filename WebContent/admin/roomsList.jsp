@@ -52,7 +52,6 @@
 
 <body>
 		<div id="header1"></div>
-		<br />	<br />	<br />	<br />
 
 <br /><br />
 <%= table %>

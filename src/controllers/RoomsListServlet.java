@@ -43,7 +43,7 @@ public class RoomsListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		doPost(request, response);
 	}
 
 	/**
@@ -59,16 +59,20 @@ public class RoomsListServlet extends HttpServlet {
 		// create admin user object w/ session data on the logged in user's info
 		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
 
+		System.out.println("RoomsListServlet: logged in admin user adminMyID = " + loggedInAdminUser.getAdminMyID());
 		int buildingID;
 
 		// get building id from form - it's the id of the building they selected		
-		buildingID = Integer.parseInt(request.getParameter("buildingList")); 
+		//buildingID = Integer.parseInt(request.getParameter("buildingList")); 
+		buildingID = Integer.parseInt(request.getParameter("buildingID")); //from list of buildings - user clicked on view rooms
+
 		
-		if (buildingID == 0) {
+		// NEED THIS BLOCK??
+/*		if (buildingID == 0) {
 			System.out.println("RoomListServlet: buildingID = 0");
-			buildingID = Integer.parseInt(request.getParameter("buildingList")); 
+			buildingID = Integer.parseInt(request.getParameter("buildingID"));
 			System.out.println("RoomListServlet: NEW buildingID = " + buildingID);
-		}
+		}*/
 		
 		
 		System.out.println("Rooms List Servlet: building id = " + buildingID);

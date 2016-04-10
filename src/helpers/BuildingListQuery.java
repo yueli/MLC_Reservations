@@ -80,6 +80,7 @@ public class BuildingListQuery {
 						+ "<th>Building Cal URL</th>"
 						+ "<th></th>"
 						+ "<th></th>"
+						+ "<th></th>" //Ginger added
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>";
@@ -123,6 +124,7 @@ public class BuildingListQuery {
 					
 					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
 					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>Edit Hours</button></a></td>";
+					table += "<td><a href=RoomsListServlet?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>View/Edit Rooms</button></a></td>";//Ginger Added
 					
 					table += "</tr>";
 				}

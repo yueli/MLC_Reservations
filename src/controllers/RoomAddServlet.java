@@ -63,7 +63,7 @@ public class RoomAddServlet extends HttpServlet {
 		}
 
 		// get building id from list or rooms - it's the id of the building they selected		
-		int buildingID = Integer.parseInt(request.getParameter("buildingList")); 
+		int buildingID = Integer.parseInt(request.getParameter("buildingID")); 
 
 		// create admin user object w/ session data on the logged in user's info
 		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
