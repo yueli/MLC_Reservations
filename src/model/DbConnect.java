@@ -118,6 +118,7 @@ public class DbConnect {
 		String url = "jdbc:mysql://localhost:3306/tomcatdb";
 		String username = "tomcatuser";
 		String password = "bu11fr0g";
+	
 		//String username = "root";
 		//String password = "";
 		try {

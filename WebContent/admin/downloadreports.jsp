@@ -28,7 +28,7 @@
 	<br>
 	<!-- Button to call the downloads servlet -->
 	<div align="center">
-	    <form id="downloadBanned" action="../controllers/Reports" method="post">
+	    <form id="downloadBanned" action="Reports" method="post">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
             
     </form>
