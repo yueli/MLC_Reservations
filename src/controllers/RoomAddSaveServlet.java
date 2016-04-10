@@ -72,7 +72,7 @@ public class RoomAddSaveServlet extends HttpServlet {
 		room.setRoomNumber(request.getParameter("roomNumber"));
 		room.setRoomFloor(Integer.parseInt(request.getParameter("roomFloor")));
 		room.setRoomStatus(Integer.parseInt(request.getParameter("roomStatus")));
-		room.setBuildingID(Integer.parseInt(request.getParameter("buildingList")));
+		room.setBuildingID(Integer.parseInt(request.getParameter("buildingID")));
 		room.setAdminID(loggedInAdminUser.getAdminID()); // get the admin user ID from the admin user who is logged in
 	
 		// check to see if this room in this building in this floor already exists

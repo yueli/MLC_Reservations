@@ -58,9 +58,7 @@ form {
 
 <body>
 		<div id="header1"></div>
-		
-<h1>Add A Room</h1>
-
+	
 <%= message %>
 <br /><br />
 <%= table %>
