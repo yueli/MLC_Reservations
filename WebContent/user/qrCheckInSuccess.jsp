@@ -56,11 +56,7 @@ form {
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-
-<h3>Reservation Check In Success</h3>
+	
 
 <p> ${message}</p>
 

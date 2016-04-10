@@ -219,7 +219,7 @@ public class ListUserReservationsQuery {
 								// check-in time (up to 10 minutes after the hour) and if it is, have CHECKIN button,
 								// else list but have no button 
 								
-								System.out.println("7 In WHILE in List User Resv.java: current hour = resv hour " + this.results.getInt("reserveID"));
+								System.out.println("7 In WHILE in List User Resv.java: current hour = resv id " + this.results.getInt("reserveID"));
 								
 								// we know the hours are the same, so check to see if the current minute
 								// is greater than 10 (check to see if it's past 10 minutes after the hour)
@@ -275,7 +275,7 @@ public class ListUserReservationsQuery {
 								
 								ReservationQuery rq = new ReservationQuery(); // to check below if already checked in 
 								
-								if (currentMinuteInt <= 10){
+								if ( (currentMinuteInt <= 10) && (!rq.alreadyCheckedIn(resv.getReserveID() )) ){
 									// it's not past 10 after the hour, so let them check-in
 									// display the check-in button that points to the check-in servlet
 				
@@ -283,12 +283,17 @@ public class ListUserReservationsQuery {
 									"<input type='hidden' name='resv_id' value='" + resv.getReserveID() + "'>" +
 											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
 											"</form></td>";	
-								
+									
+									System.out.println("*******List User Resv.java: in cur min <= 10 and not checked in w/ resv id= " + resv.getReserveID());	
+									
 								}else if (rq.alreadyCheckedIn(resv.getReserveID())) {
 									table += "<td><h4> *Already Checked In* </h4></td>";
+									System.out.println("*******List User Resv.java: in cur min <= 10 and already checked in w/ resv id= " + resv.getReserveID());	
 									
 								}else{
 									table += "<td><h4> *Too late to check in* </h4> </td>";
+									System.out.println("*******List User Resv.java: in cur min <= 10 and TOO LATE TO CHECK IN");	
+									
 								}	
 							
 								table += "</tr>";
@@ -420,7 +425,8 @@ public class ListUserReservationsQuery {
 			table += "<th> Room Floor</th>";
 			table += "<th> Room Number</th>";
 			table += "<th> Primary/Secondary</th>";
-			table += "<th></th>";
+			table += "<th>&nbsp</th>";
+			table += "<th>&nbsp</th>";
 			table += "</tr>";
 			table += "</thead>";
 			
@@ -434,33 +440,26 @@ public class ListUserReservationsQuery {
 			table += "<td>" + roomFloor + "</td>";
 			table += "<td>" + roomNumber+ "</td>";
 			table += "<td>" + userPlace + "</td>";
-			table += "</tr>";
 			
-			table += "<tr>"
-					+ "<td>"
+			table +=  "<td>"
 					+ "<form action='CancelServlet' method = 'post'>" +
 					"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
 					"<input class='btn btn-lg btn-red' type='submit' value='Cancel Reservation'>" +
 					"</form>"
 					+ "</td>";	
-	
+			
+			table += "</tr></tbody></table>";
 
-			table += "<td>"
-					+ "<form action='ViewServlet' method = 'post'>" +
-					"<input type='submit' value='Go back to viewing reservations'>" +
-					"</form>"
-					+ "</td>";	
+			//table += "<td>"
+			table += "<br /><br />";
+			table += "<form action='ViewServlet' method = 'post'>";
+			table += "<input type='submit' value='Go back to viewing reservations'>";
+			table += "<input type='hidden' name='noCancel' value='noCancel'>";
+			table += "</form>";
+				//	+ "</td>";	
 			
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
+
 			
-			table += "</tr>"
-					+ "</tbody>"
-					+ "</table>";
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

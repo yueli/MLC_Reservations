@@ -15,6 +15,9 @@ import model.User;
 
 /**
  * Servlet implementation class UserHomePageServlet
+ * 
+ * This servlet is used to forward to the user home page
+ * @author Brian Olaogun
  */
 @WebServlet({ "/UserHomePageServlet", "/UserHome" })
 public class UserHomePageServlet extends HttpServlet {

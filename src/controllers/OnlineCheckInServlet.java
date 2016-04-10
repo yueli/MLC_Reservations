@@ -63,16 +63,17 @@ public class OnlineCheckInServlet extends HttpServlet {
 		
 		if (resvQuery.checkInUser(reservationRecdId, userRecdId)) { //if successfully checked in user
 			
-			message += "<div align='center'><h2> Successfully checked in! </h2></div>";
+			message += "<div align='center'><h3> Successfully checked in! </h3></div>";
 			
-			url = "user/qrCheckInSuccess.jsp";
+			//url = "user/qrCheckInSuccess.jsp";
+			url = "ViewServlet";
 		
 		}else{
 			url="user/qrError.jsp"; 
 			message += "Error: The reservation can not be checked in. Please contact adminstrators for help.";
 			
 		}
-        
+        System.out.println("+_+_+_+ OnlineCheckInServ: message = " + message);
 		session.setAttribute("user", user);
 		session.setAttribute("message", message);
 
