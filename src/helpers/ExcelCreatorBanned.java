@@ -19,8 +19,10 @@ import java.sql.Statement;
 
 public class ExcelCreatorBanned {
 
-          public String downloadExcel(ServletOutputStream out){
+          public String downloadExcel( ) { //ServletOutputStream out){
+        	  
            
+        	System.out.println("At the very top");
     	  	int nRow = 1;
             String strQuery = null;
             Connection con = null;
@@ -29,10 +31,10 @@ public class ExcelCreatorBanned {
                                   
                   // Getting connection here for mySQL database 
                   Class.forName("com.mysql.jdbc.Driver").newInstance();
-                  //con = DbConnect.devCredentials();
-                  con = DriverManager.getConnection
+                  con = DbConnect.devCredentials();
+                  /*con = DriverManager.getConnection
                     ("jdbc:mysql://localhost:3306/","Root","");
-                  System.out.println("Got into server");
+                  System.out.println("Got into server");*/
                  
                if(con==null)
                         return "Connection Failed";
@@ -51,14 +53,14 @@ public class ExcelCreatorBanned {
                   //String query = "SELECT * FROM Banned";
                   
                   /** stmt = conn.createStatement();
-                  rs = stmt.executeQuery(query);
+                  rs = stmt.executeQuery(query);*/
                   while (rs.next()) {
                   int BannedId = rs.getInt(1);
-                  int UserID = rs.getInt(2); */
- /** UNCOMMENT HERE - BRIAN - ADDED COMMENT SO THAT THERE WONT BE AN ERROR WHEN RUNNIN ON SERVER                        
+                  int UserID = rs.getInt(2); 
+                   
                   String Status = rs.getString(8);
-                  System.out.println(BannedId + "\t" + UserID + "\t" + AdminID + "\t" + BanStartDate + "\t" + 
-                  BanEndDate + "\t" + PenaltyCount + "\t" + Description + "\t" + Status);   
+                  /*System.out.println(BannedId + "\t" + UserID + "\t" + AdminID + "\t" + BanStartDate + "\t" + 
+                  BanEndDate + "\t" + PenaltyCount + "\t" + Description + "\t" + Status);   */
                    
                   FileWriter fstream = new FileWriter(file);
                   BufferedWriter out = new BufferedWriter(fstream);
@@ -69,7 +71,7 @@ public class ExcelCreatorBanned {
                    
                    out.close();  
                    
-                  } */
+                  } 
                  
           } catch (Exception e) {
         	  System.err.println("Got an exception!");
