@@ -58,7 +58,7 @@ public class ExcelCreatorBanned {
                   out.write(titleLine);
                   
                   // stmt = conn.createStatement();
-                  rs = stmt.executeQuery(query);
+                  //rs = stmt.executeQuery(query);
                   
                   while (rs.next()) {
                 	  int BannedId = rs.getInt(1);
