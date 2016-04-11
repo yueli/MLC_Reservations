@@ -1,8 +1,8 @@
 /*
  *  @author: Ginger Nix
  *  
- *  This servlet gets the building record id from the RoomsServlet -> rooms.jsp which
- *  links to this servlet.
+ *  This servlet gets the building record id from the RoomsServlet or BuildingSelectServlet
+ *   and goes to rooms.jsp to list al the rooms with that building record id
  *  
  */
 
@@ -52,13 +52,19 @@ public class RoomsListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "";
 		String table = "";
+		String cancelAction = "";
+		
+		/////////if(building != null && !building.isEmpty()){
 
 		//get our current session
 		session = request.getSession();
 
-		// create admin user object w/ session data on the logged in user's info
 		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
 
+		// clear out the session variable cancelAction just in case there is something in it
+		cancelAction = (String) session.getAttribute("cancelAction"); //NEED THIS???
+		cancelAction = "";
+		
 		System.out.println("RoomsListServlet: logged in admin user adminMyID = " + loggedInAdminUser.getAdminMyID());
 		int buildingID;
 
@@ -66,6 +72,10 @@ public class RoomsListServlet extends HttpServlet {
 		//buildingID = Integer.parseInt(request.getParameter("buildingList")); 
 		buildingID = Integer.parseInt(request.getParameter("buildingID")); //from list of buildings - user clicked on view rooms
 
+		// get the name of the page that called this servlet to be able to format
+		// the cancel/go back buttons		
+		cancelAction = request.getParameter("prev"); //will be 'buildings' or 'RoomsServlet' depending on what called it
+		System.out.println("Rooms List Servlet: prev = " + cancelAction	);
 		
 		// NEED THIS BLOCK??
 /*		if (buildingID == 0) {
@@ -79,13 +89,18 @@ public class RoomsListServlet extends HttpServlet {
 		
 		// using building id, create a table of a list of all the rooms in that building
 		RoomsSelectQuery rsq = new RoomsSelectQuery();
-		table = rsq.ListRoomsInBuilding(buildingID);
+		
+		// action will be part of the url for the sending back to prev page for
+		// the cancel/go back button
+		
+		table = rsq.ListRoomsInBuilding(buildingID, cancelAction);
 		
 		
 		//forward our request along
 		request.setAttribute("table", table);
 		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-
+		request.setAttribute("cancelAction", cancelAction);
+		
 		url = "admin/roomsList.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

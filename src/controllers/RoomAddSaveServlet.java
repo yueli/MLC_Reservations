@@ -53,12 +53,12 @@ public class RoomAddSaveServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = "";
 		String table = "";
+		String cancelAction = "";
 		
 		//get our current session
 		session = request.getSession();
 		message = (String) request.getAttribute("message"); 
-
-		// create admin user object w/ session data on the logged in user's info
+		cancelAction = (String) request.getAttribute("cancelAction");
 		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
 		
 		// blank message if nothing gotten in message attribute		
@@ -95,6 +95,7 @@ public class RoomAddSaveServlet extends HttpServlet {
 		
 		request.setAttribute("message", message);
 		request.setAttribute("loggedInUser", loggedInAdminUser);
+		request.setAttribute("cancelAction", cancelAction);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);			

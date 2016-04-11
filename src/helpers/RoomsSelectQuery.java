@@ -362,10 +362,10 @@ public class RoomsSelectQuery {
 		/**
 		 * This method takes a building record id and lists all the rooms in that building
 		 * @author: Ginger Nix
-		 * @param buildingID
+		 * @param buildingID, action (where to send it when canceling/going back to previous calling page
 		 * @return the html table
 		 */
-		public String ListRoomsInBuilding(int buildingID){
+		public String ListRoomsInBuilding(int buildingID, String cancelAction){
 			
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
 			
@@ -384,6 +384,29 @@ public class RoomsSelectQuery {
 					"<input type='hidden' name='buildingID' value='" + buildingID + "'>" +
 					"<input class='btn btn-lg btn-red' type='submit' value='Add A Room'>" +
 					"</form>";
+			
+			table += "<br />";			
+			
+			// 'action' will be 'buildings' if came from list of all buildings 
+			// or 'RoomsServlet' if came from user selecting a building
+			table += "<form action='" + cancelAction + "' method = 'post	'>" +
+					"<input class='btn btn-lg btn-red' type='submit' value='Go Back'>" +
+					"</form>";
+			
+			System.out.println("RoomsSelQ: ListRoomsInBuilding - action = " + cancelAction);
+			
+/*
+			table += "<form action='RoomsServlet' method = 'post'>" +
+					"<input class='btn btn-lg btn-red' type='submit' value='Go Back to Rooms Servlet'>" +
+					"</form>";
+
+*/			
+			/*			
+			
+			table += "<a href=RoomsListServlet?prev=RoomsServlet>"
+					+ "<button class='btn btn-lg btn-red' type='submit' value='EditHours'>Back to Select Building</button>"
+					+ "</a>";
+				*/
 			table += "</div>";		
 			
 
@@ -427,7 +450,6 @@ public class RoomsSelectQuery {
 									
 					table += "<td><form action='RoomEditServlet' method = 'post'>" +
 							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'/>" +
-							"<input type='hidden' name='buildingList' value='" + buildingID + "'/>" +
 							"<input class='btn btn-lg btn-red' type='submit' value='Edit Room' />" +
 							"</form></td>";		
 				
@@ -628,7 +650,7 @@ public class RoomsSelectQuery {
 				
 				table += "</form>";
 				
-				table += "<br />";
+				table += "<br /><br />";
 				table += "<form action='RoomsListServlet' method = 'post'>";
 				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
