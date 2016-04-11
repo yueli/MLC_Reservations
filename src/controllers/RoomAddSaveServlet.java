@@ -54,18 +54,24 @@ public class RoomAddSaveServlet extends HttpServlet {
 		String message = "";
 		String table = "";
 		String cancelAction = "";
+		int buildingID;
 		
 		//get our current session
 		session = request.getSession();
 		message = (String) request.getAttribute("message"); 
-		cancelAction = (String) request.getAttribute("cancelAction");
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
 		
 		// blank message if nothing gotten in message attribute		
 		if (message == null || message.isEmpty()) {
 			 message = "";
 		}
 
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
+		
+		// get parameters passes by clicking the Save button
+		buildingID = Integer.parseInt(request.getParameter("buildingID")); 
+		cancelAction = request.getParameter("cancelAction"); 
+	
+	
 		Rooms room = new Rooms();
 		
 		// get the parameters of the room they are adding		
@@ -96,6 +102,7 @@ public class RoomAddSaveServlet extends HttpServlet {
 		request.setAttribute("message", message);
 		request.setAttribute("loggedInUser", loggedInAdminUser);
 		request.setAttribute("cancelAction", cancelAction);
+		request.setAttribute("buildingID", buildingID);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);			

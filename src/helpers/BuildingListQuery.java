@@ -128,7 +128,7 @@ public class BuildingListQuery {
 					
 					//Ginger added this button to view the rooms of the building
 					table += "<td><form action = 'RoomsListServlet' method = 'post'>" +
-							"<input type='hidden' name='prev' value='buildings'>" +
+							"<input type='hidden' name='cancelAction' value='buildings'>" +
 							"<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>" +
 							"<input class='btn btn-lg btn-red' type='submit' value='View/Edit Rooms'>" +
 							"</form></td>";//Ginger Added
