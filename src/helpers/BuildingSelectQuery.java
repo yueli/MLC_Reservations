@@ -260,14 +260,13 @@ public class BuildingSelectQuery {
 		return select;
 	}
 
-	/*
+	/**
 	 * @author: Ginger Nix
 	 * 
 	 * creates page for person to select a building to view its rooms
 	 * calls on getAllActiveBuildings above to list the select pull down of all active buildings
 	 * 
 	 */
-	
 	public String selectBuildingToViewRooms() {
 		String table = "";
 		
