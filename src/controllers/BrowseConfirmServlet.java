@@ -66,7 +66,6 @@ public class BrowseConfirmServlet extends HttpServlet {
 				String currentDate = (String) session.getAttribute("currentDate");
 				String buildingName = (String) session.getAttribute("buildingName");
 				int buildingID = (Integer) session.getAttribute("buildingID");
-				//User primaryUser = (User) session.getAttribute("user");
 				int hourIncrement = Integer.parseInt(request.getParameter("userIncrementSelected"));
 				String secondaryMyID = (String) request.getParameter("secondary");
 				String msg = "";
@@ -182,8 +181,8 @@ public class BrowseConfirmServlet extends HttpServlet {
 							// set success message and forwarding URL
 							msg = "You have successfully made a reservation.  "
 									+ "You should receive a confirmation email shortly";
-							url = "user/reservationConfirmation.jsp";
-							
+							//url = "user/reservationConfirmation.jsp";
+							url = "ViewServlet";
 							session.setAttribute("secondaryEmail", secondaryEmail);				
 							
 							// remove session attributes
