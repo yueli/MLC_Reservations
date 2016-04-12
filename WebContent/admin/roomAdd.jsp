@@ -22,7 +22,7 @@ form {
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Rooms List</title>
+<title>Rooms Add</title>
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -58,10 +58,11 @@ form {
 
 <body>
 		<div id="header1"></div>
-	
-<%= message %>
-<br /><br />
-<%= table %>
+		<div align='center'>	
+		<%= message %>
+		<br /><br />
+		<%= table %>
+		</div>
 		<div id="footer"></div>
 </body>
 </html>

@@ -56,17 +56,18 @@ public class RoomEditServlet extends HttpServlet {
 		session = request.getSession();
 
 		message = (String) request.getAttribute("message"); 
-		
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-	
 		// blank message if nothing gotten in message attribute		
 		if (message == null || message.isEmpty()) {
 			 message = "";
 		}
-		 
-		//hidden parameter = room record id of the room to edit from jsp
+		
+		// create admin user object w/ session data on the logged in user's info
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+	
+		// hidden parameters to use and to pass on
 		int roomID = Integer.parseInt(request.getParameter("roomID")); 
+		int buildingID = Integer.parseInt(request.getParameter("buildingID")); 
+		String cancelAction = request.getParameter("cancelAction"); 
 		
 		System.out.println("RoomEditServlet: roomID = " + roomID);
 
@@ -76,7 +77,7 @@ public class RoomEditServlet extends HttpServlet {
 		 */
 		 
 		RoomsSelectQuery rsq = new RoomsSelectQuery();	
-		table = rsq.createEditRoomForm(roomID);
+		table = rsq.createEditRoomForm(roomID, cancelAction);
 		
 		
 		//forward our request along
