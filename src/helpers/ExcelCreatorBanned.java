@@ -57,9 +57,9 @@ public class ExcelCreatorBanned {
                 		   "Ban End Date" + "," + "Penalty Count" + "," + "Description" + "," + "Status" + "\n";
                   out.write(titleLine);
                   
-            	  stmt = conn.createStatement(); 
-
-
+                  stmt = conn.createStatement();
+                  
+                  
                   while (rs.next()) {
                 	  int BannedId = rs.getInt(1);
                 	  int UserID = rs.getInt(2); 
