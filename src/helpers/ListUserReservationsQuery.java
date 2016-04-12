@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.Objects;
 
 import model.Reservation;
+import model.TimeConverter;
+import model.DateTimeConverter;
 import model.DbConnect;
 
 public class ListUserReservationsQuery {
@@ -59,6 +61,10 @@ public class ListUserReservationsQuery {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();	
 		currentDate = dateFormat.format(date);
+		
+		// Used to convert date and time from SQL format to more standard format for display.
+		TimeConverter tc = new TimeConverter();
+		DateTimeConverter dtc = new DateTimeConverter();
 		
 		System.out.println("List User Resv: current date  = " + currentDate);
 		
@@ -198,10 +204,10 @@ public class ListUserReservationsQuery {
 								
 								
 								table += "<tr>";
-								table += "<td>" + resv.getReserveStartDate() + "</td>";
-								table += "<td>" + resv.getReserveEndDate() + "</td>";
-								table += "<td>" + resv.getReserveStartTime() + "</td>";
-								table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+								table += "<td>" + dtc.convertDateLong(resv.getReserveStartDate()) + "</td>";
+								table += "<td>" + dtc.convertDateLong(resv.getReserveEndDate()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(resv.getReserveStartTime()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resv.getReserveEndTime())) + "</td>"; 
 								table += "<td>" + building + "</td>";
 								table += "<td>" + roomFloor + "</td>";
 								table += "<td>" + roomNumber + "</td>";
@@ -264,10 +270,10 @@ public class ListUserReservationsQuery {
 								// but check below on whether to have a 'cancel' button or a 'check-in' button
 								
 								table += "<tr>";
-								table += "<td>" + resv.getReserveStartDate() + "</td>";
-								table += "<td>" + resv.getReserveEndDate() + "</td>";
-								table += "<td>" + resv.getReserveStartTime() + "</td>";
-								table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+								table += "<td>" + dtc.convertDateLong(resv.getReserveStartDate()) + "</td>";
+								table += "<td>" + dtc.convertDateLong(resv.getReserveEndDate()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(resv.getReserveStartTime()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resv.getReserveEndTime())) + "</td>";  
 								table += "<td>" + building + "</td>";
 								table += "<td>" + roomFloor + "</td>";
 								table += "<td>" + roomNumber + "</td>";
@@ -328,10 +334,10 @@ public class ListUserReservationsQuery {
 							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 							
 							table += "<tr>";
-							table += "<td>" + resv.getReserveStartDate() + "</td>";
-							table += "<td>" + resv.getReserveEndDate() + "</td>";
-							table += "<td>" + resv.getReserveStartTime() + "</td>";
-							table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+							table += "<td>" + dtc.convertDateLong(resv.getReserveStartDate()) + "</td>";
+							table += "<td>" + dtc.convertDateLong(resv.getReserveEndDate()) + "</td>";
+							table += "<td>" + tc.convertTimeTo12(resv.getReserveStartTime()) + "</td>";
+							table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resv.getReserveEndTime())) + "</td>";  
 							table += "<td>" + building + "</td>";
 							table += "<td>" + roomFloor + "</td>";
 							table += "<td>" + roomNumber + "</td>";
@@ -382,7 +388,10 @@ public class ListUserReservationsQuery {
 	
 	public String GetUserReservation(int resv_id, int userRecdID){
 		String table = "";
-
+		// Used to convert date and time from SQL format to more standard format for display.
+		TimeConverter tc = new TimeConverter();
+		DateTimeConverter dtc = new DateTimeConverter();
+		
 		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
 				+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
 				+ "AND Rooms.Building_buildingID = Building.buildingID "
@@ -432,10 +441,10 @@ public class ListUserReservationsQuery {
 			
 			table += "<tbody>";
 			table += "<tr>";
-			table += "<td>" + resvStartDate + "</td>";
-			table += "<td>" + resvEndDate + "</td>";	
-			table += "<td>" + resvStartTime + "</td>";
-			table += "<td>" + resvEndTime + "</td>";
+			table += "<td>" + dtc.convertDateLong(resvStartDate) + "</td>";
+			table += "<td>" + dtc.convertDateLong(resvEndDate) + "</td>";	
+			table += "<td>" + tc.convertTimeTo12(resvStartTime) + "</td>";
+			table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resvEndTime)) + "</td>";
 			table += "<td>" + building + "</td>";
 			table += "<td>" + roomFloor + "</td>";
 			table += "<td>" + roomNumber+ "</td>";

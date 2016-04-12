@@ -60,9 +60,11 @@ public class BrowseReserveServlet extends HttpServlet {
 				String roomNumber = (String) request.getParameter("roomNumber");
 				String currentDate = (String) request.getParameter("currentDate");
 				int buildingID = (Integer) session.getAttribute("building");
+				int userID = user.getUserRecordID();
+				
 				String requestURL = request.getRequestURL().toString();
 				System.out.println("Request URL = " + requestURL);
-				int userID = user.getUserRecordID();
+				
 				System.out.println("USER INFO FROM BROWSE RESERVE SERVLET: " + user.getUserRecordID() + ", " + user.getMyID() + ", " + user.getLastLogin());
 				
 				// get the building name from ID
