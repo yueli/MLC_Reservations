@@ -277,7 +277,7 @@ public class BuildingSelectQuery {
 		
 		table += getAllActiveBuildings();
 		
-		table += "<input type = 'hidden' name = 'prev' value='RoomsServlet'>";	
+		table += "<input type = 'hidden' name = 'cancelAction' value='RoomsServlet'>";	
 		table += "<input class='btn btn-lg btn-red' name='buildingSelected' type='submit' value='Enter'>";
 		table += "</form>";
 	
