@@ -51,18 +51,16 @@ public class AdminAddServlet extends HttpServlet {
 		//get our current session
 		session = request.getSession();
 		message = (String) request.getAttribute("message"); 
+
+		// create admin user object w/ session data on the logged in user's info
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
+		System.out.println("AdminAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
 		
-		// blank message if nothing gotten in message attribute
-		
+		// blank message if nothing gotten in message attribute		
 		if (message == null || message.isEmpty()) {
 			 message = "";
 		}
 		
-
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
-
-		System.out.println("AdminAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
 		
 		AdminUserHelper adminUserHelper = new AdminUserHelper();
 		
@@ -70,7 +68,9 @@ public class AdminAddServlet extends HttpServlet {
 		// some of the pull down options are determined by the logged in admin's role
 		
        table = adminUserHelper.createAddAdminForm(loggedInAdminUser);
-
+      
+       System.out.println("AdminAddServlet: logged in admin user's myid AT END = " + loggedInAdminUser.getAdminMyID());
+		
     	request.setAttribute("message", message);
         request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		request.setAttribute("table", table);
