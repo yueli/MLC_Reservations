@@ -261,6 +261,36 @@ public class BuildingSelectQuery {
 	}
 
 	/**
+	 * @author: Ginger Nix
+	 * 
+	 * creates page for person to select a building to view its rooms
+	 * calls on getAllActiveBuildings above to list the select pull down of all active buildings
+	 * 
+	 */
+	public String selectBuildingToViewRooms() {
+		String table = "";
+		
+		table += "<div align='center'><h3>Please Select a Building</h3></div><br />";
+		
+		table += "<div align='center'>";
+		table += "<form name='buildingForRoomsForm' action='RoomsListServlet' method='post'>";
+		
+		table += getAllActiveBuildings();
+		
+		table += "<input type = 'hidden' name = 'cancelAction' value='RoomsServlet'>";	
+		table += "<input class='btn btn-lg btn-red' name='buildingSelected' type='submit' value='Enter'>";
+		table += "</form>";
+	
+		table += "</div>";
+		
+		return table;
+	
+		
+	}
+	
+	
+	
+	/**
 	 * 
 	 * This method takes just a building record id and returns the human readable name
 	 * @author: Ginger Nix

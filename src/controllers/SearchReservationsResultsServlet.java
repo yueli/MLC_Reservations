@@ -58,7 +58,7 @@ public class SearchReservationsResultsServlet extends HttpServlet {
 			//Create Table
 			String table="";
 			try {
-				table = srrs.getHTMLTable(roomsAL, reservationAL, beginDate, beginTime, endDate, endTime, hourIncrement);
+				table = srrs.getHTMLTable(roomsAL, reservationAL, beginDate, beginTime, endDate, endTime, hourIncrement, buildingid);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

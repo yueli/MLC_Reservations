@@ -57,28 +57,29 @@ public class RoomAddServlet extends HttpServlet {
 		session = request.getSession();
 		message = (String) request.getAttribute("message"); 
 		
+		// create admin user object w/ session data on the logged in user's info
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
+		System.out.println("RoomAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
+
 		// blank message if nothing gotten in message attribute		
 		if (message == null || message.isEmpty()) {
 			 message = "";
 		}
 
 		// get building id from list or rooms - it's the id of the building they selected		
-		int buildingID = Integer.parseInt(request.getParameter("buildingID")); 
+		int buildingID = Integer.parseInt(request.getParameter("buildingID"));
+		
+		// get the cancelAction for Cancel buttons to pass on
+		String cancelAction = request.getParameter("cancelAction"); 
 
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
-
-		System.out.println("RoomAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
+		/*		
+		creates table to display an empty form
+		*/		
 		
 		RoomsSelectQuery rsq = new RoomsSelectQuery();
-		table = rsq.createAddRoomForm(buildingID);
+		table = rsq.createAddRoomForm(buildingID, cancelAction);
 
 		
-/*		
-	creates table to display an empty form
-	some of the pull down options are determined by the logged in admin's role
-		
-*/
     	request.setAttribute("message", message);
         request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		request.setAttribute("table", table);

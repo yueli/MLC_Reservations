@@ -1,8 +1,8 @@
 /*
  *  @author: Ginger Nix
  *  
- *  This servlet gets the building record id from the RoomsServlet -> rooms.jsp which
- *  links to this servlet.
+ *  This servlet gets the building record id from the RoomsServlet or BuildingSelectServlet
+ *   and goes to rooms.jsp to list al the rooms with that building record id
  *  
  */
 
@@ -52,45 +52,76 @@ public class RoomsListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "";
 		String table = "";
+		String cancelAction = "";
+		int buildingID = 0;
 
+		
+		/////////
+		
+		
+		
+		
 		//get our current session
 		session = request.getSession();
 
-		// create admin user object w/ session data on the logged in user's info
 		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-
 		System.out.println("RoomsListServlet: logged in admin user adminMyID = " + loggedInAdminUser.getAdminMyID());
-		int buildingID;
+				
+		
+		// get parameter 'prev' which will be 'building' or 'RoomsServlet'
+		// and get the parameter 'buildingID' 
+		buildingID = Integer.parseInt(request.getParameter("buildingID")); 
+		cancelAction = request.getParameter("cancelAction"); 
+		
+			
+		// check to see if there is a parameter
+		if(cancelAction != null && !cancelAction.isEmpty()){
+			//======================//
+			//===== PARAMETERS =====//
+			//======================//
+			
+			// if so, 
+			// cancelAction = parameter prev value and		
+			// buildingID = parameter buildingID all from above
+						
+			
+		}else{	
+			//========================//
+			//===== SESSION VARS =====//
+			//========================//
+			
+			// else we have a session var to use so,
+			// cancelAction = session var cancelAction from RoomAddSaveServlet and RoomSaveServlet
+			
+			cancelAction = (String) session.getAttribute("cancelAction"); 
+			buildingID = (int) session.getAttribute("buildingID");
 
-		// get building id from form - it's the id of the building they selected		
-		//buildingID = Integer.parseInt(request.getParameter("buildingList")); 
-		buildingID = Integer.parseInt(request.getParameter("buildingID")); //from list of buildings - user clicked on view rooms
-
+		}
 		
-		// NEED THIS BLOCK??
-/*		if (buildingID == 0) {
-			System.out.println("RoomListServlet: buildingID = 0");
-			buildingID = Integer.parseInt(request.getParameter("buildingID"));
-			System.out.println("RoomListServlet: NEW buildingID = " + buildingID);
-		}*/
-		
-		
+		// clear out session var cancelAction 
+		request.setAttribute("cancelAction", "");
+					
+		// we now have the cancel action (which servlet called this one) 
+		// and the building ID used to save rooms records
+			
+		System.out.println("Rooms List Servlet: prev = " + cancelAction	);		
 		System.out.println("Rooms List Servlet: building id = " + buildingID);
 		
 		// using building id, create a table of a list of all the rooms in that building
 		RoomsSelectQuery rsq = new RoomsSelectQuery();
-		table = rsq.ListRoomsInBuilding(buildingID);
 		
+		// cancelAction will be part of the url for the sending back to prev page for
+		// the cancel/go back button and buildingID for saving room record
+		
+		table = rsq.ListRoomsInBuilding(buildingID, cancelAction);
 		
 		//forward our request along
 		request.setAttribute("table", table);
 		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-
+		
 		url = "admin/roomsList.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-
-	
 		
 	}
 
