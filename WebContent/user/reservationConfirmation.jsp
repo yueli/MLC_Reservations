@@ -23,7 +23,9 @@
 		<br>
 		<br>
 		<br>
-		<p>${msg}</p>
+		<div align="center">
+			<p>${msg}</p>
+		</div>
 		<div id="footer"></div>
 	</body>
 </html>
