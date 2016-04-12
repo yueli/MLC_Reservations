@@ -182,11 +182,13 @@ public class BrowseConfirmServlet extends HttpServlet {
 							email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime24, endTime, buildingName, roomNumber, email.getWebsiteURL());
 							
 							// set success message and forwarding URL
-							msg = "You have successfully made a reservation. <br> "
-									+ "You should receive a confirmation email shortly";
+							String message = "<div align='center'><h3>You have successfully made a reservation. <br> "
+									+ "You should receive a confirmation email shortly.</h3></div>";
 							//url = "user/reservationConfirmation.jsp";
 							url = "ViewServlet";
+							
 							session.setAttribute("secondaryEmail", secondaryEmail);				
+							session.setAttribute("message", message);
 							
 							// remove session attributes
 							session.removeAttribute("building");
