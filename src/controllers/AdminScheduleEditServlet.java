@@ -83,15 +83,16 @@ public class AdminScheduleEditServlet extends HttpServlet {
 						bsq.doAdminBuildingRead();
 						buildings = bsq.getBuildingResults(bldg);
 					}
+
 					// if there is a buildingID from session, it becomes the buildingID
 					// if there is a buildingID selected from dropdown, it becomes the buildingID
 					if (buildingIDSelect != null){
 						buildingID = buildingIDSelect;
 						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in dropdown.
 					} else if (buildingIDSession != null){
-						buildingID = buildingIDSession;
-					} else {
-						
+						if(buildingIDSession.equalsIgnoreCase(buildingID)){
+							buildingID = buildingIDSession;
+						}
 					}
 					
 					// query the database to get
