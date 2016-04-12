@@ -89,7 +89,9 @@ public class AdminReservationsServlet extends HttpServlet {
 						buildingID = buildingIDSelect;
 						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
 					} else if (buildingIDSession != null){
-						buildingID = buildingIDSession;
+						if(buildingIDSession.equalsIgnoreCase(buildingID)){
+							buildingID = buildingIDSession;
+						}
 					} 
 					
 					

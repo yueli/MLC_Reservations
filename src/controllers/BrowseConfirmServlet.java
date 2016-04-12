@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.UserHelper;
-import model.DateTimeConverter;
+
 import model.DbConnect;
 import model.Email;
 import model.Reservation;
@@ -215,8 +215,9 @@ public class BrowseConfirmServlet extends HttpServlet {
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -226,7 +227,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
-			//url = "LoginServlet";
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 			

@@ -45,4 +45,18 @@ public class CASLogoutServlet extends HttpServlet {
 		
 	}
 	
+	/**
+	 * This method will clear browser cache and prevent the browser from going back to previous page.
+	 * @param request HTTP Request
+	 * @param response HTTP Response
+	 * @throws IOException Java Exception
+	 * @throws ServletException Servlet Exception
+	 */
+	public static void clearCache(HttpServletRequest request, HttpServletResponse response) 
+		      throws IOException, ServletException {
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		response.setDateHeader("Expires", 0);
+	}
+
 }
