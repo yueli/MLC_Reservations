@@ -73,12 +73,15 @@ public class BrowseConfirmServlet extends HttpServlet {
 				// input validation for secondary myID
 				if(secondaryMyID.isEmpty() || secondaryMyID.equals("")){
 					msg = "Please enter a myID of a secondary person to reserve a room";
+					url = "user/reservation.jsp";
 				} else if (secondaryMyID.equalsIgnoreCase(primaryUser.getMyID())){
-					msg = "Please enter a myID other than your own.  The person also needs to have "
+					msg = "Please enter a myID other than your own. <br> The person also needs to have "
 							+ "logged into the site at least once to be added to a reservation.";
+					url = "user/reservation.jsp";
 							
 				} else if (User.containsSpaces(secondaryMyID) == true){
 					msg = "Please remove spaces from the ID entered.";
+					url = "user/reservation.jsp";
 					
 				} else {
 	
@@ -105,8 +108,8 @@ public class BrowseConfirmServlet extends HttpServlet {
 					// verify inputed secondary user ID
 					// if user is not in our local database, have them login once to register
 					else if(!uh.inUserTable(secondaryMyID)){
-						msg = "Please have " + secondaryMyID + " login once into the application. "
-								+ "Logging in once serves as a form of user registration. Once " + secondaryMyID 
+						msg = "Please have " + secondaryMyID + " login once into the application. <br>"
+								+ "Logging in once serves as a form of user registration.<br> Once " + secondaryMyID 
 								+ " has logged in once, you can add them to any future reservation. ";
 						url = "user/reservation.jsp";
 					} else {
@@ -179,11 +182,13 @@ public class BrowseConfirmServlet extends HttpServlet {
 							email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime24, endTime, buildingName, roomNumber, email.getWebsiteURL());
 							
 							// set success message and forwarding URL
-							msg = "You have successfully made a reservation.  "
-									+ "You should receive a confirmation email shortly";
+							String message = "<div align='center'><h3>You have successfully made a reservation. <br> "
+									+ "You should receive a confirmation email shortly.</h3></div>";
 							//url = "user/reservationConfirmation.jsp";
 							url = "ViewServlet";
+							
 							session.setAttribute("secondaryEmail", secondaryEmail);				
+							session.setAttribute("message", message);
 							
 							// remove session attributes
 							session.removeAttribute("building");
@@ -205,9 +210,8 @@ public class BrowseConfirmServlet extends HttpServlet {
 					session.setAttribute("roomNumber", roomNumber);
 					session.setAttribute("building", buildingName);
 					session.setAttribute("hourIncrement", hourIncrement);
-	
-					session.setAttribute("msg", msg);
 				}
+				session.setAttribute("msg", msg);
 			} else {
 				//------------------------------------------------//
 				/*               USER INFO EXPIRED                */
