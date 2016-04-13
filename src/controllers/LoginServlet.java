@@ -54,20 +54,21 @@ public class LoginServlet extends HttpServlet {
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setAdminMyID("bbo89");
 		System.out.println("LOGIN SERVLET!");
-		
+	
 		User user = new User();
 		user.setMyID("bbo89");
 		user.setUserEmail("bbo89@uga.edu");
 		user.setUserRecordID(1);
 		System.out.println("LoginServlet USER OBJECT " );
 		
-		
+	
 		session.setAttribute("user", user);
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
+
 		
 		System.out.println("LOGIN SERVLET!");
-		/*
-		User user = new User();
+
+/*		User user = new User();
 		user.setMyID("ganix");
 		user.setUserEmail("ganix@uga.edu");
 		user.setUserFirstName("Ginger");
@@ -75,25 +76,22 @@ public class LoginServlet extends HttpServlet {
 		user.setUserRecordID(19);
 		
 		session.setAttribute("user", user);
-		*/
+*/
 		
 		url = "AdminHome"; 
 		//url = "user/userHomePage.jsp"; 
 
-		
 		//----------
 		// TESTING ADMINS SECTION
 /*		loggedInAdminUser.setAdminID(2);
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setRole("S");
 		loggedInAdminUser.setAdminMyID("ganix");
-		
-
 		url = "admin/adminHomePage.jsp";
 		
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		
-*/		
+*/	
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response); 

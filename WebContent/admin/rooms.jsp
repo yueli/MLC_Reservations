@@ -7,7 +7,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--  @author Ginger Nix -->
 <html>
 <head>
 <style>
@@ -54,18 +53,8 @@ form {
 	<body>
 		<div id="header1"></div>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
 
-		<form name="buildingForRoomsForm" action="RoomsListServlet" method="post">
-			<h2>Please Select A Building</h2>
 			<p>${buildings}
-			<input class='btn btn-lg btn-red' name="buildingSelected" type="submit" value="Enter"></p> 
-		</form>
 
 		<div id="footer"></div>
 	</body>

@@ -33,9 +33,9 @@
 		<div class="row text-center">
 		<div id="reservation_div">	
 			<form name="browse_reservation" id ="browse_reservation" action="BrowseConfirmation" method="post">
-				<p>Please fill out additional information below to make a reservation</p>
-				<p>${msg}</p>
-				<p>Reservation for ${currentDateLong}</p>
+				<h2>Please fill out additional information below to make a reservation.</h2>
+				<h2>${msg}</h2>
+				<h3>Reservation for ${currentDateLong}</h3>
 				<p>Building:
 				<input type="text" name="building" id="building" value="${buildingName}" disabled></p>				
 				<p>Room Number:  

@@ -56,11 +56,7 @@ form {
 	</head>
 <body>
 <div id="header1"></div>
-<br>
-	<br>
-
-<br>
-<br>
+<br />
 <div align="center">
 <div class="container margin-vert-60" style="z-index:1;">
 	<div class="row text-center">

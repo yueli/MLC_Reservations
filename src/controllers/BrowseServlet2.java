@@ -101,8 +101,9 @@ public class BrowseServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -112,7 +113,7 @@ public class BrowseServlet2 extends HttpServlet {
 			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
-			//url = "LoginServlet";
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

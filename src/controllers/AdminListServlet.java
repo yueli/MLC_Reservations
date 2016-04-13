@@ -52,8 +52,15 @@ public class AdminListServlet extends HttpServlet {
 		//get our current session
 		session = request.getSession();
 
+
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+		System.out.println("AdminListServlet: logged in admin user adminMyID = " + loggedInAdminUser.getAdminMyID());
+		System.out.println("AdminListServlet: logged in w/role = " + loggedInAdminUser.getRole());
+
 		String message = "";
 		message = (String) request.getAttribute("message"); 
+		
+		System.out.println("AdminListServlet: message received is: " + message);
 		
 		// blank out message if nothing gotten in message attribute
 		
@@ -61,10 +68,6 @@ public class AdminListServlet extends HttpServlet {
 			 message = " ";
 		}
 
-		// create admin user object
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-		
-		System.out.println("AdminListServlet: logged in user's role = " + loggedInAdminUser.getRole());
 	
 		// use the class AdminUserHelper
 		AdminUserHelper adminHelper = new AdminUserHelper();
