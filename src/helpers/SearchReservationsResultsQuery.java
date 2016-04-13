@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+import java.util.concurrent.TimeUnit;
 
 import model.DbConnect;
 import model.Reservation;
@@ -51,7 +51,7 @@ public class SearchReservationsResultsQuery {
 	//Method to get all rooms in building
 	public ArrayList<Integer> getAllRooms(int buildingid){
 		String query = "SELECT Rooms.roomID, Rooms.Building_buildingID FROM tomcatdb.Rooms WHERE Rooms.Building_buildingID ='"+buildingid+"' ORDER BY Rooms.roomNumber";
-		System.out.println("getAllRooms:");
+		//System.out.println("getAllRooms:");
 		System.out.println(query);
 		
 		//Get all rooms in building
@@ -183,6 +183,11 @@ public class SearchReservationsResultsQuery {
 			SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date beginDate = sdfDate.parse(sDate);
 			java.util.Date endDate = sdfDate.parse(eDate);
+			
+			GregorianCalendar endCal = new GregorianCalendar();
+			endCal.setTime(endDate);
+			endCal.add(Calendar.DAY_OF_YEAR, 1);
+			
 
 			
 			//1.Go through every day user chose
@@ -197,11 +202,13 @@ public class SearchReservationsResultsQuery {
 			 ///1.Go through every day (that the user input)
 			 GregorianCalendar gcal = new GregorianCalendar();
 			 gcal.setTime(beginDate);
-			 while (gcal.getTime().before(endDate)) {
-					gcal.add(Calendar.DAY_OF_YEAR, 1);
+			 while (gcal.getTime().before(endCal.getTime())) {
+				 
+					
 							//Convert Format
 						     String pointDate = sdfDate.format(gcal.getTime());
-	
+						     gcal.add(Calendar.DAY_OF_YEAR, 1);
+						     
 			//2.Create new table for new date
 			        if(!newDate.equals(pointDate)){
 						//If new date, close table and create new table date
@@ -265,17 +272,21 @@ public class SearchReservationsResultsQuery {
 									int tempRoom = reservationAL.get(y).getRoomsID();
 									
 									//Date Match
-									int a = newDate.compareTo(tempDate);
+								
+									
+									
 									//Time Match
-									int b = tempTime.compareTo(tempEndTime);
+								
 									//Room Match
-									int hrInc = reservationAL.get(y).getHourIncrement();
+									
 									
 									//Date & Time
-									if(a==1 && b==1 && tempRoom==tempRoomAL && roomtaken==0){
+									if(pointDate.equals(tempDate) && tempTime.equals(tempEndTime) && tempRoom==tempRoomAL && roomtaken==0){
 										table +="<td>";
 										table +="TAKEN";
 										table +="</td>";
+									
+										System.out.println("TAKEN: Point Date: "+pointDate + "--------tempDate: " + tempDate);
 								
 										
 										roomtaken=1;
@@ -285,16 +296,22 @@ public class SearchReservationsResultsQuery {
 									
 									else if(y==(reservationAL.size()-1) && roomtaken==0){
 										table +="<td>";
-										table +="<a href=/searchconfrimresults"
-												+ "?Rooms_roomID="+ tempRoomAL +"&"
-												+ "?reserveStartDate="+ newDate +"&"
-												+ "?reserveEndDate=01-01-2001&"
-												+ "?reserveStartTime="+ tempEndTime +"&"
-												+ "?reserveEndTime=11:11:1111&"
-												+ "?hourIncrement="+ hrIncrement +"&"
-												+ "?Building_buildingID="+ buildingid +"&"
-												+ "?free=N&"
-												+ ">OPEN</a>";
+										table += "<form name='searchconfirmresults' action=searchconfirmresults method=post>";
+										
+										//Room ID and building ID needs to get name and room number
+										
+										table += "<input type='hidden' name='Rooms_roomID' value='"+ tempRoomAL +"'>";
+										table += "<input type='hidden' name='reserveStartDate' value='"+ pointDate +"'>";
+										table += "<input type='hidden' name='reserveEndDate' value='01-01-2001'>";
+										table += "<input type='hidden' name='reserveStartTime' value='"+ tempEndTime +"'>";
+										
+										//Conver reserveEndTime to +hIncr
+										table += "<input type='hidden' name='reserveEndTime' value='11:11:1111'>";
+										table += "<input type='hidden' name='hourIncrement' value='"+ hrIncrement +"'>";
+										table += "<input type='hidden' name='Building_buildingID' value='"+ buildingid +"'>";
+										table += "<input type='hidden' name='free' value='N'>";
+										table +="<input type='submit' value='Submit'></form>";
+										 
 										table +="</td>";
 									}
 								
