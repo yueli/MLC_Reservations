@@ -241,7 +241,8 @@ public class ListUserReservationsQuery {
 								
 								//FOR TESTING - TAKE OUT
 								currentMinuteInt = 2; //!!!!!!!!!!!
-										
+								currentMinuteInt = 20; //!!!!!!!!!!
+								
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
 								// if this is the first time around, print out the table headers
