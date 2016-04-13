@@ -55,8 +55,8 @@
 
 	<body>
 		<div id="header"></div>
-<h2>Admin Users</h2>
-			<%= message %>
+		<br /><br /><br /><br />
+		<%= message %>
 
 		<%= table %> 
  		

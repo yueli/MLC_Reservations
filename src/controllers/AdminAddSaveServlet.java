@@ -62,7 +62,7 @@ public class AdminAddSaveServlet extends HttpServlet {
 		
 
 		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
+		Admin loggedInAdminUser = (Admin) request.getAttribute("loggedInAdminUser");		
 
 		// create new admin object to hold data entered in the form to add an admin user
 		Admin adminUserBeingAdded = new Admin();
@@ -79,11 +79,18 @@ public class AdminAddSaveServlet extends HttpServlet {
 		// check to see if an admin user already exists with this myID which is supposed to be unique
 		boolean alreadyInTable = false;
 		
+		System.out.println("AdminAddSaveServlet: before call to alreadyInTable: MyID to be checked: " + adminUserBeingAdded.getAdminMyID());
+		
 		alreadyInTable = adminUserHelper.inAdminTable(adminUserBeingAdded.getAdminMyID());
 		
 		if (alreadyInTable){
 			// don't add, set message
-			message = "The admin " + adminUserBeingAdded.getAdminMyID() + " already exists!";
+			message = "<br /><br /><div align='center'><h3>The admin user " +
+						adminUserBeingAdded.getFname() + " " + adminUserBeingAdded.getLname()   + 
+						" with the UGA MyID ' " + adminUserBeingAdded.getAdminMyID() + 
+						"' already exists!</h3></div>";
+			
+			url = "AdminAddServlet";
 			
 		}else{
 			//add new admin user 
@@ -95,13 +102,11 @@ public class AdminAddSaveServlet extends HttpServlet {
 					adminUserBeingAdded.getAdminStatus()
 					);
 			
-			message = "Admin added";			
+			message = "Admin added";
+			url = "AdminListServlet";
 		}
-		
-		// regardless if already exists or admin added, go back to the listing admins page w/ message
-		
-		url = "AdminListServlet";	
-		
+
+			
 		request.setAttribute("message", message);
 		request.setAttribute("loggedInUser", loggedInAdminUser);
 
