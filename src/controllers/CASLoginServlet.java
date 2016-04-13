@@ -141,9 +141,9 @@ public class CASLoginServlet extends HttpServlet {
 
 		AdminUserHelper adminUserHelper = new AdminUserHelper();
 		
-		System.out.println("Login Servlet logged in user my id = " + loggedInUser.getMyID());
+		System.out.println("CAS Login Servlet logged in user my id = " + loggedInUser.getMyID());
 
-		System.out.println("Login Servlet logged in user employee type = " + employeeType);
+		System.out.println("CAS Login Servlet logged in user employee type = " + employeeType);
 		 
 		boolean inAdminUserTable = false;	
 		inAdminUserTable = adminUserHelper.inAdminTable(loggedInUser.getMyID());
@@ -204,7 +204,8 @@ public class CASLoginServlet extends HttpServlet {
 			
 			// test1010 should be emp type 01
 			
-			if (!employeeType.equals(00)) { 
+			//if (!employeeType.equals(00)) { 
+			if (!employeeType.equals(00) && (!loggedInUser.getMyID().equals("test1010"))) { 
 				// they are not a student so send them to a page where all they can do is log out
 				System.out.println("CASLogin Servlet logged in employeeType != 00 - " + employeeType);
 				
