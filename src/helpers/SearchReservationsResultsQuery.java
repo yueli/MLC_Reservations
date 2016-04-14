@@ -52,7 +52,7 @@ public class SearchReservationsResultsQuery {
 	public ArrayList<Integer> getAllRooms(int buildingid){
 		String query = "SELECT Rooms.roomID, Rooms.Building_buildingID FROM tomcatdb.Rooms WHERE Rooms.Building_buildingID ='"+buildingid+"' ORDER BY Rooms.roomNumber";
 		//System.out.println("getAllRooms:");
-		System.out.println(query);
+		//System.out.println(query);
 		
 		//Get all rooms in building
 		ArrayList<Integer> roomsArray = new ArrayList<Integer>();
@@ -81,7 +81,7 @@ public class SearchReservationsResultsQuery {
 				+ "Reservations.reserveStartTime>='"+ beginTime +"' AND "
 				+ "Reservations.reserveEndTime<='"+ endTime +"' "
 				+ "ORDER BY Reservations.reserveStartDate, Reservations.reserveStartTime";	
-		System.out.println("doRead "+ query);
+		//System.out.println("doRead "+ query);
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -249,7 +249,9 @@ public class SearchReservationsResultsQuery {
 							table+="<td>"+roomsAL.get(z)+"</td>";
 							int tempRoomAL = roomsAL.get(z);
 							String tempEndTime="";
+							String tempEndTimeShort ="";
 							
+							System.out.println("Temp Room AL: "+tempRoomAL);
 						
 						//Only searching for hours requested	
 						for(int i=hourbt;i<=houret;i++){
@@ -262,8 +264,13 @@ public class SearchReservationsResultsQuery {
 								for(int y=0;y<reservationAL.size();y++){
 									
 									//Modify Format
-									if(i<10){tempEndTime = "0"+i+":00:00";}
-									else{tempEndTime =i+":00:00";}
+									if(i<10){
+										tempEndTime = "0"+i+":00:00";
+										tempEndTimeShort = "0"+i+":00";
+										}
+									else{tempEndTime =i+":00:00";
+									tempEndTimeShort =i+":00";
+									}
 									
 									
 									//Date/Time/Room must match be listed as 
@@ -302,25 +309,65 @@ public class SearchReservationsResultsQuery {
 										
 										table += "<input type='hidden' name='Rooms_roomID' value='"+ tempRoomAL +"'>";
 										table += "<input type='hidden' name='reserveStartDate' value='"+ pointDate +"'>";
-										table += "<input type='hidden' name='reserveEndDate' value='01-01-2001'>";
+										
+										//Same dates as start date
+										table += "<input type='hidden' name='reserveEndDate' value='"+pointDate+"'>";
+										
+										
 										table += "<input type='hidden' name='reserveStartTime' value='"+ tempEndTime +"'>";
 										
 										//Conver reserveEndTime to +hIncr
-										table += "<input type='hidden' name='reserveEndTime' value='11:11:1111'>";
+										//GregorianCalendar gcal = new GregorianCalendar();
+										 //gcal.setTime(beginDate);
+										
+										table += "<input type='hidden' name='reserveEndTime' value='00:00:0000'>";
 										table += "<input type='hidden' name='hourIncrement' value='"+ hrIncrement +"'>";
 										table += "<input type='hidden' name='Building_buildingID' value='"+ buildingid +"'>";
 										table += "<input type='hidden' name='free' value='N'>";
-										table +="<input type='submit' value='Submit'></form>";
+										table +="<input type='submit' value='"+tempEndTimeShort +"'></form>";
 										 
 										table +="</td>";
 									}
+									
 								
 								}
 								}
 								//Else will fill empty slots instead of skipping
 								else{
+									
+									//Modify Format
+									if(i<10){
+										tempEndTime = "0"+i+":00:00";
+										tempEndTimeShort = "0"+i+":00";
+										}
+									else{tempEndTime =i+":00:00";
+									tempEndTimeShort =i+":00";
+									}
+									
+									
 										table +="<td>";
-										table +="OPEN";
+										table += "<form name='searchconfirmresults' action=searchconfirmresults method=post>";
+										
+										//Room ID and building ID needs to get name and room number
+										
+										table += "<input type='hidden' name='Rooms_roomID' value='"+ tempRoomAL +"'>";
+										table += "<input type='hidden' name='reserveStartDate' value='"+ pointDate +"'>";
+										
+										//Same dates as start date
+										table += "<input type='hidden' name='reserveEndDate' value='"+pointDate+"'>";
+										
+										
+										table += "<input type='hidden' name='reserveStartTime' value='"+ tempEndTime +"'>";
+										
+										//Conver reserveEndTime to +hIncr
+										//GregorianCalendar gcal = new GregorianCalendar();
+										 //gcal.setTime(beginDate);
+										
+										table += "<input type='hidden' name='reserveEndTime' value='00:00:0000'>";
+										table += "<input type='hidden' name='hourIncrement' value='"+ hrIncrement +"'>";
+										table += "<input type='hidden' name='Building_buildingID' value='"+ buildingid +"'>";
+										table += "<input type='hidden' name='free' value='N'>";
+										table +="<input type='submit' value='OPEN'></form>";
 										table +="</td>";
 									}
 									
@@ -332,7 +379,7 @@ public class SearchReservationsResultsQuery {
 						table += "</tr>";
 						table += "</tbody>";		
 						table += "</table>";
-						System.out.println(table);
+						
 							
 						}
 			   return table;
