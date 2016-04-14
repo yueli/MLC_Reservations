@@ -128,7 +128,7 @@ public class BuildingListQuery {
 					table += "<form name='scheduleEditForm' action='Schedule' method='post'>";
 					table += "<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>";
 					table += "<input class='btn btn-lg btn-red' type='submit' value='EditHours'>";
-					table += "</form";
+					table += "</form>";
 					table += "</td>";
 					//Ginger added this button to view the rooms of the building
 					table += "<td>";
