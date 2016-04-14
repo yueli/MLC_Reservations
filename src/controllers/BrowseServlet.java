@@ -56,16 +56,19 @@ public class BrowseServlet extends HttpServlet {
 			 
 			if(user != null) { // run code if user object is not null
 				System.out.println("USER INFO FROM BROWSE: " + user.getUserRecordID() + ", " + user.getMyID() + ", " + user.getLastLogin());
+				
 				// Check if any buildings are open
+				DateTimeConverter dtc = new DateTimeConverter();
+				String currentDay = "";
 				
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				boolean isOpen = bsq.buildingsOnline();
 				if (isOpen){
 					session.removeAttribute("msg");
-					DateTimeConverter dtc = new DateTimeConverter();
+					
 					
 					// Headers and Submit button
-					String currentDay = "<h2>Browse Reservations for Today, " + dtc.convertDateLong(dtc.parseDate(dtc.datetimeStamp())) + "</h2><br>";
+					currentDay = "<h2>Browse reservations for today, " + dtc.convertDateLong(dtc.parseDate(dtc.datetimeStamp())) + "</h2><br>";
 					String buildingHeader = "Please Select Building";
 					String buildingSubmit = "<input class='btn btn-lg btn-red' name='enterBuilding' type='submit' value='Enter'>";
 					
@@ -84,8 +87,10 @@ public class BrowseServlet extends HttpServlet {
 				
 				} else {
 					// if no buildings are online.
+					currentDay = "<h2>Browse reservations for today, " + dtc.convertDateLong(dtc.parseDate(dtc.datetimeStamp())) + "</h2><br>";
 					String msg = "No Buildings are currently open at this time.  Please check again.";
 					session.setAttribute("msg", msg);
+					session.setAttribute("currentDay", currentDay);
 					url = "/user/browse.jsp";
 				}
 			} else {
