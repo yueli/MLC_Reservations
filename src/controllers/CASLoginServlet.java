@@ -205,7 +205,7 @@ public class CASLoginServlet extends HttpServlet {
 			// test1010 should be emp type 01
 			
 			//if (!employeeType.equals(00)) { 
-			if (!employeeType.equals(00) && (!loggedInUser.getMyID().equals("test1010"))) { 
+			if (!employeeType.equals(00) && (!loggedInUser.getMyID().equals("test1010") || !loggedInUser.getMyID().equals("test1009"))) { 
 				// they are not a student so send them to a page where all they can do is log out
 				System.out.println("CASLogin Servlet logged in employeeType != 00 - " + employeeType);
 				
