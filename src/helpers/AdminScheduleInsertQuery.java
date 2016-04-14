@@ -70,7 +70,7 @@ public class AdminScheduleInsertQuery {
 		
 		} catch (SQLException e){
 			e.printStackTrace();
-			System.out.println("Error in AdminScheduleInsertQuery.java: insertCheck method. Please check connection or SQL statement.");
+			System.err.println("Error in AdminScheduleInsertQuery.java: insertCheck method. Please check connection or SQL statement.");
 		} 
 		// will return false by default if the connection fails.
 		value = "false";
@@ -113,7 +113,7 @@ public class AdminScheduleInsertQuery {
 			ps.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();
-			System.out.println("Error in AdminScheduleInsertQuery.java: doScheduleInsert method. Please check connection or SQL statement.");
+			System.err.println("Error in AdminScheduleInsertQuery.java: doScheduleInsert method. Please check connection or SQL statement.");
 		} finally {
 			if (this.connection != null) {
 				try {
