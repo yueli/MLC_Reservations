@@ -42,7 +42,7 @@ public class ReservationInsertQuery {
 				+ "tomcatdb.Reservations.Rooms_roomID, tomcatdb.Reservations.reserveStartDate, tomcatdb.Reservations.reserveEndDate, "
 				+ "tomcatdb.Reservations.reserveStartTime, tomcatdb.Reservations.reserveEndTime, tomcatdb.Reservations.hourIncrement, "
 				+ "tomcatdb.Reservations.Building_buildingID, tomcatdb.Reservations.free) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		
+		System.out.println(query);
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);

@@ -240,8 +240,8 @@ public class ListUserReservationsQuery {
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								
 								//FOR TESTING - TAKE OUT
-								currentMinuteInt = 2; //!!!!!!!!!!!
-								currentMinuteInt = 20; //!!!!!!!!!!
+								//currentMinuteInt = 2; //!!!!!!!!!!!
+								//currentMinuteInt = 20; //!!!!!!!!!!
 								
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
