@@ -75,7 +75,7 @@ public class SearchReservationsResultsQuery {
 	//User Input for Results
 	public void doRead(int buildingid, String beginDate, String beginTime, String endDate, String endTime, int hourIncrement ){
 		String query = "SELECT Reservations.Building_buildingID,  Reservations.Rooms_roomID, Reservations.hourIncrement, Reservations.reserveStartDate, Reservations.reserveEndDate, Reservations.reserveStartTime, Reservations.reserveEndTime"
-				+ " FROM tomcatdb.Reservations WHERE reservations.Building_buildingID ='"+buildingid+"' AND "
+				+ " FROM tomcatdb.Reservations WHERE Reservations.Building_buildingID ='"+buildingid+"' AND "
 				+ "Reservations.reserveStartDate>='"+ beginDate +"' AND "
 				+ "Reservations.reserveendDate<='"+ endDate +"' AND "
 				+ "Reservations.reserveStartTime>='"+ beginTime +"' AND "
@@ -89,7 +89,7 @@ public class SearchReservationsResultsQuery {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in BuildingListQuery.java: doRoom method. Please check connection or SQL statement: " + query);
+			System.out.println("Error in SearchReservationResultsQuery.java: doRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
 	
