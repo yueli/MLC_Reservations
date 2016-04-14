@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
+import model.DateTimeConverter;
 import model.DbConnect;
 import model.User;
 
@@ -61,7 +62,10 @@ public class BrowseServlet extends HttpServlet {
 				boolean isOpen = bsq.buildingsOnline();
 				if (isOpen){
 					session.removeAttribute("msg");
+					DateTimeConverter dtc = new DateTimeConverter();
+					
 					// Headers and Submit button
+					String currentDay = "<h2>Browse Reservations for Today, " + dtc.convertDateLong(dtc.parseDate(dtc.datetimeStamp())) + "</h2><br>";
 					String buildingHeader = "Please Select Building";
 					String buildingSubmit = "<input class='btn btn-lg btn-red' name='enterBuilding' type='submit' value='Enter'>";
 					
@@ -71,6 +75,7 @@ public class BrowseServlet extends HttpServlet {
 					String buildings = bsq.getBuildingResults();
 					
 					// set session attribute
+					session.setAttribute("currentDay", currentDay);
 					session.setAttribute("user", user);
 					session.setAttribute("buildingHeader", buildingHeader);
 					session.setAttribute("buildingSubmit", buildingSubmit);
