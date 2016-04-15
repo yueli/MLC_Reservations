@@ -54,7 +54,7 @@
 				Start Time: <input type="text" id="startTime" name="startTimeEdit" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input type="text" id="endTime" name="endTimeEdit" value="${tc.convertTimeTo12(endTime)}"><br>
 				Summary: <input type="text" name="summaryEdit" value="${summary}"><br><br>
-				<button class="btn btn-lg btn-red" onclick="goBack()">Go Back</button>   <input class="btn btn-lg btn-red" type="submit" value="Submit">
+				<a href="Schedule"><button class="btn btn-lg btn-red" type="submit" value="View Building Hours">View Building Hours</button></a>   <input class="btn btn-lg btn-red" type="submit" value="Submit">
 			</form>
 		</div>
 		<div id="footer"></div>

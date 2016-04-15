@@ -429,7 +429,7 @@ public class DateTimeConverter {
 		    System.out.println(" Date is ..." + date);
 		}
 		
-		boolean isAfter = DateTimeConverter.isAfter("03/03/2016", "03/12/2016");
+		boolean isAfter = DateTimeConverter.isAfter("03/12/2016", "03/12/2016");
 		System.out.println(isAfter);
 	}
 }
