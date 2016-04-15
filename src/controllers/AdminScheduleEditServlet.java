@@ -101,6 +101,8 @@ public class AdminScheduleEditServlet extends HttpServlet {
 						}
 					}
 					
+					String buildingName = bsq.getBuildingNameFromID(Integer.parseInt(buildingID));
+					System.out.println("Building in Schedule Edit is " + buildingName + " Building ID is " + buildingID);
 					
 					// query the database to get
 					AdminScheduleSelectQuery ssq = new AdminScheduleSelectQuery();
@@ -118,6 +120,7 @@ public class AdminScheduleEditServlet extends HttpServlet {
 					
 					
 					// set session and request variables
+					request.setAttribute("buildingName", buildingName);
 					session.setAttribute("msg", msg);
 					session.setAttribute("buildingID", buildingID);
 					session.setAttribute("buildings", buildings);
