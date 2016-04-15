@@ -39,12 +39,10 @@
 		<div id="header1"></div>
 		<br>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
 		<div align="center">
+		<h2>Buildings</h2>
+		<h3>You can add or edit buildings, hours, or rooms here.</h3>
+		<br><br>
 		<a href='buildingform'><button class='btn btn-lg btn-red' type='submit' value='EditHours'>Add Building</button></a>
 		<br /><br />
 

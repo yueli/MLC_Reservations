@@ -77,7 +77,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 						// query building
 						
 						bsq.doAdminBuildingRead();
-						buildings = bsq.getBuildingResults(bldg);
+						buildings = "<h3>Select a Building: </h3>" + bsq.getBuildingResults(bldg);
 			
 					}
 					// if there is a buildingID from session, it becomes the buildingID

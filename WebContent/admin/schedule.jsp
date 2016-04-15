@@ -63,6 +63,8 @@
 	<br>
 	<br>
 		<div align="center">
+			<h2>Viewing Building Hours</h2>
+			<h3>Please select a building and or date to view a building's hours of operation.</h3><br>
 			<h2>${msg}</h2>
 			<form name="BuildingSelect" action="Schedule" method="post">
 				<p>${buildings}
