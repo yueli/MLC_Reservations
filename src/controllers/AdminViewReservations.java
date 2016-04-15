@@ -60,7 +60,9 @@ public class AdminViewReservations extends HttpServlet {
 				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S") || role.equalsIgnoreCase("C")) && status == 1){
-			
+					// remove message 
+					session.removeAttribute("msg");
+					
 					//------------------------------------------------//
 					/*               VIEW RESERVATIONS                */
 					//------------------------------------------------//
