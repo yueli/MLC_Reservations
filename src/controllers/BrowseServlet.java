@@ -55,6 +55,18 @@ public class BrowseServlet extends HttpServlet {
 			User user = (User) session.getAttribute("user");
 			 
 			if(user != null) { // run code if user object is not null
+				// remove anything from previous sessions
+				session.removeAttribute("currentDay");
+				session.removeAttribute("building");
+				session.removeAttribute("buildingID");
+				session.removeAttribute("buildingHeader");
+				session.removeAttribute("buildingSubmit");
+				session.removeAttribute("buildings");
+				session.removeAttribute("floor");
+				session.removeAttribute("floorSelected");
+				session.removeAttribute("floorHeader");
+				session.removeAttribute("table");
+				
 				System.out.println("USER INFO FROM BROWSE: " + user.getUserRecordID() + ", " + user.getMyID() + ", " + user.getLastLogin());
 				
 				// Check if any buildings are open
