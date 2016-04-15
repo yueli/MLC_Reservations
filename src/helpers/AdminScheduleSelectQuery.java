@@ -141,7 +141,7 @@ public class AdminScheduleSelectQuery {
 			table += "<thead>";
 			table += "<tr>";
 			table += "<th></th>";
-			table += "<th>Building </th>";
+			//table += "<th>Building </th>";
 			table += "<th>Date </th>";
 			table += "<th>Start Time</th>";
 			table += "<th>End Time</th>";
@@ -173,7 +173,7 @@ public class AdminScheduleSelectQuery {
 				
 				table += "<tr>";
 				table += "<td>" + j + "</td>";
-				table += "<td data-search='" + building.getBuildingName() + "'>" + building.getBuildingName() + "</td>";
+				//table += "<td data-search='" + building.getBuildingName() + "'>" + building.getBuildingName() + "</td>";
 				table += "<td data-search='" + schedule.getStartDate()+ "'>" + dtc.convertDateLong(schedule.getStartDate()) + "</td>";
 				table += "<td data-order='" + schedule.getStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(schedule.getStartTime()) + "</td>";
 				table += "<td data-order='" + schedule.getEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(schedule.getEndTime()) + "</td>";
