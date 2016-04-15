@@ -395,8 +395,8 @@ public class DateTimeConverter {
 			date2 = slashedFormat.parse(to);
 			
 			if(date1.after(date2)){
-	             return true;
-	         }
+	             	    return true;
+	         	}
 		} catch (ParseException e) {
 			e.printStackTrace();
 			System.err.println("**Error parsing date in DateTimeConverter.comapreDate**");
