@@ -60,8 +60,14 @@ public class AdminScheduleAddServlet extends HttpServlet {
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 					
-					// remove message 
+					// remove session variables 
 					session.removeAttribute("msg");
+					session.removeAttribute("buildingID");
+					session.removeAttribute("startDate");
+					session.removeAttribute("endDate");
+					session.removeAttribute("startTime");
+					session.removeAttribute("endTime");
+					session.removeAttribute("summary");
 					
 					// get session and request variables + initialization of others
 					String buildings = ""; // the string that contains the HTML drop down list
