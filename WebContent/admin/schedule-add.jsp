@@ -55,11 +55,8 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 		<div align="center">
+			<h2>Add Hours for a Building</h2>
 			<h2>${msg}</h2>
 			<p>${buildings}</p>
 			<form name="scheduleForm" action="new-schedule" method="post">
@@ -67,7 +64,7 @@
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
 				Start Time: <input type="text" id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input type="text" id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
-				Summary: <input type="text" name="summary" value="${summary}"><br>
+				Summary: <input type="text" name="summary" value="${summary}"><br><br>
 				<button class="btn btn-lg btn-red" onclick="goBack()">Go Back</button>     <input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter">
 			</form>
 		</div>
