@@ -63,13 +63,16 @@
 	<br>
 	<br>
 		<div align="center">
-			<h2>${msg}</h2>
+			<h2>Viewing Building Hours</h2>
+			<h3>Please select a building and or date to view a building's hours of operation.</h3><br>
+			<h3>${msg}</h3><br>
+			<h2>Hours for ${buildingName}</h2><br>
 			<form name="BuildingSelect" action="Schedule" method="post">
 				<p>${buildings}
 				<label for="from">From </label> <input type="text" id="from" name="from" placeholder="mm/dd/yyyy"> <label for="to">To </label> <input type="text" id="to" name="to" placeholder="mm/dd/yyyy">
 				<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"> </p>
 			</form>
-			<a href="add-schedule"><button class="btn btn-lg btn-red" type="submit" value="add-schedule">Add Building Hours</button></a>
+			<a href="buildings"><button class="btn btn-lg btn-red" type="submit" value="Back to Buildings">Back To Buildings</button></a>  <a href="add-schedule"><button class="btn btn-lg btn-red" type="submit" value="add-schedule">Add Building Hours</button></a>
 		</div>
 		<p>${schedule}</p>
 		<div id="footer"></div>

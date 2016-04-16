@@ -26,7 +26,7 @@
 			});
 			// jQuery for datepicker plugin
 			$(function() {
-			    $( "#datepicker" ).datepicker({ minDate: -1, maxDate: +14, dateFormat: "yy-mm-dd" });
+			    $( "#datepicker" ).datepicker({ maxDate: +14, dateFormat: "yy-mm-dd" });
 			 });
 			// jQuery for Datatable plugin for pagination
 			$(document).ready( function () {
@@ -41,9 +41,8 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
+		<div align="center">
+			<h2>View All Reservations for Admins and Students</h2><br>
 			<div id="search-container">
 				<h2>${msg}</h2>
 				<form name="adminViewForm" action="view-reservations?update" method="post">
@@ -51,12 +50,14 @@
 					<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
 				</form>
 			</div>
+			<br>
 			<div>
 			<h2>Admin Reservations for ${currentDateLong}</h2>
 			<p>${adminReservations}</p>
 			</div>
 			<h2>Student Reservations for ${currentDateLong}</h2>
 			<p>${userReservations}</p>
+		</div>
 			<br><br><br><br>
 		
 		<div id="footer"></div>

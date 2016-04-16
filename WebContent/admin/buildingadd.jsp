@@ -23,17 +23,14 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 <div align="center">
 <form name="addForm" action="addbuilding" method=get>
-
+<h2>Add a Building</h2><br>
+<h3>Please enter the information below to add a building.</h3><br>
 Building Name:<input type=text name=buildingName value="" /><br>
 Building Status:<input type=text name=buildingStatus value="" /><br>
 Building Cal Name:<input type=text name=buildingCalName value="" /><br>
-Building Cal URL:<input type=text name=buildingCalUrl value="" /><br>
+Building Cal URL:<input type=text name=buildingCalUrl value="" /><br><br>
 <p>
 <input class="btn btn-lg btn-red" type=submit name=submit value='Add Building'>
 </p>

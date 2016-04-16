@@ -191,6 +191,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 							session.setAttribute("message", message);
 							
 							// remove session attributes
+							session.removeAttribute("currentDay");
 							session.removeAttribute("building");
 							session.removeAttribute("buildingID");
 							session.removeAttribute("buildingHeader");
