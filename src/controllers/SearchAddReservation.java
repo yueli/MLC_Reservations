@@ -12,7 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import helpers.ReservationInsertQuery;
 import model.Building;
+import model.DbConnect;
+import model.Email;
 import model.Reservation;
+import model.TimeConverter;
+import model.User;
 
 /**
  * Servlet implementation class SearchAddReservation
@@ -58,7 +62,7 @@ System.out.println("Resevation Set");
 		String buildingName = building.getBuildingName();
 		
 		
-		Reservation reservation = new Reservation(tempPUSER, tempSUSER, Rooms_roomID, reserveStartDate, reserveEndDate,reserveStartTime , reserveEndTime, hourIncrement, Building_buildingID, free);
+		Reservation reservation = new Reservation(tempPUSER, tempSUSER, Rooms_roomID, reserveStartDate, reserveEndDate, reserveStartTime , TimeConverter.subtractOneSecondToTime(reserveEndTime), hourIncrement, Building_buildingID, free);
 		
 		String table = "";
 		table += "Reservation Succesful! <br />";
@@ -74,6 +78,37 @@ System.out.println("Resevation Set");
 		ReservationInsertQuery riq = new ReservationInsertQuery();
 		riq.doReservationInsert(reservation);
 		//Send Email
+		
+		// class used to send email
+		/*
+		 * RONNIE, in order to send an email, you need to get the primary user email from the session object
+		 * and get the secondary users email from the myID
+		 * 
+		 * User primaryUser = (User) session.getAttribute("user");
+		 * String primaryEmail = primaryUser.getUserEmail();
+		 * 
+		 * To get the secondary's info, you will need their myID
+		 * 
+		 * 1st check to see if the secondary's myID is in the user table
+		 * 
+		 * UserHelper uh = new UserHelper();
+		 * If the user is not in a table, display a message similar to the one below and have them enter another myID 
+		 * if(!uh.inUserTable(secondaryMyID)){
+				msg = "Please have " + secondaryMyID + " login once into the application. <br>"
+						+ "Logging in once serves as a form of user registration.<br> Once " + secondaryMyID 
+						+ " has logged in once, you can add them to any future reservation. ";
+			}
+		 * User secondaryUser = uh.getUserInfo(secondaryMyID);
+		 * String secondaryEmail = secondaryUser.getUserEmail();
+		 * 
+		 * Also do a check to make sure that the person logged in doesn't use their myID as the secondary user.
+		 * 
+		 * Also for email to work, you need the room number
+		 */
+		
+		/*Email email = new Email();
+		email.setWebsiteURL(DbConnect.urlRedirect());
+		email.sendMail(primaryEmail, secondaryEmail, reserveStartDate, reserveStartTime, reserveEndTime, buildingName, roomNumber, email.getWebsiteURL()); */
 		
 		//Redirect to home page? with message?
 		

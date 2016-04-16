@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <%
    Building building = (Building) session.getAttribute("building");
     %>

@@ -124,14 +124,20 @@ public class BuildingListQuery {
 					
 					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
 					
-					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>Edit Hours</button></a></td>";
-					
+					table += "<td>";
+					table += "<form name='scheduleEditForm' action='Schedule' method='post'>";
+					table += "<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>";
+					table += "<input class='btn btn-lg btn-red' type='submit' value='EditHours'>";
+					table += "</form>";
+					table += "</td>";
 					//Ginger added this button to view the rooms of the building
-					table += "<td><form action = 'RoomsListServlet' method = 'post'>" +
-							"<input type='hidden' name='cancelAction' value='buildings'>" +
-							"<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>" +
-							"<input class='btn btn-lg btn-red' type='submit' value='View/Edit Rooms'>" +
-							"</form></td>";//Ginger Added
+					table += "<td>";
+					table += "<form name='formForRooms' action='RoomsListServlet' method='post'>";
+					table += "<input type='hidden' name='cancelAction' value='buildings'>";
+					table += "<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>";
+					table += "<input class='btn btn-lg btn-red' type='submit' value='View/Edit Rooms'>";
+					table += "</form>";
+					table += "</td>"; //Ginger Added
 					
 					
 					table += "</tr>";

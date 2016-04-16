@@ -60,10 +60,13 @@ public class BrowseReserveServlet extends HttpServlet {
 				String roomNumber = (String) request.getParameter("roomNumber");
 				String currentDate = (String) request.getParameter("currentDate");
 				int buildingID = (Integer) session.getAttribute("building");
-				
-				
 				int userID = user.getUserRecordID();
+				
+				String requestURL = request.getRequestURL().toString();
+				System.out.println("Request URL = " + requestURL);
+				
 				System.out.println("USER INFO FROM BROWSE RESERVE SERVLET: " + user.getUserRecordID() + ", " + user.getMyID() + ", " + user.getLastLogin());
+				
 				// get the building name from ID
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				String buildingName = bsq.buildingName(buildingID);
@@ -97,7 +100,7 @@ public class BrowseReserveServlet extends HttpServlet {
 				} else if (incrementSum >= 2){ 
 					// either 2 1-hour reservations or 1 2-hour reservation was made
 					// user has reached 2 hour max for the day
-					msg = "You have exceeded the maximum hours (2) for reservations for today.  "
+					msg = "You have exceeded the maximum hours (2) for reservations for today.  <br>"
 							+ "To make a reservation for another time for today, please cancel one of your current reservations first.";
 					url = "user/browse.jsp"; 
 					
@@ -121,14 +124,19 @@ public class BrowseReserveServlet extends HttpServlet {
 				session.setAttribute("buildingID", buildingID);
 				session.setAttribute("buildingName", buildingName);
 				session.setAttribute("incrementSelect", incrementSelect);
+				
+				// This prevents the user from going back to this page after they make a reservation.
+				CASLogoutServlet.clearCache(request, response);
+				
 			} else {
 				//------------------------------------------------//
 				/*               USER INFO EXPIRED                */
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -139,7 +147,7 @@ public class BrowseReserveServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
-			//url = "LoginServlet";
+		
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 			
