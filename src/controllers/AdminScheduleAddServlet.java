@@ -48,7 +48,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 		
 		// if this session is not null (active/valid)
 		if(this.session != null){
-
+			
 			// get admin user object from session
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
 			if (loggedInAdminUser != null){
@@ -59,6 +59,16 @@ public class AdminScheduleAddServlet extends HttpServlet {
 					
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+					
+					// remove session variables 
+					session.removeAttribute("msg");
+					session.removeAttribute("buildingID");
+					session.removeAttribute("startDate");
+					session.removeAttribute("endDate");
+					session.removeAttribute("startTime");
+					session.removeAttribute("endTime");
+					session.removeAttribute("summary");
+					
 					// get session and request variables + initialization of others
 					String buildings = ""; // the string that contains the HTML drop down list
 					String buildingID = request.getParameter("buildingID"); // get the value from 
@@ -77,7 +87,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 						// query building
 						
 						bsq.doAdminBuildingRead();
-						buildings = bsq.getBuildingResults(bldg);
+						buildings = "<h3>Select a Building: </h3>" + bsq.getBuildingResults(bldg);
 			
 					}
 					// if there is a buildingID from session, it becomes the buildingID

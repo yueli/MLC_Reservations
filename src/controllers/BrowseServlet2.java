@@ -76,6 +76,13 @@ public class BrowseServlet2 extends HttpServlet {
 						fsq.doFloorRead(buildingSelected);
 						String floor = fsq.getFloorResults();
 						
+						String table = (String) session.getAttribute("table");
+						
+						// remove current table if building is reselected.
+						if (table != null && !table.isEmpty()){
+							session.removeAttribute("table");
+						}
+						
 						// URL of the view to forward
 						url = "/user/browse.jsp";
 						

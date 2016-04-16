@@ -186,7 +186,8 @@ public class BuildingSelectQuery {
 		return select;
 	}
 	/**
-	 * This method takes into account the building schedule.  
+	 * This method takes into account the building schedule. 
+	 * If the building is not online, an empty string is returned. 
 	 * We get the building name from inputted buildingID
 	 * @param buildingID ID of the building	
 	 * @return buildingName Name of the building
