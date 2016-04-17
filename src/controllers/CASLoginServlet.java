@@ -1,12 +1,3 @@
-/* @author: Brian Olaogun and Ginger Nix
- * 
- * This is the servlet that CAS points to after authenticating the user.
- * It determines if the person is coming in from a QR code scan, is an admin, or is a plain ole user.
- * If they are not coming in from the QR scan and not an admin, a check is done to see if they are a student.
- * If not, they are sent to an error page where they can only log out
- * 
- */
-
 package controllers;
 
 import java.io.IOException;
@@ -35,7 +26,12 @@ import javax.servlet.http.HttpSession;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
 /**
- * Servlet implementation class CASLoginServlet
+ * This is the servlet that CAS points to after authenticating the user.
+ * It determines if the person is coming in from a QR code scan, is an admin, or is a plain ole user.
+ * If they are not coming in from the QR scan and not an admin, a check is done to see if they are a student.
+ * If not, they are sent to an error page where they can only log out
+ * @author: Brian Olaogun and Ginger Nix
+ * 
  */
 @WebServlet("/CASLoginServlet")
 public class CASLoginServlet extends HttpServlet {

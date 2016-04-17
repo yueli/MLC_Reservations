@@ -89,7 +89,7 @@ public class FloorSelectQuery {
 	}
 	
 	/**
-	 * 
+	 * This method will create a new drop down with the selected floor listed first.
 	 * @param selected the floor the user select
 	 * @return new html select with the floor the user selected still displayed
 	 */

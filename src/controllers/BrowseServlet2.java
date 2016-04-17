@@ -17,7 +17,9 @@ import model.User;
 
 /**
  * @author Brian Olaogun
- * Servlet implementation class BrowseServlet2
+ * Servlet implementation class BrowseServlet2.  This servlet displays the building drop down.  Once a building is selected,
+ * then the floor list is displayed as well as headers and titles.  All information from the previous servlet is in the session.
+ * Once a floor is selected, Browse Servlet 3 is called.
  */
 @WebServlet({ "/BrowseServlet2", "/Browse2", "/BrowseFloors" })
 public class BrowseServlet2 extends HttpServlet {

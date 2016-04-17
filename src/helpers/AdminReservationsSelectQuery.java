@@ -140,7 +140,7 @@ public class AdminReservationsSelectQuery {
 	public String doAdminReservationResults(String role){
 		String table = "";
 		if (role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")){
-			System.out.println("FORWARD TO doAdminReservationsWithCancel");
+			
 			table = doAdminReservationResultsWithCancel();
 			return table;
 			
@@ -213,7 +213,7 @@ public class AdminReservationsSelectQuery {
 	 * to cancel admin reservations.
 	 */
 	public String doAdminReservationResultsWithCancel(){
-		System.out.println("IN doAdminReservationResultsWithCancel");
+
 		String table = "";
 		try {
 			table += "<table id='' class='display'>";
