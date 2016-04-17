@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import model.Building;
 import model.DbConnect;
+import model.Rooms;
 
 
 /**
@@ -63,6 +64,73 @@ public class BuildingListQuery {
 				System.out.println("Error in BuildingListQuery.java: doRoom method. Please check connection or SQL statement: " + query);
 			} 
 		}
+		
+		public String getBuildingName(int buildingID){
+			String bName = "";
+			try {
+				while(results.next()){
+						Building building = new Building();
+						building.setBuildingID(results.getInt("buildingID"));
+						building.setBuildingName(results.getString("buildingName"));
+						int bID = building.getBuildingID();
+						
+						if(buildingID==bID){
+						bName = results.getString("buildingName");
+					}
+				}
+			}	
+				catch(SQLException e) {
+					e.printStackTrace();	
+				}
+				return bName;
+			}
+		
+		
+		public void doReadRooms(int buildingID){
+
+			String query = "SELECT `rooms`.`roomID`,`rooms`.`Admin_adminID`,`rooms`.`Building_buildingID`,`rooms`.`roomNumber`,`rooms`.`roomFloor`,`rooms`.`roomStatus`,`rooms`.`qrUrl` FROM `tomcatdb`.`rooms` WHERE `rooms`.`Building_buildingID` = '"+buildingID+"';";
+			// securely run query
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				this.results = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in BuildingListQuery.java: doRoom method. Please check connection or SQL statement: " + query);
+			} 
+		}
+		
+		
+		public String getRoomName(int roomID){
+			String rNumber = "";
+			try {
+				while(results.next()){
+					Rooms room = new Rooms();
+					room.setRoomID(results.getInt("roomID"));
+					room.setRoomNumber("roomNumber");
+					
+						int rID = room.getRoomID();
+						
+						if(roomID==rID){
+							rNumber = results.getString("roomNumber");
+					}
+				}
+			}	
+				catch(SQLException e) {
+					e.printStackTrace();	
+				}
+				return rNumber;
+			}
+		
+		
+				
+						
+			
+			
+		
+			
+		
+		
 		
 		
 		

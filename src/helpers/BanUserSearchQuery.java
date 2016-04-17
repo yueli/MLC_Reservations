@@ -1,15 +1,14 @@
 package helpers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Banned;
 import model.DbConnect;
+import model.User;
 
-public class BanUserSelectDataQuery {
+public class BanUserSearchQuery{
 	
 	private Connection connection;
 	private ResultSet results;
@@ -18,7 +17,7 @@ public class BanUserSelectDataQuery {
 	 * 
 	 * Connect to database.  This is hard coded in DBConnect.java
 	 */
-	public BanUserSelectDataQuery() {
+	public BanUserSearchQuery() {
 
 		// set up the driver
 		try {
@@ -36,11 +35,11 @@ public class BanUserSelectDataQuery {
 	
 	
 
-	public void doRead(String userID){
+	public void doRead(String fname, String lname){
 
 		//String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
-		String query = "SELECT userID , myID, fname, lname, lastLogin FROM tomcatdb.User";
-		// securely run query
+		String query = "SELECT userID , myID, fname, lname, lastLogin, email FROM tomcatdb.User where fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%'";
+		System.out.println(query);
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			results = ps.executeQuery();
@@ -64,55 +63,47 @@ public class BanUserSelectDataQuery {
 		try{
 			
 			
-			table += "<tr><td><a href=banUser><button type='submit' value=''>Ban A User(List)</button></a></td>";
+			table += "<tr><td><a href=banUser><button type='submit' value=''>Ban A User</button></a></td>";
 			table += "<td><a href=banUser><button type='submit' value=''>Unban A User(List)</button></a></td>";
 			table += "<td><a href=unbanall><button type='submit' value=''>Unban All</button></a></td></tr>";
 			
-			table += "<tr><td>Ban#</td><td>Student ID</td><td>Admin ID</td><td>Ban Start</td><td>Ban End</td><td>Penalty Count</td><td>Description</td><td>Status</td></tr>";
+			table += "<tr><td>User ID</td><td>User My ID</td><td>First Name</td><td>Last Name</td><td>Last Login</td><td>E-mail</td><td></td></tr>";
 			while(results.next()){
-
+				//userID , myID, fname, lname, lastLogin, email
 				
+				User user = new User();
+				user.setUserRecordID(results.getInt("userID"));
+				user.setMyID(results.getString("userID"));
+				user.setUserFirstName(results.getString("fname"));
+				user.setUserLastName(results.getString("lname"));
+				user.setLastLogin(results.getString("lastLogin"));
+				user.setUserEmail(results.getString("email"));
 				
-				Banned ban = new Banned();
-				ban.setBanID(results.getInt("bannedID"));
-				ban.setStudentID(results.getInt("Student_studentID"));
-				ban.setAdminID(results.getInt("Admin_adminID"));
-				ban.setBanStart(results.getString("banStart"));
-				ban.setBanEnd(this.results.getString("banEnd"));
-				ban.setPenaltyCount(results.getInt("penaltyCount"));
-				ban.setDescription(results.getString("description"));
-				ban.setStatus(results.getInt("status"));
-				
-				//show only banned
+		
 				
 				table += "<tr>";
 				
 				table += "<td>";
-				table += ban.getBanID();
+				table += user.getUserRecordID();
 				table += "</td>";
 				table += "<td>";
-				table += ban.getStudentID();
+				table += user.getMyID();
 				table += "</td>";
 				table += "<td>";
-				table += ban.getAdminID();
+				table += user.getUserFirstName();
 				table += "</td>";
 				table += "<td>";
-				table += ban.getBanStart();
+				table += user.getUserLastName();
 				table += "</td>";
 				table += "<td>";
-				table += ban.getBanEnd();
+				table += user.getLastLogin();
 				table += "</td>";
 				table += "<td>";
-				table += ban.getPenaltyCount();
+				table += user.getUserEmail();
 				table += "</td>";
-				table += "<td>";
-				table += ban.getDescription();
-				table += "</td>";
-				table += "<td>";
-				table += ban.getStatus();
-				table += "</td>";
+			
 				
-				table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
+				table += "<td><a href=ban?banID=" + user.getUserRecordID() + "> <button type='submit' value='Ban'>Ban</button></a></td>";
 
 				
 				table += "</tr>";

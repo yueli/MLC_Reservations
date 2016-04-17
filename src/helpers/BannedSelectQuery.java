@@ -4,10 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import model.Banned;
 import model.DateTimeConverter;
 import model.DbConnect;
+import model.TimeConverter;
 
 
 /**
@@ -46,16 +51,30 @@ public class BannedSelectQuery {
 
 		public void doRead(){
 
-			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned";
+			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned WHERE Banned.status=1;";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
 				results = ps.executeQuery();
 				
-				
-				
 			
 				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in BannedSelectQuery.java: getHTMLTable method. Please check connection or SQL statement: " + query);
+			} 
+		}
+		
+		
+		public void doReadSearch(){
+
+			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned WHERE Banned.status=1;";
+			// securely run query
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				results = ps.executeQuery();
+				
+			
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -67,6 +86,9 @@ public class BannedSelectQuery {
 		
 		public String getHTMLTable(){ 
 			//Return table of banned students
+			
+			
+			
 			
 			String table = "";
 			

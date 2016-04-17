@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import helpers.UnbanUserQuery;
+import helpers.BanUserSearchQuery;
 
 /**
- * Servlet implementation class UnbanUserServlet
+ * Servlet implementation class BanUserSearchResultsServlet
  */
-@WebServlet({ "/UnbanUserServlet", "/unban" })
-public class UnbanUserServlet extends HttpServlet {
+@WebServlet({ "/BanUserSearchResultsServlet", "/searchuser" })
+public class BanUserSearchResultsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UnbanUserServlet() {
+    public BanUserSearchResultsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,21 +30,32 @@ public class UnbanUserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//?? response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		
+		//Get Data
+		String fname = request.getParameter("fname");
+		String lname = request.getParameter("lname");
 		
 		
 		
-		int banID = Integer.parseInt(request.getParameter("banID"));
-		UnbanUserQuery uuq = new UnbanUserQuery();
 		
-		uuq.unbanUser(banID);
+		//Pull Data from DB
+		BanUserSearchQuery busq = new BanUserSearchQuery();
+		busq.doRead(fname, lname);
 		
 		
-		//Redirect to BanList
-		String url = "/banread";
+		//Create Table with results
+		String table = busq.getHTMLTable();
+		
+		//dispatch to the admin view
+		request.setAttribute("table", table);
+		//Forward to JSP
+		String url = "/banList.jsp";
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+		
+		
 		
 	}
 

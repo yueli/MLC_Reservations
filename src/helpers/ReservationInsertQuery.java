@@ -57,6 +57,8 @@ public class ReservationInsertQuery {
 			ps.setInt(9, this.reservation.getbuildingID());
 			ps.setString(10, this.reservation.getFree());
 			ps.executeUpdate();
+			
+			System.out.println(ps);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in ReservationInsertQuery.java: doReservationInsert method. Please check connection or SQL statement: " + query);
