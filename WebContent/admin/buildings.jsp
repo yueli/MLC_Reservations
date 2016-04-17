@@ -40,8 +40,9 @@
 		<br>
 		<br>
 		<div align="center">
-		<h2>Buildings</h2>
-		<h3>You can add or edit buildings, hours, or rooms here.</h3>
+		<h2>Buildings</h2><br>
+		<h3>Listing of all buildings currently added to the site.  <br>
+		Edit buildings, hours, or rooms.</h3>
 		<br><br>
 		<a href='buildingform'><button class='btn btn-lg btn-red' type='submit' value='EditHours'>Add Building</button></a>
 		<br /><br />

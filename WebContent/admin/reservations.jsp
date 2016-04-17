@@ -64,7 +64,8 @@
 		<div align="center">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
 				<h2>Make a Reservation</h2><br>
-				<h3>Please select a building, date, start and end time for your reservation.</h3>
+				<h3>Please select a building, date, start and end time for your reservation.<br>
+				Please also enter the name or group the room is reserved under.</h3><br>
 				<p>${msg}</p>
 				Building ${buildings}<br>
 				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
