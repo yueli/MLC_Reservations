@@ -4,14 +4,19 @@ package helpers;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 import javax.servlet.ServletOutputStream;
 
+import com.mysql.jdbc.Blob;
 
 import model.DbConnect;
 
@@ -19,9 +24,18 @@ import java.sql.Statement;
 
 public class ExcelCreatorBanned {
 
-          public String downloadExcel( ) { //ServletOutputStream out){
+          public File downloadExcel( ) throws IOException { //ServletOutputStream out){
         	  
         	String outFileName = "BannedStudents.csv";
+        	File file = new File(outFileName);
+        
+        	//String home = System.getProperty("user.home");
+        	//File file = new File(home + "/Downloads" + outFileName);
+        	
+  /**      	if (!file.exists()){
+        		file.createNewFile();
+        	} */
+        	
         	System.out.println("At the very top");
     	  	int nRow = 1;
             String strQuery = null;
@@ -40,27 +54,38 @@ public class ExcelCreatorBanned {
                   System.out.println("Got into server");*/
                  
                if(con==null)
-                        return "Connection Failed";
+                        return null;
                   // Database Query               
-                  strQuery = "select * from banned";
-                  Statement stmt=con.createStatement();
-                  ResultSet rs=stmt.executeQuery(strQuery);
-                  
-                  
-                  
-                  File file = new File(outFileName);
-                  FileWriter fstream = new FileWriter(file);
+                  strQuery = "select * from Banned into OUTFILE BannedStudents.csv;";
+                  Statement stmt = con.createStatement();
+                  ResultSet rs = stmt.executeQuery(strQuery);
+                                                                     
+                  FileWriter fstream = new FileWriter(file.getAbsoluteFile());
                   BufferedWriter out = new BufferedWriter(fstream);
-                
-                  //Get Titles
+                  
+                //Get Titles
                   String titleLine = "BannedID" + "," + "UserID" + "," + "AdminID" + "," + "Ban Start Date" + "," + 
                 		   "Ban End Date" + "," + "Penalty Count" + "," + "Description" + "," + "Status" + "\n";
                   out.write(titleLine);
                   
+                  while(rs.next()){
+	                  out.write(Integer.toString(rs.getInt("BannedID")) + ", ");
+	                  out.write(Integer.toString(rs.getInt("UserID")) + ", ");
+	                  out.write(Integer.toString(rs.getInt("AdminID")) + ", ");
+	                  out.write(rs.getString("BanStartDate") + ", ");
+	                  out.write(rs.getString("BanEndDate") + ", ");
+	                  out.write(Integer.toString(rs.getInt("PenaltyCount")) + ", ");
+	                  out.write(rs.getString("Description") + ", ");
+	                  out.write(rs.getString("Status") + ", ");
+	                  out.newLine();
+                  }
+                
+                  
+                  
                   //stmt = conn.createStatement();
                   
                   
-                  while (rs.next()) {
+               /**   while (rs.next()) {
                 	  int BannedId = rs.getInt(1);
                 	  int UserID = rs.getInt(2); 
                 	  int AdminID = rs.getInt(3); 
@@ -71,17 +96,18 @@ public class ExcelCreatorBanned {
                 	  String Status = rs.getString(8);
                   
                 	  String outline = BannedId + "," + UserID + "," + AdminID + "," + BanStartDate + "," + 
-                          BanEndDate + "," + PenaltyCount + "," + Description + "," + Status + "\n";
+                          BanEndDate + "," + PenaltyCount + "," + Description + "," + Status + "\n"; 
                 	  
                 	  out.write(outline);
 
-                  } //end of while
+                  } //end of while */
                   out.close();
                  
           } catch (Exception e) {
         	  System.err.println("Got an exception!");
               System.err.println(e.getMessage());
           }
-			return outFileName;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
+			return rs;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
      }
+          
 }
