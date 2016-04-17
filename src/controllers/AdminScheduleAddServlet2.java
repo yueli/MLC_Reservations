@@ -21,7 +21,7 @@ import model.Schedule;
 import model.TimeConverter;
 
 /**
- * Servlet implementation class AdminScheduleAddServlet2
+ * Servlet implementation class AdminScheduleAddServlet2.  This servlet will allow admins to add building hours.
  * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleAddServlet2", "/new-schedule" })
@@ -416,7 +416,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 					// if a new session is created with no user object passed
 					// user will need to login again
 					session.invalidate();
-					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
@@ -428,7 +428,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -439,7 +439,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
+			CASLogoutServlet.clearCache(request, response);
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

@@ -1,10 +1,13 @@
-/*
+/**
  * @author: Ginger Nix
  * 
- * This servlet takes a filled out edit rooms form
- * and processes it by updating the admin users table
+ * The AdminSaveServlet is called when a user edits an already existing admin user.
+ * If a user is editing their own data, there is a check to see if they are a super user, they can't change their role, 
+ * and to check that they are not making themselves inactive. These checks are to prevent the state where there
+ * are no active super admin users.
  * 
- */
+ **/
+
 package controllers;
 
 import java.io.IOException;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.AdminUserHelper;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminSaveServlet
@@ -54,84 +58,96 @@ public class AdminSaveServlet extends HttpServlet {
 		boolean update = true;
 		
 		//get our current session
-		session = request.getSession();	
+		this.session = request.getSession(false); 
 		
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-		
-		System.out.println("AdminSaveServlet: logged in admin user's record ID = " + loggedInAdminUser.getAdminID());
-		
-		Admin adminUserBeingEdited = new Admin();
-		
-		//pull the hidden field for the user being edited's record id from the form adminEdit.jsp
-		adminUserBeingEdited.setAdminID(Integer.parseInt(request.getParameter("adminID")));
-
-		System.out.println("AdminSaveServlet: after setting admin ID for user being edited ");
-		
-		//pull the fields from the form adminEdit.jsp to populate the user being edited's object
-		adminUserBeingEdited.setFname(request.getParameter("fname"));
-		adminUserBeingEdited.setLname(request.getParameter("lname"));
-		adminUserBeingEdited.setAdminMyID(request.getParameter("adminMyID"));
-		adminUserBeingEdited.setRole(request.getParameter("role"));
-		adminUserBeingEdited.setAdminStatus(Integer.parseInt(request.getParameter("status")));
-				
-		System.out.println("AdminSaveServlet: adminRecordID for edited user = " + adminUserBeingEdited.getAdminID());
-	
-		System.out.println("AdminSaveServlet: fname = " + adminUserBeingEdited.getFname());
-		
-		AdminUserHelper adminUserHelper = new AdminUserHelper();
-	
-		// check to see if logged in user is editing themselves (myID's)
-		// and if so, check to see if logged in user has the role of super admin
-		// and if so, they can't change their role from super admin nor can they inactivate themselves
-		// because the admin users may end up with no one having a super admin role
-		// and that wouldn't be good
-		
-		// if logged in user is editing themselves
-		if (Objects.equals(loggedInAdminUser.getAdminMyID(), adminUserBeingEdited.getAdminMyID())){ 
+		// if this session is not null (active/valid)
+		if (this.session != null){	
 			
-			// if logged in user's role is super admin
-			// and they are changing their role to something other than super admin
-		
-			if 	(	(Objects.equals(loggedInAdminUser.getRole(), "S" )) && 
-					(!Objects.equals(adminUserBeingEdited.getRole(), "S" )) 
-				)
-			{ 
-				// they can't change their own role - send them back to the editing page w/ a message
-				// and the user being edited's info object to populate the table
+			// create admin user object w/ session data on the logged in user's info
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			
+			System.out.println("AdminSaveServlet: logged in admin user's record ID = " + loggedInAdminUser.getAdminID());
+			
+			Admin adminUserBeingEdited = new Admin();
+			
+			//pull the hidden field for the user being edited's record id from the form adminEdit.jsp
+			adminUserBeingEdited.setAdminID(Integer.parseInt(request.getParameter("adminID")));
+	
+			System.out.println("AdminSaveServlet: after setting admin ID for user being edited ");
+			
+			//pull the fields from the form adminEdit.jsp to populate the user being edited's object
+			adminUserBeingEdited.setFname(request.getParameter("fname"));
+			adminUserBeingEdited.setLname(request.getParameter("lname"));
+			adminUserBeingEdited.setAdminMyID(request.getParameter("adminMyID"));
+			adminUserBeingEdited.setRole(request.getParameter("role"));
+			adminUserBeingEdited.setAdminStatus(Integer.parseInt(request.getParameter("status")));
 					
-				message = "A Super Admin user may not edit their own role.";	
-				url = "AdminEditServlet";	
-				update = false;
-				System.out.println("AdminSaveServlet: before status compare status = " + adminUserBeingEdited.getAdminStatus());
-
-			}else if (Objects.equals(adminUserBeingEdited.getAdminStatus(), 0 ) ){ 
-				// editing themselves but roles are the same BUT they are making themselves inactive
-				// which is against the rules
+			System.out.println("AdminSaveServlet: adminRecordID for edited user = " + adminUserBeingEdited.getAdminID());
+			
+			AdminUserHelper adminUserHelper = new AdminUserHelper();
+		
+			// check to see if logged in user is editing themselves (myID's)
+			// and if so, check to see if logged in user has the role of super admin
+			// and if so, they can't change their role from super admin nor can they inactivate themselves
+			// because the admin users may end up with no one having a super admin role
+			// and that wouldn't be good
+			
+			// if logged in user is editing themselves
+			if (Objects.equals(loggedInAdminUser.getAdminMyID(), adminUserBeingEdited.getAdminMyID())){ 
 				
-				message = "A Super Admin user may not make themselves inactive.";
-				url = "AdminEditServlet";
-				update = false;
+				// if logged in user's role is super admin
+				// and they are changing their role to something other than super admin
+			
+				if 	(	(Objects.equals(loggedInAdminUser.getRole(), "S" )) && 
+						(!Objects.equals(adminUserBeingEdited.getRole(), "S" )) 
+					)
+				{ 
+					// they can't change their own role - send them back to the editing page w/ a message
+					// and the user being edited's info object to populate the table
+						
+					message = "A Super Admin user may not edit their own role.";	
+					url = "AdminEditServlet";	
+					update = false;
+					System.out.println("AdminSaveServlet: before status compare status = " + adminUserBeingEdited.getAdminStatus());
+	
+				}else if (Objects.equals(adminUserBeingEdited.getAdminStatus(), 0 ) ){ 
+					// editing themselves but roles are the same BUT they are making themselves inactive
+					// which is against the rules
+					
+					message = "A Super Admin user may not make themselves inactive.";
+					url = "AdminEditServlet";
+					update = false;
+				}
+			}		
+			
+			// if the edited user can be updated, do it with pleasure
+			if (update){
+				adminUserHelper.updateAdminTable
+					   (adminUserBeingEdited.getAdminID(), 
+						adminUserBeingEdited.getFname(), 
+						adminUserBeingEdited.getLname(), 
+						adminUserBeingEdited.getAdminMyID(), 
+						adminUserBeingEdited.getRole(), 
+						adminUserBeingEdited.getAdminStatus());
+	
+				message = "";
+				url = "AdminListServlet";	
+				request.setAttribute("message", message);
+				request.setAttribute("editedUser", adminUserBeingEdited);
+				request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+	
 			}
-		}		
 		
-		// if the edited user can be updated, do it with pleasure
-		if (update){
-			adminUserHelper.updateAdminTable
-				   (adminUserBeingEdited.getAdminID(), 
-					adminUserBeingEdited.getFname(), 
-					adminUserBeingEdited.getLname(), 
-					adminUserBeingEdited.getAdminMyID(), 
-					adminUserBeingEdited.getRole(), 
-					adminUserBeingEdited.getAdminStatus());
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
 
-			message = "";
-			url = "AdminListServlet";	
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
-		
-		request.setAttribute("message", message);
-		request.setAttribute("editedUser", adminUserBeingEdited);
-		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);	

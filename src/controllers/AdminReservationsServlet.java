@@ -121,7 +121,7 @@ public class AdminReservationsServlet extends HttpServlet {
 					// if a new session is created with no user object passed
 					// user will need to login again
 					session.invalidate();
-					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
@@ -132,7 +132,7 @@ public class AdminReservationsServlet extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}

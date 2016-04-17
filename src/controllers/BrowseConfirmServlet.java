@@ -21,7 +21,8 @@ import model.TimeConverter;
 import model.User;
 
 /**
- * Servlet implementation class BrowseConfirmServlet
+ * Servlet implementation class BrowseConfirmServlet.  This servlet will check the secondary myID entered from BrowseReserve,
+ * check to make sure that the room is still available, and send a confirmation email.
  * @author Brian Olaogun
  */
 @WebServlet({ "/BrowseConfirmation", "/BrowseConfirm" })
@@ -189,6 +190,9 @@ public class BrowseConfirmServlet extends HttpServlet {
 							
 							session.setAttribute("secondaryEmail", secondaryEmail);				
 							session.setAttribute("message", message);
+							
+							// clear cache to clear back button functionality
+							CASLogoutServlet.clearCache(request, response);
 							
 							// remove session attributes
 							session.removeAttribute("currentDay");

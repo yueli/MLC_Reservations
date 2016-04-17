@@ -348,7 +348,7 @@ public class BuildingSelectQuery {
 			
 			buildingID = this.results.getInt("buildingID");
 			
-			System.out.println("BuildingSelectQuery getFirstBuildingID AFTER executing query building ID = " + buildingID);
+			//System.out.println("BuildingSelectQuery getFirstBuildingID AFTER executing query building ID = " + buildingID);
 			
 			
 		} catch (SQLException e) {

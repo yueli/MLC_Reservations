@@ -395,22 +395,9 @@ public class RoomsSelectQuery {
 					"</form>";
 			
 			System.out.println("RoomsSelQ: ListRoomsInBuilding - action = " + cancelAction);
-			
-/*
-			table += "<form action='RoomsServlet' method = 'post'>" +
-					"<input class='btn btn-lg btn-red' type='submit' value='Go Back to Rooms Servlet'>" +
-					"</form>";
 
-*/			
-			/*			
-			
-			table += "<a href=RoomsListServlet?prev=RoomsServlet>"
-					+ "<button class='btn btn-lg btn-red' type='submit' value='EditHours'>Back to Select Building</button>"
-					+ "</a>";
-				*/
 			table += "</div>";		
 			
-
 			table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";			
 			table += "<thead>";
 			table += "<th>Room Floor</th>";
@@ -466,7 +453,8 @@ public class RoomsSelectQuery {
 				table += "<td></td>";
 				table += "<td></td>";
 				table += "<td></td>";
-
+				table += "<td></td>";
+				
 				table += "</tr>";
 				table += "</tfoot>";
 				

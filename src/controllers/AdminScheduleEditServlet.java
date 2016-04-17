@@ -17,7 +17,7 @@ import model.DateTimeConverter;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminScheduleEditServlet
+ * Servlet implementation class AdminScheduleEditServlet. This servlet will allow admins to edit building hours.
  * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleEditServlet", "/Schedule" })

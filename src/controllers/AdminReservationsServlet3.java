@@ -115,7 +115,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 						// set success message and forwarding URL
 						msg = "You have successfully made a reservation.";
 						url = "view-reservations";
-						
+						CASLogoutServlet.clearCache(request, response);
 						
 					}
 					
@@ -136,7 +136,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 					// if a new session is created with no user object passed
 					// user will need to login again
 					session.invalidate();
-					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
@@ -147,7 +147,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -158,7 +158,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

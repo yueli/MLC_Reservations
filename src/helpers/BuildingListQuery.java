@@ -12,8 +12,10 @@ import model.Rooms;
 
 
 /**
- * @author Ronnie Xu
  * Helper for the Admin side of the website.
+ * @author Ronnie Xu
+ * @contributor Brian Olaogun	
+ * @contributor Ginger Nix
  *
  */
 

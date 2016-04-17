@@ -31,7 +31,7 @@ public class ReservationInsertQuery {
 		
 	}
 	/**
-	 * 
+	 * This method will create a reservation in the SQL database.  This is used for student/user reservations.
 	 * @param reservation Reservation object that has the primary user, secondary user, room ID,
 	 * reservation start date and time, reservation end date and time, hour increment, building ID,
 	 * and free set in the object.
@@ -65,7 +65,7 @@ public class ReservationInsertQuery {
 		} 
 	}
 	/**
-	 * 
+	 * This method will create a reservation in the SQL database.  This is used for admin reservations
 	 * @param reservation Reservation object that has the admin ID, room ID, reservation start date and time,
 	 * Reservation end date and time, hour increment, reserve name, building ID and free set in the reservation object.
 	 */
