@@ -77,6 +77,8 @@ System.out.println("Resevation Set");
 		//Insert Data
 		ReservationInsertQuery riq = new ReservationInsertQuery();
 		riq.doReservationInsert(reservation);
+		System.out.println("We just inserted");
+		
 		//Send Email
 		
 		// class used to send email

@@ -42,7 +42,7 @@ public class ReservationInsertQuery {
 				+ "tomcatdb.Reservations.Rooms_roomID, tomcatdb.Reservations.reserveStartDate, tomcatdb.Reservations.reserveEndDate, "
 				+ "tomcatdb.Reservations.reserveStartTime, tomcatdb.Reservations.reserveEndTime, tomcatdb.Reservations.hourIncrement, "
 				+ "tomcatdb.Reservations.Building_buildingID, tomcatdb.Reservations.free) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		System.out.println(query);
+		
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -57,6 +57,8 @@ public class ReservationInsertQuery {
 			ps.setInt(9, this.reservation.getbuildingID());
 			ps.setString(10, this.reservation.getFree());
 			ps.executeUpdate();
+			
+			System.out.println(ps);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in ReservationInsertQuery.java: doReservationInsert method. Please check connection or SQL statement: " + query);

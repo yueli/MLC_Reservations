@@ -25,38 +25,19 @@
 <p>
 
 <div align="center">
-</p><form name="addBan" action=addBan method=get>
 
-<!-- Get banID -->
-
-
-
-User ID:<input type=text name=userID value=""/><br><br>
-
-<!-- Add Script to show student name -->
-
-<!-- Get banID -->
-<input type=text name=userID value=""/><br><br>
-
-<!-- Get currentDate / banStart -->
-<input type=text name=userID value=""/><br><br>
-
-<!-- Get banEnd Date -->
-<input type=text name=userID value=""/><br><br>
-
-<!-- Get Ban Count -->
-
+<form name="/searchuser" action="/searchuser" method="get">
+First Name: <input type=text name=fname value=""/><br>
+Last Name<input type=text name=lname value=""/><br>
 
 Reason for ban:<textarea rows="4" cols="50" type=text name=banReason value=""/>
 </textarea><br><br>
 
-
-<!-- Set Status to 1 -->
-
-
+<input class="btn btn-lg btn-red col-med-3" type="submit" name="submit" value="Search">
 
 </form>
-<input class="btn btn-lg btn-red col-med-3" type="submit" name="submit" value="Ban">
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 </div>
 <div id="footer"></div>
 

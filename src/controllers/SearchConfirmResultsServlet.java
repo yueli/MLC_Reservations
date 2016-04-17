@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.BuildingListQuery;
 import model.Building;
 
 /**
@@ -48,7 +52,7 @@ public class SearchConfirmResultsServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		session = request.getSession();
 		
-		
+
 		
 		
 		//END DATE and END TIME needs to be corrected (dummy numbers)
@@ -59,8 +63,8 @@ public class SearchConfirmResultsServlet extends HttpServlet {
 				String reserveStartTime =  request.getParameter("reserveStartTime");
 				String reserveEndTime = request.getParameter("reserveEndTime");
 				int hourIncrement = Integer.parseInt(request.getParameter("hourIncrement"));
-				//int hourIncrement = 1;
 				String free = request.getParameter("free");
+				
 				
 				
 				
@@ -93,19 +97,23 @@ public class SearchConfirmResultsServlet extends HttpServlet {
 				table += "<input type='hidden' name='reserveName' value='"+ reserveName +"'>";
 				table += "<input type='hidden' name='Building_buildingID' value='"+ Building_buildingID +"'>";
 				table += "<input type='hidden' name='free' value='"+free+"'>";
-	
-				Building building = new Building();
-				building.setBuildingID(Building_buildingID);
-				String buildingName = building.getBuildingName();
+				
+				//Get Building Name
+				BuildingListQuery blq = new BuildingListQuery();
+				blq.doRead();
+				String buildingName = blq.getBuildingName(Building_buildingID);
+				
+				//Get Room Name/Number
+				blq.doReadRooms(Building_buildingID);
+				String roomNumber = blq.getRoomName(Rooms_roomID);
 				
 				
-				
-				table +="Building ID: "+ Building_buildingID +" <br .>";
-				table +="Room#: "+ Rooms_roomID +" <br .>";
-				table +="Date: "+ reserveStartDate +" <br .>";;
+				table +="Building Name: "+ buildingName +" <br .>";
+				table +="Room#: "+ roomNumber +" <br .>";
+				table +="Date: "+ reserveStartDate +" <br .>";
 				table +="Start Time: "+ reserveStartTime +" <br .>";
 				table +="End Time: "+ reserveEndTime +" <br .>";
-				table +="Hours: "+ hourIncrement +" <br .>";;
+				table +="Hours: "+ hourIncrement +" <br .>";
 				
 				table +="</p>";
 				
