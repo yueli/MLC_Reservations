@@ -191,6 +191,9 @@ public class BrowseConfirmServlet extends HttpServlet {
 							session.setAttribute("secondaryEmail", secondaryEmail);				
 							session.setAttribute("message", message);
 							
+							// clear cache to clear back button functionality
+							CASLogoutServlet.clearCache(request, response);
+							
 							// remove session attributes
 							session.removeAttribute("currentDay");
 							session.removeAttribute("building");
