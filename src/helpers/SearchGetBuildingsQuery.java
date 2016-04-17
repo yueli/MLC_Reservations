@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import model.Building;
 import model.DbConnect;
@@ -46,7 +50,7 @@ public class SearchGetBuildingsQuery {
 					+ "Building.buildingCalName, "
 					+ "Building.buildingCalUrl, "
 					+ "Building.Admin_adminID "
-					+ "FROM tomcatdb.Building";
+					+ "FROM tomcatdb.Building WHERE buildingStatus='1'";
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
@@ -126,12 +130,37 @@ public class SearchGetBuildingsQuery {
 		
 		public String getBuildingResults(){
 			
-		
+			//Get Current Date
+			//DateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date d = new Date();
+			String startDate = dateFormat.format(d);
+			
+			GregorianCalendar calendar = new GregorianCalendar();
+		    calendar.setTime(d);
+		    
+		    calendar.add(Calendar.DATE, 14);
+		    
+		    String endDate = dateFormat.format(calendar.getTime());
+		    
+
+		    
+		    //Get Time
+		    DateFormat timeFormat = new SimpleDateFormat("HH:00");
+		    Date time = new Date();   // given date
+		    Calendar calendarTime = GregorianCalendar.getInstance(); // creates a new calendar instance
+		    calendarTime.setTime(time);   // assigns calendar to given date 
+		   
+		    String hour = timeFormat.format(calendarTime.getTime());
+		    //calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
+		    //calendar.get(Calendar.HOUR);        // gets hour in 12h format
+		    System.out.println("hour: "+ hour);
+		   
 			
 			
 			// Create the String for HTML
 			String select = "<h2>Please Select Building</h2>";
-			select += "<form name='searchForm' action='searchresults' method='post'>";
+			select += "<form name='searchForm' action='searchresults' onsubmit='return validateForm()' method='post'>";
 			select += "Select building: <select name='buildingid'><br/>";
 			// HTML for dropdown list
 			try {
@@ -154,13 +183,17 @@ public class SearchGetBuildingsQuery {
 					
 				}
 				select+= "</select>";
-				select += " <br/>";
-				select += "Begin Date: <input name='beginDate' type='date' ><br /> ";
-				select += "Begin Time: <input name='beginTime' type='time'><br /> ";
-				select += "Hour Increment: <input name='hourIncrement' type='number' value='Enter'min='1' max='2'><br /> ";
-				select += "End Date: <input name='endDate' type='date' ><br /> ";
-				select += "End Time: <input name='endTime' type='time' ><br /> ";
-				select += "<input class='btn btn-lg btn-red' type=submit name=submit value='Search'><br /> ";
+				select += " <br/><br /> ";
+				select += "Begin Date: <input name='beginDate' type='date' min='"+startDate+"' max='"+endDate+"' value='"+startDate+"' required><br /> ";
+				select += "End Date: <input name='endDate' type='date'  min='"+startDate+"' max='"+endDate+"'value='"+startDate+"' required><br /><br />  ";				
+				
+
+				select += "Begin Time: <input name='beginTime' type='time' value = '"+hour+"' required><br /> ";
+				select += "End Time: <input name='endTime' type='time' value = '"+hour+"' required ><br /> <br /> ";
+				
+				select += "Hour Increment: <input name='hourIncrement' type='number' value='1' min='1' max='2'  required><br /><br />  ";
+				
+				select += "<input class='btn btn-lg btn-red' type=submit name=submit value='Search' required><br /> ";
 				select += "</form>";
 				
 				
