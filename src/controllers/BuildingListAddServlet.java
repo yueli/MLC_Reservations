@@ -44,8 +44,6 @@ public class BuildingListAddServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
-
-		
 		
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -53,7 +51,8 @@ public class BuildingListAddServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String url = "";
-		String table = "";
+		String message = "";
+		int adminID = 0;
 		
 		this.session = request.getSession(false);				
 		
@@ -83,27 +82,40 @@ public class BuildingListAddServlet extends HttpServlet {
 
 					BuildingListAddQuery buildingListAddQuery = new BuildingListAddQuery();
 
-			      // table = buildingListAddQuery.addBuilding(buildingID, buildingName, 
-			    	//	   buildingStatus, buildingCalName, buildingCalUrl);
-			      
-			       System.out.println("AdminAddServlet: logged in admin user's myid AT END = " + loggedInAdminUser.getAdminMyID());
-					
-			       //request.setAttribute("message", message);
-			       request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-			       request.setAttribute("table", table);
-			
-					url = "admin/adminAdd.jsp";
+					// check to see if an admin user already exists with this myID which is supposed to be unique
+					boolean alreadyInTable = false;
 
+					alreadyInTable = buildingListAddQuery.inBuildingTable(buildingName);
 					
+					if (alreadyInTable){
+						// don't add, set message
+						message = "<br /><br /><div align='center'><h3>A building with this name " + 
+								buildingName + " already exits!</h3></div>";
+						
+						url = "BuildingListForm";
+						System.out.println("BuildingListAddServlet: Building already exisits!");
+						
+					}else{
+						//add new building
+						System.out.println("BuildingListAddServlet: adding new building");
+
+						adminID = loggedInAdminUser.getAdminID();
+						
+						try {
+							buildingListAddQuery.addBuilding(buildingName, buildingStatus, buildingCalName, buildingCalUrl, adminID, buildingQRName);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						message = "Building added";
+						url = "BuildingListServlet";
+					}		      
+			       
 					
-					
-					
-					
-					
-					
-					
-					
-		
+			       request.setAttribute("message", message);
+			       request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+	
 
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//

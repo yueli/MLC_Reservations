@@ -72,8 +72,14 @@ public class BuildingListForm extends HttpServlet {
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 					
 					// remove message 
-					session.removeAttribute("message");
+					//session.removeAttribute("message");
+					message = (String) request.getAttribute("message"); 
 					
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+
 					BuildingListQuery buildingListQuery = new BuildingListQuery();
 					
 					System.out.println("BuildingListForm: - building table form");
