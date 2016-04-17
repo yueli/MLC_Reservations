@@ -15,7 +15,7 @@ import model.Admin;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminScheduleAddServlet
+ * Servlet implementation class AdminScheduleAddServlet. This servlet will allow admins to add building hours.
  * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleAddServlet", "/add-schedule" })
