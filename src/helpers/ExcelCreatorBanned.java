@@ -24,11 +24,12 @@ import java.sql.Statement;
 
 public class ExcelCreatorBanned {
 
+
     	public String downloadExcel( ) throws IOException { //ServletOutputStream out){
     			String data = ""; 
     			//String outFileName = "BannedStudents.csv";
     			//File file = new File(outFileName);
-  	 
+
         	//String home = System.getProperty("user.home");
         	//File file = new File(home + "/Downloads" + outFileName);
         	
@@ -59,19 +60,23 @@ public class ExcelCreatorBanned {
                   strQuery = "select * from Banned into OUTFILE BannedStudents.csv;";
                   Statement stmt = con.createStatement();
                   ResultSet rs = stmt.executeQuery(strQuery);
-                                                                     
+
                  //FileWriter fstream = new FileWriter(file.getAbsoluteFile());
                  //BufferedWriter out = new BufferedWriter(fstream);
+
                   
                 //Get Titles
                   String titleLine = "BannedID" + "," + "UserID" + "," + "AdminID" + "," + "Ban Start Date" + "," + 
                 		   "Ban End Date" + "," + "Penalty Count" + "," + "Description" + "," + "Status" + "\n";
                   //out.write(titleLine);
+
                   
                   data += titleLine;
 
                   while(rs.next()){
+
 	                  /* out.write(Integer.toString(rs.getInt("BannedID")) + ", ");
+
 	                  out.write(Integer.toString(rs.getInt("UserID")) + ", ");
 	                  out.write(Integer.toString(rs.getInt("AdminID")) + ", ");
 	                  out.write(rs.getString("BanStartDate") + ", ");
@@ -79,7 +84,9 @@ public class ExcelCreatorBanned {
 	                  out.write(Integer.toString(rs.getInt("PenaltyCount")) + ", ");
 	                  out.write(rs.getString("Description") + ", ");
 	                  out.write(rs.getString("Status") + ", ");
+
 	                  out.newLine(); */
+
                   }
                 
                   
@@ -109,11 +116,47 @@ public class ExcelCreatorBanned {
         	  System.err.println("Got an exception!");
               System.err.println(e.getMessage());
           }
+
 			return rs;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
 			//return file; // I commented out line above and put this in instead because I was geting an error - GINGER
 
 			//return data;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
 
+
      }
+          
+          /** private String toByteValue(File file)
+			throws IOException {
+
+		byte[] bytes = loadFile(file);
+		
+		String encodedString = new String(bytes);
+
+		return encodedString;
+	}
+
+	private static byte[] loadFile(File file) throws IOException {
+	    InputStream is = new FileInputStream(file);
+
+	    long length = file.length();
+	    if (length > Integer.MAX_VALUE) {
+	        // File is too large
+	    }
+	    byte[] bytes = new byte[(int)length];
+	    
+	    int offset = 0;
+	    int numRead = 0;
+	    while (offset < bytes.length
+	           && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+	        offset += numRead;
+	    }
+
+	    if (offset < bytes.length) {
+	        throw new IOException("Could not completely read file "+file.getName());
+	    }
+
+	    is.close();
+	    return bytes;
+	} */
           
 }
