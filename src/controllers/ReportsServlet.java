@@ -57,23 +57,46 @@ public class ReportsServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		if ("bannedreport".equalsIgnoreCase(action)){
-			response.setContentType("text/html; charset=UTF-8");
-			response.setHeader("Content-Disposition", "attachment;filename=BannedStudents.csv");
-			//ServletContext ctx = getServletContext();
+			String data = "";
+			
+			
 			PrintWriter out = response.getWriter();
-			//out.println("Banned List Button Test</br>");
 			ExcelCreatorBanned ecb = new ExcelCreatorBanned();
-			File bannedreport = ecb.downloadExcel();
+			data = ecb.downloadExcel();
+			
+			// VVV For testing
+			response.setContentType("text/html");
+			out.print("TEST:" + data + "</br>");
+			// ^^^ For testing
+			
+			/**
+			 * response.setContentType("text/csv");
+			 * response.setHeader("Content-Disposition", "attachment; filename=\FILENAMEHERE.csv\"");
+			 * out.print(data.getBytes());
+			 */
+			
+			
+			
+			
+			
+			
+			// VVV OLD CODE
+			//response.setHeader("Content-Disposition", "attachment;filename=BannedStudents.csv");
+			//ServletContext ctx = getServletContext();
+			//out.println("Banned List Button Test</br>");
+			//File bannedreport = ecb.downloadExcel();
 			//out.println("data:application/octet-stream;base64," + toByteValue(bannedreport));
 			//out.println("data:application/octet-stream;base64,");
+			// ^^^ OLD CODE
 			
 			//Make Byte Buffer and write printwriter out to browser
 		}
+		else{
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		//System.out.println(request);
-		//}
+		}
 		
 		
 	/**	catch {

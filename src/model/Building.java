@@ -25,8 +25,10 @@ public class Building {
 	 * @param buildingCalUrl
 	 * @param admin
 	 */
+	//public Building(int buildingID, String buildingName, int buildingStatus, String buildingCalName,
+	//		String buildingCalUrl, String admin, String buildingQRName) {
 	public Building(int buildingID, String buildingName, int buildingStatus, String buildingCalName,
-			String buildingCalUrl, String admin) {
+			String buildingCalUrl, String admin, String buildingQRName) { // Ginger made this change - not sure needed
 		this.buildingID = buildingID;
 		this.buildingName = buildingName;
 		this.buildingStatus = buildingStatus;
