@@ -19,7 +19,9 @@ import model.User;
 
 /**
  * @author Brian Olaogun
- * Servlet implementation class BrowseReserve
+ * Servlet implementation class BrowseReserve.  This servlet will check to make sure that the user did not max out of reservations
+ * for the day.  If they did, a message will display on browse 3.  This servlet will generate the selector for the hour increment
+ * as well as the other form elements.  Once a user enters the secondary myID, forward to BrowseConfirmServlet.
  */
 @WebServlet({ "/BrowseReserve", "/BrowseReservation" })
 public class BrowseReserveServlet extends HttpServlet {

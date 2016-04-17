@@ -15,7 +15,8 @@ import model.Admin;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminReserveCancelServlet
+ * Servlet implementation class AdminReserveCancelServlet.  This servlet is used to cancel admin reservations.
+ * Only admins and super admins can see the cancellation button on AdminViewReservations.
  * @author Brian Olaogun
  */
 @WebServlet({"/AdminReserveCancelServlet", "/AdminCancel"})

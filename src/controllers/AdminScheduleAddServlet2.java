@@ -21,7 +21,7 @@ import model.Schedule;
 import model.TimeConverter;
 
 /**
- * Servlet implementation class AdminScheduleAddServlet2
+ * Servlet implementation class AdminScheduleAddServlet2.  This servlet will allow admins to add building hours.
  * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleAddServlet2", "/new-schedule" })

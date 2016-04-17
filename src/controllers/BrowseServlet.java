@@ -16,8 +16,11 @@ import model.DbConnect;
 import model.User;
 
 /**
+ * 
+ * Servlet implementation class BrowseServlet.  This is used for the student/user browse page.
+ * This is the first servlet called for Browse.  It just pushed down the building drop down list and headers if any buildings are open.
+ * If no buildings are open, then it will display a message to the user that no buildings are open
  * @author Brian Olaogun
- * Servlet implementation class BrowseServlet
  */
 @WebServlet(
 		description = "Servlet for browse.jsp", 

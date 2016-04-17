@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class CASLogoutServlet
+ * Servlet implementation class CASLogoutServlet.  
+ * This servlet will clear the cache, invalidate the session, and redirect to the CAS logout page.
+ * There are also standalone methods to clear the browser cache on to be used on a selected servlet.
+ * @author Brian Olaogun
  */
 @WebServlet({ "/CASLogoutServlet", "/Logout" })
 public class CASLogoutServlet extends HttpServlet {

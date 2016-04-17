@@ -91,7 +91,6 @@ public class AdminScheduleSelectQuery {
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-			System.out.println(query);
 			
 			ps.setString(1, buildingID);
 			
