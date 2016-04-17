@@ -108,6 +108,8 @@ public class SearchConfirmResultsServlet extends HttpServlet {
 				String roomNumber = blq.getRoomName(Rooms_roomID);
 				
 				
+				
+				
 				table +="Building Name: "+ buildingName +" <br .>";
 				table +="Room#: "+ roomNumber +" <br .>";
 				table +="Date: "+ reserveStartDate +" <br .>";
