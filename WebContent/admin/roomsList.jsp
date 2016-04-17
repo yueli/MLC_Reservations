@@ -1,3 +1,9 @@
+<%-- 
+	@author: Ginger Nix
+	
+	This page displays all the rooms in a selected building for the admin.
+--%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -46,7 +52,6 @@
 
 <body>
 		<div id="header1"></div>
-		<br />	<br />	<br />	<br />
 
 <br /><br />
 <%= table %>

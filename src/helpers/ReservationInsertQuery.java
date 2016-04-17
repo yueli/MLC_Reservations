@@ -30,7 +30,12 @@ public class ReservationInsertQuery {
 		}
 		
 	}
-	
+	/**
+	 * This method will create a reservation in the SQL database.  This is used for student/user reservations.
+	 * @param reservation Reservation object that has the primary user, secondary user, room ID,
+	 * reservation start date and time, reservation end date and time, hour increment, building ID,
+	 * and free set in the object.
+	 */
 	public void doReservationInsert(Reservation reservation){
 		this.reservation = reservation;
 		String query = "INSERT INTO tomcatdb.Reservations (tomcatdb.Reservations.primaryUser, tomcatdb.Reservations.secondaryUser, "
@@ -52,12 +57,18 @@ public class ReservationInsertQuery {
 			ps.setInt(9, this.reservation.getbuildingID());
 			ps.setString(10, this.reservation.getFree());
 			ps.executeUpdate();
+			
+			System.out.println(ps);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in ReservationInsertQuery.java: doReservationInsert method. Please check connection or SQL statement: " + query);
 		} 
 	}
-	
+	/**
+	 * This method will create a reservation in the SQL database.  This is used for admin reservations
+	 * @param reservation Reservation object that has the admin ID, room ID, reservation start date and time,
+	 * Reservation end date and time, hour increment, reserve name, building ID and free set in the reservation object.
+	 */
 	public void doAdminReservationInsert(Reservation reservation){
 		this.reservation = reservation;
 		String query = "INSERT INTO tomcatdb.Reservations (tomcatdb.Reservations.Admin_adminID, "

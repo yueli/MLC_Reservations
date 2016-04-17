@@ -55,11 +55,9 @@ form {
 
 <body>
 		<div id="header1"></div>
-		<br />	<br />	<br />	<br />
-		<h2>Admin Edit User</h2>
-<%= message %>
-<br /><br />
-<%= table %>
+	<%= message %>
+	<br /><br />
+	<%= table %>
 
  		
 		<div id="footer"></div>

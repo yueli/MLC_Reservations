@@ -1,3 +1,10 @@
+<%--
+	@author: Ginger Nix
+	
+	This page displays a pre-populated form for the admin 
+	to edit a room in a building
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     

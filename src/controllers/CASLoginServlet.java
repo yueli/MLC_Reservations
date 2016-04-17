@@ -1,3 +1,12 @@
+/** @author: Brian Olaogun and Ginger Nix
+ * 
+ * This is the servlet that CAS points to after authenticating the user.
+ * It determines if the person is coming in from a QR code scan, is an admin, or is a plain ole user.
+ * If they are not coming in from the QR scan and not an admin, a check is done to see if they are a student.
+ * If not, they are sent to an error page where they can only log out
+ * 
+ **/
+
 package controllers;
 
 import java.io.IOException;
@@ -8,7 +17,7 @@ import java.util.Enumeration;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
-import org.jasig.cas.client.validation.Saml11TicketValidator;
+//import org.jasig.cas.client.validation.Saml11TicketValidator;
 
 import helpers.AdminUserHelper;
 import helpers.UserHelper;
@@ -23,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.jasig.cas.client.authentication.AttributePrincipal;
+//import org.jasig.cas.client.authentication.AttributePrincipal;
 
 /**
  * Servlet implementation class CASLoginServlet
@@ -65,11 +74,12 @@ public class CASLoginServlet extends HttpServlet {
 		{
 		  String key = (String)keys.nextElement();
 		  //out.println(key + ": " + session.getValue(key) + "<br>"); // getValue deprecated
-		  //table += "** " + key + ":" + session.getAttribute(key) + "<br />";		  // had this for testing
 		}
 		
 		User loggedInUser = new User(); // create the user object to pass forward		
-				
+		
+		String employeeType = ""; /*used for grabbing the employee type from CAS */
+		
 		AttributePrincipal principal = (AttributePrincipal)request.getUserPrincipal();
 		Map attributes = principal.getAttributes();
 		Iterator attributeNames = attributes.keySet().iterator();
@@ -90,7 +100,7 @@ public class CASLoginServlet extends HttpServlet {
 		      }
 		      if (Objects.equals("CN", attributeName)){
 		    		loggedInUser.setMyID(attributeValue);    
-		    		//table += " ** using this attirbute CAN ** ";
+		    		//table += " ** using this attribute CAN ** ";
 		      }
 		      if (Objects.equals("ugaEmail", attributeName)){
 		    	  	System.out.println("************************");
@@ -98,7 +108,7 @@ public class CASLoginServlet extends HttpServlet {
 		    	  	System.out.println("CAS VARIABLE LOGGING IN ugaEmail: " + attributeValue); // TEST IN CAS STAGE
 		    	  	System.out.println();
 		    	  	System.out.println("************************");
-		    		//table += " ** using this attirbute CAN ** ";
+		    		
 		      }
 		      if (Objects.equals("fsCode", attributeName)){
 		    	  	System.out.println("************************");
@@ -106,7 +116,7 @@ public class CASLoginServlet extends HttpServlet {
 		    	  	System.out.println("CAS VARIABLE LOGGING IN fsCode: " + attributeValue); // TEST IN CAS STAGE
 		    	  	System.out.println();
 		    	  	System.out.println("************************");
-		    		//table += " ** using this attirbute CAN ** ";
+		    		
 		      }
 		      if (Objects.equals("employeeType", attributeName)){
 		    	  	System.out.println("************************");
@@ -114,7 +124,13 @@ public class CASLoginServlet extends HttpServlet {
 		    	  	System.out.println("CAS VARIABLE LOGGING IN employeeType: " + attributeValue); // THIS WORKED!!!!
 		    	  	System.out.println();
 		    	  	System.out.println("************************");
-		    		//table += " ** using this attirbute CAN ** ";
+		    		
+		    	  	/* grabbing the employee's type to see if they are a student
+		    	  	 * not going to store it in the object since only needed during logging in
+		    	  	 */
+		    	  	
+		    	  	employeeType = attributeValue;
+		    	  	
 		      }
 		      //=====================
 
@@ -124,7 +140,9 @@ public class CASLoginServlet extends HttpServlet {
 
 		AdminUserHelper adminUserHelper = new AdminUserHelper();
 		
-		System.out.println("QR Login Servlet logged in user my id = " + loggedInUser.getMyID());
+		System.out.println("CAS Login Servlet logged in user my id = " + loggedInUser.getMyID());
+
+		System.out.println("CAS Login Servlet logged in user employee type = " + employeeType);
 		 
 		boolean inAdminUserTable = false;	
 		inAdminUserTable = adminUserHelper.inAdminTable(loggedInUser.getMyID());
@@ -174,69 +192,88 @@ public class CASLoginServlet extends HttpServlet {
 			
 		}else{
 			// this is a plain ole user and not an admin
-			// so look in the user table to see if they already exist
 			
-			// set up the user object since not an admin
-			User user = new User();			
-			user.setMyID(loggedInUser.getMyID());
-			user.setUserFirstName(loggedInUser.getUserFirstName());
-			user.setUserLastName(loggedInUser.getUserLastName());
+			/*------------
+			 * THIS MAY CHANGE IF DATA BACK FROM CAS HAS MORE THAN ONE EMPLOYEE TYPE
+			 * OR WE USE FSCODE INSTEAD
+			 */
 			
-			String userEmail = loggedInUser.getMyID() + "@uga.edu";
-			//user.setUserEmail(userEmail);
-			/* HARD CODED FOR TESTING */
+			/* check to see if this user is a student by looking at the employee type */
+			/* the employee type looks like the FSCode so going to check for 00 in the employee type string*/
 			
-			user.setUserEmail("ganix@uga.edu"); 
+			// test1010 should be emp type 01 so allowing them to log on as a student
 			
+			//if (!employeeType.equals(00)) { 
+			if (!employeeType.contains("00") && (!loggedInUser.getMyID().equals("test1010"))) { 
 			
-						
-			UserHelper userHelper = new UserHelper();			
-			boolean inTable = userHelper.inUserTable(user.getMyID());				
-			
-			if (inTable){ // they are in the user's table
-				// get the user's record ID from the user table to check to see if banned
+				// they are not a student so send them to a page where all they can do is log out
+				System.out.println("CASLogin Servlet logged in employeeType != 00 - " + employeeType);
 				
-				recordID = userHelper.getRecordID(user.getMyID());
+				url = "user/notAStudent.jsp";
+				
+			}else{ //they are students
+		
+				// so look in the user table to see if they already exist
 
-				user.setUserRecordID(recordID);
+				User user = new User();			
+				user.setMyID(loggedInUser.getMyID());
+				user.setUserFirstName(loggedInUser.getUserFirstName());
+				user.setUserLastName(loggedInUser.getUserLastName());
+
+				// use the MyID and concatenate 'uga.ed' at the end
+				// no matter what other uga email addresses this person has,
+				// this email will always work.
+				String userEmail = loggedInUser.getMyID() + "@uga.edu";
+				
+				user.setUserEmail(userEmail); 
+										
+				UserHelper userHelper = new UserHelper();			
+				boolean inTable = userHelper.inUserTable(user.getMyID());				
+				
+				if (inTable){ // they are in the user's table
+			
+					// get the user's record ID from the user table to check to see if banned					
+					recordID = userHelper.getRecordID(user.getMyID());
 	
-				System.out.println("CAS login: record ID " + user.getUserRecordID());
-				
-				if(userHelper.alreadyBanned(recordID)) {
-					// since they have already been banned, send them to a page telling them 
-					
-
 					user.setUserRecordID(recordID);
-					session.setAttribute("user", user);
-					url="user/bannedUser.jsp";
+		
+					System.out.println("CAS login: record ID " + user.getUserRecordID());
 					
+					if(userHelper.alreadyBanned(recordID)) {
+						
+						// since they have already been banned, send them to a page telling them 	
+						user.setUserRecordID(recordID);
+						session.setAttribute("user", user);
+						url="user/bannedUser.jsp";
+						
+						
+					}else{ 	// they are in the table and not banned
+							// update the last login date field
+						userHelper.updateLastLogin(user.getMyID());	
+	
+						user.setUserRecordID(recordID);
+						session.setAttribute("user", user);
+						url = "UserHome";
+					}
 					
-				}else{ 	// they are in the table and not banned
-						// update the last login date field
-					userHelper.updateLastLogin(user.getMyID());	
-
+				}else{ //authenticated but not in user table, so add them
+					
+					userHelper.insertUserTable(loggedInUser.getMyID(), loggedInUser.getUserFirstName(), loggedInUser.getUserLastName(), loggedInUser.getUserEmail()); 
+					
+					recordID = userHelper.getRecordID(user.getMyID());
+	
 					user.setUserRecordID(recordID);
 					session.setAttribute("user", user);
 					url = "UserHome";
-				}
+					
+				}// end else not in user table
 				
-			}else{ //authenticated but not in user table, so add them
-				
-				//userHelper.insertUserTable(loggedInUser.getMyID(), loggedInUser.getUserFirstName(), loggedInUser.getUserLastName(), loggedInUser.getUserEmail()); 
-				userHelper.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), " " ); 
-			
-				recordID = userHelper.getRecordID(user.getMyID());
-
-				user.setUserRecordID(recordID);
+				// by this time the user object should have recordID, myID, fname, lname and email
 				session.setAttribute("user", user);
-				url = "UserHome";
 				
-			}
-			
-			// by this time the user object should have recordID, myID, fname, lname and email
-			session.setAttribute("user", user);
-		}		
+			}// end else they are students	
 
+		}// end else this is a plan ole user
 		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

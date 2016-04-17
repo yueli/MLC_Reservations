@@ -1,8 +1,11 @@
-/*
+/**
  * @author: Ginger Nix
  * 
- * This servlet is call to create an empty form for the user to add anther admin user
- */
+ * The AdminAddServlet is called to create an empty form for the user to add another admin user.
+ * From this page the user can fill out the form and click add (which calls the AdminAddSaveServlet) or
+ * they can cancel and go back to the list of admins.
+ * 
+ **/
 package controllers;
 
 import java.io.IOException;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.AdminUserHelper;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminAddServlet
@@ -49,37 +53,50 @@ public class AdminAddServlet extends HttpServlet {
 		String table = "";
 		
 		//get our current session
-		session = request.getSession();
-		message = (String) request.getAttribute("message"); 
+		this.session = request.getSession(false); 
 		
-		// blank message if nothing gotten in message attribute
-		
-		if (message == null || message.isEmpty()) {
-			 message = "";
+		// if this session is not null (active/valid)
+		if (this.session != null){	
+
+			message = (String) request.getAttribute("message"); 
+	
+			// create admin user object w/ session data on the logged in user's info
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
+			System.out.println("AdminAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
+			
+			// blank message if nothing gotten in message attribute		
+			if (message == null || message.isEmpty()) {
+				 message = "";
+			}
+						
+			AdminUserHelper adminUserHelper = new AdminUserHelper();
+			
+			// creates table to display an empty form
+			// some of the pull down options are determined by the logged in admin's role
+			
+	       table = adminUserHelper.createAddAdminForm(loggedInAdminUser);
+	      
+	       System.out.println("AdminAddServlet: logged in admin user's myid AT END = " + loggedInAdminUser.getAdminMyID());
+			
+	       request.setAttribute("message", message);
+	       request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+	       request.setAttribute("table", table);
+	
+			url = "admin/adminAdd.jsp";
+			
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
-
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
-
-		System.out.println("AdminAddServlet: logged in admin user's myid = " + loggedInAdminUser.getAdminMyID());
-		
-		AdminUserHelper adminUserHelper = new AdminUserHelper();
-		
-		// creates table to display an empty form
-		// some of the pull down options are determined by the logged in admin's role
-		
-       table = adminUserHelper.createAddAdminForm(loggedInAdminUser);
-
-    	request.setAttribute("message", message);
-        request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-		request.setAttribute("table", table);
-
-		url = "admin/adminAdd.jsp";
-		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
-	
+		dispatcher.forward(request, response);	
 		
 	}
 

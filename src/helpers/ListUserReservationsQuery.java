@@ -1,7 +1,9 @@
 /*
  * @author: Ginger Nix
  * 
- * This class contains methods to help with listing a user's reservations
+ * This class contains methods to help with listing a user's reservations.
+ * 
+ * MAKE SURE TO TAKE OUT THE HARDCODING OF THE MINUTE FOR TESTING CHECKING IN
  */
 
 package helpers;
@@ -15,6 +17,8 @@ import java.util.Date;
 import java.util.Objects;
 
 import model.Reservation;
+import model.TimeConverter;
+import model.DateTimeConverter;
 import model.DbConnect;
 
 public class ListUserReservationsQuery {
@@ -57,6 +61,10 @@ public class ListUserReservationsQuery {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();	
 		currentDate = dateFormat.format(date);
+		
+		// Used to convert date and time from SQL format to more standard format for display.
+		TimeConverter tc = new TimeConverter();
+		DateTimeConverter dtc = new DateTimeConverter();
 		
 		System.out.println("List User Resv: current date  = " + currentDate);
 		
@@ -174,17 +182,18 @@ public class ListUserReservationsQuery {
 								
 								if (firstTime){
 
-									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' style='width:95%;'>";
 									table += "<thead>";
 									table += "<tr>";
-									table += "<th> Start Date</td>";
-									table += "<th> End Date</td>";
-									table += "<th> Start Time</td>";
-									table += "<th> End Time </td>"; 
-									table += "<th> Building </td>";
-									table += "<th> Room Floor</td>";
-									table += "<th> Room Number</td>";
-									table += "<th> Primary/Secondary</td>";
+									table += "<th> Start Date</th>";
+									table += "<th> End Date</th>";
+									table += "<th> Start Time</th>";
+									table += "<th> End Time </th>"; 
+									table += "<th> Building </th>";
+									table += "<th> Room Floor</th>";
+									table += "<th> Room Number</th>";
+									table += "<th> Primary/Secondary</th>";
+									table += "<th></th>";
 									table += "</tr>";
 									table += "</thead>";
 									table += "<tbody>";
@@ -195,10 +204,10 @@ public class ListUserReservationsQuery {
 								
 								
 								table += "<tr>";
-								table += "<td>" + resv.getReserveStartDate() + "</td>";
-								table += "<td>" + resv.getReserveEndDate() + "</td>";
-								table += "<td>" + resv.getReserveStartTime() + "</td>";
-								table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+								table += "<td>" + dtc.convertDateLong(resv.getReserveStartDate()) + "</td>";
+								table += "<td>" + dtc.convertDateLong(resv.getReserveEndDate()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(resv.getReserveStartTime()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resv.getReserveEndTime())) + "</td>"; 
 								table += "<td>" + building + "</td>";
 								table += "<td>" + roomFloor + "</td>";
 								table += "<td>" + roomNumber + "</td>";
@@ -216,7 +225,7 @@ public class ListUserReservationsQuery {
 								// check-in time (up to 10 minutes after the hour) and if it is, have CHECKIN button,
 								// else list but have no button 
 								
-								System.out.println("7 In WHILE in List User Resv.java: current hour = resv hour " + this.results.getInt("reserveID"));
+								System.out.println("7 In WHILE in List User Resv.java: current hour = resv id " + this.results.getInt("reserveID"));
 								
 								// we know the hours are the same, so check to see if the current minute
 								// is greater than 10 (check to see if it's past 10 minutes after the hour)
@@ -230,15 +239,16 @@ public class ListUserReservationsQuery {
 								// convert minute to integer to see if more than 10
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								
-								//TAKE THIS OUT AFTER TESTING !!!!!
-								currentMinuteInt = 2; //!!!!!!!!!!!
-										
+								//FOR TESTING - TAKE OUT
+								//currentMinuteInt = 2; //!!!!!!!!!!!
+								//currentMinuteInt = 20; //!!!!!!!!!!
+								
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
 								// if this is the first time around, print out the table headers
 								if (firstTime){
 
-									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' style='width:95%;'>";
 									table += "<thead>";
 									table += "<tr>";
 									table += "<th> Start Date</th>";
@@ -249,6 +259,7 @@ public class ListUserReservationsQuery {
 									table += "<th> Room Floor</th>";
 									table += "<th> Room Number</th>";
 									table += "<th> Primary/Secondary</th>";
+									table += "<th></th>";
 									table += "</tr>";
 									table += "</thead>";
 									table += "<tbody>";
@@ -258,12 +269,12 @@ public class ListUserReservationsQuery {
 								// add the fields to the string table that we need to display
 								// already know we want to display this reservation
 								// but check below on whether to have a 'cancel' button or a 'check-in' button
-								//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+								
 								table += "<tr>";
-								table += "<td>" + resv.getReserveStartDate() + "</td>";
-								table += "<td>" + resv.getReserveEndDate() + "</td>";
-								table += "<td>" + resv.getReserveStartTime() + "</td>";
-								table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+								table += "<td>" + dtc.convertDateLong(resv.getReserveStartDate()) + "</td>";
+								table += "<td>" + dtc.convertDateLong(resv.getReserveEndDate()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(resv.getReserveStartTime()) + "</td>";
+								table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resv.getReserveEndTime())) + "</td>";  
 								table += "<td>" + building + "</td>";
 								table += "<td>" + roomFloor + "</td>";
 								table += "<td>" + roomNumber + "</td>";
@@ -271,23 +282,28 @@ public class ListUserReservationsQuery {
 								
 								ReservationQuery rq = new ReservationQuery(); // to check below if already checked in 
 								
-								if (currentMinuteInt <= 10){
+								if ( (currentMinuteInt <= 10) && (!rq.alreadyCheckedIn(resv.getReserveID() )) ){
 									// it's not past 10 after the hour, so let them check-in
 									// display the check-in button that points to the check-in servlet
-									
-									//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-									//table += "<td> CHECK IN </td>"; 
-									table += "<tr><td><form action='OnlineCheckInServlet' method = 'post'>" +
+				
+									table += "<td><form action='OnlineCheckInServlet' method = 'post'>" +
 									"<input type='hidden' name='resv_id' value='" + resv.getReserveID() + "'>" +
 											"<input class='btn btn-lg btn-red' type='submit' value='Check In'>" +
 											"</form></td>";	
-								
+									
+									System.out.println("*******List User Resv.java: in cur min <= 10 and not checked in w/ resv id= " + resv.getReserveID());	
+									
 								}else if (rq.alreadyCheckedIn(resv.getReserveID())) {
-									table += "<td> *Already Checked In* </td>";
+									table += "<td><h4> *Successfully Checked In* </h4></td>";
+									System.out.println("*******List User Resv.java: in cur min <= 10 and already checked in w/ resv id= " + resv.getReserveID());	
 									
 								}else{
-									table += "<td> *Too late to check in* </td>";
+									table += "<td><h4> *Too late to check in* </h4> </td>";
+									System.out.println("*******List User Resv.java: in cur min <= 10 and TOO LATE TO CHECK IN");	
+									
 								}	
+							
+								table += "</tr>";
 								
 							}//end current hour = resv hour
 								
@@ -295,17 +311,18 @@ public class ListUserReservationsQuery {
 						}else {// end if record's date > current date 
 							if (firstTime){
 
-								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+								table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' style='width:95%;'>";
 								table += "<thead>";
 								table += "<tr>";
-								table += "<th> Start Date</td>";
-								table += "<th> End Date</td>";
-								table += "<th> Start Time</td>";
-								table += "<th> End Time </td>"; 
-								table += "<th> Building </td>";
-								table += "<th> Room Floor</td>";
-								table += "<th> Room Number</td>";
-								table += "<th> Primary/Secondary</td>";
+								table += "<th> Start Date</th>";
+								table += "<th> End Date</th>";
+								table += "<th> Start Time</th>";
+								table += "<th> End Time </th>"; 
+								table += "<th> Building </th>";
+								table += "<th> Room Floor</th>";
+								table += "<th> Room Number</th>";
+								table += "<th> Primary/Secondary</th>";
+								table += "<th></th>";
 								table += "</tr>";
 								table += "</thead>";
 								table += "<tbody>";
@@ -318,16 +335,15 @@ public class ListUserReservationsQuery {
 							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 							
 							table += "<tr>";
-							table += "<td>" + resv.getReserveStartDate() + "</td>";
-							table += "<td>" + resv.getReserveEndDate() + "</td>";
-							table += "<td>" + resv.getReserveStartTime() + "</td>";
-							table += "<td>" + resv.getReserveEndTime() + "</td>"; 
+							table += "<td>" + dtc.convertDateLong(resv.getReserveStartDate()) + "</td>";
+							table += "<td>" + dtc.convertDateLong(resv.getReserveEndDate()) + "</td>";
+							table += "<td>" + tc.convertTimeTo12(resv.getReserveStartTime()) + "</td>";
+							table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resv.getReserveEndTime())) + "</td>";  
 							table += "<td>" + building + "</td>";
 							table += "<td>" + roomFloor + "</td>";
 							table += "<td>" + roomNumber + "</td>";
 							table += "<td>" + userPlace + "</td>";
-							
-							//table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";		
+								
 							table += "<td><form action='CancelConfirmServlet' method = 'post'>" +
 									"<input type='hidden' name='resv_id' value='" + resv.getReserveID()+ "'>" +
 									"<input class='btn btn-lg btn-red' type='submit' value='Cancel Reservation'>" +
@@ -371,13 +387,11 @@ public class ListUserReservationsQuery {
 	}
 	
 	
-// USING THIS??
 	public String GetUserReservation(int resv_id, int userRecdID){
 		String table = "";
-		
-		//String query = "SELECT * FROM tomcatdb.Reservations "
-			//		+ "WHERE Reservations.reserveID = '"
-				//	+ resv_id + "'";
+		// Used to convert date and time from SQL format to more standard format for display.
+		TimeConverter tc = new TimeConverter();
+		DateTimeConverter dtc = new DateTimeConverter();
 		
 		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
 				+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
@@ -410,7 +424,7 @@ public class ListUserReservationsQuery {
 			}else{	
 				userPlace = "Seconday User";
 			}
-			table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
+			table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' style='width:95%;'>";
 			table += "<thead>";
 			table += "<tr>";
 			table += "<th> Start Date</th>";
@@ -421,46 +435,41 @@ public class ListUserReservationsQuery {
 			table += "<th> Room Floor</th>";
 			table += "<th> Room Number</th>";
 			table += "<th> Primary/Secondary</th>";
+			table += "<th>&nbsp</th>";
+			table += "<th>&nbsp</th>";
 			table += "</tr>";
 			table += "</thead>";
 			
 			table += "<tbody>";
 			table += "<tr>";
-			table += "<td>" + resvStartDate + "</td>";
-			table += "<td>" + resvEndDate + "</td>";	
-			table += "<td>" + resvStartTime + "</td>";
-			table += "<td>" + resvEndTime + "</td>";
+			table += "<td>" + dtc.convertDateLong(resvStartDate) + "</td>";
+			table += "<td>" + dtc.convertDateLong(resvEndDate) + "</td>";	
+			table += "<td>" + tc.convertTimeTo12(resvStartTime) + "</td>";
+			table += "<td>" + tc.convertTimeTo12(TimeConverter.addOneSecondToTime(resvEndTime)) + "</td>";
 			table += "<td>" + building + "</td>";
 			table += "<td>" + roomFloor + "</td>";
 			table += "<td>" + roomNumber+ "</td>";
 			table += "<td>" + userPlace + "</td>";
-			table += "</tr>";
 			
-			table += "<tr>"
-					+ "<td>"
+			table +=  "<td>"
 					+ "<form action='CancelServlet' method = 'post'>" +
 					"<input type='hidden' name='resv_id' value='" + resv_id+ "'>" +
 					"<input class='btn btn-lg btn-red' type='submit' value='Cancel Reservation'>" +
 					"</form>"
 					+ "</td>";	
-	
+			
+			table += "</tr></tbody></table>";
 
-			table += "<td>"
-					+ "<form action='ViewServlet' method = 'post'>" +
-					"<input type='submit' value='Go back to viewing reservations'>" +
-					"</form>"
-					+ "</td>";	
+			//table += "<td>"
+			table += "<br /><br />";
+			table += "<form action='ViewServlet' method = 'post'>";
+			table += "<input type='submit' value='Go back to viewing reservations'>";
+			table += "<input type='hidden' name='noCancel' value='noCancel'>";
+			table += "</form>";
+				//	+ "</td>";	
 			
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
-			table += "<td>&nbsp;</td>";
+
 			
-			table += "</tr>"
-					+ "</tbody>"
-					+ "</table>";
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

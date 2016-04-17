@@ -70,7 +70,7 @@ public class AdminScheduleInsertQuery {
 		
 		} catch (SQLException e){
 			e.printStackTrace();
-			System.out.println("Error in AdminScheduleInsertQuery.java: insertCheck method. Please check connection or SQL statement.");
+			System.err.println("Error in AdminScheduleInsertQuery.java: insertCheck method. Please check connection or SQL statement.");
 		} 
 		// will return false by default if the connection fails.
 		value = "false";
@@ -83,16 +83,7 @@ public class AdminScheduleInsertQuery {
 	 * @param schedule Schedule object.
 	 */
 	public void doScheduleInsert(Schedule schedule){
-		this.schedule = schedule;
-		//System.out.println(this.schedule.toString());
-		System.out.println("Do Admin Schedule Insert Query doScheduleInsert: " + this.schedule.getAllDayEvent() + " " + 
-		this.schedule.getStartDate()  + " " +
-		this.schedule.getEndDate()  + " " +
-		this.schedule.getStartTime()  + " " +
-		this.schedule.getEndTime() + " " +
-		this.schedule.getSummary() + " " +
-		this.schedule.getCreatedBy() + " " +
-		this.schedule.getBuildingID() + " ");  
+		this.schedule = schedule; 
 		
 		String query = "INSERT INTO tomcatdb.Schedule "
 				+ "(tomcatdb.Schedule.allDayEvent, tomcatdb.Schedule.startDate, tomcatdb.Schedule.endDate, tomcatdb.Schedule.startTime, "
@@ -113,7 +104,7 @@ public class AdminScheduleInsertQuery {
 			ps.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();
-			System.out.println("Error in AdminScheduleInsertQuery.java: doScheduleInsert method. Please check connection or SQL statement.");
+			System.err.println("Error in AdminScheduleInsertQuery.java: doScheduleInsert method. Please check connection or SQL statement.");
 		} finally {
 			if (this.connection != null) {
 				try {

@@ -27,7 +27,7 @@ public class DbConnect {
 	}
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param url URL of the connector and host name
 	 * @param database name of the database
 	 * @param username user name of a user on the database
@@ -97,7 +97,7 @@ public class DbConnect {
 	}
 	
 	/**
-	 * 
+	 * This method will set the credentials to connect to the MySQL database.
 	 * @return Driver Manager used in connection assignment.  This contains the url, database, username, and password to connect to the SQL database.
 	 */
 	public Connection credentials(){	
@@ -111,13 +111,14 @@ public class DbConnect {
 	}
 	
 	/**
-	 * 
+	 * This method will set the credentials to connect to the MySQL database.
 	 * @return Driver Manager used in connection assignment.  This contains the url, database, username, and password to connect to the SQL database.
 	 */
 	public static Connection devCredentials(){
 		String url = "jdbc:mysql://localhost:3306/tomcatdb";
 		String username = "tomcatuser";
 		String password = "bu11fr0g";
+	
 		//String username = "root";
 		//String password = "";
 		try {
@@ -129,7 +130,7 @@ public class DbConnect {
 		
 	}
 	/**
-	 * 
+	 * Set the URL to redirect to the login page after sessions expire.
 	 * @return String of the url redirect if the session is null.
 	 */
 	public static String urlRedirect(){

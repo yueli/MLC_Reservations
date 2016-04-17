@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import helpers.ReservationInsertQuery;
 import helpers.ReservationSelectQuery;
 import helpers.UserHelper;
-import model.DateTimeConverter;
+
 import model.DbConnect;
 import model.Email;
 import model.Reservation;
@@ -21,7 +21,9 @@ import model.TimeConverter;
 import model.User;
 
 /**
- * Servlet implementation class BrowseConfirmServlet
+ * Servlet implementation class BrowseConfirmServlet.  This servlet will check the secondary myID entered from BrowseReserve,
+ * check to make sure that the room is still available, and send a confirmation email.
+ * @author Brian Olaogun
  */
 @WebServlet({ "/BrowseConfirmation", "/BrowseConfirm" })
 public class BrowseConfirmServlet extends HttpServlet {
@@ -65,7 +67,6 @@ public class BrowseConfirmServlet extends HttpServlet {
 				String currentDate = (String) session.getAttribute("currentDate");
 				String buildingName = (String) session.getAttribute("buildingName");
 				int buildingID = (Integer) session.getAttribute("buildingID");
-				//User primaryUser = (User) session.getAttribute("user");
 				int hourIncrement = Integer.parseInt(request.getParameter("userIncrementSelected"));
 				String secondaryMyID = (String) request.getParameter("secondary");
 				String msg = "";
@@ -73,12 +74,15 @@ public class BrowseConfirmServlet extends HttpServlet {
 				// input validation for secondary myID
 				if(secondaryMyID.isEmpty() || secondaryMyID.equals("")){
 					msg = "Please enter a myID of a secondary person to reserve a room";
+					url = "user/reservation.jsp";
 				} else if (secondaryMyID.equalsIgnoreCase(primaryUser.getMyID())){
-					msg = "Please enter a myID other than your own.  The person also needs to have "
+					msg = "Please enter a myID other than your own. <br> The person also needs to have "
 							+ "logged into the site at least once to be added to a reservation.";
+					url = "user/reservation.jsp";
 							
 				} else if (User.containsSpaces(secondaryMyID) == true){
 					msg = "Please remove spaces from the ID entered.";
+					url = "user/reservation.jsp";
 					
 				} else {
 	
@@ -105,8 +109,8 @@ public class BrowseConfirmServlet extends HttpServlet {
 					// verify inputed secondary user ID
 					// if user is not in our local database, have them login once to register
 					else if(!uh.inUserTable(secondaryMyID)){
-						msg = "Please have " + secondaryMyID + " login once into the application. "
-								+ "Logging in once serves as a form of user registration. Once " + secondaryMyID 
+						msg = "Please have " + secondaryMyID + " login once into the application. <br>"
+								+ "Logging in once serves as a form of user registration.<br> Once " + secondaryMyID 
 								+ " has logged in once, you can add them to any future reservation. ";
 						url = "user/reservation.jsp";
 					} else {
@@ -125,11 +129,12 @@ public class BrowseConfirmServlet extends HttpServlet {
 						       // primary user
 						int primaryUserID = primaryUser.getUserRecordID();
 						
-						      // TODO secondary user
+							  // secondary user 
 						User secondaryUser = uh.getUserInfo(secondaryMyID);
+						int secondaryUserID = secondaryUser.getUserRecordID();
+						
 						System.out.println("SECONDARY USER INFO FROM BROWSE CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
 						System.out.println();
-						int secondaryUserID = secondaryUser.getUserRecordID();
 						System.out.println("PRINT of secondary ID: " + secondaryUserID);
 						
 						// check if reservation is available
@@ -152,8 +157,16 @@ public class BrowseConfirmServlet extends HttpServlet {
 							riq.doReservationInsert(reservation);
 							
 							// send confirmation email
-							String primaryEmail = primaryUser.getUserEmail();
+							String primaryEmail;
 							String secondaryEmail;
+							
+							// make sure an email exists in our local database for primary user. 
+							// if not, use MyID@uga.edu as email.
+							if (primaryUser.getUserEmail() == null || primaryUser.getUserEmail().isEmpty()){
+								primaryEmail = primaryUser.getMyID() + "@uga.edu";
+							} else {
+								primaryEmail = primaryUser.getUserEmail();
+							}
 							
 							// make sure an email exists in our local database for secondary user. 
 							// if not, use MyID@uga.edu as email.
@@ -170,13 +183,19 @@ public class BrowseConfirmServlet extends HttpServlet {
 							email.sendMail(primaryEmail, secondaryEmail, currentDate, startTime24, endTime, buildingName, roomNumber, email.getWebsiteURL());
 							
 							// set success message and forwarding URL
-							msg = "You have successfully made a reservation.  "
-									+ "You should receive a confirmation email shortly";
-							url = "user/reservationConfirmation.jsp";
+							String message = "<div align='center'><h3>You have successfully made a reservation. <br> "
+									+ "You should receive a confirmation email shortly.</h3></div>";
+							//url = "user/reservationConfirmation.jsp";
+							url = "ViewServlet";
 							
 							session.setAttribute("secondaryEmail", secondaryEmail);				
+							session.setAttribute("message", message);
+							
+							// clear cache to clear back button functionality
+							CASLogoutServlet.clearCache(request, response);
 							
 							// remove session attributes
+							session.removeAttribute("currentDay");
 							session.removeAttribute("building");
 							session.removeAttribute("buildingID");
 							session.removeAttribute("buildingHeader");
@@ -196,18 +215,19 @@ public class BrowseConfirmServlet extends HttpServlet {
 					session.setAttribute("roomNumber", roomNumber);
 					session.setAttribute("building", buildingName);
 					session.setAttribute("hourIncrement", hourIncrement);
-	
-					session.setAttribute("msg", msg);
 				}
+				session.setAttribute("msg", msg);
 			} else {
 				//------------------------------------------------//
 				/*               USER INFO EXPIRED                */
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
 		} else {
 			//------------------------------------------------//
@@ -215,8 +235,9 @@ public class BrowseConfirmServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
-			//url = "LoginServlet";
+			
 			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 			
 		}
 		

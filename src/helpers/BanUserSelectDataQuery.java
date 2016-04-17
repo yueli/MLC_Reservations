@@ -45,10 +45,7 @@ public class BanUserSelectDataQuery {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			results = ps.executeQuery();
 			
-			
-			
 		
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

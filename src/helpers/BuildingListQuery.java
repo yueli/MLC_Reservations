@@ -8,11 +8,14 @@ import java.sql.SQLException;
 
 import model.Building;
 import model.DbConnect;
+import model.Rooms;
 
 
 /**
- * @author Ronnie Xu
  * Helper for the Admin side of the website.
+ * @author Ronnie Xu
+ * @contributor Brian Olaogun	
+ * @contributor Ginger Nix
  *
  */
 
@@ -62,6 +65,73 @@ public class BuildingListQuery {
 			} 
 		}
 		
+		public String getBuildingName(int buildingID){
+			String bName = "";
+			try {
+				while(results.next()){
+						Building building = new Building();
+						building.setBuildingID(results.getInt("buildingID"));
+						building.setBuildingName(results.getString("buildingName"));
+						int bID = building.getBuildingID();
+						
+						if(buildingID==bID){
+						bName = results.getString("buildingName");
+					}
+				}
+			}	
+				catch(SQLException e) {
+					e.printStackTrace();	
+				}
+				return bName;
+			}
+		
+		
+		public void doReadRooms(int buildingID){
+
+			String query = "SELECT `rooms`.`roomID`,`rooms`.`Admin_adminID`,`rooms`.`Building_buildingID`,`rooms`.`roomNumber`,`rooms`.`roomFloor`,`rooms`.`roomStatus`,`rooms`.`qrUrl` FROM `tomcatdb`.`rooms` WHERE `rooms`.`Building_buildingID` = '"+buildingID+"';";
+			// securely run query
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				this.results = ps.executeQuery();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error in BuildingListQuery.java: doRoom method. Please check connection or SQL statement: " + query);
+			} 
+		}
+		
+		
+		public String getRoomName(int roomID){
+			String rNumber = "";
+			try {
+				while(results.next()){
+					Rooms room = new Rooms();
+					room.setRoomID(results.getInt("roomID"));
+					room.setRoomNumber("roomNumber");
+					
+						int rID = room.getRoomID();
+						
+						if(roomID==rID){
+							rNumber = results.getString("roomNumber");
+					}
+				}
+			}	
+				catch(SQLException e) {
+					e.printStackTrace();	
+				}
+				return rNumber;
+			}
+		
+		
+				
+						
+			
+			
+		
+			
+		
+		
+		
 		
 		
 		public String getHTMLTable(){ 
@@ -80,7 +150,7 @@ public class BuildingListQuery {
 						+ "<th>Building Cal URL</th>"
 						+ "<th></th>"
 						+ "<th></th>"
-						+ "<th></th>"
+						+ "<th></th>" //Ginger added
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>";
@@ -121,12 +191,24 @@ public class BuildingListQuery {
 					table += "<td>";
 					table += building.getBuildingCalUrl();
 					table += "</td>";
-					table += "<td>";
-					table += "admin?";
-					table += "</td>";
 					
 					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
-					table += "<td><a href=Schedule?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='EditHours'>Edit Building Schedule</button></a></td>";
+					
+					table += "<td>";
+					table += "<form name='scheduleEditForm' action='Schedule' method='post'>";
+					table += "<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>";
+					table += "<input class='btn btn-lg btn-red' type='submit' value='Edit Hours'>";
+					table += "</form>";
+					table += "</td>";
+					//Ginger added this button to view the rooms of the building
+					table += "<td>";
+					table += "<form name='formForRooms' action='RoomsListServlet' method='post'>";
+					table += "<input type='hidden' name='cancelAction' value='buildings'>";
+					table += "<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>";
+					table += "<input class='btn btn-lg btn-red' type='submit' value='View/Edit Rooms'>";
+					table += "</form>";
+					table += "</td>"; //Ginger Added
+					
 					
 					table += "</tr>";
 				}

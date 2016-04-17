@@ -1,4 +1,6 @@
-//@author: Ginger Nix
+/*@author: Ginger Nix
+ * 
+ */
 
 package controllers;
 
@@ -54,7 +56,8 @@ public class RoomsServlet extends HttpServlet {
 		bsq.doBuildingRead(); 
 		
 		// get a list of all the active building to list
-		String buildings = bsq.getAllActiveBuildings();
+		//String buildings = bsq.getAllActiveBuildings();
+		String buildings = bsq.selectBuildingToViewRooms();
 		
 		System.out.println("RoomsServlet: buildings: " + buildings);
 		

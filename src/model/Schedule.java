@@ -20,7 +20,16 @@ public class Schedule {
 	public Schedule(){
 		
 	}
-	
+	/**
+	 * Constructor
+	 * @param scheduleID Integer ID of the schedule entry in the schedule table
+	 * @param startDate String start date
+	 * @param endDate String end date
+	 * @param startTime String start time
+	 * @param endTime String end time
+	 * @param summary String summary of the entry
+	 * @param createdBy String --> admin or script
+	 */
 	public Schedule(int scheduleID, String startDate, String endDate,
 			String startTime, String endTime, String summary, String createdBy){
 		this.scheduleID = scheduleID;
@@ -31,7 +40,15 @@ public class Schedule {
 		this.summary = summary;
 		this.createdBy = createdBy;
 	}
-	
+	/**
+	 * Constructor
+	 * @param startDate String start date
+	 * @param endDate String end date
+	 * @param startTime String start time
+	 * @param endTime String end time
+	 * @param summary String summary of the entry
+	 * @param createdBy String --> admin or script
+	 */
 	public Schedule(String startDate, String endDate,
 			String startTime, String endTime, String summary, String createdBy){
 		
@@ -42,7 +59,17 @@ public class Schedule {
 		this.summary = summary;
 		this.createdBy = createdBy;
 	}
-	
+	/**
+	 * Constructor
+	 * @param startDate String start date
+	 * @param endDate String end date
+	 * @param startTime String start time
+	 * @param endTime String end time
+	 * @param summary String summary of the entry
+	 * @param createdBy String --> admin or script
+	 * @param allDayEvent --> not in use 
+	 * @param buildingID Integer building ID from building table
+	 */
 	public Schedule(String startDate, String endDate,
 			String startTime, String endTime, String summary, String createdBy, int allDayEvent, int buildingID){
 		

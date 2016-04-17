@@ -1,3 +1,10 @@
+<%-- 
+
+	@author: Ginger Nix
+	The admin list servlet goes to this jsp which lists all
+	the admins.
+	
+ --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -48,14 +55,10 @@
 
 	<body>
 		<div id="header"></div>
-<h2>Admin Users</h2>
-			<%= message %>
+		<br /><br /><br /><br />
+		<%= message %>
 
-		<%= table %>
-
-		<form name="Logout" action="AdminLoginController" method="get">
- 			<input class="btn btn-lg btn-red" type="submit" name = "logout" value="Logout">
- 		</form>
+		<%= table %> 
  		
 		<div id="footer"></div>
 	</body>
