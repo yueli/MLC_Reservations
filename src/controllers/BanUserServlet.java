@@ -21,7 +21,7 @@ import model.Banned;
 		description = "Ban User", 
 		urlPatterns = { 
 				"/banUserServlet", 
-				"/banUser"
+			
 		})
 public class BanUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
