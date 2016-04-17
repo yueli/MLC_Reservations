@@ -1,11 +1,11 @@
-/* @author: Brian Olaogun and Ginger Nix
+/** @author: Brian Olaogun and Ginger Nix
  * 
  * This is the servlet that CAS points to after authenticating the user.
  * It determines if the person is coming in from a QR code scan, is an admin, or is a plain ole user.
  * If they are not coming in from the QR scan and not an admin, a check is done to see if they are a student.
  * If not, they are sent to an error page where they can only log out
  * 
- */
+ **/
 
 package controllers;
 
@@ -17,7 +17,7 @@ import java.util.Enumeration;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
-import org.jasig.cas.client.validation.Saml11TicketValidator;
+//import org.jasig.cas.client.validation.Saml11TicketValidator;
 
 import helpers.AdminUserHelper;
 import helpers.UserHelper;
@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.jasig.cas.client.authentication.AttributePrincipal;
+//import org.jasig.cas.client.authentication.AttributePrincipal;
 
 /**
  * Servlet implementation class CASLoginServlet
@@ -74,7 +74,6 @@ public class CASLoginServlet extends HttpServlet {
 		{
 		  String key = (String)keys.nextElement();
 		  //out.println(key + ": " + session.getValue(key) + "<br>"); // getValue deprecated
-		  //table += "** " + key + ":" + session.getAttribute(key) + "<br />";		  // had this for testing
 		}
 		
 		User loggedInUser = new User(); // create the user object to pass forward		
@@ -200,12 +199,13 @@ public class CASLoginServlet extends HttpServlet {
 			 */
 			
 			/* check to see if this user is a student by looking at the employee type */
-			/* the employee type looks like the FSCode so going to check for 00 */
+			/* the employee type looks like the FSCode so going to check for 00 in the employee type string*/
 			
-			// test1010 should be emp type 01
+			// test1010 should be emp type 01 so allowing them to log on as a student
 			
 			//if (!employeeType.equals(00)) { 
 			if (!employeeType.contains("00") && (!loggedInUser.getMyID().equals("test1010"))) { 
+			
 				// they are not a student so send them to a page where all they can do is log out
 				System.out.println("CASLogin Servlet logged in employeeType != 00 - " + employeeType);
 				
@@ -214,26 +214,25 @@ public class CASLoginServlet extends HttpServlet {
 			}else{ //they are students
 		
 				// so look in the user table to see if they already exist
-				// set up the user object since not an admin
+
 				User user = new User();			
 				user.setMyID(loggedInUser.getMyID());
 				user.setUserFirstName(loggedInUser.getUserFirstName());
 				user.setUserLastName(loggedInUser.getUserLastName());
-				
+
+				// use the MyID and concatenate 'uga.ed' at the end
+				// no matter what other uga email addresses this person has,
+				// this email will always work.
 				String userEmail = loggedInUser.getMyID() + "@uga.edu";
 				
-				/* HARD CODED FOR TESTING */
-				
-				user.setUserEmail("ganix@uga.edu"); 
-				
-				
-							
+				user.setUserEmail(userEmail); 
+										
 				UserHelper userHelper = new UserHelper();			
 				boolean inTable = userHelper.inUserTable(user.getMyID());				
 				
 				if (inTable){ // they are in the user's table
-					// get the user's record ID from the user table to check to see if banned
-					
+			
+					// get the user's record ID from the user table to check to see if banned					
 					recordID = userHelper.getRecordID(user.getMyID());
 	
 					user.setUserRecordID(recordID);
@@ -241,9 +240,8 @@ public class CASLoginServlet extends HttpServlet {
 					System.out.println("CAS login: record ID " + user.getUserRecordID());
 					
 					if(userHelper.alreadyBanned(recordID)) {
-						// since they have already been banned, send them to a page telling them 
 						
-	
+						// since they have already been banned, send them to a page telling them 	
 						user.setUserRecordID(recordID);
 						session.setAttribute("user", user);
 						url="user/bannedUser.jsp";
@@ -260,9 +258,8 @@ public class CASLoginServlet extends HttpServlet {
 					
 				}else{ //authenticated but not in user table, so add them
 					
-					//userHelper.insertUserTable(loggedInUser.getMyID(), loggedInUser.getUserFirstName(), loggedInUser.getUserLastName(), loggedInUser.getUserEmail()); 
-					userHelper.insertUserTable(user.getMyID(), user.getUserFirstName(), user.getUserLastName(), " " ); 
-				
+					userHelper.insertUserTable(loggedInUser.getMyID(), loggedInUser.getUserFirstName(), loggedInUser.getUserLastName(), loggedInUser.getUserEmail()); 
+					
 					recordID = userHelper.getRecordID(user.getMyID());
 	
 					user.setUserRecordID(recordID);

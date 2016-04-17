@@ -1,9 +1,10 @@
 /**
  * @author: Ginger Nix
  * 
- * This servlet creates a form for admins to add other admins
+ * AdminEditServlet displays a pre-populated form of the admin user to edit. This servlet
+ * is called when someone clicks on edit admin on the same line an admin user is listed.
  * 
- */
+ **/
 package controllers;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.AdminUserHelper;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminEditServlet
@@ -50,46 +52,59 @@ public class AdminEditServlet extends HttpServlet {
 		String message = "";
 		
 		//get our current session
-		session = request.getSession();
-		message = (String) request.getAttribute("message"); 
+		this.session = request.getSession(false); 
 		
-		// blank message if nothing gotten in message attribute
+		// if this session is not null (active/valid)
+		if (this.session != null){	
+
+			message = (String) request.getAttribute("message"); 
+			
+			// blank message if nothing gotten in message attribute			
+			if (message == null || message.isEmpty()) {
+				 message = "";
+			}
+			
+				
+			System.out.println("AdminEditServlet: beginning - message = " + message);
+	
+			// create admin user object w/ session data on the logged in user's info
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
+				
+			System.out.println("AdminEditServlet: loggedInAdminUser adminMyID = " + loggedInAdminUser.getAdminMyID());
+	
+			 
+			//hidden parameter = admin record id of the person to edit from jsp
+			int adminID = Integer.parseInt(request.getParameter("adminID")); 
+			
+			System.out.println("AdminEditServlet: adminID = " + adminID);
+			
+			AdminUserHelper adminUserHelper = new AdminUserHelper();
 		
-		if (message == null || message.isEmpty()) {
-			 message = "";
+			// creates table w/ admin user's info to edit
+			// some of the pull down options are determined by the logged in admin's role
+			table = adminUserHelper.getAdminInfo(adminID, loggedInAdminUser);
+			
+			System.out.println("AdminEditServlet: after getAdminInfo - message = " + message);
+	
+	       	request.setAttribute("message", message);
+	        request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+			request.setAttribute("table", table);
+	
+			url = "admin/adminEdit.jsp";
+		
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 		
-			
-		System.out.println("AdminEditServlet: beginning - message = " + message);
-
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");		
-			
-		System.out.println("AdminEditServlet: loggedInAdminUser adminMyID = " + loggedInAdminUser.getAdminMyID());
-
-		 
-		//hidden parameter = admin record id of the person to edit from jsp
-		int adminID = Integer.parseInt(request.getParameter("adminID")); 
-		
-		System.out.println("AdminEditServlet: adminID = " + adminID);
-		
-		AdminUserHelper adminUserHelper = new AdminUserHelper();
-	
-		// creates table w/ admin user's info to edit
-		// some of the pull down options are determined by the logged in admin's role
-       table = adminUserHelper.getAdminInfo(adminID, loggedInAdminUser);
-		
-       System.out.println("AdminEditServlet: after getAdminInfo - message = " + message);
-
-       	request.setAttribute("message", message);
-        request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-		request.setAttribute("table", table);
-
-		url = "admin/adminEdit.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
-
-		
+		dispatcher.forward(request, response);		
 
 	}
 
