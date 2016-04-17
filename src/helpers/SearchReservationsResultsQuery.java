@@ -13,6 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 import model.DbConnect;
 import model.Reservation;
+import model.TimeConverter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SearchReservationsResultsQuery {
 	
@@ -285,6 +288,7 @@ public class SearchReservationsResultsQuery {
 						table += "<table id='' class='display'>";
 						table += "<tbody>";
 						
+				
 						
 				 //3. Date for Header for new Date Table
 						table += "<tr><td>Building: "+buildingName+"<br /> Date:"+ pointDate +"</td></tr>";
@@ -292,8 +296,17 @@ public class SearchReservationsResultsQuery {
 								//Create Time Columns
 								//Leave space for Room #
 								table +="<td>RoomID#</td>";
-								for(int i=hourbt;i<=houret;i++){
-									table +="<td>"+ i +":00</td>";
+								for(int i=hourbt;i<houret;i++){
+									
+									String tempTimeI = i+":00";
+									
+									SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
+									 SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+									 Date _24HourDt = _24HourSDF.parse(tempTimeI);
+									 ;
+									 table +="<td>"+_12HourSDF.format(_24HourDt)+"</td>";
+									//table +="<td>"+ i +":00</td>";
+									
 								}
 							table += "</tr>";
 				//4. ADD NEW ROWS AFTER HEADER
@@ -317,7 +330,7 @@ public class SearchReservationsResultsQuery {
 							
 						
 						//Only searching for hours requested	
-						for(int i=hourbt;i<=houret;i++){
+						for(int i=hourbt;i<houret;i++){
 							
 							
 						int roomtaken=0;
@@ -456,6 +469,7 @@ public class SearchReservationsResultsQuery {
 						
 							
 						}
+			 System.out.println(table);
 			   return table;
 	}
 }

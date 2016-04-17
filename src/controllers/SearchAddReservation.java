@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.BuildingListQuery;
 import helpers.ReservationInsertQuery;
 import model.Building;
 import model.DbConnect;
@@ -59,15 +60,26 @@ System.out.println("Resevation Set");
 		
 		Building building = new Building();
 		building.setBuildingID(Building_buildingID);
-		String buildingName = building.getBuildingName();
+
 		
 		
 		Reservation reservation = new Reservation(tempPUSER, tempSUSER, Rooms_roomID, reserveStartDate, reserveEndDate, reserveStartTime , TimeConverter.subtractOneSecondToTime(reserveEndTime), hourIncrement, Building_buildingID, free);
 		
+		//Get Building Name
+		BuildingListQuery blq = new BuildingListQuery();
+		blq.doRead();
+		String buildingName = blq.getBuildingName(Building_buildingID);
+		
+		//Get Room Name/Number
+		blq.doReadRooms(Building_buildingID);
+		String roomNumber = blq.getRoomName(Rooms_roomID);
+		
+		
+		
 		String table = "";
 		table += "Reservation Succesful! <br />";
-		table += "Building ID: "+Building_buildingID+"<br />";
-		table += "Room ID: "+Rooms_roomID+"<br />";
+		table += "Building Name: "+buildingName+"<br />";
+		table += "Room Number: "+roomNumber+"<br />";
 		table += "Date: "+reserveStartDate+"<br />";
 		table += "Time: "+ reserveStartTime+"<br />";
 		table += "<br />";
