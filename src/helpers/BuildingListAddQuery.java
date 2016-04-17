@@ -60,20 +60,26 @@ public class BuildingListAddQuery {
 		return buildingCount;
 		}
 
-		public void addBuildingList(int buildingID, String buildingName, int buildingStatus, String buildingCalName, String buildingCalUrl) throws SQLException{
+		
+		public void addBuilding(String buildingName, int buildingStatus, 
+				String buildingCalName, String buildingCalUrl, String buildingQRName) throws SQLException{
 			
 			Building building = new Building();
 
-			
-			building.setBuildingID(buildingID);
 			building.setBuildingName(buildingName);
 			building.setBuildingStatus(buildingStatus);
 			building.setBuildingCalName(buildingCalName);
 			building.setBuildingCalUrl(buildingCalUrl);
+			building.setBuildingQRName(buildingQRName);
+			
 			//building.setAdmin(admin);
 	
 
-			String query = "INSERT INTO tomcatdb.building (buildingID, buildingName, buildingStatus, buildingCalName, buildingCalUrl, Admin_adminID)VALUES ('"+building.getBuildingID()+"', '"+building.getBuildingName()+"', '"+building.getBuildingStatus()+"', '"+building.getBuildingCalName()+"', '"+building.getBuildingCalUrl()+"', '1');";
+			String query = "INSERT INTO tomcatdb.building "
+					+ "(buildingName, buildingStatus, buildingCalName, buildingCalUrl, buldingQRName)"
+					+ "VALUES ('" + building.getBuildingID() + "', '" + building.getBuildingName()  +"', '"
+					+ building.getBuildingStatus() + "', '" + building.getBuildingCalName()+"', '"
+					+ building.getBuildingCalUrl()+"', '1');";
 			
 
 			
