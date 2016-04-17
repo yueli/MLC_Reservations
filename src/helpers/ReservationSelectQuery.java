@@ -76,7 +76,7 @@ public class ReservationSelectQuery {
 	
 	/**
 	 * Different from the version below.  The connection has to be closed
-	 * since there are too many open connections in RoomsSelectQuery.
+	 * since there are too many open connections in RoomsSelectQuery.getRoomsTable.
 	 * @return reservation ID if there is a reservation or an empty string if there isn't.
 	 */
 	public String doReservationResults(){

@@ -44,6 +44,7 @@ public class SearchReservationsResultsServlet extends HttpServlet {
 				
 			//Pull opening slots from database
 			SearchReservationsResultsQuery srrs = new SearchReservationsResultsQuery();
+
 			
 			//Pull all rooms from Building in form of Array
 			ArrayList<Integer> roomsAL = new ArrayList<Integer>();
@@ -51,14 +52,16 @@ public class SearchReservationsResultsServlet extends HttpServlet {
 			
 			//Set Result Set with all reservation within credentials
 			//Set ResultsList of all reservation into Array
-			srrs.doRead(buildingid, beginDate, beginTime, endDate, endTime, hourIncrement);		
-			ArrayList<Reservation> reservationAL = new ArrayList<Reservation>();
-			reservationAL = srrs.getReservationList();
+			//srrs.doRead(buildingid, beginDate, beginTime, endDate, endTime, hourIncrement);	
 			
+			ArrayList<Reservation> reservationAL = new ArrayList<Reservation>();
+			reservationAL = srrs.doReadArray(buildingid, beginDate, beginTime, endDate, endTime, hourIncrement);
+			
+			System.out.println(reservationAL.size());
 			//Create Table
 			String table="";
 			try {
-				table = srrs.getHTMLTable(roomsAL, reservationAL, beginDate, beginTime, endDate, endTime, hourIncrement, buildingid);
+				table = srrs.getHTMLTable(buildingid,roomsAL, reservationAL, beginDate, beginTime, endDate, endTime, hourIncrement, buildingid);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

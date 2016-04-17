@@ -3,7 +3,9 @@ package helpers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import model.DbConnect;
 
@@ -41,11 +43,13 @@ public class UnbanUserQuery {
 	
 	public void unbanUser(int banID){
 		//Set Date to CurrentTime
-		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d = new Date();
+		String date = dateFormat.format(d);
 		
-
+		
 		String query = "UPDATE tomcatdb.Banned SET banEnd='"+ date + "', status=0 WHERE bannedID="+banID+"";
-		
+		System.out.println(query);
 
 		
 		try {

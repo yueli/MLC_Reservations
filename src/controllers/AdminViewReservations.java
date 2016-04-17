@@ -17,7 +17,7 @@ import model.DateTimeConverter;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminViewReservations
+ * Servlet implementation class AdminViewReservations.  This servlet will allow admins to view all reservations.
  * @author Brian Olaogun
  * 
  */

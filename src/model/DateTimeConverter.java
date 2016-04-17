@@ -381,7 +381,7 @@ public class DateTimeConverter {
 	}
 	/**
 	 * This method will compare a starting date to see if its greater than the ending date.
-	 * If the starting date is greater, true is returned.
+	 * If the starting date is greater, true is returned else false.
 	 * @param to String ending date in MM/dd/yyyy format
 	 * @param from String starting date in MM/dd/yyyy format
 	 * @return boolean true if from > to

@@ -1,8 +1,9 @@
-/* 
+/**
  * @author: Ginger Nix
  *
- * class containing methods to use with viewing, adding, and editing admin users
- */
+ * This class contains methods to use with viewing, adding, and editing admin users.
+ * 
+ **/
 
 package helpers;
 
@@ -41,6 +42,14 @@ public class AdminUserHelper {
 
 	}
 	
+	/*
+	 * This method returns a table listing all the admin users.
+	 * @author: Ginger Nix
+	 * @date: Spring 2016
+	 * @parameters: none
+	 * @return: table of all the admin users
+	 * 
+	 */
 	public String ListAdmins(){
 		String table = "";
 		String adminActiveStatus = "";

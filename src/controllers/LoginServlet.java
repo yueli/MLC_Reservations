@@ -56,6 +56,8 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("LOGIN SERVLET!");
 	
 		User user = new User();
+		user.setUserFirstName("Brian");
+		user.setUserLastName("Olaogun");
 		user.setMyID("bbo89");
 		user.setUserEmail("bbo89@uga.edu");
 		user.setUserRecordID(1);
