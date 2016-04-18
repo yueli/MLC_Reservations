@@ -69,7 +69,7 @@ public class BuildingListAddQuery {
 		public void addBuilding(String buildingName, int buildingStatus, 
 				String buildingCalName, String buildingCalUrl, int adminID, String buildingQRName) throws SQLException{
 
-			String query = "INSERT INTO tomcatdb.building "
+			String query = "INSERT INTO tomcatdb.Building "
 					+ "(buildingName, buildingStatus, buildingCalName, buildingCalUrl, Admin_adminID, buildingQRName)"
 					+ "VALUES ('" 
 					+ buildingName + "', '" 
