@@ -200,7 +200,8 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 								if (check.equalsIgnoreCase("false")){
 									// if false, no entries in schedule table exist that
 									// match parameters user entered
-									msg = "Successfully added schedule for dates " + dtc.convertDateLong(startDate) + " - " + dtc.convertDateLong(endDate) + "!";
+									
+									msg = "Successfully added schedule for dates " + dtc.convertDateLong(dtc.slashDateConvert(startDate)) + " - " + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "!";
 									siq.doScheduleInsert(schedule);
 									
 									session.removeAttribute("buildingID");
@@ -350,8 +351,7 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 						if (check.equalsIgnoreCase("false")){
 							// if false, no entries in schedule table exist that
 							// match parameters user entered
-							msg = "Successfully added schedule for dates " + dtc.convertDateLong(startDate) + " - " + dtc.convertDateLong(endDate) + "!";
-							siq.doScheduleInsert(schedule);
+							msg = "Successfully added schedule for dates " + dtc.convertDateLong(dtc.slashDateConvert(startDate)) + " - " + dtc.convertDateLong(dtc.slashDateConvert(endDate)) + "!";							siq.doScheduleInsert(schedule);
 							
 							session.removeAttribute("buildingID");
 							session.removeAttribute("startDate");
