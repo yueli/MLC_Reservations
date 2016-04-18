@@ -28,6 +28,18 @@ public class Banned {
 			this.status = status;
 		}
 		
+		public Banned(int studentID, int adminID, String banStart, String banEnd, int penaltyCount,
+				String description, int status) {
+			super();
+			this.studentID = studentID;
+			this.adminID = adminID;
+			this.banStart = banStart;
+			this.banEnd = banEnd;
+			this.penaltyCount = penaltyCount;
+			this.description = description;
+			this.status = status;
+		}
+		
 		public int getBanID() {
 			return banID;
 		}
