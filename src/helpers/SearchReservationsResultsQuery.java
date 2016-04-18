@@ -303,7 +303,7 @@ public class SearchReservationsResultsQuery {
 									SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
 									 SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
 									 Date _24HourDt = _24HourSDF.parse(tempTimeI);
-									 ;
+									 
 									 table +="<td>"+_12HourSDF.format(_24HourDt)+"</td>";
 									//table +="<td>"+ i +":00</td>";
 									

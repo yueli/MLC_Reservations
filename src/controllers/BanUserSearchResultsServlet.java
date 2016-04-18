@@ -50,7 +50,7 @@ public class BanUserSearchResultsServlet extends HttpServlet {
 		//dispatch to the admin view
 		request.setAttribute("table", table);
 		//Forward to JSP
-		String url = "/banList.jsp";
+		String url = "/admin/banList.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
