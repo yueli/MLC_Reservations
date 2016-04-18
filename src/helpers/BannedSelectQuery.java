@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime; //2016-04-17 GAN commented out - red x - error
 import java.util.Date;
 
 import model.Banned;
 import model.DateTimeConverter;
 import model.DbConnect;
 import model.TimeConverter;
+import model.User;
 
 
 /**
@@ -91,14 +92,18 @@ public class BannedSelectQuery {
 			
 			
 			String table = "";
-			
-		
+			table += "<center><a href=banUser><button type='submit' value=''>Ban A User(List)</button></a>";
+
+			table += "<a href=unbanall><button type='submit' value=''>Unban All</button></a>";
+			table += "<tr></tr>";
 			try {
 				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 				
 				table += "<thead>";
 				table += "<tr>"
 						+ "<th>Ban#</th>"
+						+ "<th>First Name</th>"
+						+ "<th>Last Name</th>"
 						+ "<th>Student ID</th>"
 						+ "<th>Admin ID</th>"
 						+ "<th>Ban Start</th>"
@@ -126,10 +131,21 @@ public class BannedSelectQuery {
 					
 					//show only banned
 					
+					BanGetUserInfoQuery userData = new BanGetUserInfoQuery();
+					User user = new User();
+					user = userData.userData(ban.getStudentID());
+					
+					
 					table += "<tr>";
 					
 					table += "<td>";
 					table += ban.getBanID();
+					table += "</td>";
+					table += "<td>";
+					table += user.getUserFirstName();
+					table += "</td>";
+					table += "<td>";
+					table += user.getUserLastName();
 					table += "</td>";
 					table += "<td>";
 					table += ban.getStudentID();
@@ -173,7 +189,7 @@ public class BannedSelectQuery {
 					table += "</tr>";
 				}
 				table += "</tbody>";
-				table += "</table>";
+				table += "</table></center>";
 			}
 			catch(SQLException e) {
 				e.printStackTrace();

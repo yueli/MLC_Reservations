@@ -38,7 +38,7 @@ public class BanUserSearchQuery{
 	public void doRead(String fname, String lname){
 
 		//String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
-		String query = "SELECT userID , myID, fname, lname, lastLogin, email FROM tomcatdb.User where fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%'";
+		String query = "SELECT u.userID , u.myID, u.fname, u.lname, u.lastLogin, u.email FROM tomcatdb.User u, tomcatdb.banned b  where  u.userID = b.User_userID and b.status = 0 and fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%'";
 		System.out.println(query);
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -57,16 +57,15 @@ public class BanUserSearchQuery{
 	public String getHTMLTable(){ 
 		//Return table of banned students
 		
-		String table = "<table>";
+		String table = "<center><table>";
 		
 	
 		try{
 			
 			
 			table += "<tr><td><a href=banUser><button type='submit' value=''>Ban A User</button></a></td>";
-			table += "<td><a href=banUser><button type='submit' value=''>Unban A User(List)</button></a></td>";
 			table += "<td><a href=unbanall><button type='submit' value=''>Unban All</button></a></td></tr>";
-			
+			table += "<tr></tr>";
 			table += "<tr><td>User ID</td><td>User My ID</td><td>First Name</td><td>Last Name</td><td>Last Login</td><td>E-mail</td><td></td></tr>";
 			while(results.next()){
 				//userID , myID, fname, lname, lastLogin, email
@@ -103,12 +102,12 @@ public class BanUserSearchQuery{
 				table += "</td>";
 			
 				
-				table += "<td><a href=ban?banID=" + user.getUserRecordID() + "> <button type='submit' value='Ban'>Ban</button></a></td>";
+				table += "<td><a href=ban?userID=" + user.getMyID() + "> <button type='submit' value='Ban'>Ban</button></a></td>";
 
 				
 				table += "</tr>";
 			}
-			table+="</table>";
+			table+="</table></center>";
 		}
 		catch(SQLException e) {
 			e.printStackTrace();

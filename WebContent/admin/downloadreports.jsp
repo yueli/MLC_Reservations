@@ -6,7 +6,7 @@
 <html>
 <head>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Download Reports</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
@@ -28,7 +28,8 @@
 	<br>
 	<!-- Button to call the downloads servlet -->
 	<div align="center">
-	    <form id="downloadBanned" action="Reports" method="post">
+	
+	    <form id="downloadBanned" action="?action=bannedreport" method="Post">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
             
     </form>
