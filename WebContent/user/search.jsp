@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<!-- @author Brian Olaogun    Used for search function to make a reservation -->
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Student Search</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
@@ -55,12 +56,12 @@
 				<h2>Welcome to Search Reservations</h2><br>
 				<h3>Please enter the information below to see rooms available.<br>
 				To make a reservation for today, please select browse from the menu.</h3><br>
-				<p>${msg}</p>
+				<h3>${msg}</h3><br>
 				Building ${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
-				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
-				End Date: <input type="text" id="endDate" name="endDate" value="${startDate}"><br>
-				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
+				Start Time: <input id="startTime" name="startTime"><br>
+				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
+				<!--End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>-->
 				Hour Increment: ${hourIncrementSelect}<br><br>
 				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
 			</form>

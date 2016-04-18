@@ -22,6 +22,7 @@ import model.User;
 
 /**
  * Servlet implementation class UserSearchServlet
+ * @author Brian Olaogun
  */
 @WebServlet("/SearchReservations")
 public class UserSearchServlet extends HttpServlet {
@@ -58,6 +59,7 @@ public class UserSearchServlet extends HttpServlet {
 				
 				// remove session variable
 				session.removeAttribute("msg");
+				session.removeAttribute("table");
 				
 				// get session and request variables + initialization of others
 				String buildings = ""; // the string that contains the HTML drop down list
@@ -67,9 +69,9 @@ public class UserSearchServlet extends HttpServlet {
 				
 				// get reservation request variables
 				String startDate = request.getParameter("startDate");
-				String endDate = request.getParameter("endDate");
+				String endDateSlashed = request.getParameter("endDate");
 				String startTime = request.getParameter("startTime");
-				String endTime = request.getParameter("endTime");
+				String endTime = "";
 				String hourIncrement = request.getParameter("hourIncrement");
 				String hourIncrementSelect = "";
 				String msg = "";
@@ -78,6 +80,9 @@ public class UserSearchServlet extends HttpServlet {
 				// Other classes
 				DateTimeConverter dtc = new DateTimeConverter();
 				TimeConverter tc = new TimeConverter();
+				
+				// convert dates to SQL format
+				String endDate = endDateSlashed;
 				
 				//------------------------------------------------//
 				/*            BUILDING INFORMATION                */
@@ -108,15 +113,28 @@ public class UserSearchServlet extends HttpServlet {
 				HourCountSelectQuery hcsq = new HourCountSelectQuery();
 				hourIncrementSelect = hcsq.hourIncrementSelect();
 				
-				//
+				// check inputs
 				if(buildingIDSelect == null || startDate == null || endDate == null || startTime == null ||
-						endTime == null || hourIncrement == null || buildingIDSelect.isEmpty() || startDate.isEmpty() || 
-						endDate.isEmpty() || startTime.isEmpty() || endTime.isEmpty() || hourIncrement.isEmpty()){
+						hourIncrement == null || buildingIDSelect.isEmpty() || startDate.isEmpty() || 
+						endDate.isEmpty() || startTime.isEmpty() || hourIncrement.isEmpty()){
 					
 					msg = "Please enter all values to begin searching for reservations.";
 					url = "user/search.jsp";
 					
 				} else {
+					//----------------------------------------------//
+					/*            Reservation Search				*/
+					//----------------------------------------------//
+					startDate = dtc.slashDateConvert(startDate);
+					endDate = dtc.slashDateConvert(endDateSlashed);
+					
+					// convert start time to 24-hour time
+					startTime = tc.convertTimeTo24(startTime);
+					
+					// get end time from start time and hour increment
+					endTime = TimeConverter.addTime(startTime, Integer.parseInt(hourIncrement));
+					
+					System.out.println("User Search Reservations --> start time = " + startTime + " end time = " + endTime);
 					
 					// query for reservation check and listing of all rooms in a building.
 					ReservationSelectQuery res = new ReservationSelectQuery();
@@ -126,7 +144,7 @@ public class UserSearchServlet extends HttpServlet {
 					List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
 					List<String> times = tc.timeRangeList(startTime, endTime);
 					
-					// date range list.  Print all dates between start and end date
+					// date range list.  Print all dates between start and end date inclusive
 					List<String> dates = dtc.dateRangeList(startDate, endDate);
 					
 					table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
@@ -142,15 +160,17 @@ public class UserSearchServlet extends HttpServlet {
 					table += "</tr>";
 					table += "</thead>";
 					table += "<tbody>";
+					
 					// loop through each room after all times have been checked 
 					int h = 1; // counter
+					
 					for (int i = 0; i < roomNumber.size(); i++){
+						
 						// loop through each date
 						for (int k = 0; k < dates.size(); k++) {
+							
 							// loop through each time then increment room
 							for (int j =0; j < times.size(); j++){
-								
-								System.out.println("TIMES -----> " + times.get(j));
 								/*
 								 * Check if there is a reservation at the time.
 								 * If there isn't then returned is an empty string.
@@ -233,10 +253,11 @@ public class UserSearchServlet extends HttpServlet {
 				session.setAttribute("buildingID", buildingID);
 				session.setAttribute("buildings", buildings);
 				session.setAttribute("startDate", startDate);
-				session.setAttribute("endDate", endDate);
+				session.setAttribute("endDate", endDateSlashed);
 				session.setAttribute("startTime", startTime);
 				session.setAttribute("endTime", endTime);
 				session.setAttribute("tc", tc);
+				
 			} else {
 				//------------------------------------------------//
 				/*               USER INFO EXPIRED                */
