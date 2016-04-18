@@ -121,8 +121,8 @@ public class HourCountSelectQuery {
 	 */
 	public String hourIncrementSelect(){
 		String select = "<select id='hourIncrement' name='hourIncrement'>";
-		select += "<option selected='selected' value='1'>1</option>";
-		select += "<option value='2'>2</option></select>";
+		select += "<option selected='selected' value='1'>1 Hour</option>";
+		select += "<option value='2'>2 Hours</option></select>";
 		return select;
 	}
 }

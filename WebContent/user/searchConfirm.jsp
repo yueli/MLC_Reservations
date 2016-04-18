@@ -29,7 +29,7 @@
 		<div id="container margin-vert-60" style="z-index:1;" >
 		<div class="row text-center">
 		<div id="reservation_div">	
-			<form name="searchConfirmForm" id ="searchConfirmForm" action="BrowseConfirmation" method="post">
+			<form name="searchConfirmForm" id ="searchConfirmForm" action="SearchReservation-Confirm" method="post">
 				<h2>Make a Reservation</h2><br>
 				<h3>Please fill out additional information below to make a reservation.</h3><br>
 				<h3>${msg}</h3>

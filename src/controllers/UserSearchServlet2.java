@@ -90,10 +90,10 @@ public class UserSearchServlet2 extends HttpServlet {
 							+ "To make a reservation for another time for today, please cancel one of your current reservations first.";
 					
 					url = "user/search.jsp";
+					
 				} else if (incrementSum == 1){
 					if(incrementSum == hourIncrement){
 						// user can make another 1 hour reservation
-						
 						url = "user/searchConfirm.jsp";
 						
 					} else {
@@ -114,6 +114,8 @@ public class UserSearchServlet2 extends HttpServlet {
 						url = "user/search.jsp";
 					}
 				}
+				// clear cache to clear back button functionality
+				CASLogoutServlet.clearCache(request, response);
 				
 				session.setAttribute("msg", msg);
 				session.setAttribute("buildingID", buildingID);

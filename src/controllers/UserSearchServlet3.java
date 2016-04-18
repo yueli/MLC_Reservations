@@ -23,7 +23,7 @@ import model.User;
  * Servlet implementation class UserSearchServlet3
  * @author Brian Olaogun
  */
-@WebServlet("/SearchConfirm")
+@WebServlet("/SearchReservation-Confirm")
 public class UserSearchServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private HttpSession session;
@@ -67,19 +67,23 @@ public class UserSearchServlet3 extends HttpServlet {
 				String endDate = (String) session.getAttribute("endDate");
 				String startTime = (String) session.getAttribute("startTime");
 				String endTime = (String) session.getAttribute("endTime");
-				String secondaryMyID = request.getParameter("secondaryMyID");
+				String secondaryMyID = request.getParameter("secondary");
 				String msg = "";
 				
 				// input validation for secondary myID
 				if(secondaryMyID.isEmpty() || secondaryMyID.equals("")){
+					
 					msg = "Please enter a myID of a secondary person to reserve a room";
 					url = "user/searchConfirm.jsp";
+					
 				} else if (secondaryMyID.equalsIgnoreCase(primaryUser.getMyID())){
+					
 					msg = "Please enter a myID other than your own. <br> The person also needs to have "
 							+ "logged into the site at least once to be added to a reservation.";
 					url = "user/searchConfirm.jsp";
 							
 				} else if (User.containsSpaces(secondaryMyID) == true){
+					
 					msg = "Please remove spaces from the ID entered.";
 					url = "user/searchConfirm.jsp";
 					
@@ -100,18 +104,22 @@ public class UserSearchServlet3 extends HttpServlet {
 					// secondary user ID check
 					// make sure inputted ID is not their own
 					if(primaryUser.getMyID() == secondaryMyID){
+						
 						msg = "You cannot enter your MyID as a secondary ID. "
 								+ "Please Enter a MyID other than your own. ";
 						url = "user/searchConfirm.jsp";
+						
 					}
 					
 					// verify inputed secondary user ID
 					// if user is not in our local database, have them login once to register
 					else if(!uh.inUserTable(secondaryMyID)){
+						
 						msg = "Please have " + secondaryMyID + " login once into the application. <br>"
 								+ "Logging in once serves as a form of user registration.<br> Once " + secondaryMyID 
 								+ " has logged in once, you can add them to any future reservation. ";
 						url = "user/searchConfirm.jsp";
+						
 					} else {
 						
 						//-----------------------//
@@ -145,11 +153,13 @@ public class UserSearchServlet3 extends HttpServlet {
 						// a returned value = the room was reserved at the time
 						// an empty result set/string =  the room is free at the time
 						if(!reservationCheck.isEmpty()){ // the room the user selected is reserved
+							
 							msg = "Another user just reserved this room at this time.  Please select another time. "
 									+ "";
 							url = "user/searchConfirm.jsp";
 							
 						} else { // the room selected is not reserved = make a reservation
+							
 							// create reservation object to insert in query
 							// subtract one sec from end time so that no end time overlap with start time for room/date/reservation in database
 							Reservation reservation = new Reservation(primaryUserID, secondaryUserID, roomID, startDate, endDate, startTime, TimeConverter.subtractOneSecondToTime(endTime), hourIncrement, Integer.parseInt(buildingID), free);
@@ -163,30 +173,36 @@ public class UserSearchServlet3 extends HttpServlet {
 							// make sure an email exists in our local database for primary user. 
 							// if not, use MyID@uga.edu as email.
 							if (primaryUser.getUserEmail() == null || primaryUser.getUserEmail().isEmpty()){
+								
 								primaryEmail = primaryUser.getMyID() + "@uga.edu";
+								
 							} else {
+								
 								primaryEmail = primaryUser.getUserEmail();
 							}
 							
 							// make sure an email exists in our local database for secondary user. 
 							// if not, use MyID@uga.edu as email.
 							if(secondaryUser.getUserEmail() == null || secondaryUser.getUserEmail().isEmpty()){
+								
 								secondaryEmail = secondaryMyID + "@uga.edu";
+								
 							} else {
+								
 								secondaryEmail = secondaryUser.getUserEmail();
+								
 							}
 							
 							// class used to send email
 							Email email = new Email();
 							email.setWebsiteURL(DbConnect.urlRedirect());
-							//email.setWebsiteURL("http://localhost:8080/MLC_Reservations");
 							email.sendMail(primaryEmail, secondaryEmail, startDate, startTime, endTime, buildingName, roomNumber, email.getWebsiteURL());
 							
 							// set success message and forwarding URL
 							String message = "<div align='center'><h3>You have successfully made a reservation. <br> "
 									+ "You should receive a confirmation email shortly.</h3></div>";
 							
-							url = "ViewServlet";
+							url = "View";
 							
 							session.setAttribute("secondaryEmail", secondaryEmail);				
 							session.setAttribute("message", message);
