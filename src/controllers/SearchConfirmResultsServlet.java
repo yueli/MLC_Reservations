@@ -83,10 +83,7 @@ public class SearchConfirmResultsServlet extends HttpServlet {
 				String table ="<p>";
 				table += "<form name='searchaddreservation' action=searchaddreservation method=get>";
 				
-				
-				//table += "<input type='hidden' name='Rooms_roomID' value='"+ Rooms_roomID +"'>";
-				//table += "<input type='hidden' name='Rooms_roomID' value='"+ Rooms_roomID +"'>";
-				//table += "<input type='hidden' name='Rooms_roomID' value='"+ Rooms_roomID +"'>";
+			
 				
 				table += "<input type='hidden' name='Rooms_roomID' value='"+ Rooms_roomID +"'>";
 				table += "<input type='hidden' name='reserveStartDate' value='"+ reserveStartDate +"'>";

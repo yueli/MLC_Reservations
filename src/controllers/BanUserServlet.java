@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,9 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import helpers.BanGetUserInfoQuery;
 import helpers.BanUserQuery;
+import model.Admin;
 import model.Banned;
+import model.User;
 
 
 //**By Ronnie Xu~****/
@@ -20,11 +27,13 @@ import model.Banned;
 @WebServlet(
 		description = "Ban User", 
 		urlPatterns = { 
-				"/banUserServlet", 
+				"/banUserServlet",  "/ban"
 			
 		})
 public class BanUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	 private HttpSession session;  
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,44 +48,66 @@ public class BanUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		// ??? response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.session = request.getSession(false);
 		
+		
+		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+		
+		String table ="";
+		BanGetUserInfoQuery bguiq = new BanGetUserInfoQuery();
+		User user = new User();
 		//Get data from form
-		int banID = Integer.parseInt(request.getParameter(""));
-		int studentID = Integer.parseInt(request.getParameter(""));
-		int adminID = Integer.parseInt(request.getParameter(""));
-		String banStart = request.getParameter("");
-		String banEnd = request.getParameter("");
-		int penaltyCount = Integer.parseInt(request.getParameter(""));
-		String description = request.getParameter("");
-		int status = Integer.parseInt(request.getParameter(""));
+		int studentID = Integer.parseInt(request.getParameter("userID"));
+		user = bguiq.userData(studentID);
 		
-		//Get helper object to Add User to ban list.
+		//Check if student is already banned or not
 		
-		Banned ban = new Banned();
+		boolean bannedAlready = bguiq.isUserBannedAlready(studentID);
 		
-		ban.setBanID(banID);
-		ban.setStudentID(studentID);
-		ban.setAdminID(adminID);
-		ban.setBanStart(banStart);
-		ban.setBanEnd(banEnd);
-		ban.setPenaltyCount(penaltyCount);
-		ban.setDescription(description);
-		ban.setStatus(status);
+	
+		if(bannedAlready == true){
+			table ="";
+			table += user.getUserFirstName()+ " is already banned in the system. <br />";
+			table += "Reason for ban: "+ bguiq.banDescription + ".";
+			
+		}
+		//User is not banned
+		else{
+			table = "";
+			table += "First Name: "+ user.getUserFirstName()+" <br />";
+			table += "Last Name: "+ user.getUserLastName()+" <br />";
+			table += "E-mail: "+ user.getUserEmail() + "<br />";
+			
+			//Hide ban inputs
+			//Create Form for confirmation
+			// java.util.Date today = new java.util.Date();
+			java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+			
+			Date now = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			sdf.format(date);
+			
+			table += "<form name='ban' action=bansuccess method=post>";
+			table += "<input type='hidden' name='userID' value='"+ user.getUserRecordID() +"'>";
+			table += "<input type='hidden' name='adminID' value='"+ loggedInAdminUser.getAdminID() +"'>";
+			table += "<input type='hidden' name='banStart' value='"+sdf.format(date) +"'>";
+			table += "<input type='hidden' name='banEnd' value='1111-11-11 11:11:11'>";
+			table += "<input type='hidden' name='penaltyCount' value='2'>";
+			table += "Reason for ban<br /><input type='text' name='description' value=''>";
+			table += "<input type='hidden' name='status' value='1'><br />";
+			table += "<input class='btn btn-lg btn-red' type=submit name=submit value='Confirm Ban'></p></form>";
+			table += "</table>";
+		}
+		
+			request.setAttribute("table", table);
+			
+			String url = "/admin/banconfirm.jsp";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+			dispatcher.forward(request, response);
+			
 		
 		
-		BanUserQuery buq = new BanUserQuery(); 
-		buq.banUser(ban);
-		
-		String url = "/banread";
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
-		
-		
-		
-		
+	
 	}
 
 	/**

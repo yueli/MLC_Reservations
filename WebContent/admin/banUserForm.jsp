@@ -26,12 +26,12 @@
 
 <div align="center">
 
-<form name="/searchuser" action="/searchuser" method="get">
+<form name="searchuser" action="searchuser" method="get">
+Search for User to Ban<br /><br />
 First Name: <input type=text name=fname value=""/><br>
-Last Name<input type=text name=lname value=""/><br>
+Last Name: <input type=text name=lname value=""/><br>
 
-Reason for ban:<textarea rows="4" cols="50" type=text name=banReason value=""/>
-</textarea><br><br>
+<br><br>
 
 <input class="btn btn-lg btn-red col-med-3" type="submit" name="submit" value="Search">
 
