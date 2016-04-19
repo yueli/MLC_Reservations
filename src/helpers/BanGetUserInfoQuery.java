@@ -50,7 +50,7 @@ public class BanGetUserInfoQuery {
 	 public User userData(int userID){
 		
 		User userData = new User();
-		String query = "SELECT user.userID,user.myID,user.fname,user.lname,user.email,user.lastLogin FROM tomcatdb.user WHERE user.userID = "+userID+";";
+		String query = "SELECT User.userID,User.myID,User.fname,User.lname,User.email,User.lastLogin FROM tomcatdb.User WHERE User.userID = "+userID+";";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			this.results = ps.executeQuery();
@@ -78,7 +78,7 @@ public class BanGetUserInfoQuery {
 		 boolean banned = false;
 		 	
 		 
-			String query = "SELECT banned.bannedID,banned.User_userID,banned.Admin_adminID,banned.banStart,banned.banEnd,banned.penaltyCount,banned.description,banned.status FROM tomcatdb.banned WHERE banned.status = 1 AND banned.User_userID = "+userID+";";
+		 String query = "SELECT Banned.bannedID,Banned.User_userID,Banned.Admin_adminID,Banned.banStart,Banned.banEnd,Banned.penaltyCount,Banned.description,Banned.status FROM tomcatdb.Banned WHERE Banned.status = 1 AND Banned.User_userID = "+userID+";";
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
 				this.banResults = ps.executeQuery();

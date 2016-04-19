@@ -38,7 +38,7 @@ public class BanUserSearchQuery{
 	public void doRead(String fname, String lname){
 
 		//String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
-		String query = "SELECT u.userID , u.myID, u.fname, u.lname, u.lastLogin, u.email FROM tomcatdb.User u, tomcatdb.banned b  where  u.userID = b.User_userID and b.status = 0 and fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%'";
+		String query = "SELECT u.userID , u.myID, u.fname, u.lname, u.email,u.lastLogin  FROM tomcatdb.User u, tomcatdb.Banned b  where  u.userID = b.User_userID and b.status = 0 and fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%'";
 		System.out.println(query);
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
