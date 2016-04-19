@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime; //2016-04-17 GAN commented out - red x - error
 import java.util.Date;
 
 import model.Banned;

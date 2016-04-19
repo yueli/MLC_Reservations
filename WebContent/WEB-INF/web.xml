@@ -2,6 +2,11 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>MLC_Reservations</display-name>
   <welcome-file-list>
+<<<<<<< HEAD
     <welcome-file>LoginServlet</welcome-file>
+=======
+    <welcome-file>CASLoginServlet</welcome-file>
+    <!--<welcome-file>LoginServlet</welcome-file> -->
+>>>>>>> refs/remotes/origin/master
   </welcome-file-list>
 </web-app>

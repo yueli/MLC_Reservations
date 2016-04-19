@@ -53,8 +53,11 @@ public class LoginServlet extends HttpServlet {
 		loggedInAdminUser.setRole("A");
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setAdminMyID("bbo89");
+		//loggedInAdminUser.setAdminMyID("ganix");
 		System.out.println("LOGIN SERVLET!");
-	
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
+		
+
 		User user = new User();
 		user.setUserFirstName("Brian");
 		user.setUserLastName("Olaogun");
@@ -76,13 +79,14 @@ public class LoginServlet extends HttpServlet {
 		user.setUserFirstName("Ginger");
 		user.setUserLastName("Nix");
 		user.setUserRecordID(19);
-		
+*/		
 		session.setAttribute("user", user);
-*/
+
 		
 		url = "AdminHome"; 
 		//url = "user/userHomePage.jsp"; 
-
+		//url = "admin/adminHomePage.jsp"; 
+		
 		//----------
 		// TESTING ADMINS SECTION
 /*		loggedInAdminUser.setAdminID(2);
@@ -94,6 +98,8 @@ public class LoginServlet extends HttpServlet {
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		
 */	
+		System.out.println("LoginServlet: url = " + url);
+		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response); 
