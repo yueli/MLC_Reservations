@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import model.DbConnect;
 import model.User;
@@ -38,12 +40,12 @@ public class BanUserSearchQuery{
 	public void doRead(String fname, String lname){
 
 		//String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
-		String query = "SELECT u.userID , u.myID, u.fname, u.lname, u.email,u.lastLogin  FROM tomcatdb.User u, tomcatdb.Banned b  where  u.userID = b.User_userID and b.status = 0 and fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%'";
+		String query = "SELECT u.userID , u.myID, u.fname, u.lname, u.email,u.lastLogin  FROM tomcatdb.User u where u.userID not IN (select b.User_userID FROM tomcatdb.Banned b where b.status=1) and fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%' GROUP BY u.userID";
 		System.out.println(query);
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			results = ps.executeQuery();
-			
+			System.out.println("Excute finished");
 		
 			
 		} catch (SQLException e) {
@@ -61,13 +63,15 @@ public class BanUserSearchQuery{
 		
 	
 		try{
-			
+			System.out.println("In try");
 			
 			table += "<tr><td><a href=banUser><button type='submit' value=''>Ban A User</button></a></td>";
 			table += "<td><a href=unbanall><button type='submit' value=''>Unban All</button></a></td></tr>";
 			table += "<tr></tr>";
 			table += "<tr><td>User ID</td><td>User My ID</td><td>First Name</td><td>Last Name</td><td>Last Login</td><td>E-mail</td><td></td></tr>";
 			while(results.next()){
+				
+				System.out.println("In while");
 				//userID , myID, fname, lname, lastLogin, email
 				
 				User user = new User();
@@ -75,7 +79,13 @@ public class BanUserSearchQuery{
 				user.setMyID(results.getString("userID"));
 				user.setUserFirstName(results.getString("fname"));
 				user.setUserLastName(results.getString("lname"));
-				user.setLastLogin(results.getString("lastLogin"));
+				
+				java.sql.Date sqlDate = results.getDate("lastLogin");
+				//sqlDate.toString();
+				
+				user.setLastLogin(sqlDate.toString());
+				System.out.println("User Set Last Login");
+				
 				user.setUserEmail(results.getString("email"));
 				
 		
