@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import model.Building;
 import model.DateTimeConverter;
 import model.DbConnect;
-import model.Reservation;
 
 /**
  * @author Brian Olaogun
@@ -434,9 +433,9 @@ public class BuildingSelectQuery {
 			this.results = ps.executeQuery();
 			
 			while(this.results.next()){
-				Reservation reservation = new Reservation();
-				reservation.setReserveID(this.results.getInt("reserveID"));
-				results += reservation.getReserveID();
+				Building building = new Building();
+				building.setBuildingID(this.results.getInt("buildingID"));
+				results += building.getBuildingID();
 			} this.results.beforeFirst();
 			
 		} catch (SQLException e) {
