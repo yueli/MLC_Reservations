@@ -43,9 +43,9 @@ public class BanUserSearchQuery{
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			results = ps.executeQuery();
-			
+						
 		
-			
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error in RoomSelectQuery.java: doRoomRead method. Please check connection or SQL statement.");
@@ -62,12 +62,12 @@ public class BanUserSearchQuery{
 	
 		try{
 			
-			
 			table += "<tr><td><a href=banUser><button type='submit' value=''>Ban A User</button></a></td>";
 			table += "<td><a href=unbanall><button type='submit' value=''>Unban All</button></a></td></tr>";
 			table += "<tr></tr>";
 			table += "<tr><td>User ID</td><td>User My ID</td><td>First Name</td><td>Last Name</td><td>Last Login</td><td>E-mail</td><td></td></tr>";
 			while(results.next()){
+				
 				//userID , myID, fname, lname, lastLogin, email
 				
 				User user = new User();
@@ -76,6 +76,7 @@ public class BanUserSearchQuery{
 				user.setUserFirstName(results.getString("fname"));
 				user.setUserLastName(results.getString("lname"));
 				user.setLastLogin(results.getString("lastLogin"));
+				
 				user.setUserEmail(results.getString("email"));
 				
 		

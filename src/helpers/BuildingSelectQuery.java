@@ -404,6 +404,7 @@ public class BuildingSelectQuery {
 		
 		return false;
 	}
+
 	/**
 	 * Java Main Method used to test methods above.
 	 * @param args Java Main Method
