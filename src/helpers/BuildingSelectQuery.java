@@ -407,10 +407,12 @@ public class BuildingSelectQuery {
 
 	/**
 	 * This method will check to see if a building is open at the user specified time
-	 * @param startDate
-	 * @param startTime
-	 * @param buildingID
-	 * @return
+	 * @param startDate String date in yyyy-MM-dd format
+	 * @param startTime String time in HH:mm:ss (24-hour) format
+	 * @param buildingID String buildingID
+	 * @return String buildingID if the building is open at the date and time entered.
+	 * If not open, and empty string is returned.
+	 * @author Brian Olaogun
 	 */
 	public String buildingScheduleCheck (String startDate, String startTime, String buildingID){
 		
@@ -467,7 +469,6 @@ public class BuildingSelectQuery {
 	 * @author Ginger Nix 
 	 * @return String the start time of the building on this date
 	 */
-	
 	public String getBuildingStartTime (int buildingID, String dateToSearch) {
 		
 		System.out.println("BSQ: getBuildingStartTime: buildingID and dateToSearch = " + buildingID + " " + dateToSearch);
@@ -514,7 +515,6 @@ public class BuildingSelectQuery {
 	 * @author Ginger Nix 
 	 * @return String the end time of the building on this date
 	 */
-	
 	public String getBuildingEndTime (int buildingID, String dateToSearch) {
 		
 		String endTime = "";
