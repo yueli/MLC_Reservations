@@ -141,7 +141,7 @@ public class UserSearchServlet3 extends HttpServlet {
 						User secondaryUser = uh.getUserInfo(secondaryMyID);
 						int secondaryUserID = secondaryUser.getUserRecordID();
 						
-						System.out.println("SECONDARY USER INFO FROM BROWSE CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
+						System.out.println("SECONDARY USER INFO FROM SEARCH CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
 						System.out.println();
 						System.out.println("PRINT of secondary ID: " + secondaryUserID);
 						
