@@ -61,7 +61,7 @@
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime"><br>
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
-				<!--End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>-->
+				End Time: <input id="endTime" name="endTime"><br>
 				Reservation Length: ${hourIncrementSelect}<br><br>
 				<a href="Browse"><button class="btn btn-lg btn-red" type="button" value="Browse">Browse</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
 			</form>
