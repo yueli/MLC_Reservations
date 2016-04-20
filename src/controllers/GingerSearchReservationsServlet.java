@@ -1,4 +1,4 @@
-package controllers;
+/*package controllers;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -26,33 +26,33 @@ import model.DbConnect;
 import model.TimeConverter;
 import model.User;
 
-/**
+*//**
  * Servlet implementation class GingerSearchReservations
- */
+ *//*
 @WebServlet("/GingerSearchReservations")
 public class GingerSearchReservationsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session; 
 	private String url;
 	
-    /**
+    *//**
      * @see HttpServlet#HttpServlet()
-     */
+     *//*
     public GingerSearchReservationsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
+	*//**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 *//*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doPost(request, response);
 	}
 
-	/**
+	*//**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 *//*
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get current session
 		session = request.getSession(false);
@@ -89,18 +89,19 @@ public class GingerSearchReservationsServlet extends HttpServlet {
 		//convert the time from user parameter to military time
 		TimeConverter tc = new TimeConverter();
 		String userStartTime24 = tc.convertTimeTo24(startTime);
-		userStartTime24 = tc.
+		userStartTime24 = tc.convertTimeTo24(startTime);
 	
 		// convert slashed date to mysql format
-		DateTimeConverter dtc = new DateTimeConverter();
-		String startDateToFormat = dtc.slashDateConvert(startDateSlashed);
-		String endDateToFormat = dtc.slashDateConvert(endDateSlashed);
+		//Date TimeConverter dtc = new DateTimeConverter();
+		//String startDateToFormat = dtc.slashDateConvert(startDateSlashed);
+		//String endDateToFormat = dtc.slashDateConvert(endDateSlashed);
 		 
-		System.out.println("GingerSearchResv:  start and end dates to format: " + startDateToFormat + " " + endDateToFormat);
+		//System.out.println("GingerSearchResv:  start and end dates to format: " + startDateToFormat + " " + endDateToFormat);
 			
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date searchStartDate = null;
 		
+		String startDateToFormat;
 		try {
 			searchStartDate = formatter.parse(startDateToFormat); //parses a string into a date
 		} catch (ParseException e) {
@@ -109,6 +110,7 @@ public class GingerSearchReservationsServlet extends HttpServlet {
 		}
 		Date searchEndDate = null;
 		
+		String endDateToFormat;
 		try {
 			searchEndDate = formatter.parse(endDateToFormat);
 		} catch (ParseException e) {
@@ -138,7 +140,7 @@ public class GingerSearchReservationsServlet extends HttpServlet {
 		String buildingEndTime = "";
 		BuildingSelectQuery bsq = new BuildingSelectQuery();
 		
-/*		//TEST
+		//TEST
 		Date date = start.getTime();
 		dateToFormat = date; // get the date object of the day we are on
 		thisDate = dateFormat.format(dateToFormat); //turn it into a string to compare	
@@ -146,7 +148,7 @@ public class GingerSearchReservationsServlet extends HttpServlet {
 	    System.out.println("GingerSearchResv: thisDate =  " + thisDate);
 	  
 		// END TEST
-*/		
+		
 		for (Date date = start.getTime();  start.before(end);  start.add(Calendar.DATE, 1), date = start.getTime()) {
 
 		    System.out.println("GingerSearchResv: beg of for loop date =  " + date);
@@ -214,7 +216,7 @@ public class GingerSearchReservationsServlet extends HttpServlet {
 		    
 		}
 		
-		/*
+		
 		 * 
 		 * SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 Date startDate = formatter.parse("2010-12-20");
@@ -244,10 +246,10 @@ Date endDate = formatter.parse("2010-12-26");
 		      System.out.println("Today Date is Greater than my date"); 
 		  else
 		      System.out.println("Both Dates are equal"); 
-		*/
+		
 		
 		
 		
 		
 	}
-}
+}*/
