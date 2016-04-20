@@ -278,7 +278,7 @@ public class UserSearchServlet extends HttpServlet {
 								}
 							}
 						} else {
-						
+					    
 							// loop through each room after all times have been checked 
 							//for (int i = 0; i < roomNumber.size(); i++){
 							for (int k = 0; k < dates.size(); k++) {	
@@ -390,7 +390,7 @@ public class UserSearchServlet extends HttpServlet {
 											}
 										}
 										
-									} 
+									}
 									if (!dates.get(k).equals(startDate) && !dates.get(k).equals(endDate)) {
 										
 										// loop through each time then increment room
