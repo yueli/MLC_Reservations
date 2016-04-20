@@ -160,6 +160,54 @@ public class TimeConverter {
 		}
 		return null;
 	}
+	
+	/**
+	 * This method will subtract the hours of a start time by the reservation length (hour)
+	 * For example, 23:00:00 - 2 = 21:00:00
+	 * @param time String time in HH:mm:ss (24-hour) SQL format
+	 * @param hourIncrement Integer reservation length
+	 * @return The difference from of the start time - reservation length (hour increment)
+	 */
+	public static String subtractTime (String time, int hourIncrement){
+		String newTime; // the result of adding a second to inputted time
+		int hour; // for calendar object
+		int minute; // for calendar object
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour (in 24-hour format)
+		SimpleDateFormat minuteFormat = new SimpleDateFormat("mm"); // for parsing out minutes
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		try {
+			// parse out hour to add to calendar
+			Date convertStringTimeToDate_Hour = _24HourTimeFormat.parse(time);
+			String hourString = hourFormat.format(convertStringTimeToDate_Hour);
+			hour = Integer.parseInt(hourString);
+	
+			// parse out minute to add to calendar
+			Date convertStringTimeToDate_Minute = _24HourTimeFormat.parse(time);
+			String minuteString = minuteFormat.format(convertStringTimeToDate_Minute);
+			minute = Integer.parseInt(minuteString);
+			
+			// calendar object to correctly add or subtract time
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.HOUR_OF_DAY, hour);
+		    calendar.set(Calendar.MINUTE, minute);
+		    calendar.set(Calendar.SECOND, 00);
+		    
+		    // subtract a second
+		    calendar.add(Calendar.HOUR_OF_DAY, -hourIncrement); 
+		    
+		    //convert calendar to string time
+		    Date nt = calendar.getTime();
+		    newTime = _24HourTimeFormat.format(nt);
+		    return newTime;
+		    
+		} catch (ParseException e) {
+			System.out.println("Error parsing time in TimeConverter.addOneMinute. Please check time parameter " + time);
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	/**
 	 * This method will count the number of hours between start and end time.
 	 * @param reserveStartTime String start time
@@ -173,9 +221,9 @@ public class TimeConverter {
 		return hourIncrement;
 	}
 	/**
-	 * 
-	 * @param stringStartTime String starting time in 24-hour format
-	 * @param stringEndTime String ending time in 24-hour format
+	 * This method will return an array list of all values inclusive between start time and end time
+	 * @param startTime String starting time in 24-hour format
+	 * @param endTime String ending time in 24-hour format
 	 * @return String array list of all values inclusive between start time and end time
 	 */
 	public List<String> timeRangeList (String startTime, String endTime){
@@ -369,6 +417,8 @@ public class TimeConverter {
 			System.out.println("Time is ..." + time);
 		}
 		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("09:00:00", "11:00:00"));
+		
+		System.out.println("TEST NEW subtract time = " + TimeConverter.subtractTime("00:00:00", 1));
 		
 	}
 

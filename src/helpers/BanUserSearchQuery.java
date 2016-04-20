@@ -38,12 +38,12 @@ public class BanUserSearchQuery{
 	public void doRead(String fname, String lname){
 
 		//String query = "SELECT banned.bannedID, banned.Student_studentID, banned.Admin_adminID, banned.banStart, banned.banEnd, banned.penaltyCount, banned.description, banned.status FROM banned";
-		String query = "SELECT u.userID , u.myID, u.fname, u.lname, u.lastLogin, u.email FROM tomcatdb.User u, tomcatdb.banned b  where  u.userID = b.User_userID and b.status = 0 and fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%'";
+		String query = "SELECT u.userID , u.myID, u.fname, u.lname, u.email,u.lastLogin  FROM tomcatdb.User u where u.userID not IN (select b.User_userID FROM tomcatdb.Banned b where b.status=1) and fname LIKE '"+fname+"%' and lname LIKE '"+lname+"%' GROUP BY u.userID";
 		System.out.println(query);
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			results = ps.executeQuery();
-			
+			System.out.println("Excute finished");
 		
 			
 		} catch (SQLException e) {
@@ -57,25 +57,54 @@ public class BanUserSearchQuery{
 	public String getHTMLTable(){ 
 		//Return table of banned students
 		
-		String table = "<center><table>";
+		String table = "<center><table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 		
 	
 		try{
+			System.out.println("In try");
 			
-			
-			table += "<tr><td><a href=banUser><button type='submit' value=''>Ban A User</button></a></td>";
-			table += "<td><a href=unbanall><button type='submit' value=''>Unban All</button></a></td></tr>";
-			table += "<tr></tr>";
-			table += "<tr><td>User ID</td><td>User My ID</td><td>First Name</td><td>Last Name</td><td>Last Login</td><td>E-mail</td><td></td></tr>";
+	
+			table += "<thead>"
+					+ "<th>User ID</th>"
+					+ "<th>User My ID</th>"
+					+ "<th>First Name</th>"
+					+ "<th>Last Name</th>"
+					+ "<th>Last Login</th>"
+					+ "<th>E-mail</th>"
+					+ "<th></th>"
+					+ "</thead>"
+					+ "<tbody>";
 			while(results.next()){
+				
+				
+				System.out.println("In while");
 				//userID , myID, fname, lname, lastLogin, email
 				
 				User user = new User();
 				user.setUserRecordID(results.getInt("userID"));
-				user.setMyID(results.getString("userID"));
+				user.setMyID(results.getString("myID"));
 				user.setUserFirstName(results.getString("fname"));
 				user.setUserLastName(results.getString("lname"));
 				user.setLastLogin(results.getString("lastLogin"));
+				
+				/*
+				if(results.getString("lastLogin").toString().equals("0000-00-00")){
+					user.setLastLogin("0000-00-00");
+				}
+				else{
+					user.setLastLogin(results.getDate("lastLogin").toString());
+				}
+						*/
+			
+				//if()
+				
+				//results.getString("lastLogin"));
+						
+			
+				
+				//user.setLastLogin(results.getString("lastLogin"));
+				System.out.println("User Set Last Login");
+				
 				user.setUserEmail(results.getString("email"));
 				
 		
@@ -102,12 +131,12 @@ public class BanUserSearchQuery{
 				table += "</td>";
 			
 				
-				table += "<td><a href=ban?userID=" + user.getMyID() + "> <button type='submit' value='Ban'>Ban</button></a></td>";
+				table += "<td><a href=ban?userID=" + user.getUserRecordID() + "> <button type='submit' value='Ban'>Ban</button></a></td>";
 
 				
 				table += "</tr>";
 			}
-			table+="</table></center>";
+			table+="</tbody></table></center>";
 		}
 		catch(SQLException e) {
 			e.printStackTrace();

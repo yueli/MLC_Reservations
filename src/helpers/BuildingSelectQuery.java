@@ -404,6 +404,51 @@ public class BuildingSelectQuery {
 		
 		return false;
 	}
+
+	/**
+	 * This method will check to see if a building is open at the user specified time
+	 * @param startDate String date in yyyy-MM-dd format
+	 * @param startTime String time in HH:mm:ss (24-hour) format
+	 * @param buildingID String buildingID
+	 * @return String buildingID if the building is open at the date and time entered.
+	 * If not open, and empty string is returned.
+	 * @author Brian Olaogun
+	 */
+	public String buildingScheduleCheck (String startDate, String startTime, String buildingID){
+		
+		String results = "";
+		String query = "SELECT tomcatdb.Building.buildingID "
+				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
+				+ "WHERE tomcatdb.Building.buildingStatus = ? "
+				+ "AND tomcatdb.Building.buildingID = tomcatdb.Schedule.Building_buildingID "
+				+ "AND tomcatdb.Building.buildingID = ? "
+				+ "AND tomcatdb.Schedule.startDate = ? "
+				+ "AND ((tomcatdb.Schedule.startTime = ?) OR (? BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
+		
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, "1");
+			ps.setString(2, buildingID);
+			ps.setString(3, startDate);
+			ps.setString(4, startTime);
+			ps.setString(5, startTime);
+			this.results = ps.executeQuery();
+			
+			while(this.results.next()){
+				Building building = new Building();
+				building.setBuildingID(this.results.getInt("buildingID"));
+				results += building.getBuildingID();
+			} this.results.beforeFirst();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in BuildingSelectQuery.java: buildingScheduleCheck method. Please check connection or SQL statement");
+		}
+		
+		return results;
+	}
+	
 	/**
 	 * Java Main Method used to test methods above.
 	 * @param args Java Main Method
@@ -415,4 +460,87 @@ public class BuildingSelectQuery {
 		System.out.println("Are there any buildings online? " + buildingsCheck);
 		
 	}
+	
+	
+	
+	/**
+	 *  Gets the start time for the building on the date and building id sent 
+	 * @param building id, date to check
+	 * @author Ginger Nix 
+	 * @return String the start time of the building on this date
+	 */
+	public String getBuildingStartTime (int buildingID, String dateToSearch) {
+		
+		System.out.println("BSQ: getBuildingStartTime: buildingID and dateToSearch = " + buildingID + " " + dateToSearch);
+		
+		String startTime = "";
+		
+		String query = "SELECT startTime FROM tomcatdb.Schedule "
+						+ "WHERE Building_buildingID = ? "
+						+ "AND startDate = ?"
+						+ "LIMIT 1";	
+		/*String query = "SELECT startTime FROM tomcatdb.Schedule "
+				+ "WHERE Building_buildingID = '" + buildingID +  "' "
+				+ "AND startDate = '" + dateToSearch + "' "
+				+ "LIMIT 1";
+		*/
+		//System.out.println("BSQ: getBuildingStartTime: query= " + query);	
+		
+		try {
+
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, buildingID); 
+			ps.setString(2, dateToSearch);
+
+			this.results = ps.executeQuery();
+	
+			// get the results of the query
+			if(this.results.next()){	
+				startTime = this.results.getString("startTime");	
+				//System.out.println("BSQ: getBuildingStartTime: startTime in if = " + startTime);							
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("**** Error in BuildingSelectQuery.java: buildingOnline method. Please check connection or SQL statement: " + query);
+		}
+		
+		//System.out.println("BSQ: getBuildingStartTime: startTime at end= " + startTime);		
+		return startTime; //will be empty if no start date is returned
+	}
+	
+	/**
+	 *  Gets the ending time for the building on the date and building id sent 
+	 * @param building id, date to check
+	 * @author Ginger Nix 
+	 * @return String the end time of the building on this date
+	 */
+	public String getBuildingEndTime (int buildingID, String dateToSearch) {
+		
+		String endTime = "";
+		
+		String query = "SELECT endTime FROM tomcatdb.Schedule "
+						+ "WHERE Building_buildingID = ? "
+						+ "AND startDate = ?"
+						+ "LIMIT 1";		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, buildingID); 
+			ps.setString(2, dateToSearch);
+
+			this.results = ps.executeQuery();
+			
+			// get the results of the query
+			if(this.results.next()){
+				endTime = this.results.getString("endTime");				
+			} 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in BuildingSelectQuery.java: buildingOnline method. Please check connection or SQL statement: " + query);
+		}
+		
+		return endTime; //will be empty if no start date is returned
+	}	
+	
 }
