@@ -16,6 +16,16 @@ table th {
 	background: #CC0000;
 	color: #fff;
 	}
+ 
+table.dataTable tr.odd { 
+	background-color: #e8e8e8;  
+	border:1px lightgrey;
+	}
+	
+table.dataTable tr.even{ 
+	background-color: white; 
+	border:1px lightgrey; 
+	}	
 	
 /* CSS FOR RESPONSIVE TABLES */
 @media only screen and (max-width: 760px),
