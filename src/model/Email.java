@@ -24,9 +24,9 @@ import javax.mail.internet.MimeMessage;
 
 
 /**
- * @author Brian Olaogun
  * Class used to send confirmation emails.
  * sample source code: https://en.wikipedia.org/wiki/JavaMail
+ * @author Brian Olaogun
  */
 public class Email {
 	// Fields for reservation confirmation email
@@ -192,7 +192,8 @@ public class Email {
 	
 	// Email Methods
 	/**
-	 * 
+	 * Send Email for reservation confirmation.  All parameters are string with time in 24-hour format, date in SQL yyyy-MM-dd format, 
+	 * building and room number with String integers, and the website URL to put in the email as a string.
 	 * @param to sendee 
 	 * @param cc copy other sendees
 	 * @param reserveDate reservation start date
@@ -200,7 +201,6 @@ public class Email {
 	 * @param endTime reservation end time
 	 * @param building the name of the building where the reservation is made
 	 * @param roomNumber room number
-	 * Send Email for reservation confirmation
 	 */
 	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL) {
         // ROOM RESERVATION DETAILS

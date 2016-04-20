@@ -1,9 +1,10 @@
-/* @author: Ginger Nix
+/** @author: Ginger Nix
  * 
- * This servlet gets the user's reservation and sends it to a jsp
- * where the user confirms that they want to cancel this reservation.
+ * The CancelConfirmServlet is called when a user clicks the cancel rervation button
+ * next to the reservation they want to cancel. It gets the user's reservation data and sends 
+ * it to a jsp where the reservation is displayed and the user confirms that they want to cancel this reservation.
  * 
- */
+ **/
 package controllers;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.ListUserReservationsQuery;
+import model.DbConnect;
 import model.Reservation;
 import model.User;
 
@@ -51,38 +53,48 @@ public class CancelConfirmServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String table = "";
 		String message = " ";
-		
-		//session.removeAttribute("message"); // null error
-		
+				
 		//get our current session
-		session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		int userRecdID = user.getUserRecordID();
+		this.session = request.getSession(false); 
 		
-		Reservation reservation = new Reservation();
+		// if this session is not null (active/valid)
+		if (this.session != null){	
 		
-		reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
-		System.out.println("CancelConfServ - resv_id = "+ reservation.getReserveID());
+			User user = (User) session.getAttribute("user");
+			int userRecdID = user.getUserRecordID();
+			
+			Reservation reservation = new Reservation();
+			
+			reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
+			System.out.println("CancelConfServ - resv_id = "+ reservation.getReserveID());
+			
+			// have reserve id from the parameter passed from view.jsp
+			// use reserve id to get the rest of the record's data and format into a table	
+			ListUserReservationsQuery lurq = new ListUserReservationsQuery();
+			table = lurq.GetUserReservation(reservation.getReserveID(),userRecdID);
+			
+			System.out.println("CancelConfirmServlet: table = " + table);
+			//forward our request along
+			request.setAttribute("user", user);
+			request.setAttribute("table",table);
+			request.setAttribute("message",message); 
+			
+			url = "user/confirmCancellation.jsp";	
+			
 		
-		// have reserve id from the parameter passed from view.jsp
-		// use reserve id to get the rest of the record's data and format into a table	
-		ListUserReservationsQuery lurq = new ListUserReservationsQuery();
-		table = lurq.GetUserReservation(reservation.getReserveID(),userRecdID);
-		
-		System.out.println("CancelConfirmServlet: table = " + table);
-		//forward our request along
-		request.setAttribute("user", user);
-		request.setAttribute("table",table);
-		request.setAttribute("message",message); 
-		
-		url = "user/confirmCancellation.jsp";	
-		
-		System.out.println("HERE: CancelConfirmServlet: message = " + message);
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
-		
 
 	}
 

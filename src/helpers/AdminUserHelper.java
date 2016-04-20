@@ -1,8 +1,9 @@
-/* 
+/**
  * @author: Ginger Nix
  *
- * class containing methods to use with viewing, adding, and editing admin users
- */
+ * This class contains methods to use with viewing, adding, and editing admin users.
+ * 
+ **/
 
 package helpers;
 
@@ -41,6 +42,14 @@ public class AdminUserHelper {
 
 	}
 	
+	/*
+	 * This method returns a table listing all the admin users.
+	 * @author: Ginger Nix
+	 * @date: Spring 2016
+	 * @parameters: none
+	 * @return: table of all the admin users
+	 * 
+	 */
 	public String ListAdmins(){
 		String table = "";
 		String adminActiveStatus = "";
@@ -48,8 +57,13 @@ public class AdminUserHelper {
 		
 		System.out.println("AdminUserHelper: ListAdmins");
 
-		table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
-		
+		table += "<div align='center'><h3>Admins</h3>";
+		table += "<br /><br />";
+		table += "<form action='AdminAddServlet' method = 'post'>" +
+				"<input class='btn btn-lg btn-red' type='submit' value='Add An Admin'>" +
+				"</form>";
+
+		table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 		table += "<thead>";
 		table += "<th> MyID</th>";
 		table += "<th> First Name</th>";
@@ -120,12 +134,8 @@ public class AdminUserHelper {
 			table += "<td></td>";
 			table += "<td></td>";
 			table += "<td></td>";
-			table += "<td align:center >";
-			table += "<form action='AdminAddServlet' method = 'post'>" +
-					"<input class='btn btn-lg btn-red' type='submit' value='Add An Admin'>" +
-					"</form>";
-			
-			table += "</td>";
+			table += "<td></td>";
+
 			table += "</tr>";
 			table += "</tfoot>";
 			
@@ -167,7 +177,7 @@ public class AdminUserHelper {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("***Error in AdminUserHelper getAdminInfo:  Query = " + query);
+			System.out.println("***Error in AdminUserHelper getAdminData:  Query = " + query);
 		}
 		return adminUser;
 		
@@ -208,7 +218,8 @@ public class AdminUserHelper {
 		
 			// create an HTML form with this information
 
-				table += "<br /><br /><br />";
+			table += "<div align='center'><h3>Edit Admin</h3>";
+			table += "<br /><br />";
 			table += "<form action='AdminSaveServlet' method = 'post'>";
 			
 			table += "First name:<br>";
@@ -425,6 +436,9 @@ public class AdminUserHelper {
 	public String createAddAdminForm(Admin loggedInAdminUser){
 		
 		String table = "";
+
+		table += "<div align='center'><h3>Add an Admin</h3>";
+		table += "<br />";
 		
 		table += "<form action='AdminAddSaveServlet' method = 'post'>";
 		
@@ -484,7 +498,7 @@ public class AdminUserHelper {
 		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Add Admin'>";
 		table += "</form>";
 		
-		table += "<br /><br />";
+		table += "<br />";
 		table += "<form action='AdminListServlet' method = 'post'>";
 		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 		table += "</form>";

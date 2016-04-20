@@ -87,7 +87,7 @@ public class AdminReservationsSelectQuery {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in AdminReservationsSelectQuery.java: doUserReservationRead method. Please check connection or SQL statement: " + query);
+			System.err.println("Error in AdminReservationsSelectQuery.java: doUserReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
 	/**
@@ -130,7 +130,7 @@ public class AdminReservationsSelectQuery {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in AdminReservationsSelectQuery.java: doAdminReservationRead method. Please check connection or SQL statement: " + query);
+			System.err.println("Error in AdminReservationsSelectQuery.java: doAdminReservationRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
 	/**
@@ -140,7 +140,7 @@ public class AdminReservationsSelectQuery {
 	public String doAdminReservationResults(String role){
 		String table = "";
 		if (role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")){
-			System.out.println("FORWARD TO doAdminReservationsWithCancel");
+			
 			table = doAdminReservationResultsWithCancel();
 			return table;
 			
@@ -213,7 +213,7 @@ public class AdminReservationsSelectQuery {
 	 * to cancel admin reservations.
 	 */
 	public String doAdminReservationResultsWithCancel(){
-		System.out.println("IN doAdminReservationResultsWithCancel");
+
 		String table = "";
 		try {
 			table += "<table id='' class='display'>";

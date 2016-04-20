@@ -3,9 +3,13 @@ package helpers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import model.Banned;
 import model.DbConnect;
+import model.TimeConverter;
 
 
 /**
@@ -40,21 +44,24 @@ public class BanUserQuery {
 	
 	public void banUser(Banned ban){
 		
-		String query = "INSERT INTO `tomcatdb`.`Banned` (`bannedID`, `Student_studentID`, `Admin_adminID`, `banStart`, `banEnd`, `penaltyCount`, `description`, `status`) VALUES (?,?,?,?,?,?,?,?)";;
+
+		
+		
+		//String query = "INSERT INTO `tomcatdb`.`Banned` (`User_userID`, `Admin_adminID`, `banStart`, `banEnd`, `penaltyCount`, `description`, `status`) VALUES (?,?,?,?,?,?,?)";;
+		String query = "INSERT INTO `tomcatdb`.`Banned` (`User_userID`, `Admin_adminID`, `banStart`, `penaltyCount`, `description`, `status`) VALUES (?,?,?,?,?,?)";;
 		
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
-			ps.setInt(1,ban.getBanID());
-			ps.setInt(2, ban.getStudentID());
-			ps.setInt(3, ban.getAdminID());
-			ps.setString(4, ban.getBanStart());
-			ps.setString(5, ban.getBanEnd());
-			ps.setInt(6, ban.getPenaltyCount());
-			ps.setString(7, ban.getDescription());
-			ps.setInt(8, ban.getStatus());
+			//ps.setInt(1,ban.getBanID());
+			ps.setInt(1, ban.getStudentID());
+			ps.setInt(2, ban.getAdminID());
+			ps.setString(3, ban.getBanStart());
+			ps.setInt(4, ban.getPenaltyCount());
+			ps.setString(5, ban.getDescription());
+			ps.setInt(6, ban.getStatus());
 			
-			
-			ps.executeUpdate();
+			System.out.println(ps);
+			ps.execute();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

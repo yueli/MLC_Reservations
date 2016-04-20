@@ -25,17 +25,15 @@
 		<br>
 		<br>
 		<br>
-		<br>
-		<br>
-		<br>
 		<div class="clearfix"></div>
 		<div id="container margin-vert-60" style="z-index:1;" >
 		<div class="row text-center">
 		<div id="reservation_div">	
 			<form name="browse_reservation" id ="browse_reservation" action="BrowseConfirmation" method="post">
-				<p>Please fill out additional information below to make a reservation</p>
-				<p>${msg}</p>
-				<p>Reservation for ${currentDateLong}</p>
+				<h2>Make a Reservation</h2><br>
+				<h3>Please fill out additional information below to make a reservation.</h3><br>
+				<h3>${msg}</h3>
+				<h3>Reservation for ${currentDateLong}</h3>
 				<p>Building:
 				<input type="text" name="building" id="building" value="${buildingName}" disabled></p>				
 				<p>Room Number:  

@@ -52,6 +52,8 @@ public class RoomSaveServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = "";
 		String table = "";
+		String cancelAction = "";
+		int buildingID;
 		
 		//get our current session
 		session = request.getSession();
@@ -71,11 +73,14 @@ public class RoomSaveServlet extends HttpServlet {
 		Rooms room = new Rooms();
 		
 		System.out.println("In Room Save Servlet");
-
+		
+		// get the paramter cancel action and building ID to pass on as a session var to RoomsListServlet
+		cancelAction = request.getParameter("cancelAction"); 
+		buildingID = Integer.parseInt(request.getParameter("buildingID"));
 		
 		//pull the hidden field for the user being edited's record id from the form adminEdit.jsp
 		room.setRoomID(Integer.parseInt(request.getParameter("roomID")));
-		room.setBuildingID(Integer.parseInt(request.getParameter("buildingList")));
+		room.setBuildingID(Integer.parseInt(request.getParameter("buildingID")));
 		
 		System.out.println("In Room Save Servlet: buildingID = " + room.getBuildingID());
 		
@@ -103,7 +108,10 @@ public class RoomSaveServlet extends HttpServlet {
 
 		request.setAttribute("message", message);
 		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+		request.setAttribute("cancelAction", cancelAction);
+		request.setAttribute("buildingID", buildingID);
 
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);	
 

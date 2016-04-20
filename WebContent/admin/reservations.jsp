@@ -11,7 +11,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/Responsive/js/dataTables.responsive.js"></script>
-       <script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
+        <script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
        
         <!-- CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -37,18 +37,7 @@
 			      defaultDate: null,
 			      changeMonth: true,
 			      numberOfMonths: 3,
-			      onClose: function( selectedDate ) {
-			        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );
-			      }
 			    });
-			    $( "#endDate" ).datepicker({
-			      defaultDate: "+1w",
-			      changeMonth: true,
-			      numberOfMonths: 3,
-			      onClose: function( selectedDate ) {
-			        $( "#startDate" ).datepicker( "option", "maxDate", selectedDate );
-			      }
-		    	});
 			});
 			// function for back button
 			function goBack() {
@@ -72,20 +61,17 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 		<div align="center">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
-				<h2>Please select a building, date, start and end time for your reservation.</h2>
+				<h2>Make a Reservation</h2><br>
+				<h3>Please select a building, date, start and end time for your reservation.<br>
+				Please also enter the name or group the room is reserved under.</h3><br>
 				<p>${msg}</p>
 				Building ${buildings}<br>
 				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
-				<!--  End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br> -->
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
-				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br>
+				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
 				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
 			</form>
 			<p>${table}</p>

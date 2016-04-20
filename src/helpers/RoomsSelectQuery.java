@@ -1,4 +1,4 @@
-
+	
 package helpers;
 
 import java.sql.Connection;
@@ -362,10 +362,10 @@ public class RoomsSelectQuery {
 		/**
 		 * This method takes a building record id and lists all the rooms in that building
 		 * @author: Ginger Nix
-		 * @param buildingID
-		 * @return
+		 * @param buildingID, action (where to send it when canceling/going back to previous calling page
+		 * @return the html table
 		 */
-		public String ListRoomsInBuilding(int buildingID){
+		public String ListRoomsInBuilding(int buildingID, String cancelAction){
 			
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
 			
@@ -377,7 +377,27 @@ public class RoomsSelectQuery {
 			String table = "";
 			String roomStatus = "";
 			
-			table += "<h2>Rooms List for Building " + buildingName + "</h2>";			
+			table += "<div align='center'><h3>Rooms List for: " + buildingName + "</h3>";
+			table += "<br /><br />";
+			
+			table += "<form action='RoomAddServlet' method = 'post'>" +
+					"<input type='hidden' name='buildingID' value='" + buildingID + "'>" +
+					"<input type='hidden' name='cancelAction' value='" + cancelAction + "'>" +
+					"<input class='btn btn-lg btn-red' type='submit' value='Add A Room'>" +
+					"</form>";
+			
+			table += "<br />";			
+			
+			// 'cancelAction' will be 'buildings' if came from list of all buildings 
+			// or 'RoomsServlet' if came from user selecting a building
+			table += "<form action='" + cancelAction + "' method = 'post	'>" +
+					"<input class='btn btn-lg btn-red' type='submit' value='Go Back'>" +
+					"</form>";
+			
+			System.out.println("RoomsSelQ: ListRoomsInBuilding - action = " + cancelAction);
+
+			table += "</div>";		
+			
 			table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";			
 			table += "<thead>";
 			table += "<th>Room Floor</th>";
@@ -418,7 +438,8 @@ public class RoomsSelectQuery {
 									
 					table += "<td><form action='RoomEditServlet' method = 'post'>" +
 							"<input type='hidden' name='roomID' value='" + room.getRoomID() + "'/>" +
-							"<input type='hidden' name='buildingList' value='" + buildingID + "'/>" +
+							"<input type='hidden' name='cancelAction' value='" + cancelAction + "'>" +
+							"<input type='hidden' name='buildingID' value='" + buildingID + "'>" +
 							"<input class='btn btn-lg btn-red' type='submit' value='Edit Room' />" +
 							"</form></td>";		
 				
@@ -432,13 +453,8 @@ public class RoomsSelectQuery {
 				table += "<td></td>";
 				table += "<td></td>";
 				table += "<td></td>";
-				table += "<td align:center >";
-				table += "<form action='RoomAddServlet' method = 'post'>" +
-						"<input type='hidden' name='buildingList' value='" + buildingID + "'>" +
-						"<input class='btn btn-lg btn-red' type='submit' value='Add A Room'>" +
-						"</form>";
+				table += "<td></td>";
 				
-				table += "</td>";
 				table += "</tr>";
 				table += "</tfoot>";
 				
@@ -465,7 +481,7 @@ public class RoomsSelectQuery {
 		 * @return String HTML table for the edited room
 		 * @author: Ginger Nix
 		 */
-		public String createEditRoomForm (int roomID){
+		public String createEditRoomForm (int roomID, String cancelAction){
 		
 			String table = "";
 			
@@ -493,21 +509,21 @@ public class RoomsSelectQuery {
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room floor= " + roomFloor);
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room status= " + roomStatus);
 				
-				table += "<br /><br /><br />";
-
-				table += "<center><h3>Building: " + buildingName + "</h3></center>";
+				table += "<div align='center'><h3>Building: " + buildingName + "</h3></div><br />";
+				table += "<div align='center'><h3>Edit Room</h3></div><br />";
 				
 				table += "<form action='RoomSaveServlet' method = 'post'>";
 				
-				table += "Room Number:<br>";
+		
+				table += "Room Number: &nbsp; &nbsp;";
 				table +=  "<input type='text' name = 'roomNumber' value = '" + roomNumber + "' required>";
-				table += "<br />";
 				
-				table += "Room Floor:<br>";
+				table += "<br /><br />";
+				table += "Room Floor: &nbsp; &nbsp;";
 				table +=  "<input type='text' name = 'roomFloor' value = '" + roomFloor + "' required>";
-				table += "<br />";
-					
-				table += "Room Status:<br>";
+
+				table += "<br /><br />";
+				table += "Room Status: &nbsp; &nbsp;";
 				table += "<select name = 'roomStatus' required>";
 				
 				if (roomStatus == 1){
@@ -519,21 +535,26 @@ public class RoomsSelectQuery {
 					table += "<option value='0' selected>Inactive</option>";		
 				}		
 				
-				table += "</select>";	
+				table += "</select>";
 				
 				table += "<br /><br />";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";
 				table += "<input type = 'hidden' name = 'roomID' value='" + roomID + "'>";
-				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'cancelAction' value='" + cancelAction + "'>";
+
 				
 				table += "</form>";
 				
 				table += "<br /><br />";
+				
 				table += "<form action='RoomsListServlet' method = 'post'>";
-				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'cancelAction' value='" + cancelAction + "'>";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 				table += "</form>";
-	
+
+				
 				System.out.println("RoomsSelectQuery: createEditRoomForm: buildingID END = " + buildingID);
 				
 				
@@ -589,26 +610,27 @@ public class RoomsSelectQuery {
 		 * @return
 		 * @author: Ginger Nix
 		 */
-		public String createAddRoomForm(int buildingID){
+		public String createAddRoomForm(int buildingID, String cancelAction){
 			
 			String table = "";
 				
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
 
-				table += "<center><p>Building: " + buildingName + "</p></center>";
+				table += "<div align='center'><h3>Add a Room to: " + buildingName + "</h3></div><br />";
+
 				
 				table += "<form action='RoomAddSaveServlet' method = 'post'>";
 				
-				table += "Room Number:<br>";
+				table += "Room Number: &nbsp;&nbsp;";
 				table +=  "<input type='text' name = 'roomNumber' required>";
-				table += "<br />";
+				table += "<br /><br />";
 				
-				table += "Room Floor:<br>";
+				table += "Room Floor: &nbsp;&nbsp;";
 				table +=  "<input type='text' name = 'roomFloor' required>";
-				table += "<br />";
+				table += "<br /><br />";
 					
-				table += "Room Status:<br>";
+				table += "Room Status: &nbsp;&nbsp;";
 				table += "<select name = 'roomStatus' required>";
 				table += "<option value='1' selected>Active</option>";
 				table += "<option value='0'>Inactive</option>";							
@@ -617,18 +639,21 @@ public class RoomsSelectQuery {
 				table += "<br /><br />";
 				
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";	
-				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'cancelAction' value='" + cancelAction + "'>";
 				
 				table += "</form>";
 				
 				table += "<br /><br />";
 				table += "<form action='RoomsListServlet' method = 'post'>";
-				table += "<input type = 'hidden' name = 'buildingList' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
+				table += "<input type = 'hidden' name = 'cancelAction' value='" + cancelAction + "'>";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 				table += "</form>";
 	
 				System.out.println("RoomsSelectQuery: createAddRoomForm: buildingID END = " + buildingID);
-		
+				System.out.println("RoomsSelectQuery: createAddRoomForm: cancelAction END = " + cancelAction);
+	
 			return table;
 		
 			

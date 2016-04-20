@@ -9,10 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+import java.util.concurrent.TimeUnit;
 
 import model.DbConnect;
 import model.Reservation;
+import model.TimeConverter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SearchReservationsResultsQuery {
 	
@@ -21,12 +24,13 @@ public class SearchReservationsResultsQuery {
 	// initialize fields
 	private Connection connection;
 	private ResultSet results;
-
 	private ResultSet resultsRooms;
+
 	public String startDate = "";
 	public String endDate = "";
 	public String startTime = "";
 	public String endTime = "";
+
 	
 			
 	/**
@@ -50,15 +54,15 @@ public class SearchReservationsResultsQuery {
 
 	//Method to get all rooms in building
 	public ArrayList<Integer> getAllRooms(int buildingid){
-		String query = "SELECT Rooms.roomID, Rooms.Building_buildingID FROM tomcatdb.Rooms WHERE Rooms.Building_buildingID ='"+buildingid+"' ORDER BY Rooms.roomNumber";
-		System.out.println("getAllRooms:");
-		System.out.println(query);
+		String query = "SELECT Rooms.roomID, Rooms.Building_buildingID FROM tomcatdb.Rooms WHERE Rooms.Building_buildingID ='"+buildingid+"' AND Rooms.roomStatus='1' ORDER BY Rooms.roomNumber";
+		//System.out.println("getAllRooms:");
+		//System.out.println(query);
 		
 		//Get all rooms in building
 		ArrayList<Integer> roomsArray = new ArrayList<Integer>();
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-			this.resultsRooms = ps.executeQuery();
+			resultsRooms = ps.executeQuery();
 			
 			while(resultsRooms.next()){
 				//Create Array of all reservations 
@@ -71,13 +75,13 @@ public class SearchReservationsResultsQuery {
 	return roomsArray;		
 	}
 	
-	
+	/*
 	//User Input for Results
 	public void doRead(int buildingid, String beginDate, String beginTime, String endDate, String endTime, int hourIncrement ){
 		String query = "SELECT Reservations.Building_buildingID,  Reservations.Rooms_roomID, Reservations.hourIncrement, Reservations.reserveStartDate, Reservations.reserveEndDate, Reservations.reserveStartTime, Reservations.reserveEndTime"
 				+ " FROM tomcatdb.Reservations WHERE Reservations.Building_buildingID ='"+buildingid+"' AND "
 				+ "Reservations.reserveStartDate>='"+ beginDate +"' AND "
-				+ "Reservations.reserveEndDate<='"+ endDate +"' AND "
+				+ "Reservations.reserveendDate<='"+ endDate +"' AND "
 				+ "Reservations.reserveStartTime>='"+ beginTime +"' AND "
 				+ "Reservations.reserveEndTime<='"+ endTime +"' "
 				+ "ORDER BY Reservations.reserveStartDate, Reservations.reserveStartTime";	
@@ -87,15 +91,68 @@ public class SearchReservationsResultsQuery {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			this.results = ps.executeQuery();
 			
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in BuildingListQuery.java: doRoom method. Please check connection or SQL statement: " + query);
+			System.out.println("Error in SearchReservationResultsQuery.java: doRead method. Please check connection or SQL statement: " + query);
 		} 
+	}
+	*/
+	
+	public ArrayList<Reservation> doReadArray(int buildingid, String beginDate, String beginTime, String endDate, String endTime, int hourIncrement ){
+		
+		String query ="SELECT Reservations.Building_buildingID,  Reservations.Rooms_roomID, Reservations.hourIncrement, Reservations.reserveStartDate, Reservations.reserveEndDate, Reservations.reserveStartTime, Reservations.reserveEndTime FROM tomcatdb.Reservations WHERE Reservations.Building_buildingID ='"+buildingid+"' AND Reservations.reserveStartDate>='"+ beginDate +"' AND Reservations.reserveendDate<='"+ endDate +"' AND Reservations.reserveStartTime>='"+ beginTime +":00' AND Reservations.reserveEndTime<='"+ endTime +":00' ORDER BY Reservations.reserveStartDate, Reservations.reserveStartTime;";	
+		/*String query = "SELECT Reservations.Building_buildingID,  Reservations.Rooms_roomID, Reservations.hourIncrement, Reservations.reserveStartDate, Reservations.reserveEndDate, Reservations.reserveStartTime, Reservations.reserveEndTime"
+				+ " FROM tomcatdb.Reservations WHERE Reservations.Building_buildingID ='"+buildingid+"' AND "
+				+ "Reservations.reserveStartDate>='"+ beginDate +"' AND "
+				+ "Reservations.reserveendDate<='"+ endDate +"' AND "
+				+ "Reservations.reserveStartTime>='"+ beginTime +":00' AND "
+				+ "Reservations.reserveEndTime<='"+ endTime +":00' "
+				+ "ORDER BY Reservations.reserveStartDate, Reservations.reserveStartTime;";	*/
+		System.out.println("doRead "+ query);
+		// securely run query
+		
+		ArrayList<Reservation> reservationAL = new ArrayList<Reservation>();
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			results = ps.executeQuery();
+			int y=0;
+			while(results.next()){
+				System.out.println("COUNT: "+y);
+				y++;
+				//Create Reservation Objects
+				Reservation reservation = new Reservation();	
+					//Get Results Values
+						int zbuildingid = results.getInt("Building_buildingID");
+						int zroomid = results.getInt("Rooms_roomID");
+						String zbeginDate = results.getString("reserveStartDate");
+						String zbeginTime = results.getString("reserveStartTime");
+						String zendDate = results.getString("reserveEndDate");
+						String zendTime = results.getString("reserveEndTime");
+						int zhourIncrement = results.getInt("hourIncrement");
+				//Set Object
+					reservation.setbuildingID(zbuildingid);
+					reservation.setRoomsID(zroomid);
+					reservation.setReserveStartDate(zbeginDate);
+					reservation.setReserveStartTime(zbeginTime);
+					reservation.setReserveEndDate(zendDate);
+					reservation.setReserveEndTime(zendTime);
+					reservation.setHourIncrement(zhourIncrement);
+				reservationAL.add(reservation);
+				System.out.println("ADDED 1");
+				}
+			}
+			catch(SQLException e) {
+				e.printStackTrace();	
+			}
+		System.out.println("SIZE :"+reservationAL.size());
+		return reservationAL;
 	}
 	
 	
 
-	
+	/*
 	public ArrayList<Reservation> getReservationList(){
 		//ArrayList of all Reservations
 			ArrayList<Reservation> reservationAL = new ArrayList<Reservation>();
@@ -104,13 +161,13 @@ public class SearchReservationsResultsQuery {
 				//Create Reservation Objects
 				Reservation reservation = new Reservation();	
 					//Get Results Values
-						int buildingid = results.getInt("Building_buildingID");
-						int roomid = results.getInt("Rooms_roomID");
-						String beginDate = results.getString("reserveStartDate");
-						String beginTime = results.getString("reserveStartTime");
-						String endDate = results.getString("reserveEndDate");
-						String endTime = results.getString("reserveEndTime");
-						int hourIncrement = results.getInt("hourIncrement");
+						int buildingid = this.results.getInt("Building_buildingID");
+						int roomid = this.results.getInt("Rooms_roomID");
+						String beginDate = this.results.getString("reserveStartDate");
+						String beginTime = this.results.getString("reserveStartTime");
+						String endDate = this.results.getString("reserveEndDate");
+						String endTime = this.results.getString("reserveEndTime");
+						int hourIncrement = this.results.getInt("hourIncrement");
 				//Set Object
 					reservation.setbuildingID(buildingid);
 					reservation.setRoomsID(roomid);
@@ -120,6 +177,7 @@ public class SearchReservationsResultsQuery {
 					reservation.setReserveEndTime(endTime);
 					reservation.setHourIncrement(hourIncrement);
 				reservationAL.add(reservation);
+				System.out.println("ADDED 1");
 				}
 			}
 			catch(SQLException e) {
@@ -127,7 +185,8 @@ public class SearchReservationsResultsQuery {
 			}
 		//Move Cursor back to first
 		try {
-			results.first();
+			System.out.println("reset cursor");
+			this.results.first();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,11 +194,15 @@ public class SearchReservationsResultsQuery {
 		
 		return reservationAL;
 	}
+	*/
 	
-	
-	public String getHTMLTable(ArrayList<Integer> roomsArrayList, ArrayList<Reservation> reservationArrayList, String sDate , String sTime, String eDate, String eTime, int hrIncrement) throws ParseException{ 
+	//table = srrs.getHTMLTable(buildingid,         roomsAL,                            reservationAL,                              beginDate, beginTime, endDate, endTime, hourIncrement, buildingid);
+	public String getHTMLTable(int buildingID, ArrayList<Integer> roomsArrayList, ArrayList<Reservation> reservationArrayList, String sDate , String sTime, String eDate, String eTime, int hrIncrement, int buildingid) throws ParseException{ 
 		//Return tables of open Reservations
 		
+		BuildingListQuery blq = new BuildingListQuery();
+		blq.doRead();
+		String buildingName = blq.getBuildingName(buildingID);
 		
 		//Intalize Parameters
 			ArrayList<Integer> roomsAL = new ArrayList<Integer>();
@@ -183,6 +246,11 @@ public class SearchReservationsResultsQuery {
 			SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
 			java.util.Date beginDate = sdfDate.parse(sDate);
 			java.util.Date endDate = sdfDate.parse(eDate);
+			
+			GregorianCalendar endCal = new GregorianCalendar();
+			endCal.setTime(endDate);
+			endCal.add(Calendar.DAY_OF_YEAR, 1);
+			
 
 			
 			//1.Go through every day user chose
@@ -197,11 +265,13 @@ public class SearchReservationsResultsQuery {
 			 ///1.Go through every day (that the user input)
 			 GregorianCalendar gcal = new GregorianCalendar();
 			 gcal.setTime(beginDate);
-			 while (gcal.getTime().before(endDate)) {
-					gcal.add(Calendar.DAY_OF_YEAR, 1);
+			 while (gcal.getTime().before(endCal.getTime())) {
+				 
+					
 							//Convert Format
 						     String pointDate = sdfDate.format(gcal.getTime());
-	
+						     gcal.add(Calendar.DAY_OF_YEAR, 1);
+						     
 			//2.Create new table for new date
 			        if(!newDate.equals(pointDate)){
 						//If new date, close table and create new table date
@@ -218,15 +288,25 @@ public class SearchReservationsResultsQuery {
 						table += "<table id='' class='display'>";
 						table += "<tbody>";
 						
+				
 						
 				 //3. Date for Header for new Date Table
-						table += "<tr><td> Date:"+ pointDate +"</td></tr>";
+						table += "<tr><td>Building: "+buildingName+"<br /> Date:"+ pointDate +"</td></tr>";
 						table += "<tr>";
 								//Create Time Columns
 								//Leave space for Room #
 								table +="<td>RoomID#</td>";
-								for(int i=hourbt;i<=houret;i++){
-									table +="<td>"+ i +":00</td>";
+								for(int i=hourbt;i<houret;i++){
+									
+									String tempTimeI = i+":00";
+									
+									SimpleDateFormat _24HourSDF = new SimpleDateFormat("HH:mm");
+									 SimpleDateFormat _12HourSDF = new SimpleDateFormat("hh:mm a");
+									 Date _24HourDt = _24HourSDF.parse(tempTimeI);
+									 
+									 table +="<td>"+_12HourSDF.format(_24HourDt)+"</td>";
+									//table +="<td>"+ i +":00</td>";
+									
 								}
 							table += "</tr>";
 				//4. ADD NEW ROWS AFTER HEADER
@@ -236,27 +316,39 @@ public class SearchReservationsResultsQuery {
 						
 				//5.Cycle to all rooms for the building
 						
-						//Creating OPEN/CLOSE rooms -- ADD ROOMS
+						//Creating OPEN/CLOSE rooms -- ADD ROOMS -row
 						for(int z=0;z<roomsAL.size();z++){
+							
+							blq.doReadRooms(buildingID);
+							String roomNumber = blq.getRoomName(roomsAL.get(z));
+							
 							table += "<tr>";
-							table+="<td>"+roomsAL.get(z)+"</td>";
+							table+="<td>"+roomNumber+"</td>";
 							int tempRoomAL = roomsAL.get(z);
 							String tempEndTime="";
+							String tempEndTimeShort ="";
 							
 						
 						//Only searching for hours requested	
-						for(int i=hourbt;i<=houret;i++){
-						
+						for(int i=hourbt;i<houret;i++){
 							
-								
+							
+						int roomtaken=0;
+						
+						System.out.println("How Many Reservation?"+ reservationAL.size());
 								//Mark off all reserved spots
 								//if empty skip and fill table with Open
 								if(reservationAL.size()>0){
 								for(int y=0;y<reservationAL.size();y++){
 									
 									//Modify Format
-									if(i<10){tempEndTime = "0"+i+":00:00";}
-									else{tempEndTime =i+":00:00";}
+									if(i<10){
+										tempEndTime = "0"+i+":00:00";
+										tempEndTimeShort = "0"+i+":00";
+										}
+									else{tempEndTime =i+":00:00";
+									tempEndTimeShort =i+":00";
+									}
 									
 									
 									//Date/Time/Room must match be listed as 
@@ -264,27 +356,105 @@ public class SearchReservationsResultsQuery {
 									String tempTime = reservationAL.get(y).getReserveStartTime();
 									int tempRoom = reservationAL.get(y).getRoomsID();
 									
-									int a = newDate.compareTo(tempDate);
-									int b = tempTime.compareTo(tempEndTime);
+									//Date Match
+								
+									System.out.print(pointDate + " "+tempDate+"----");
+									System.out.print(tempTime+"   "+tempEndTime+"----");
+									System.out.println(tempRoom +  "  " +tempRoomAL);
 									
-									if(a==1 && b==1 && tempRoom==tempRoomAL){
+									//Time Match
+								
+									//Room Match
+									
+									
+									//Date & Time
+									if(pointDate.equals(tempDate) && tempTime.equals(tempEndTime) && tempRoom==tempRoomAL && roomtaken==0){
 										table +="<td>";
-										table +="TAKEN";
+										table +="Unavailable";
 										table +="</td>";
-										System.out.println("match");
+									
+										
+								
+										
+										roomtaken=1;
 										
 									}
-									else{
+									
+									
+									else if(y==(reservationAL.size()-1) && roomtaken==0){
 										table +="<td>";
-										table +="<a href='#?'>OPEN</a>";
+										table += "<form name='searchconfirmresults' action=searchconfirmresults method=post>";
+										
+										//Room ID and building ID needs to get name and room number
+										//Get Building Name
+										
+										
+										//Get Room Name/Number
+										
+										
+										
+										
+										table += "<input type='hidden' name='Rooms_roomID' value='"+ tempRoomAL +"'>";
+										table += "<input type='hidden' name='reserveStartDate' value='"+ pointDate +"'>";
+										
+										//Same dates as start date
+										table += "<input type='hidden' name='reserveEndDate' value='"+pointDate+"'>";
+										
+										
+										table += "<input type='hidden' name='reserveStartTime' value='"+ tempEndTime +"'>";
+										
+										//Conver reserveEndTime to +hIncr
+										//GregorianCalendar gcal = new GregorianCalendar();
+										 //gcal.setTime(beginDate);
+										
+										table += "<input type='hidden' name='reserveEndTime' value='00:00:0000'>";
+										table += "<input type='hidden' name='hourIncrement' value='"+ hrIncrement +"'>";
+										table += "<input type='hidden' name='Building_buildingID' value='"+ buildingid +"'>";
+										table += "<input type='hidden' name='free' value='N'>";
+										table +="<input type='submit' value='"+tempEndTimeShort +"'></form>";
+										 
 										table +="</td>";
 									}
-									}
+									
+								
+								}
 								}
 								//Else will fill empty slots instead of skipping
 								else{
+									
+									//Modify Format
+									if(i<10){
+										tempEndTime = "0"+i+":00:00";
+										tempEndTimeShort = "0"+i+":00";
+										}
+									else{tempEndTime =i+":00:00";
+									tempEndTimeShort =i+":00";
+									}
+									
+									
 										table +="<td>";
-										table +="<a href='#'>OPEN</a>";
+										table += "<form name='searchconfirmresults' action=searchconfirmresults method=post>";
+										
+										//Room ID and building ID needs to get name and room number
+										
+										table += "<input type='hidden' name='Rooms_roomID' value='"+ tempRoomAL +"'>";
+										table += "<input type='hidden' name='reserveStartDate' value='"+ pointDate +"'>";
+										
+										//Same dates as start date
+										table += "<input type='hidden' name='reserveEndDate' value='"+pointDate+"'>";
+										
+										
+										table += "<input type='hidden' name='reserveStartTime' value='"+ tempEndTime +"'>";
+										
+										//Conver reserveEndTime to +hIncr
+										//GregorianCalendar gcal = new GregorianCalendar();
+										 //gcal.setTime(beginDate);
+										
+										table += "<input type='hidden' name='reserveEndTime' value='00:00:0000'>";
+										table += "<input type='hidden' name='hourIncrement' value='"+ hrIncrement +"'>";
+										table += "<input type='hidden' name='Building_buildingID' value='"+ buildingid +"'>";
+										table += "<input type='hidden' name='free' value='N'>";
+										table +="<input type='submit' value='OPEN'></form>";
 										table +="</td>";
 									}
 									
@@ -296,9 +466,10 @@ public class SearchReservationsResultsQuery {
 						table += "</tr>";
 						table += "</tbody>";		
 						table += "</table>";
-						System.out.println(table);
+						
 							
 						}
+			 System.out.println(table);
 			   return table;
 	}
 }

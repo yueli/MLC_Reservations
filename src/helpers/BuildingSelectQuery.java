@@ -186,7 +186,8 @@ public class BuildingSelectQuery {
 		return select;
 	}
 	/**
-	 * This method takes into account the building schedule.  
+	 * This method takes into account the building schedule. 
+	 * If the building is not online, an empty string is returned. 
 	 * We get the building name from inputted buildingID
 	 * @param buildingID ID of the building	
 	 * @return buildingName Name of the building
@@ -218,8 +219,9 @@ public class BuildingSelectQuery {
 	 */
 	public String getAllActiveBuildings(){
 		
-		String select = "<select id='buildingList' name='buildingList'>";
-
+		//String select = "<select id='buildingList' name='buildingList'>";
+		String select = "<select id='buildingList' name='buildingID'>"; //GINGER CHANGED 04-09-16
+		
 		// go through all the active buildings to put into a list
 		String query = "SELECT * FROM tomcatdb.Building "
 						+ "WHERE buildingStatus = ?";
@@ -259,6 +261,36 @@ public class BuildingSelectQuery {
 		return select;
 	}
 
+	/**
+	 * @author: Ginger Nix
+	 * 
+	 * creates page for person to select a building to view its rooms
+	 * calls on getAllActiveBuildings above to list the select pull down of all active buildings
+	 * 
+	 */
+	public String selectBuildingToViewRooms() {
+		String table = "";
+		
+		table += "<div align='center'><h3>Please Select a Building</h3></div><br />";
+		
+		table += "<div align='center'>";
+		table += "<form name='buildingForRoomsForm' action='RoomsListServlet' method='post'>";
+		
+		table += getAllActiveBuildings();
+		
+		table += "<input type = 'hidden' name = 'cancelAction' value='RoomsServlet'>";	
+		table += "<input class='btn btn-lg btn-red' name='buildingSelected' type='submit' value='Enter'>";
+		table += "</form>";
+	
+		table += "</div>";
+		
+		return table;
+	
+		
+	}
+	
+	
+	
 	/**
 	 * 
 	 * This method takes just a building record id and returns the human readable name
@@ -316,7 +348,7 @@ public class BuildingSelectQuery {
 			
 			buildingID = this.results.getInt("buildingID");
 			
-			System.out.println("BuildingSelectQuery getFirstBuildingID AFTER executing query building ID = " + buildingID);
+			//System.out.println("BuildingSelectQuery getFirstBuildingID AFTER executing query building ID = " + buildingID);
 			
 			
 		} catch (SQLException e) {
@@ -372,6 +404,48 @@ public class BuildingSelectQuery {
 		
 		return false;
 	}
+	/**
+	 * This method will check to see if a building is open at the user specified time
+	 * @param startDate
+	 * @param startTime
+	 * @param buildingID
+	 * @return
+	 */
+	public String buildingScheduleCheck (String startDate, String startTime, String buildingID){
+		
+		String results = "";
+		String query = "SELECT tomcatdb.Building.buildingID "
+				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
+				+ "WHERE tomcatdb.Building.buildingStatus = ? "
+				+ "AND tomcatdb.Building.buildingID = tomcatdb.Schedule.Building_buildingID "
+				+ "AND tomcatdb.Building.buildingID = ? "
+				+ "AND tomcatdb.Schedule.startDate = ? "
+				+ "AND ((tomcatdb.Schedule.startTime = ?) OR (? BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
+		
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, "1");
+			ps.setString(2, buildingID);
+			ps.setString(3, startDate);
+			ps.setString(4, startTime);
+			ps.setString(5, startTime);
+			this.results = ps.executeQuery();
+			
+			while(this.results.next()){
+				Building building = new Building();
+				building.setBuildingID(this.results.getInt("buildingID"));
+				results += building.getBuildingID();
+			} this.results.beforeFirst();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in BuildingSelectQuery.java: buildingScheduleCheck method. Please check connection or SQL statement");
+		}
+		
+		return results;
+	}
+	
 	/**
 	 * Java Main Method used to test methods above.
 	 * @param args Java Main Method

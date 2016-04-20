@@ -59,6 +59,10 @@ public class AdminReservationsServlet extends HttpServlet {
 				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+					
+					// remove message 
+					session.removeAttribute("msg");
+					
 					//------------------------------------------------//
 					/*               VIEW FOR ADMIN                   */
 					//------------------------------------------------//
@@ -89,7 +93,9 @@ public class AdminReservationsServlet extends HttpServlet {
 						buildingID = buildingIDSelect;
 						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
 					} else if (buildingIDSession != null){
-						buildingID = buildingIDSession;
+						if(buildingIDSession.equalsIgnoreCase(buildingID)){
+							buildingID = buildingIDSession;
+						}
 					} 
 					
 					
@@ -115,7 +121,7 @@ public class AdminReservationsServlet extends HttpServlet {
 					// if a new session is created with no user object passed
 					// user will need to login again
 					session.invalidate();
-					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
@@ -126,7 +132,7 @@ public class AdminReservationsServlet extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}

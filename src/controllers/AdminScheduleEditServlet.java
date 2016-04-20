@@ -13,10 +13,11 @@ import javax.servlet.http.HttpSession;
 import helpers.AdminScheduleSelectQuery;
 import helpers.BuildingSelectQuery;
 import model.Admin;
+import model.DateTimeConverter;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminScheduleEditServlet
+ * Servlet implementation class AdminScheduleEditServlet. This servlet will allow admins to edit building hours.
  * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleEditServlet", "/Schedule" })
@@ -47,7 +48,7 @@ public class AdminScheduleEditServlet extends HttpServlet {
 		
 		// check to see if there is a valid session
 		if (session != null){ // there is an active session
-
+			
 			// get admin user object from session
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
 			if (loggedInAdminUser != null){
@@ -63,6 +64,9 @@ public class AdminScheduleEditServlet extends HttpServlet {
 					/*                EDIT SCHEDULE                   */
 					//------------------------------------------------//
 					
+					// remove message 
+					session.removeAttribute("msg");
+					
 					// get session and request variables
 					String buildings = ""; // the string that contains the html dropdown list
 					String buildingID = request.getParameter("buildingID"); // get the value from
@@ -71,6 +75,8 @@ public class AdminScheduleEditServlet extends HttpServlet {
 					
 					String to = request.getParameter("to");
 					String from = request.getParameter("from");
+					String msg = "";
+					String schedule = "";
 					System.out.println();
 					
 					BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -83,23 +89,39 @@ public class AdminScheduleEditServlet extends HttpServlet {
 						bsq.doAdminBuildingRead();
 						buildings = bsq.getBuildingResults(bldg);
 					}
+
 					// if there is a buildingID from session, it becomes the buildingID
 					// if there is a buildingID selected from dropdown, it becomes the buildingID
 					if (buildingIDSelect != null){
 						buildingID = buildingIDSelect;
 						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in dropdown.
 					} else if (buildingIDSession != null){
-						buildingID = buildingIDSession;
-					} else {
-						
+						if(buildingIDSession.equalsIgnoreCase(buildingID)){
+							buildingID = buildingIDSession;
+						}
 					}
+					
+					String buildingName = bsq.getBuildingNameFromID(Integer.parseInt(buildingID));
+					System.out.println("Building in Schedule Edit is " + buildingName + " Building ID is " + buildingID);
 					
 					// query the database to get
 					AdminScheduleSelectQuery ssq = new AdminScheduleSelectQuery();
-					ssq.doRead(buildingID, to, from);
-					String schedule = ssq.listSchedule();
+					if(to != null && !to.isEmpty() && from != null && !from.isEmpty()){
+						if(DateTimeConverter.isAfter(from, to) == true){
+							msg = "Please enter a <b>from</b> date that's less than the <b>to</b> date.";
+						} else {
+							ssq.doRead(buildingID, to, from);
+							schedule = ssq.listSchedule();
+						}
+					} else {
+						ssq.doRead(buildingID, to, from);
+						schedule = ssq.listSchedule();
+					}
+					
 					
 					// set session and request variables
+					request.setAttribute("buildingName", buildingName);
+					session.setAttribute("msg", msg);
 					session.setAttribute("buildingID", buildingID);
 					session.setAttribute("buildings", buildings);
 					session.setAttribute("schedule", schedule);

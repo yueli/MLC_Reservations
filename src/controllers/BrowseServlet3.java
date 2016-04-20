@@ -18,7 +18,9 @@ import model.User;
 
 /**
  * @author Brian Olaogun
- * Servlet implementation class BrowseServlet3
+ * Servlet implementation class BrowseServlet3.  This servlet will display an HTML table with available times 
+ * of a room once the building and floor is selected.  The tables cells are clickable and and will take you to BrowseReserveServlet if
+ * the room is available (green).
  */
 @WebServlet({ "/BrowseServlet3", "/Browse3", "/BrowseRooms" })
 public class BrowseServlet3 extends HttpServlet {
@@ -96,8 +98,9 @@ public class BrowseServlet3 extends HttpServlet {
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -107,7 +110,7 @@ public class BrowseServlet3 extends HttpServlet {
 			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
-			//url = "LoginServlet";
+		
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

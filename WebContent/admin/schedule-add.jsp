@@ -55,21 +55,21 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 		<div align="center">
-			<h2>${msg}</h2>
+			<h2>Add Building Hours</h2><br>
+			<h3>Adding opening and closing hours for a building. <br>
+			Please enter all information below to add hours to a building.</h3><br>
+			<h3>${msg}</h3>
 			<p>${buildings}</p>
 			<form name="scheduleForm" action="new-schedule" method="post">
-				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
-				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
-				Start Time: <input type="text" id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
-				End Time: <input type="text" id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
-				Summary: <input type="text" name="summary" value="${summary}"><br>
-				<button class="btn btn-lg btn-red" onclick="goBack()">Go Back</button>     <input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter">
+				Start Date: <input type="text" id="startDate" name="startDate" value=""><br>
+				End Date: <input type="text" id="endDate" name="endDate" value=""><br>
+				Start Time: <input type="text" id="startTime" name="startTime" value=""><br>
+				End Time: <input type="text" id="endTime" name="endTime" value=""><br>
+				Summary: <input type="text" name="summary" value=""><br><br>
+				<a href="Schedule"><button class="btn btn-lg btn-red" type="button" value="Schedule">View Building Hours</button></a>  <input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter"> <br>
 			</form>
+			    
 		</div>
 		<div id="footer"></div>
 	</body>

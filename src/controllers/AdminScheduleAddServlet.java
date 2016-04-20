@@ -15,7 +15,7 @@ import model.Admin;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminScheduleAddServlet
+ * Servlet implementation class AdminScheduleAddServlet. This servlet will allow admins to add building hours.
  * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleAddServlet", "/add-schedule" })
@@ -48,7 +48,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 		
 		// if this session is not null (active/valid)
 		if(this.session != null){
-
+			
 			// get admin user object from session
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
 			if (loggedInAdminUser != null){
@@ -59,6 +59,16 @@ public class AdminScheduleAddServlet extends HttpServlet {
 					
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+					
+					// remove session variables 
+					session.removeAttribute("msg");
+					session.removeAttribute("buildingID");
+					session.removeAttribute("startDate");
+					session.removeAttribute("endDate");
+					session.removeAttribute("startTime");
+					session.removeAttribute("endTime");
+					session.removeAttribute("summary");
+					
 					// get session and request variables + initialization of others
 					String buildings = ""; // the string that contains the HTML drop down list
 					String buildingID = request.getParameter("buildingID"); // get the value from 
@@ -77,7 +87,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 						// query building
 						
 						bsq.doAdminBuildingRead();
-						buildings = bsq.getBuildingResults(bldg);
+						buildings = "<h3>Select a Building: </h3>" + bsq.getBuildingResults(bldg);
 			
 					}
 					// if there is a buildingID from session, it becomes the buildingID
@@ -86,7 +96,9 @@ public class AdminScheduleAddServlet extends HttpServlet {
 						buildingID = buildingIDSelect;
 						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
 					} else if (buildingIDSession != null){
-						buildingID = buildingIDSession;
+						if(buildingIDSession.equalsIgnoreCase(buildingID)){
+							buildingID = buildingIDSession;
+						}
 					} 
 					
 					// forward the URL
@@ -112,7 +124,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 					// if a new session is created with no user object passed
 					// user will need to login again
 					session.invalidate();
-					//url = "LoginServlet"; // USED TO TEST LOCALLY
+					
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
@@ -125,7 +137,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -136,7 +148,7 @@ public class AdminScheduleAddServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

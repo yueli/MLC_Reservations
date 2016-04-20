@@ -94,7 +94,9 @@ public class AdminReservationsServlet2 extends HttpServlet {
 						buildingID = buildingIDSelect;
 						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in drop down.
 					} else if (buildingIDSession != null){
-						buildingID = buildingIDSession;
+						if(buildingIDSession.equalsIgnoreCase(buildingID)){
+							buildingID = buildingIDSession;
+						}
 					} 
 					
 					//------------------------------------------------//
@@ -281,7 +283,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -292,7 +294,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

@@ -1,9 +1,3 @@
-/**
- * @author: Ginger Nix
- * 
- * This servlet is called then sends the user to the admin's home page
- * 
- */
 package controllers;
 
 import java.io.IOException;
@@ -20,7 +14,8 @@ import model.Admin;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminHomePageServlet
+ * Servlet implementation class AdminHomePageServlet.  This is the servlet used to call the admin home page
+ * @author Brian Olaogun
  */
 @WebServlet({ "/AdminHomePageServlet", "/AdminHome" })
 public class AdminHomePageServlet extends HttpServlet {

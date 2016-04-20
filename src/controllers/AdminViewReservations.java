@@ -17,7 +17,7 @@ import model.DateTimeConverter;
 import model.DbConnect;
 
 /**
- * Servlet implementation class AdminViewReservations
+ * Servlet implementation class AdminViewReservations.  This servlet will allow admins to view all reservations.
  * @author Brian Olaogun
  * 
  */
@@ -60,7 +60,9 @@ public class AdminViewReservations extends HttpServlet {
 				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S") || role.equalsIgnoreCase("C")) && status == 1){
-			
+					// remove message 
+					session.removeAttribute("msg");
+					
 					//------------------------------------------------//
 					/*               VIEW RESERVATIONS                */
 					//------------------------------------------------//

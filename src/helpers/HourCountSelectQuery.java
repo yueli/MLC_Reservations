@@ -32,7 +32,7 @@ public class HourCountSelectQuery {
 		
 	}
 	/**
-	 * This query will sum the hours of reservations for a user for the date selected. 
+	 * This query will sum the hours of reservations for a user for the current date. 
 	 * 0 == no reservations made for that day.
 	 * @param userID User ID of the person who wants to reserve room (primary user)
 	 */
@@ -52,6 +52,35 @@ public class HourCountSelectQuery {
 			ps.setInt(1, userID);
 			ps.setString(2, currentDate);
 			ps.setString(3, currentDate);
+			ps.setString(4, "N");
+			
+			this.results = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in HourCountSelectQuery.java: doIncrementRead method. Please check connection or SQL statement: " + query);
+		}
+	}
+	
+	/**
+	 * This query will sum the hours of reservations for a user for the date selected.
+	 * 0 == no reservations made for that day.
+	 * @param userID userID User ID of the person who wants to reserve room (primary user)
+	 * @param date String date in SQL format.
+	 */
+	public void doIncrementRead(int userID, String date){
+		
+		String query = "SELECT SUM(tomcatdb.Reservations.hourIncrement) as incrementSum "
+				+ "FROM tomcatdb.User, tomcatdb.Reservations "
+				+ "WHERE tomcatdb.Reservations.primaryUser = tomcatdb.User.userID "
+				+ "AND tomcatdb.Reservations.primaryUser = ? "
+				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
+				+ "AND tomcatdb.Reservations.reserveEndDate = ? "
+				+ "AND tomcatdb.Reservations.free = ?";
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, userID);
+			ps.setString(2, date);
+			ps.setString(3, date);
 			ps.setString(4, "N");
 			
 			this.results = ps.executeQuery();
@@ -85,5 +114,15 @@ public class HourCountSelectQuery {
 		
 		return incrementSum;
 		
+	}
+	/**
+	 * 
+	 * @return String HTML select with hour increments
+	 */
+	public String hourIncrementSelect(){
+		String select = "<select id='hourIncrement' name='hourIncrement'>";
+		select += "<option selected='selected' value='1'>1 Hour</option>";
+		select += "<option value='2'>2 Hours</option></select>";
+		return select;
 	}
 }

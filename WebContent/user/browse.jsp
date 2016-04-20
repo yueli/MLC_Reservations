@@ -30,6 +30,7 @@
 		<div id="header1"></div>
 		<br><br><br><br>
 		<div align="center">
+			${currentDay}
 			<form name="browseForm" action="BrowseFloors" method="post">
 				<h2>${buildingHeader}</h2>
 				<p>${buildings}

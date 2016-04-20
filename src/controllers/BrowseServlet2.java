@@ -17,7 +17,9 @@ import model.User;
 
 /**
  * @author Brian Olaogun
- * Servlet implementation class BrowseServlet2
+ * Servlet implementation class BrowseServlet2.  This servlet displays the building drop down.  Once a building is selected,
+ * then the floor list is displayed as well as headers and titles.  All information from the previous servlet is in the session.
+ * Once a floor is selected, Browse Servlet 3 is called.
  */
 @WebServlet({ "/BrowseServlet2", "/Browse2", "/BrowseFloors" })
 public class BrowseServlet2 extends HttpServlet {
@@ -76,6 +78,13 @@ public class BrowseServlet2 extends HttpServlet {
 						fsq.doFloorRead(buildingSelected);
 						String floor = fsq.getFloorResults();
 						
+						String table = (String) session.getAttribute("table");
+						
+						// remove current table if building is reselected.
+						if (table != null && !table.isEmpty()){
+							session.removeAttribute("table");
+						}
+						
 						// URL of the view to forward
 						url = "/user/browse.jsp";
 						
@@ -101,8 +110,9 @@ public class BrowseServlet2 extends HttpServlet {
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -112,7 +122,7 @@ public class BrowseServlet2 extends HttpServlet {
 			//------------------------------------------------//
 			// if session isnt active, go to home page
 			// the app should log them out.
-			//url = "LoginServlet";
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

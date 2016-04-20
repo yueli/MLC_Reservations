@@ -17,6 +17,23 @@
 		<link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
 		        
 		<script> 
+		
+		
+			function validateForm() {
+				var start = document.forms["searchForm"]["beginDate"].value;
+				var end = document.forms["searchForm"]["endDate"].value;
+				
+				var dStart = Date.parse(start);
+				var dEnd = Date.parse(end);
+				
+				
+			    if (dEnd<dStart) {
+			        alert("End Date must be a later time");
+			        return false;
+			    }
+		}
+		
+		
 			$(function() {
 				$("#header1").load("user/userheader.html"); 
 				$("#footer").load("footer.html"); 
@@ -28,6 +45,11 @@
 			});
 		
 		</script> 
+		
+		
+		
+		
+		
 	</head>
 	<body>
 		<div id="header1"></div>

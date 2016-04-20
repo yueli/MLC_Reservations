@@ -1,9 +1,10 @@
 /** 
  * @author: Ginger Nix
  * 
- * This servlet lists all the admins in the admin table
+ * The AdminListServlet displays a list of all the admins in the admin table, active and not active.
+ * Each admin is on a different row with a button to edit the admin data.
  * 
- */
+ **/
 package controllers;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.AdminUserHelper;
 import model.Admin;
-import model.User;
+import model.DbConnect;
 
 /**
  * Servlet implementation class AdminListServlet
@@ -50,41 +51,52 @@ public class AdminListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		//get our current session
-		session = request.getSession();
+		this.session = request.getSession(false); 
+		
+		// if this session is not null (active/valid)
+		if (this.session != null){	
+	
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+			System.out.println("AdminListServlet: logged in admin user adminMyID = " + loggedInAdminUser.getAdminMyID());
+			System.out.println("AdminListServlet: logged in w/role = " + loggedInAdminUser.getRole());
+	
+			String message = "";
+			message = (String) request.getAttribute("message"); 
+			
+			System.out.println("AdminListServlet: message received is: " + message);
+			
+			// blank out message if nothing gotten in message attribute
+			
+			if (message == null || message.isEmpty()) {
+				 message = " ";
+			}
 
-		String message = "";
-		message = (String) request.getAttribute("message"); 
+			AdminUserHelper adminHelper = new AdminUserHelper();
+			
+			// get the admin users
+			String table = "";
+			table = adminHelper.ListAdmins();
+			
+			//forward our request along
+			request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+			request.setAttribute("table", table);
+			request.setAttribute("message", message);
+	
+			url = "admin/adminList.jsp";
 		
-		// blank out message if nothing gotten in message attribute
-		
-		if (message == null || message.isEmpty()) {
-			 message = " ";
+		} else { // there isn't an active session.
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 
-		// create admin user object
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-		
-		System.out.println("AdminListServlet: logged in user's role = " + loggedInAdminUser.getRole());
-	
-		// use the class AdminUserHelper
-		AdminUserHelper adminHelper = new AdminUserHelper();
-		
-		// get the admin users
-		String table = "";
-		table = adminHelper.ListAdmins();
-		
-		//forward our request along
-		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-		request.setAttribute("table", table);
-		request.setAttribute("message", message);
-
-
-		url = "admin/adminList.jsp";	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-
-		
-		
 		
 	}
 

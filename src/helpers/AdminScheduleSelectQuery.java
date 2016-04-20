@@ -59,44 +59,74 @@ public class AdminScheduleSelectQuery {
 				+ "tomcatdb.Schedule.createdBy "
 				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
 				+ "WHERE tomcatdb.Schedule.Building_buildingID = tomcatdb.Building.buildingID "
-				+ "AND tomcatdb.Schedule.Building_buildingID = '" + buildingID + "' ";
+				+ "AND tomcatdb.Schedule.Building_buildingID = ? ";
 		
 		// if both a to and from value is entered, from - to range.
 		if(to != null && from != null && !to.isEmpty() && !from.isEmpty()){
 			to = dtc.slashDateConvert(to);
 			from = dtc.slashDateConvert(from);
-			query += "AND ((tomcatdb.Schedule.startDate = '" + from + "') "
-			      + "OR (tomcatdb.Schedule.startDate BETWEEN '" + from + "' AND '" + to + "')) "
+			query += "AND ((tomcatdb.Schedule.startDate = ?) "
+			      + "OR (tomcatdb.Schedule.startDate BETWEEN ? AND ?)) "
 				  + "ORDER BY tomcatdb.Schedule.startDate ASC";
 			
 			// if to value isn't null, query range from current date to "to" date entered.
 		} else if (to != null && !to.isEmpty()){
 			to = dtc.slashDateConvert(to);
-			query += "AND ((tomcatdb.Schedule.startDate = '" + currentDate + "') "
-				  + "OR (tomcatdb.Schedule.startDate BETWEEN '" + currentDate + "' AND '" + to + "')) "
+			query += "AND ((tomcatdb.Schedule.startDate = ?) "
+				  + "OR (tomcatdb.Schedule.startDate BETWEEN ? AND ?)) "
 			      + "ORDER BY tomcatdb.Schedule.startDate ASC";
 			
 			// if from date is entered, query from "from" date to end of result set.
 		} else if (from != null && !from.isEmpty()){
 			from = dtc.slashDateConvert(from);  
-			query += "AND tomcatdb.Schedule.startDate >= '" + from + "' "
+			query += "AND tomcatdb.Schedule.startDate >= ? "
 				  + "ORDER BY tomcatdb.Schedule.startDate ASC";
 			
 			// for all other values.
 		} else {
-			  query += "AND tomcatdb.Schedule.startDate >= '" + currentDate + "' "
+			  query += "AND tomcatdb.Schedule.startDate >= ? "
 					+ "ORDER BY tomcatdb.Schedule.startDate ASC";
 		}
 		
 		// securely run query
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-			System.out.println(query);
+			
+			ps.setString(1, buildingID);
+			
+			// if both a to and from value is entered, from - to range.
+			if(to != null && from != null && !to.isEmpty() && !from.isEmpty()){
+				//to = dtc.slashDateConvert(to);
+				//from = dtc.slashDateConvert(from);
+				
+				ps.setString(2, from);
+				ps.setString(3, from);
+				ps.setString(4, to);
+				
+				// if to value isn't null, query range from current date to "to" date entered.
+			} else if (to != null && !to.isEmpty()){
+				//to = dtc.slashDateConvert(to);
+				
+				ps.setString(2, currentDate);
+				ps.setString(3, currentDate);
+				ps.setString(4, to);
+				
+				// if from date is entered, query from "from" date to end of result set.
+			} else if (from != null && !from.isEmpty()){
+				//from = dtc.slashDateConvert(from);  
+				ps.setString(2, from);
+				
+				// for all other values.
+			} else {
+				
+				ps.setString(2, currentDate);
+			}
+			
 			this.results = ps.executeQuery();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error in AdminScheduleSelectQuery.java: doRead method. Please check connection or SQL statement: " + query);
+			System.err.println("Error in AdminScheduleSelectQuery.java: doRead method. Please check connection or SQL statement: " + query);
 		} 
 	}
 	/**
@@ -110,7 +140,7 @@ public class AdminScheduleSelectQuery {
 			table += "<thead>";
 			table += "<tr>";
 			table += "<th></th>";
-			table += "<th>Building </th>";
+			//table += "<th>Building </th>";
 			table += "<th>Date </th>";
 			table += "<th>Start Time</th>";
 			table += "<th>End Time</th>";
@@ -142,7 +172,7 @@ public class AdminScheduleSelectQuery {
 				
 				table += "<tr>";
 				table += "<td>" + j + "</td>";
-				table += "<td data-search='" + building.getBuildingName() + "'>" + building.getBuildingName() + "</td>";
+				//table += "<td data-search='" + building.getBuildingName() + "'>" + building.getBuildingName() + "</td>";
 				table += "<td data-search='" + schedule.getStartDate()+ "'>" + dtc.convertDateLong(schedule.getStartDate()) + "</td>";
 				table += "<td data-order='" + schedule.getStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(schedule.getStartTime()) + "</td>";
 				table += "<td data-order='" + schedule.getEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(schedule.getEndTime()) + "</td>";
