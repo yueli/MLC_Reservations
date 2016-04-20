@@ -4,15 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-//import java.time.LocalDateTime; //2016-04-17 GAN commented out - red x - error
-import java.util.Date;
-
+import model.Admin;
 import model.Banned;
 import model.DateTimeConverter;
 import model.DbConnect;
-import model.TimeConverter;
+
 import model.User;
 
 
@@ -101,13 +97,12 @@ public class BannedSelectQuery {
 				
 				table += "<thead>";
 				table += "<tr>"
-						+ "<th>Ban#</th>"
+
 						+ "<th>First Name</th>"
 						+ "<th>Last Name</th>"
-						+ "<th>Student ID</th>"
-						+ "<th>Admin ID</th>"
+						+ "<th>My ID</th>"
+						+ "<th>Admin</th>"
 						+ "<th>Ban Start</th>"
-						+ "<th>Ban End</th>"
 						+ "<th>Penalty Count</th>"
 						+ "<th>Description</th>"
 						+ "<th>Status</th>"
@@ -135,12 +130,16 @@ public class BannedSelectQuery {
 					User user = new User();
 					user = userData.userData(ban.getStudentID());
 					
+					BanGetUserInfoQuery adminData = new BanGetUserInfoQuery();
+					Admin admin = new Admin();
+					admin = adminData.adminData(ban.getAdminID());
+					
+					
+					
 					
 					table += "<tr>";
 					
-					table += "<td>";
-					table += ban.getBanID();
-					table += "</td>";
+
 					table += "<td>";
 					table += user.getUserFirstName();
 					table += "</td>";
@@ -148,31 +147,25 @@ public class BannedSelectQuery {
 					table += user.getUserLastName();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getStudentID();
+					table += user.getMyID();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getAdminID();
+					table += admin.getFname() +" "+ admin.getLname();
 					table += "</td>";
 					table += "<td>";
 					table += dtc.dateTimeTo12Long(ban.getBanStart());
 					table += "</td>";
 					table += "<td>";
-					// check to see if end date time string is empty or null
-					// if its not, then convert to easier display
-					// if empty or null, show blank in table (instead of "null")
-					if (ban.getBanEnd() != null && !ban.getBanEnd().isEmpty()){
-						// converts sql format to format thats easier to read.
-						table += dtc.dateTimeTo12Long(ban.getBanEnd());
-					} else {
-						// show a blank instead of null in the table
-						table += "";
-					}
-					table += "</td>";
-					table += "<td>";
 					table += ban.getPenaltyCount();
 					table += "</td>";
 					table += "<td>";
-					table += ban.getDescription();
+						if(ban.getDescription().isEmpty()==true)
+						{
+							table += "-";
+						}
+						else{
+						table += ban.getDescription();
+						}
 					table += "</td>";
 					table += "<td>";
 					if (ban.getStatus() == 1){

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Admin;
 import model.DbConnect;
 import model.User;
 
@@ -17,6 +18,7 @@ public class BanGetUserInfoQuery {
 	private Connection connection;
 	private ResultSet results;
 	private ResultSet banResults;
+	private ResultSet adminResults;
 	//private int numRecords;
 	public String banDescription ="";
 
@@ -71,6 +73,33 @@ public class BanGetUserInfoQuery {
 		return userData;
 	}
 	 
+	 
+	 public Admin adminData(int adminID){
+			
+			Admin adminData = new Admin();
+			String query = "SELECT Admin.adminID,Admin.adminMyID,Admin.fname,Admin.lname,Admin.role,Admin.adminStatus,Admin.cantBeDeleted FROM tomcatdb.Admin WHERE Admin.adminID = "+adminID+";";
+			try {
+				PreparedStatement ps = this.connection.prepareStatement(query);
+				this.adminResults = ps.executeQuery();
+				while(this.adminResults.next()){
+					adminData.setAdminID(this.adminResults.getInt("Admin.adminID"));
+					adminData.setAdminMyID(this.adminResults.getString("Admin.adminMyID"));
+					adminData.setFname(this.adminResults.getString("Admin.fname"));
+					adminData.setLname(this.adminResults.getString("Admin.lname"));
+					adminData.setRole(this.adminResults.getString("Admin.role"));
+					adminData.setAdminStatus(this.adminResults.getInt("Admin.adminStatus"));
+					adminData.setCantBeDeleted(this.adminResults.getInt("Admin.cantBeDeleted"));
+
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
+			}
+			
+			return adminData;
+		}
+	 
 	 /*
 	  * Check if user is already banned
 	  */
@@ -100,6 +129,9 @@ public class BanGetUserInfoQuery {
 			
 			return banned;
 		}
+	 
+	 
+	 
 	 
 
 }
