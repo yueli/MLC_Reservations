@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Admin;
 import model.DbConnect;
 import model.User;
 
@@ -17,6 +18,7 @@ public class BanGetUserInfoQuery {
 	private Connection connection;
 	private ResultSet results;
 	private ResultSet banResults;
+	private ResultSet adminResults;
 	//private int numRecords;
 	public String banDescription ="";
 
