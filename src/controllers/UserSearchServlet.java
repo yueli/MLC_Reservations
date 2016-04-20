@@ -68,12 +68,12 @@ public class UserSearchServlet extends HttpServlet {
 				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
 				
 				// get reservation request variables
-				String startDateSlashed = request.getParameter("startDate");
-				String endDateSlashed = request.getParameter("endDate");
+				String startDateSlashed = request.getParameter("startDate");// keep as slashed for session variable
+				String endDateSlashed = request.getParameter("endDate");// keep as slashed for session variable
 				String startTime = request.getParameter("startTime");
 				String endTime = request.getParameter("endTime");
 				String hourIncrement = request.getParameter("hourIncrement");
-				String hourIncrementSelect = "";
+				String hourIncrementSelect = "";// used to add the reservation length drop down
 				String msg = "";
 				String table = "";
 				
@@ -95,7 +95,7 @@ public class UserSearchServlet extends HttpServlet {
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
-					bsq.doBuildingRead();
+					bsq.doAdminBuildingRead(); // using admin read since there's not hours check
 					buildings = bsq.getBuildingResults(bldg);
 		
 				}
