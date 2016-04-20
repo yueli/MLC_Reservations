@@ -71,7 +71,7 @@ public class UserSearchServlet extends HttpServlet {
 				String startDateSlashed = request.getParameter("startDate");
 				String endDateSlashed = request.getParameter("endDate");
 				String startTime = request.getParameter("startTime");
-				String endTime = "";
+				String endTime = request.getParameter("endTime");
 				String hourIncrement = request.getParameter("hourIncrement");
 				String hourIncrementSelect = "";
 				String msg = "";
@@ -140,26 +140,22 @@ public class UserSearchServlet extends HttpServlet {
 						
 						// convert start time to 24-hour time
 						startTime = tc.convertTimeTo24(startTime);
+						endTime = tc.convertTimeTo24(endTime);
 						
-						// get end time from start time and hour increment
-						endTime = TimeConverter.addTime(startTime, Integer.parseInt(hourIncrement));
-						// get end time from start time and hour increment
-
+						System.out.println("User Search Reservations --> start time = " + startTime + " end time = " + endTime);
 						
-						endTime = TimeConverter.addTime(startTime, Integer.parseInt(hourIncrement));
-						endTime = TimeConverter.addTime(startTime, Integer.parseInt(hourIncrement));
-						// User's can only make a reservation within a 24 hour period.  No rolling 24 hour reservations.
-						if(startTime.equals("23:00:00") && Integer.parseInt(hourIncrement) == 2){
-							msg = "The end time falls into the next day. Please create a separate reservation on the following day from 12am - 1am <br> "
-									+ "or reduce the reservation length to 1 hour.";
-							
-							url = "user/search.jsp";
-							
-						} else {
-							
-							System.out.println("User Search Reservations --> start time = " + startTime + " end time = " + endTime);
-						System.out.println("User Search Reservations --> start time = " + startTime + " end time = " + endTime););
-
+						// query for reservation check and listing of all rooms in a building.
+						ReservationSelectQuery res = new ReservationSelectQuery();
+						RoomsSelectQuery rsq = new RoomsSelectQuery();
+						
+						// list for the room number.  Below will print all times, inclusive between start and end
+						List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
+						
+						List<String> times = tc.timeRangeList(startTime, TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement))); 
+						List<String> times2 = tc.timeRangeList(startTime, TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
+						List<String> times3 = tc.timeRangeList("00:00:00", TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
+						List<String> times4 = tc.timeRangeList("00:00:00", TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement)));
+						
 						// date range list.  Print all dates between start and end date inclusive
 						List<String> dates = dtc.dateRangeList(startDate, endDate);
 						
