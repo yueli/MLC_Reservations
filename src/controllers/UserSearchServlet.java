@@ -144,6 +144,7 @@ public class UserSearchServlet extends HttpServlet {
 						// get end time from start time and hour increment
 						endTime = TimeConverter.addTime(startTime, Integer.parseInt(hourIncrement));
 						// get end time from start time and hour increment
+
 						
 						endTime = TimeConverter.addTime(startTime, Integer.parseInt(hourIncrement));
 						endTime = TimeConverter.addTime(startTime, Integer.parseInt(hourIncrement));
