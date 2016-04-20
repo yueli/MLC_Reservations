@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>MLC_Reservations</display-name>
- 	<welcome-file-list>
-    	<welcome-file>CASLoginServlet</welcome-file>
-    	<!--<welcome-file>LoginServlet</welcome-file> -->
-	</welcome-file-list>
+  <welcome-file-list>
+   		<welcome-file>CASLoginServlet</welcome-file>
+		<!--<welcome-file>LoginServlet</welcome-file>-->
+  </welcome-file-list>
   <session-config>
     <session-timeout>10</session-timeout>
   </session-config>
-    <filter>
+   <filter>
     <filter-name>CAS Single Sign Out Filter</filter-name>
     <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
   </filter>
