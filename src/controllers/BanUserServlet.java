@@ -89,7 +89,9 @@ public class BanUserServlet extends HttpServlet {
 			
 			table += "<form name='ban' action=bansuccess method=post>";
 			table += "<input type='hidden' name='userID' value='"+ user.getUserRecordID() +"'>";
-			table += "<input type='hidden' name='adminID' value='"+ loggedInAdminUser.getAdminID() +"'>";
+//			table += "<input type='hidden' name='adminID' value='"+ loggedInAdminUser.getAdminID() +"'>";
+			//ISSUE
+			table += "<input type='hidden' name='adminID' value='1'>";
 			table += "<input type='hidden' name='banStart' value='"+sdf.format(date) +"'>";
 			table += "<input type='hidden' name='banEnd' value='1111-11-11 11:11:11'>";
 			table += "<input type='hidden' name='penaltyCount' value='2'>";
