@@ -405,6 +405,48 @@ public class BuildingSelectQuery {
 		return false;
 	}
 	/**
+	 * This method will check to see if a building is open at the user specified time
+	 * @param startDate
+	 * @param startTime
+	 * @param buildingID
+	 * @return
+	 */
+	public String buildingScheduleCheck (String startDate, String startTime, String buildingID){
+		
+		String results = "";
+		String query = "SELECT tomcatdb.Building.buildingID "
+				+ "FROM tomcatdb.Building, tomcatdb.Schedule "
+				+ "WHERE tomcatdb.Building.buildingStatus = ? "
+				+ "AND tomcatdb.Building.buildingID = tomcatdb.Schedule.Building_buildingID "
+				+ "AND tomcatdb.Building.buildingID = ? "
+				+ "AND tomcatdb.Schedule.startDate = ? "
+				+ "AND ((tomcatdb.Schedule.startTime = ?) OR (? BETWEEN tomcatdb.Schedule.startTime AND tomcatdb.Schedule.endTime))";
+		
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, "1");
+			ps.setString(2, buildingID);
+			ps.setString(3, startDate);
+			ps.setString(4, startTime);
+			ps.setString(5, startTime);
+			this.results = ps.executeQuery();
+			
+			while(this.results.next()){
+				Building building = new Building();
+				building.setBuildingID(this.results.getInt("buildingID"));
+				results += building.getBuildingID();
+			} this.results.beforeFirst();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in BuildingSelectQuery.java: buildingScheduleCheck method. Please check connection or SQL statement");
+		}
+		
+		return results;
+	}
+	
+	/**
 	 * Java Main Method used to test methods above.
 	 * @param args Java Main Method
 	 * @author Brian Olaogun

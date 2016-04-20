@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("LOGIN SERVLET!");
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
 		
-
+/*
 		User user = new User();
 		user.setUserFirstName("Brian");
 		user.setUserLastName("Olaogun");
@@ -69,22 +69,22 @@ public class LoginServlet extends HttpServlet {
 	
 		session.setAttribute("user", user);
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
-
+*/
 		
 		System.out.println("LOGIN SERVLET!");
 
-/*		User user = new User();
+		User user = new User();
 		user.setMyID("ganix");
 		user.setUserEmail("ganix@uga.edu");
 		user.setUserFirstName("Ginger");
 		user.setUserLastName("Nix");
 		user.setUserRecordID(19);
-*/		
+		
 		session.setAttribute("user", user);
 
 		
-		url = "AdminHome"; 
-		//url = "user/userHomePage.jsp"; 
+		//url = "AdminHome"; 
+		url = "user/userHomePage.jsp"; 
 		//url = "admin/adminHomePage.jsp"; 
 		
 		//----------
