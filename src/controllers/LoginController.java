@@ -136,8 +136,8 @@ public class LoginController extends HttpServlet {
 					session.invalidate();
 					session=request.getSession(true);
 					
-					//url = "admin/adminHome.jsp";
-					url = "index.html";
+					url = "admin/adminHome.jsp";
+					//url = "index.html";
 					
 					user.setUserRecordID(19);
 					
