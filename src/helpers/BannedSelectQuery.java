@@ -159,7 +159,11 @@ public class BannedSelectQuery {
 					table += ban.getPenaltyCount();
 					table += "</td>";
 					table += "<td>";
-						if(ban.getDescription().isEmpty()==true)
+					
+					System.out.println("BannedSelectQuery: ban.getDescription = " + ban.getDescription());
+						//if (ban.getDescription().isEmpty()==true)
+						//if( (ban.getDescription().isEmpty()==true) || (ban.getDescription() == null))
+						if  (ban.getDescription() == null)
 						{
 							table += "-";
 						}
