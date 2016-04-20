@@ -644,4 +644,3 @@ public class UserSearchServlet extends HttpServlet {
 	}
 
 }
-	
