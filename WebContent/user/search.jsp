@@ -32,8 +32,8 @@
 			});	
 			// jQuery for datepicker plugin
 			$(function() {
-			    $( "#startDate" ).datepicker({ minDate: +1, maxDate: +14 });
-			    $( "#endDate" ).datepicker({ minDate: +1, maxDate: +14 });
+			    $( "#startDate" ).datepicker({ minDate: 0, maxDate: +14 });
+			    $( "#endDate" ).datepicker({ minDate: 0, maxDate: +14 });
 			 });
 			// jQuery for Datatable plugin for pagination, sort, and search
 			$(document).ready( function () {
@@ -54,7 +54,7 @@
 		<div align="center">
 			<form name="userReserveForm" action="SearchReservations" method="post">
 				<h2>Welcome to Search Reservations</h2><br>
-				<h3>Please enter the information below to see rooms available.<br>
+				<h3>Search for reservations up to 2 week from today.<br>
 				To make a reservation for today, please click browse.</h3><br>
 				<h3>${msg}</h3><br>
 				Building ${buildings}<br>

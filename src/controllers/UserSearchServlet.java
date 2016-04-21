@@ -68,12 +68,12 @@ public class UserSearchServlet extends HttpServlet {
 				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
 				
 				// get reservation request variables
-				String startDateSlashed = request.getParameter("startDate");
-				String endDateSlashed = request.getParameter("endDate");
+				String startDateSlashed = request.getParameter("startDate");// keep as slashed for session variable
+				String endDateSlashed = request.getParameter("endDate");// keep as slashed for session variable
 				String startTime = request.getParameter("startTime");
 				String endTime = request.getParameter("endTime");
 				String hourIncrement = request.getParameter("hourIncrement");
-				String hourIncrementSelect = "";
+				String hourIncrementSelect = "";// used to add the reservation length drop down
 				String msg = "";
 				String table = "";
 				
@@ -95,7 +95,7 @@ public class UserSearchServlet extends HttpServlet {
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
-					bsq.doBuildingRead();
+					bsq.doAdminBuildingRead(); // using admin read since there's not hours check
 					buildings = bsq.getBuildingResults(bldg);
 		
 				}
@@ -151,10 +151,10 @@ public class UserSearchServlet extends HttpServlet {
 						// list for the room number.  Below will print all times, inclusive between start and end
 						List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
 						
-						List<String> times = tc.timeRangeList(startTime, TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
-						List<String> times2 = tc.timeRangeList("00:00:00", TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement)));
+						List<String> times = tc.timeRangeList(startTime, TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement))); 
+						List<String> times2 = tc.timeRangeList(startTime, TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
 						List<String> times3 = tc.timeRangeList("00:00:00", TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
-						List<String> times4 = tc.timeRangeList(startTime, TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement))); 
+						List<String> times4 = tc.timeRangeList("00:00:00", TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement)));
 						
 						// date range list.  Print all dates between start and end date inclusive
 						List<String> dates = dtc.dateRangeList(startDate, endDate);
@@ -185,12 +185,12 @@ public class UserSearchServlet extends HttpServlet {
 								for (int k = 0; k < dates.size(); k++) {
 									
 									// loop through each time then increment room
-									for (int j =0; j < times4.size(); j++){
+									for (int j =0; j < times.size(); j++){
 										
-										String innerEndTime = TimeConverter.addTime(times4.get(j), Integer.parseInt(hourIncrement));
-										System.out.println("Loop Start time = " + times4.get(j) + " Loop END TIME = " + innerEndTime);
+										String innerEndTime = TimeConverter.addTime(times.get(j), Integer.parseInt(hourIncrement));
+										System.out.println("Loop Start time = " + times.get(j) + " Loop END TIME = " + innerEndTime);
 										
-										List<String> innerTimes = tc.timeRangeList(times4.get(j), innerEndTime);
+										List<String> innerTimes = tc.timeRangeList(times.get(j), innerEndTime);
 										
 										// loop through/display times in range based off hour increment (reservation length)
 										// ex. if hour increment = 1, start time = 9am, end time = 11am --> 9am - 10am, next row = 10am - 11am, etc.
@@ -238,7 +238,7 @@ public class UserSearchServlet extends HttpServlet {
 															table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
 															table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 															table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-															table += "<input type='submit' value='Make Reservation'>";
+															table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
 															table += "</form>";
 															table += "</td>";
 															table += "</tr>";
@@ -250,10 +250,11 @@ public class UserSearchServlet extends HttpServlet {
 														// testing - printing to console
 														System.out.println("******* RESERVED ********");
 														System.out.println("RESERVE ID = " + check);
-														System.out.println("DATE " + startDate);
-														System.out.println("END " + endDate);
+														System.out.println("DATE " + dates.get(k));
+														System.out.println("END " + dates.get(k));
 														System.out.println("ROOM NUMBER " + roomNumber.get(i));
-														System.out.println("TIME " + times.get(j));
+														System.out.println("ST TIME " + innerTimes.get(l));
+														System.out.println("END TIME " + innerEndTime);
 														System.out.println("******* RESERVED ********");
 														System.out.println();
 														
@@ -277,7 +278,10 @@ public class UserSearchServlet extends HttpServlet {
 								}
 							}
 						} else {
-						
+							/*
+							 * From the start date, loop through all times between the user
+							 * inputted start time - end time of midnight - hour increment
+							 */
 							// loop through each room after all times have been checked 
 							//for (int i = 0; i < roomNumber.size(); i++){
 							for (int k = 0; k < dates.size(); k++) {	
@@ -292,210 +296,11 @@ public class UserSearchServlet extends HttpServlet {
 									System.out.println("*************************");
 									if(dates.get(k).equals(startDate)){
 										
-										//List<String> t1 = tc.timeRangeList(startTime, TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
-										// loop through each time then increment room
-										for (int j =0; j < times.size(); j++){
-											
-											String innerEndTime = TimeConverter.addTime(times.get(j), Integer.parseInt(hourIncrement));
-											System.out.println("Times 1 --> Loop Start time = " + times.get(j) + " Loop END TIME = " + innerEndTime);
-											
-											List<String> innerTimes = tc.timeRangeList(times.get(j), innerEndTime);
-											
-											// loop through/display times in range based off hour increment (reservation length)
-											// ex. if hour increment = 1, start time = 9am, end time = 11am --> 9am - 10am, next row = 10am - 11am, etc.
-											// ex. if hour increment = 2, 9am - 11am, increment room --> 9am - 11am
-											for(int l = 0; l < innerTimes.size(); l++){
-												
-												/*
-												 * Check if the building selected is open at the time
-												 * if there is, the building ID is returned
-												 */
-												String buildingCheck = bsq.buildingScheduleCheck(dates.get(k), innerTimes.get(l), buildingID);
-												if(!buildingCheck.isEmpty()){
-													
-													res.doReservationRead(dates.get(k), innerTimes.get(l), roomNumber.get(i));
-												   	/*
-													* Check if there is a reservation at the time.
-													* If there isn't then returned is an empty string.
-													*/
-													String check = res.doReservationResults2();
-													if(check.isEmpty()){
-														// index 0 is the start time of the reservation
-														if(l == 0){
-															//if (!innerTimes.get(l).equals(endTime)){
-																// testing - printing to console
-																System.out.println();
-																System.out.println("DATE " + dates.get(k));
-																//System.out.println("END " + endDate);
-																System.out.println("END " + dates.get(k));
-																System.out.println("ROOM NUMBER " + roomNumber.get(i));
-																//System.out.println("TIME " + innerTimes.get(l));
-																System.out.println("ST TIME " + innerTimes.get(l));
-																System.out.println("END TIME " + innerEndTime);
-																System.out.println();
-																
-																table += "<tr>";
-																table += "<td data-sort='" + h + "'>" + h + "</td>";
-																table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
-																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-																table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-																table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
-																table += "<td>";
-																table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
-																table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
-																table += "<input type='hidden' name='startTime' value='" + innerTimes.get(l) + "'>";
-																table += "<input type='hidden' name='endTime' value='" + innerEndTime + "'>";
-																table += "<input type='hidden' name='startDate' value='" + dates.get(k) + "'>";
-																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
-																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
-																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-																table += "<input type='submit' value='Make Reservation'>";
-																table += "</form>";
-																table += "</td>";
-																table += "</tr>";
-																
-																h++;
-															//}
-														}
-													} else if (!check.isEmpty()){
-														if(l == 0){
-															// testing - printing to console
-															System.out.println("******* RESERVED ********");
-															System.out.println("RESERVE ID = " + check);
-															System.out.println("DATE " + startDate);
-															System.out.println("END " + endDate);
-															System.out.println("ROOM NUMBER " + roomNumber.get(i));
-															System.out.println("TIME " + times.get(j));
-															System.out.println("******* RESERVED ********");
-															System.out.println();
-															
-															table += "<tr>";
-															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
-															table += "<td data-sort='" + h + "'>" + h + "</td>";
-															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
-															table += "<td> **RESERVED**</td>"; 
-															table += "</form>";
-															table += "</tr>";
-														
-															h++; 
-														}
-													}
-												}
-											}
-										}
-										
-									} 
-									if (!dates.get(k).equals(startDate) && !dates.get(k).equals(endDate)) {
-										
-										// loop through each time then increment room
-										for (int j =0; j < times3.size(); j++){
-											
-											String innerEndTime = TimeConverter.addTime(times3.get(j), Integer.parseInt(hourIncrement));
-											System.out.println("Times 3 --> Loop Start time = " + times3.get(j) + " Loop END TIME = " + innerEndTime);
-											
-											List<String> innerTimes = tc.timeRangeList(times3.get(j), innerEndTime);
-											
-											// loop through/display times in range based off hour increment (reservation length)
-											// ex. if hour increment = 1, start time = 9am, end time = 11am --> 9am - 10am, next row = 10am - 11am, etc.
-											// ex. if hour increment = 2, 9am - 11am, increment room --> 9am - 11am
-											for(int l = 0; l < innerTimes.size(); l++){
-												
-												/*
-												 * Check if the building selected is open at the time
-												 * if there is, the building ID is returned
-												 */
-												String buildingCheck = bsq.buildingScheduleCheck(dates.get(k), innerTimes.get(l), buildingID);
-												if(!buildingCheck.isEmpty()){
-													
-													res.doReservationRead(dates.get(k), innerTimes.get(l), roomNumber.get(i));
-												   	/*
-													* Check if there is a reservation at the time.
-													* If there isn't then returned is an empty string.
-													*/
-													String check = res.doReservationResults2();
-													if(check.isEmpty()){
-														// index 0 is the start time of the reservation
-														if(l == 0){
-															//if (!innerTimes.get(l).equals(endTime)){
-																// testing - printing to console
-																System.out.println();
-																System.out.println("DATE " + dates.get(k));
-																//System.out.println("END " + endDate);
-																System.out.println("END " + dates.get(k));
-																System.out.println("ROOM NUMBER " + roomNumber.get(i));
-																//System.out.println("TIME " + innerTimes.get(l));
-																System.out.println("ST TIME " + innerTimes.get(l));
-																System.out.println("END TIME " + innerEndTime);
-																System.out.println();
-																
-																table += "<tr>";
-																table += "<td data-sort='" + h + "'>" + h + "</td>";
-																table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
-																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-																table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-																table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
-																table += "<td>";
-																table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
-																table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
-																table += "<input type='hidden' name='startTime' value='" + innerTimes.get(l) + "'>";
-																table += "<input type='hidden' name='endTime' value='" + innerEndTime + "'>";
-																table += "<input type='hidden' name='startDate' value='" + dates.get(k) + "'>";
-																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
-																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
-																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-																table += "<input type='submit' value='Make Reservation'>";
-																table += "</form>";
-																table += "</td>";
-																table += "</tr>";
-																
-																h++;
-															//}
-														}
-													} else if (!check.isEmpty()){
-														if(l == 0){
-															// testing - printing to console
-															System.out.println("******* RESERVED ********");
-															System.out.println("RESERVE ID = " + check);
-															System.out.println("DATE " + startDate);
-															System.out.println("END " + endDate);
-															System.out.println("ROOM NUMBER " + roomNumber.get(i));
-															System.out.println("TIME " + times3.get(j));
-															System.out.println("******* RESERVED ********");
-															System.out.println();
-															
-															table += "<tr>";
-															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
-															table += "<td data-sort='" + h + "'>" + h + "</td>";
-															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
-															table += "<td> **RESERVED**</td>"; 
-															table += "</form>";
-															table += "</tr>";
-															
-															h++; 
-														}
-													}
-												}
-											}
-										}
-									}
-
-									if (dates.get(k).equals(endDate)){
-										
 										// loop through each time then increment room
 										for (int j =0; j < times2.size(); j++){
 											
 											String innerEndTime = TimeConverter.addTime(times2.get(j), Integer.parseInt(hourIncrement));
-											System.out.println("Times 2 --> Loop Start time = " + times2.get(j) + " Loop END TIME = " + innerEndTime);
+											System.out.println("Times 1: Start Date --> Loop Start time = " + times2.get(j) + " Loop END TIME = " + innerEndTime);
 											
 											List<String> innerTimes = tc.timeRangeList(times2.get(j), innerEndTime);
 											
@@ -548,7 +353,214 @@ public class UserSearchServlet extends HttpServlet {
 																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
 																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-																table += "<input type='submit' value='Make Reservation'>";
+																table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
+																table += "</form>";
+																table += "</td>";
+																table += "</tr>";
+																
+																h++;
+															//}
+														}
+													} else if (!check.isEmpty()){
+														if(l == 0){
+															// testing - printing to console
+															System.out.println("******* RESERVED ********");
+															System.out.println("RESERVE ID = " + check);
+															System.out.println("DATE " + dates.get(k));
+															System.out.println("END " + dates.get(k));
+															System.out.println("ROOM NUMBER " + roomNumber.get(i));
+															System.out.println("ST TIME " + innerTimes.get(l));
+															System.out.println("END TIME " + innerEndTime);
+															System.out.println("******* RESERVED ********");
+															System.out.println();
+															
+															table += "<tr>";
+															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
+															table += "<td data-sort='" + h + "'>" + h + "</td>";
+															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
+															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
+															table += "<td> **RESERVED**</td>"; 
+															table += "</form>";
+															table += "</tr>";
+														
+															h++; 
+														}
+													}
+												}
+											}
+										}
+										
+									}
+									/*
+									 * Any date in between the start date and end date, exclusive, will loop
+									 * through start time midnight to the end time of midnight - hour increment
+									 */
+									if (!dates.get(k).equals(startDate) && !dates.get(k).equals(endDate)) {
+										
+										// loop through each time then increment room
+										for (int j =0; j < times3.size(); j++){
+											
+											String innerEndTime = TimeConverter.addTime(times3.get(j), Integer.parseInt(hourIncrement));
+											System.out.println("Times 2: Middle Date --> Loop Start time = " + times3.get(j) + " Loop END TIME = " + innerEndTime);
+											
+											List<String> innerTimes = tc.timeRangeList(times3.get(j), innerEndTime);
+											
+											// loop through/display times in range based off hour increment (reservation length)
+											// ex. if hour increment = 1, start time = 9am, end time = 11am --> 9am - 10am, next row = 10am - 11am, etc.
+											// ex. if hour increment = 2, 9am - 11am, increment room --> 9am - 11am
+											for(int l = 0; l < innerTimes.size(); l++){
+												
+												/*
+												 * Check if the building selected is open at the time
+												 * if there is, the building ID is returned
+												 */
+												String buildingCheck = bsq.buildingScheduleCheck(dates.get(k), innerTimes.get(l), buildingID);
+												if(!buildingCheck.isEmpty()){
+													
+													res.doReservationRead(dates.get(k), innerTimes.get(l), roomNumber.get(i));
+												   	/*
+													* Check if there is a reservation at the time.
+													* If there isn't then returned is an empty string.
+													*/
+													String check = res.doReservationResults2();
+													if(check.isEmpty()){
+														// index 0 is the start time of the reservation
+														if(l == 0){
+															//if (!innerTimes.get(l).equals(endTime)){
+																// testing - printing to console
+																System.out.println();
+																System.out.println("DATE " + dates.get(k));
+																//System.out.println("END " + endDate);
+																System.out.println("END " + dates.get(k));
+																System.out.println("ROOM NUMBER " + roomNumber.get(i));
+																//System.out.println("TIME " + innerTimes.get(l));
+																System.out.println("ST TIME " + innerTimes.get(l));
+																System.out.println("END TIME " + innerEndTime);
+																System.out.println();
+																
+																table += "<tr>";
+																table += "<td data-sort='" + h + "'>" + h + "</td>";
+																table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
+																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
+																table += "<td>";
+																table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
+																table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
+																table += "<input type='hidden' name='startTime' value='" + innerTimes.get(l) + "'>";
+																table += "<input type='hidden' name='endTime' value='" + innerEndTime + "'>";
+																table += "<input type='hidden' name='startDate' value='" + dates.get(k) + "'>";
+																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
+																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
+																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
+																table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
+																table += "</form>";
+																table += "</td>";
+																table += "</tr>";
+																
+																h++;
+															//}
+														}
+													} else if (!check.isEmpty()){
+														if(l == 0){
+															// testing - printing to console
+															System.out.println("******* RESERVED ********");
+															System.out.println("RESERVE ID = " + check);
+															System.out.println("DATE " + dates.get(k));
+															System.out.println("END " + dates.get(k));
+															System.out.println("ROOM NUMBER " + roomNumber.get(i));
+															System.out.println("ST TIME " + innerTimes.get(l));
+															System.out.println("END TIME " + innerEndTime);
+															System.out.println("******* RESERVED ********");
+															System.out.println();
+															
+															table += "<tr>";
+															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
+															table += "<td data-sort='" + h + "'>" + h + "</td>";
+															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
+															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
+															table += "<td> **RESERVED**</td>"; 
+															table += "</form>";
+															table += "</tr>";
+															
+															h++; 
+														}
+													}
+												}
+											}
+										}
+									}
+									/*
+									 * If the end date in the loop reaches the user inputted end date
+									 * then loop from times midnight to user inputted end time.
+									 */
+									if (dates.get(k).equals(endDate)){
+										
+										// loop through each time then increment room
+										for (int j =0; j < times4.size(); j++){
+											
+											String innerEndTime = TimeConverter.addTime(times4.get(j), Integer.parseInt(hourIncrement));
+											System.out.println("Times 3: End Date --> Loop Start time = " + times4.get(j) + " Loop END TIME = " + innerEndTime);
+											
+											List<String> innerTimes = tc.timeRangeList(times4.get(j), innerEndTime);
+											
+											// loop through/display times in range based off hour increment (reservation length)
+											// ex. if hour increment = 1, start time = 9am, end time = 11am --> 9am - 10am, next row = 10am - 11am, etc.
+											// ex. if hour increment = 2, 9am - 11am, increment room --> 9am - 11am
+											for(int l = 0; l < innerTimes.size(); l++){
+												
+												/*
+												 * Check if the building selected is open at the time
+												 * if there is, the building ID is returned
+												 */
+												String buildingCheck = bsq.buildingScheduleCheck(dates.get(k), innerTimes.get(l), buildingID);
+												if(!buildingCheck.isEmpty()){
+													
+													res.doReservationRead(dates.get(k), innerTimes.get(l), roomNumber.get(i));
+												   	/*
+													* Check if there is a reservation at the time.
+													* If there isn't then returned is an empty string.
+													*/
+													String check = res.doReservationResults2();
+													if(check.isEmpty()){
+														// index 0 is the start time of the reservation
+														if(l == 0){
+															//if (!innerTimes.get(l).equals(endTime)){
+																// testing - printing to console
+																System.out.println();
+																System.out.println("DATE " + dates.get(k));
+																//System.out.println("END " + endDate);
+																System.out.println("END " + dates.get(k));
+																System.out.println("ROOM NUMBER " + roomNumber.get(i));
+																//System.out.println("TIME " + innerTimes.get(l));
+																System.out.println("ST TIME " + innerTimes.get(l));
+																System.out.println("END TIME " + innerEndTime);
+																System.out.println();
+																
+																table += "<tr>";
+																table += "<td data-sort='" + h + "'>" + h + "</td>";
+																table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
+																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
+																table += "<td>";
+																table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
+																table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
+																table += "<input type='hidden' name='startTime' value='" + innerTimes.get(l) + "'>";
+																table += "<input type='hidden' name='endTime' value='" + innerEndTime + "'>";
+																table += "<input type='hidden' name='startDate' value='" + dates.get(k) + "'>";
+																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
+																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
+																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
+																table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
 																table += "</form>";
 																table += "</td>";
 																table += "</tr>";
@@ -561,10 +573,11 @@ public class UserSearchServlet extends HttpServlet {
 															// testing - printing to console
 															System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
-															System.out.println("DATE " + startDate);
-															System.out.println("END " + endDate);
+															System.out.println("DATE " + dates.get(k));
+															System.out.println("END " + dates.get(k));
 															System.out.println("ROOM NUMBER " + roomNumber.get(i));
-															System.out.println("TIME " + times2.get(j));
+															System.out.println("ST TIME " + innerTimes.get(l));
+															System.out.println("END TIME " + innerEndTime);
 															System.out.println("******* RESERVED ********");
 															System.out.println();
 															

@@ -160,6 +160,14 @@ public class TimeConverter {
 		}
 		return null;
 	}
+	
+	/**
+	 * This method will subtract the hours of a start time by the reservation length (hour)
+	 * For example, 23:00:00 - 2 = 21:00:00
+	 * @param time String time in HH:mm:ss (24-hour) SQL format
+	 * @param hourIncrement Integer reservation length
+	 * @return The difference from of the start time - reservation length (hour increment)
+	 */
 	public static String subtractTime (String time, int hourIncrement){
 		String newTime; // the result of adding a second to inputted time
 		int hour; // for calendar object
@@ -213,9 +221,9 @@ public class TimeConverter {
 		return hourIncrement;
 	}
 	/**
-	 * 
-	 * @param stringStartTime String starting time in 24-hour format
-	 * @param stringEndTime String ending time in 24-hour format
+	 * This method will return an array list of all values inclusive between start time and end time
+	 * @param startTime String starting time in 24-hour format
+	 * @param endTime String ending time in 24-hour format
 	 * @return String array list of all values inclusive between start time and end time
 	 */
 	public List<String> timeRangeList (String startTime, String endTime){
