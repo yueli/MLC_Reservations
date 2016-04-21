@@ -32,8 +32,8 @@
 			});	
 			// jQuery for datepicker plugin
 			$(function() {
-				$( "#startDate" ).datepicker({ minDate: 0, maxDate: +14 });
-				$( "#endDate" ).datepicker({ minDate: 0, maxDate: +14 });
+			    $( "#startDate" ).datepicker({ minDate: 0, maxDate: +14 });
+			    $( "#endDate" ).datepicker({ minDate: 0, maxDate: +14 });
 			 });
 			// jQuery for Datatable plugin for pagination, sort, and search
 			$(document).ready( function () {
