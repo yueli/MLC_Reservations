@@ -159,8 +159,8 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					//------------------------------------------------//
 					// if a new session is created with no user object passed
 					// user will need to login again
-					
 					session.invalidate();
+					
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
@@ -172,6 +172,7 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
+				
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
