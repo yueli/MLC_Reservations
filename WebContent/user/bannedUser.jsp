@@ -29,7 +29,7 @@
 			        ${user.userLastName} has been banned from making reservations.</h2>
 			        
 					<p class="text-center margin-top-30">You have been banned due to not checking into a reserved room for two or more times this period.</p>
-			        <p class="text-center">For more information, contact XXXXXXX or <a href="mailto:learnctr@uga.edu?Subject=Banned%20from%20Making%20A%20Reservation" target="_top">learnctr@uga.edu</a></p>
+			        <p class="text-center">For more information, call (706) 542-7000 or email <a href="mailto:learnctr@uga.edu?Subject=Banned%20from%20Making%20A%20Reservation" target="_top">learnctr@uga.edu</a></p>
 			        
 					</div>
 			     </div>
