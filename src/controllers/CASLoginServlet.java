@@ -92,11 +92,11 @@ public class CASLoginServlet extends HttpServlet {
 		      //=====================
 		      if (Objects.equals("lastName", attributeName)){
 		    		loggedInUser.setUserLastName(attributeValue);    
-		    		//table += " ** using this attirbute last name ** ";
+		    		//table += " ** using this attribute last name ** ";
 		      }
 		      if (Objects.equals("firstName", attributeName)){
 		    		loggedInUser.setUserFirstName(attributeValue);    
-		    		//table += " ** using this attirbute first name ** ";
+		    		//table += " ** using this attribute first name ** ";
 		      }
 		      if (Objects.equals("CN", attributeName)){
 		    		loggedInUser.setMyID(attributeValue);    
