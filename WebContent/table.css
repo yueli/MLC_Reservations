@@ -15,6 +15,16 @@ table td {
 table th {
 	background: #CC0000;
 	color: #fff;
+	}
+ 
+table.dataTable tr.even { 
+	background-color: #e8e8e8;  
+	border:1px lightgrey;
+	}
+	
+table.dataTable tr.odd{ 
+	background-color: white; 
+	border:1px lightgrey; 
 	}	
 	
 /* CSS FOR RESPONSIVE TABLES */
