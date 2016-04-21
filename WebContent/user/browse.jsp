@@ -41,11 +41,9 @@
 				<p>${floor}</p>
 			</form>
 		</div>
-		<div align="center">
-		<h3>${msg}</h3> 
+		<h3>${msg}</h3> <!-- If the user has reserved a room for a total of 2 hours and makes another reservation, a message will display. -->
 		<p>${table}</p>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		</div>
 		<div id="footer"></div>
 	</body>
 </html>

@@ -31,9 +31,17 @@
 	
 	    <form id="downloadBanned" action="?action=bannedreport" method="Post">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
+        
+        </form>
+<!--           
+          <form id="downloadBannedGinger" action="?action=bannedreportGinger" method="GET">
+            <input class="btn btn-lg btn-red" type="submit" value="Ginger Download Banned Student List"><br>
+              
             
-    </form>
-
+	    <form id="downloadBannedGinger" action="?action=bannedreport" method="GET">
+            <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
+        </form>
+ -->
 	</div>
 	<div id="footer"></div>
 	</body>

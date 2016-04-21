@@ -44,7 +44,7 @@
 				<p>Reservation Length: ${reservationLength}</p>
 				<p>Please enter myID of secondary person:<br>
 				<input type="text" name="secondary" id="secondary" placeholder="MyID" required></p>
-				<button class="btn btn-lg btn-red" onclick="goBack()">Cancel</button>    <input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
+				<button class="btn btn-lg btn-red" onclick="goBack()">Go Back</button>    <input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
 			</form>
 		</div>	
 		</div>

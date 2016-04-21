@@ -48,39 +48,57 @@ public class LoginServlet extends HttpServlet {
 		this.session = request.getSession();
 		
 		Admin loggedInAdminUser = new Admin();
-		User user = new User();
-		/*
 		loggedInAdminUser.setAdminID(1);
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setRole("A");
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setAdminMyID("bbo89");
-		user.setMyID("bbo89");
-		user.setUserEmail("bbo89@uga.edu");
+		//loggedInAdminUser.setAdminMyID("ganix");
+		System.out.println("LOGIN SERVLET!");
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
+		
+/*
+		User user = new User();
 		user.setUserFirstName("Brian");
 		user.setUserLastName("Olaogun");
+		user.setMyID("bbo89");
+		user.setUserEmail("bbo89@uga.edu");
 		user.setUserRecordID(1);
-		*/
-		loggedInAdminUser.setAdminID(2);
-		loggedInAdminUser.setAdminStatus(1);
-		loggedInAdminUser.setRole("S");
-		loggedInAdminUser.setAdminMyID("ganix");
+		System.out.println("LoginServlet USER OBJECT " );
+		
+	
+		session.setAttribute("user", user);
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
+*/
+		
+		System.out.println("LOGIN SERVLET!");
+
+		User user = new User();
 		user.setMyID("ganix");
 		user.setUserEmail("ganix@uga.edu");
 		user.setUserFirstName("Ginger");
 		user.setUserLastName("Nix");
 		user.setUserRecordID(19);
 		
-		
-		// Switch Home Pages
-		url = "UserHome"; // user home page
-		//url = "AdminHome"; // admin home page
-		
-		System.out.println("LOGIN SERVLET!");
-		System.out.println("LoginServlet: url = " + url);
-		
 		session.setAttribute("user", user);
-		session.setAttribute("loggedInAdminUser", loggedInAdminUser); 
+
+		
+		//url = "AdminHome"; 
+		url = "user/userHomePage.jsp"; 
+		//url = "admin/adminHomePage.jsp"; 
+		
+		//----------
+		// TESTING ADMINS SECTION
+/*		loggedInAdminUser.setAdminID(2);
+		loggedInAdminUser.setAdminStatus(1);
+		loggedInAdminUser.setRole("S");
+		loggedInAdminUser.setAdminMyID("ganix");
+		url = "admin/adminHomePage.jsp";
+		
+		session.setAttribute("loggedInAdminUser", loggedInAdminUser);
+		
+*/
+		System.out.println("LoginServlet: url = " + url);
 		
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

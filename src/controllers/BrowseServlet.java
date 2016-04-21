@@ -103,7 +103,7 @@ public class BrowseServlet extends HttpServlet {
 				} else {
 					// if no buildings are online.
 					currentDay = "<h2>Browse reservations for today, " + dtc.convertDateLong(dtc.parseDate(dtc.datetimeStamp())) + "</h2><br>";
-					String msg = "No Buildings are currently open today.  Please select Seach from the menu to schedule a reservation for the following day.";
+					String msg = "No Buildings are currently open at this time.  Please check again.";
 					session.setAttribute("msg", msg);
 					session.setAttribute("currentDay", currentDay);
 					url = "/user/browse.jsp";

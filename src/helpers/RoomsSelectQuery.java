@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Building;
 import model.DateTimeConverter;
 import model.DbConnect;
 import model.Rooms;
@@ -119,7 +118,7 @@ public class RoomsSelectQuery {
 		 */
 		public void doRoomRead(int buildingID, String floor){
 			//String query = "SELECT * FROM tomcatdb.Rooms WHERE roomStatus = 1";
-			String query = "SELECT Building.buildingID, roomID, roomNumber "
+			String query = "SELECT roomID, roomNumber "
 					+ "FROM tomcatdb.Rooms, tomcatdb.Building "
 					+ "WHERE tomcatdb.Rooms.Building_buildingID = tomcatdb.Building.buildingID "
 					+ "AND tomcatdb.Building.buildingID = ? "
@@ -188,15 +187,7 @@ public class RoomsSelectQuery {
 			TimeConverter tc = new TimeConverter();
 			int j = 0; // used for jQuery tabs creation
 			try {
-				while(this.results.next()){
-					// get the buildingID
-					Building building = new Building();
-					building.setBuildingID(this.results.getInt("buildingID"));
-					String buildingID = Integer.toString(building.getBuildingID());
-					
-					// Java class that contains method to query building hours
-					BuildingSelectQuery bsq = new BuildingSelectQuery();
-					
+				while(this.results.next()){	
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
 					room.setRoomID(this.results.getInt("roomID")); 
@@ -213,16 +204,12 @@ public class RoomsSelectQuery {
 					
 					table += "<tbody class='subcategory'>";
 					table += "<tr>";
-					for(int i = 0; i < 12; i++){
-						
+					for(int i = 0; i < 12; i++){	
 						// get results for reservations
 						ReservationSelectQuery rsq = new ReservationSelectQuery();
 						
 						// class used to get the current datetime and parse date
 						DateTimeConverter dtc = new DateTimeConverter();
-						
-						// building hours check
-						String scheduleCheck = bsq.buildingScheduleCheck(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], buildingID);
 						
 						// check to see if room is reserved at the current hour at the current date
 						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
@@ -240,8 +227,7 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// compare the current hour with the hour of the reservation
 						// user can only make a reservation for current hour and beyond for the day
-						// also if building is not open at current hour, color cells gray	
-						} else if ((reserveHour < currentHour) || scheduleCheck.isEmpty()){
+						} else if (reserveHour < currentHour){	
 							table += "<td id='gray'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time
@@ -284,9 +270,6 @@ public class RoomsSelectQuery {
 						// class used to get the current datetime and parse date
 						DateTimeConverter dtc = new DateTimeConverter();
 						
-						// building hours check
-						String scheduleCheck = bsq.buildingScheduleCheck(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], buildingID);
-						
 						// check to see if room is reserved at the current hour at the current date
 						rsq.doReservationRead(dtc.parseDate(dtc.datetimeStamp()), timeBlock[i], room.getRoomNumber());
 						String reservation = rsq.doReservationResults();
@@ -303,8 +286,7 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// compare the current hour with the hour of the reservation
 						// user can only make a reservation for current hour and beyond for the day
-						// also if building is not open at current hour, color cells gray	
-						}else if ((reserveHour < currentHour) || scheduleCheck.isEmpty()){
+						}else if (reserveHour < currentHour){
 							table += "<td id='gray'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time

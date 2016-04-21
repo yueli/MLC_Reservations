@@ -72,7 +72,7 @@
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
-				<a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> 
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
 			</form>
 			<p>${table}</p>
 		</div>
