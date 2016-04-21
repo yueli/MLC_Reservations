@@ -68,12 +68,12 @@ public class UserSearchServlet extends HttpServlet {
 				String buildingIDSession = (String) session.getAttribute("buildingID"); // get the building ID from the session
 				
 				// get reservation request variables
-				String startDateSlashed = request.getParameter("startDate");
-				String endDateSlashed = request.getParameter("endDate");
+				String startDateSlashed = request.getParameter("startDate");// keep as slashed for session variable
+				String endDateSlashed = request.getParameter("endDate");// keep as slashed for session variable
 				String startTime = request.getParameter("startTime");
 				String endTime = request.getParameter("endTime");
 				String hourIncrement = request.getParameter("hourIncrement");
-				String hourIncrementSelect = "";
+				String hourIncrementSelect = "";// used to add the reservation length drop down
 				String msg = "";
 				String table = "";
 				
@@ -95,7 +95,7 @@ public class UserSearchServlet extends HttpServlet {
 					int bldg = Integer.parseInt(buildingID);
 					// query building
 					
-					bsq.doBuildingRead();
+					bsq.doAdminBuildingRead(); // using admin read since there's not hours check
 					buildings = bsq.getBuildingResults(bldg);
 		
 				}
@@ -238,7 +238,7 @@ public class UserSearchServlet extends HttpServlet {
 															table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
 															table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 															table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-															table += "<input type='submit' value='Make Reservation'>";
+															table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
 															table += "</form>";
 															table += "</td>";
 															table += "</tr>";
@@ -278,7 +278,10 @@ public class UserSearchServlet extends HttpServlet {
 								}
 							}
 						} else {
-					    
+							/*
+							 * From the start date, loop through all times between the user
+							 * inputted start time - end time of midnight - hour increment
+							 */
 							// loop through each room after all times have been checked 
 							//for (int i = 0; i < roomNumber.size(); i++){
 							for (int k = 0; k < dates.size(); k++) {	
@@ -350,7 +353,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
 																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-																table += "<input type='submit' value='Make Reservation'>";
+																table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
 																table += "</form>";
 																table += "</td>";
 																table += "</tr>";
@@ -391,6 +394,10 @@ public class UserSearchServlet extends HttpServlet {
 										}
 										
 									}
+									/*
+									 * Any date in between the start date and end date, exclusive, will loop
+									 * through start time midnight to the end time of midnight - hour increment
+									 */
 									if (!dates.get(k).equals(startDate) && !dates.get(k).equals(endDate)) {
 										
 										// loop through each time then increment room
@@ -450,7 +457,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
 																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-																table += "<input type='submit' value='Make Reservation'>";
+																table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
 																table += "</form>";
 																table += "</td>";
 																table += "</tr>";
@@ -490,7 +497,10 @@ public class UserSearchServlet extends HttpServlet {
 											}
 										}
 									}
-
+									/*
+									 * If the end date in the loop reaches the user inputted end date
+									 * then loop from times midnight to user inputted end time.
+									 */
 									if (dates.get(k).equals(endDate)){
 										
 										// loop through each time then increment room
@@ -550,7 +560,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
 																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-																table += "<input type='submit' value='Make Reservation'>";
+																table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
 																table += "</form>";
 																table += "</td>";
 																table += "</tr>";
