@@ -463,7 +463,7 @@ public class ListUserReservationsQuery {
 			//table += "<td>"
 			table += "<br /><br />";
 			table += "<form action='ViewServlet' method = 'post'>";
-			table += "<input type='submit' value='Go back to viewing reservations'>";
+			table += "<input class='btn btn-lg btn-red' type='submit' value='Go back to viewing reservations'>";
 			table += "<input type='hidden' name='noCancel' value='noCancel'>";
 			table += "</form>";
 				//	+ "</td>";	

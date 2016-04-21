@@ -51,10 +51,10 @@
                                     <!-- End Carousel Images -->
                                     <!--  
                                     <!-- Carousel Controls -->
-                                    <a class="left carousel-control" href="index.html#carousel-example" data-slide="prev">
+                                    <a class="left carousel-control" href="UserHome#carousel-example" data-slide="prev">
                                         <span class="glyphicon glyphicon-chevron-left"></span>
                                     </a>
-                                    <a class="right carousel-control" href="index.html#carousel-example" data-slide="next">
+                                    <a class="right carousel-control" href="UserHome#carousel-example" data-slide="next">
                                         <span class="glyphicon glyphicon-chevron-right"></span>
                                     </a>
                                     <!-- End Carousel Controls -->
@@ -70,7 +70,7 @@
                                 <hr class="margin-top-15">
                                 <p class="animate fadeIn text-center animated">This website will enable you to reserve a room in the Zell B. Miller Learning Center for study purposes or group meetings.</p>
                                 <p class="text-center animate fadeInUp margin-bottom-50 animated">
-                                    <button type="button" class="btn btn-lg btn-red" href="Browse">Reserve a Room</button>
+                                    <a href="Browse"><button type="button" class="btn btn-lg btn-red">Reserve a Room</button></a>
                                 </p>
                             </div>
                         </div>
