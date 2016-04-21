@@ -183,7 +183,6 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
