@@ -71,7 +71,6 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					
 					// values passed from schedule.jsp/AdminScheduleSelectQuery
 					String scheduleID = request.getParameter("scheduleID");
-					System.out.println("ScheduleID: " +  scheduleID);
 					String buildingName = request.getParameter("buildingName");
 					String buildingID = request.getParameter("buildingID");
 					String startTime = request.getParameter("startTime");
@@ -133,7 +132,6 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 							msg = "All values must be entered.";
 							url = "admin/schedule-edit.jsp";
 						}
-						System.out.println("Print of: " + startDate + " " + tc.convertTimeTo12(startTime) + " " + tc.convertTimeTo12(endTime) + " " + summary);
 						this.session.setAttribute("msg", msg);
 						this.session.setAttribute("tc", tc);
 						this.session.setAttribute("scheduleID", scheduleID);
@@ -161,7 +159,6 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					// if a new session is created with no user object passed
 					// user will need to login again
 					session.invalidate();
-					//url = "LoginServlet"; // USED TO TEST LOCALLY
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
@@ -173,7 +170,6 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				//url = "LoginServlet"; // USED TO TEST LOCALLY
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -184,7 +180,6 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
