@@ -187,7 +187,7 @@ public class RoomsSelectQuery {
 			TimeConverter tc = new TimeConverter();
 			int j = 0; // used for jQuery tabs creation
 			try {
-				while(this.results.next()){
+				while(this.results.next()){	
 					// get the room number and reserved rooms from the query results
 					Rooms room = new Rooms();
 					room.setRoomID(this.results.getInt("roomID")); 
@@ -204,7 +204,7 @@ public class RoomsSelectQuery {
 					
 					table += "<tbody class='subcategory'>";
 					table += "<tr>";
-					for(int i = 0; i < 12; i++){
+					for(int i = 0; i < 12; i++){	
 						// get results for reservations
 						ReservationSelectQuery rsq = new ReservationSelectQuery();
 						
@@ -227,7 +227,7 @@ public class RoomsSelectQuery {
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// compare the current hour with the hour of the reservation
 						// user can only make a reservation for current hour and beyond for the day
-						} else if (reserveHour < currentHour){
+						} else if (reserveHour < currentHour){	
 							table += "<td id='gray'>";
 							table += tc.convertTimeTo12(timeBlock[i]);
 						// if result set IS empty, then there IS NOT a reservation at that time
