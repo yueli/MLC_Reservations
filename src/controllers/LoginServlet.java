@@ -97,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 		
 		session.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		
-*/	
+*/
 		System.out.println("LoginServlet: url = " + url);
 		
 		//forward our request along

@@ -57,9 +57,12 @@ public class ExcelCreatorBanned {
                         return null;
                   // Database Query               
                   strQuery = "select * from Banned into OUTFILE BannedStudents.csv;";
+                  //strQuery = "select * from tomcatdb.Banned into OUTFILE BannedStudents.csv;";
+                  //strQuery = "select * into OUTFILE 'BannedStudents.csv' FIELDS TERMINATED BY ',' from tomcatdb.Banned"; //GINGER
+                  System.out.println("ExcelCreatorBanned: 1st query: " + strQuery);     // GINGER  
                   Statement stmt = con.createStatement();
                   ResultSet rs = stmt.executeQuery(strQuery);
-                                                                     
+                  System.out.println("ExcelCreatorBanned: 2nd query: " + strQuery);     // GINGER                                         
                   //FileWriter fstream = new FileWriter(file.getAbsoluteFile());
                   //BufferedWriter out = new BufferedWriter(fstream);
                   
