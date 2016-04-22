@@ -179,8 +179,16 @@ public class BannedSelectQuery {
 						}
 					table += "</td>";
 					
-					table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
-	
+					//table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
+					table += "<td>"
+							+ "<form action='unban' method = 'post'>"
+							+ "<input type='hidden' name='bannedRecdID' value='" + ban.getBanID() + "'>"
+							+ "<input type='hidden' name='myID' value='" + user.getMyID() + "'>"
+							+ "<input class='btn btn-lg btn-red' type='submit' value='Unban'>" 
+							+ "</form>"
+							+ "</td>";
+
+						
 					
 					table += "</tr>";
 				}
