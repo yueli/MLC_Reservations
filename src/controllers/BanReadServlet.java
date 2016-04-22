@@ -65,12 +65,15 @@ public class BanReadServlet extends HttpServlet {
 				String role = loggedInAdminUser.getRole();
 				int status = loggedInAdminUser.getAdminStatus();
 				
+				System.out.println("++BanReadServlet: logged in admin user name = " + loggedInAdminUser.getFname() + " " + loggedInAdminUser.getLname());
+				System.out.println("++BanReadServlet: logged in admin user role = " + loggedInAdminUser.getRole()); 
+				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 					
 					message = (String) request.getAttribute("message");	
 					
-					System.out.println("BanReadServlet: message at beg = " + message);
+					System.out.println("**BanReadServlet: message at beg = " + message);
 					
 					// blank the message if nothing gotten in message attribute
 					if (message == null || message.isEmpty()) {

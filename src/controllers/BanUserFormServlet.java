@@ -58,9 +58,14 @@ public class BanUserFormServlet extends HttpServlet {
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
 			if (loggedInAdminUser != null){
 				
-				// get the role for the currently logged in admin user.
+				// get info for the currently logged in admin user.
 				String role = loggedInAdminUser.getRole();
 				int status = loggedInAdminUser.getAdminStatus();
+				
+				//DOESN'T WORK??
+				System.out.println(">>BanUserFormServ: logged in admin role = " + loggedInAdminUser.getRole());
+				
+				System.out.println(">>BanUserFormServ: logged in admin user name = " + loggedInAdminUser.getFname() + " " + loggedInAdminUser.getLname());
 				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
@@ -78,7 +83,6 @@ public class BanUserFormServlet extends HttpServlet {
 					BanUserQuery buq = new BanUserQuery();					
 					String form = buq.createBanUserForm();
 					
-					System.out.println("BanUserFormServ: logged in admin user name = " + loggedInAdminUser.getFname() + " " + loggedInAdminUser.getLname());
 					
 					request.setAttribute("form", form);
 					request.setAttribute("message", message);

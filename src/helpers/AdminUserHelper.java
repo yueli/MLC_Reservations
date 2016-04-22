@@ -500,7 +500,7 @@ public class AdminUserHelper {
 		
 		table += "<br />";
 		table += "<form action='AdminListServlet' method = 'post'>";
-		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
+		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Back'>";
 		table += "</form>";
 				
 		return table;
