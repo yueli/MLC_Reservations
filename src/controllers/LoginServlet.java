@@ -65,6 +65,8 @@ public class LoginServlet extends HttpServlet {
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setRole("S");
 		loggedInAdminUser.setAdminMyID("ganix");
+		loggedInAdminUser.setFname("Best");
+		loggedInAdminUser.setLname("Admin");
 		user.setMyID("ganix");
 		user.setUserEmail("ganix@uga.edu");
 		user.setUserFirstName("Ginger");

@@ -91,16 +91,50 @@ public class BanUserQuery {
 			form += "<br /> <br />";
 			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Ban Student'>";
 			form += "</form>";
-			
-			
-			
+			form += "<br />";
+			form += "<form action='BanReadServlet' method = 'post'>";
+			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Back'>";
+			form += "</form>";
+	
 			return form;
-			
-			
-		
+	
 		}
 	
+		/**
+		 * This method cancels all future reservations for the banned user - 
+		 * looks for any reservations that this user has as a primary user
+		 * and set the free field to yes, indicating that the reservation
+		 * is no longer valid, thus freeing the time/building/room up
+		 * for other users
+		 * 
+		 * @author: Ginger Nix
+		 * @param 
+		 * @return
+		 **/
+		public void cancelBannedUserReservations(int userRecdID){
+			// look for any reservations that this user has as a primary user
+			// and set the free field to yes indicating that the reservation
+			// is no longer valid, thus freeing the time/building/room up
+			// for other users
 	
+			String query = "UPDATE tomcatdb.Reservations "
+							+ "SET free = 'Y' "
+							+ "WHERE primaryUser = ?";
+			
+			try {
+				PreparedStatement ps = connection.prepareStatement(query);
+				
+				ps.setInt(1, userRecdID);
+			System.out.println(ps);
+				ps.execute();
+				
+			} catch (SQLException e) {
+				System.out.println("****ERROR: BanUSerQuery: cancel resv: query = " + query);
+				e.printStackTrace();
+			}
+			
+			
+		}	
 	
 	
 
