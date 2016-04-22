@@ -144,12 +144,7 @@ public class BanUserServlet extends HttpServlet {
 							Date date = new Date();	
 							currentDate = dateFormat.format(date);
 							
-							System.out.println("BanUserServ: user is not banned: date = " + currentDate);
-							
 							Banned userToBan = new Banned();
-							
-							System.out.println("BanUserServ: logged in admin user name: " + loggedInAdminUser.getFname() + " " + loggedInAdminUser.getLname());
-							System.out.println("BanUserServ: logged in admin adminID: " + loggedInAdminUser.getAdminMyID());
 							
 							userToBan.setUserRecdID(userRecdID);
 							userToBan.setAdminID(loggedInAdminUser.getAdminID());
@@ -159,9 +154,12 @@ public class BanUserServlet extends HttpServlet {
 							userToBan.setStatus(1);
 							
 							BanUserQuery buq = new BanUserQuery();
+							
+							// ban the user
 							buq.banUser(userToBan);
 							
-							System.out.println("BanUserServ: logged in admin user name: " + loggedInAdminUser.getFname() + " " + loggedInAdminUser.getLname());
+							// free up banned user's resv where they are the primary user
+							buq.cancelBannedUserReservations(userRecdID);
 							
 							message = "<br /><br /><div align='center'><h3>The user with the UGA MyId " 
 									+ MyID  + " has been banned."

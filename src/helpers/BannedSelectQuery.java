@@ -142,7 +142,9 @@ public class BannedSelectQuery {
 					BanGetUserInfoQuery adminData = new BanGetUserInfoQuery();
 					Admin admin = new Admin();
 					admin = adminData.adminData(ban.getAdminID());
-				
+					
+					System.out.println("**BanSelectQuery: getHTMLTable: admin name  = " + admin.getFname() + " " + admin.getLname());
+					
 					table += "<tr>";
 					
 					table += "<td>";
