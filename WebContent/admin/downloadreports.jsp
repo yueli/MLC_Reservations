@@ -29,10 +29,10 @@
 	<!-- Button to call the downloads servlet -->
 	<div align="center">
 	
-	    <form id="downloadBanned" action="?action=bannedreport" method="Post">
+	    <form name="banForm" id="banForm" action="DownloadReports" method="Post">
+	    	<input type="hidden" name="bannedList" value="bannedList">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
-            
-    </form>
+    	</form>
 
 	</div>
 	<div id="footer"></div>

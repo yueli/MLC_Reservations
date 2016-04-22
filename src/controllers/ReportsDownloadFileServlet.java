@@ -11,38 +11,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.ReportsExcelCreator;
 import model.Admin;
 import model.DbConnect;
 
+@WebServlet(description = "Download Reports", urlPatterns = { "/DownloadReports" })
 /**
- * This servlet will forward to the download reports jsp
+ * This servlet will download the actual file when the download button is clicked on
+ * downloadreports.jsp
  * @author Brian Olaogun & Victoria Chambers
+ *
  */
-@WebServlet({ "/ReportsServlet", "/Reports" })
-public class ReportsServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private HttpSession session;
-	private String url;   
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ReportsServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+public class ReportsDownloadFileServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    
+    private HttpSession session; 
+    private String url;
+
+    public ReportsDownloadFileServlet() {
+    
+    }
+   
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	doPost(request,response);
+    	
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession(false);
 		
 		// check to see if there is a valid session
@@ -58,8 +53,32 @@ public class ReportsServlet extends HttpServlet {
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 					
-					url = "admin/downloadreports.jsp";
+					String banList = request.getParameter("bannedList"); // value of hidden input in banForm
 					
+					// if the download ban button is clicked, download file
+					if(banList != null && !banList.isEmpty()){
+						String strMessage = "";
+			            try {	
+							response.reset();
+							response.setContentType("application/vnd.ms-excel");
+							response.setHeader("Content-Disposition", "attachment;filename=BannedStudents.xls");
+							ReportsExcelCreator rec = new ReportsExcelCreator();
+							  
+							//Calling method download banned list 
+							strMessage = rec.downloadBannedList(response.getOutputStream());
+							request.setAttribute("Message",strMessage);
+							
+							// the url to forward
+							url = "admin/downloadreports.jsp";
+							
+							// since outputting to response, a return is needed
+							return;
+			
+			            } catch (Exception e) {
+			            	e.getMessage();
+			            }
+					
+					}
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
 					/*                VIEW FOR CLERK                  */
