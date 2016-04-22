@@ -15,6 +15,7 @@ import model.User;
 /**
  * @author Ronnie Xu
  * Helper for the Admin side of the website.
+ * @contributer to fix bugs: Ginger Nix
  *
  */
 
@@ -48,7 +49,15 @@ public class BannedSelectQuery {
 
 		public void doRead(){
 
-			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned WHERE Banned.status=1;";
+			//String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned WHERE Banned.status=1;";
+			String query = "SELECT * FROM tomcatdb.Banned "
+					+ "WHERE status=1 "
+					+ "AND penaltyCount > 1 "
+					+ "AND (banEnd IS NULL "
+					+ "OR banEnd = '') ";
+			
+			System.out.println("BanSelQ: doRead: query = " + query);
+			
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
@@ -65,7 +74,12 @@ public class BannedSelectQuery {
 		
 		public void doReadSearch(){
 
-			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned WHERE Banned.status=1;";
+			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, "
+					+ "Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, "
+					+ "Banned.status FROM Banned WHERE Banned.status=1;";
+			
+		
+			
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
@@ -84,13 +98,10 @@ public class BannedSelectQuery {
 		public String getHTMLTable(){ 
 			//Return table of banned students
 			
-			
-			
-			
 			String table = "";
-			table += "<center><a href=banUser><button type='submit' value=''>Ban A User(List)</button></a>";
+			table += "<center><a href=banUser><button type='submit' value=''>Ban A User</button></a>&nbsp;&nbsp";
 
-			table += "<a href=unbanall><button type='submit' value=''>Unban All</button></a>";
+			table += "<a href=unbanall><button type='submit' value=''>Unban All</button></a></center>";
 			table += "<tr></tr>";
 			try {
 				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
@@ -105,7 +116,6 @@ public class BannedSelectQuery {
 						+ "<th>Ban Start</th>"
 						+ "<th>Penalty Count</th>"
 						+ "<th>Description</th>"
-						+ "<th>Status</th>"
 						+ "<th></th>"
 						+ "</tr>";
 				table += "</thead>";
@@ -116,30 +126,25 @@ public class BannedSelectQuery {
 					
 					Banned ban = new Banned();
 					ban.setBanID(results.getInt("bannedID"));
-					ban.setStudentID(results.getInt("User_userID"));
+					ban.setUserRecdID(results.getInt("User_userID"));
 					ban.setAdminID(results.getInt("Admin_adminID"));
 					ban.setBanStart(results.getString("banStart"));
 					ban.setBanEnd(this.results.getString("banEnd"));
 					ban.setPenaltyCount(results.getInt("penaltyCount"));
 					ban.setDescription(results.getString("description"));
-					ban.setStatus(results.getInt("status"));
 					
 					//show only banned
 					
 					BanGetUserInfoQuery userData = new BanGetUserInfoQuery();
 					User user = new User();
-					user = userData.userData(ban.getStudentID());
+					user = userData.userData(ban.getUserRecdID());
 					
 					BanGetUserInfoQuery adminData = new BanGetUserInfoQuery();
 					Admin admin = new Admin();
 					admin = adminData.adminData(ban.getAdminID());
-					
-					
-					
-					
+				
 					table += "<tr>";
 					
-
 					table += "<td>";
 					table += user.getUserFirstName();
 					table += "</td>";
@@ -165,19 +170,11 @@ public class BannedSelectQuery {
 						//if( (ban.getDescription().isEmpty()==true) || (ban.getDescription() == null))
 						if  (ban.getDescription() == null)
 						{
-							table += "-";
+							table += "** None **";
 						}
 						else{
 						table += ban.getDescription();
 						}
-					table += "</td>";
-					table += "<td>";
-					if (ban.getStatus() == 1){
-						table += "Active";
-					} else {
-						table += "Not Active";
-					}
-					//table += ban.getStatus();
 					table += "</td>";
 					
 					table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";

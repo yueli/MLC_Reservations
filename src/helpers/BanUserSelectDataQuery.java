@@ -75,7 +75,7 @@ public class BanUserSelectDataQuery {
 				
 				Banned ban = new Banned();
 				ban.setBanID(results.getInt("bannedID"));
-				ban.setStudentID(results.getInt("Student_studentID"));
+				ban.setUserRecdID(results.getInt("Student_studentID"));
 				ban.setAdminID(results.getInt("Admin_adminID"));
 				ban.setBanStart(results.getString("banStart"));
 				ban.setBanEnd(this.results.getString("banEnd"));
@@ -91,7 +91,7 @@ public class BanUserSelectDataQuery {
 				table += ban.getBanID();
 				table += "</td>";
 				table += "<td>";
-				table += ban.getStudentID();
+				table += ban.getUserRecdID();
 				table += "</td>";
 				table += "<td>";
 				table += ban.getAdminID();

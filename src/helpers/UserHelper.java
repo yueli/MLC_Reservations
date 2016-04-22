@@ -53,19 +53,6 @@ public class UserHelper {
 			
 	}
 	
-	/**
-	 * 
-	 * @param myID user myID
-	 * @param encryptedPass encrypted password
-	 * Authenticates a user 
-	 * @return A user object if successful, null if unsuccessful.
-	 */
-	public boolean authenticateUser(String myID, String encryptedPass) {
-		
-
-
-		return true; //will be null if user wasn't valid
-	}
 
 //-------------
 	

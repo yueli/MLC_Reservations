@@ -1,3 +1,7 @@
+/**
+ * @author: Ginger Nix
+ */
+
 package helpers;
 
 import java.sql.Connection;
@@ -72,14 +76,50 @@ public class BanGetUserInfoQuery {
 		
 		return userData;
 	}
+	
+	 /**
+	  * This method takes the user's MyID and looks gets the user's info from the user table
+	  * @param MyID
+	  * @return
+	  */
+	 public User userDataWithMyID(String MyID){
+			
+		User userData = new User();
+		String query = "SELECT * "
+					+ "FROM tomcatdb.User WHERE User.myID = ?";
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, MyID);
+			
+			this.results = ps.executeQuery();
+			while(this.results.next()){
+				userData.setUserRecordID(this.results.getInt("user.userID"));
+				userData.setMyID(this.results.getString("user.myID"));
+				userData.setUserFirstName(this.results.getString("user.fname"));
+				userData.setUserLastName(this.results.getString("user.lname"));
+				userData.setUserEmail(this.results.getString("user.email"));
+				userData.setLastLogin(this.results.getString("user.lastLogin"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
+		}
+		
+		return userData;
+	}
 	 
 	 
 	 public Admin adminData(int adminID){
 			
 			Admin adminData = new Admin();
-			String query = "SELECT Admin.adminID,Admin.adminMyID,Admin.fname,Admin.lname,Admin.role,Admin.adminStatus,Admin.cantBeDeleted FROM tomcatdb.Admin WHERE Admin.adminID = "+adminID+";";
+			String query = "SELECT * "
+					+ "FROM tomcatdb.Admin WHERE Admin.adminID = ?";
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, adminID);
+				
 				this.adminResults = ps.executeQuery();
 				while(this.adminResults.next()){
 					adminData.setAdminID(this.adminResults.getInt("Admin.adminID"));
@@ -94,7 +134,7 @@ public class BanGetUserInfoQuery {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
+				System.out.println("****Error - BanGetUSerQuery: adminData query = " + query);
 			}
 			
 			return adminData;
@@ -102,24 +142,28 @@ public class BanGetUserInfoQuery {
 	 
 	 /*
 	  * Check if user is already banned
+	  * 
+	  * NOT NEEDED I THINK SINCE I ALREADY HAVE A METHOD IN USERHELPER TO CHECK THIS
 	  */
-	 public boolean isUserBannedAlready(int userID){
+	 public boolean isUserBannedAlready(int userRecdID){
 		 boolean banned = false;
 		 	
 		 
-		 String query = "SELECT Banned.bannedID,Banned.User_userID,Banned.Admin_adminID,Banned.banStart,Banned.banEnd,Banned.penaltyCount,Banned.description,Banned.status FROM tomcatdb.Banned WHERE Banned.status = 1 AND Banned.User_userID = "+userID+";";
+		 String query = "SELECT * "
+		 		+ "FROM tomcatdb.Banned "
+		 		+ "WHERE status = 1 "
+		 		+ "AND User_userID = ?";
+		 
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
-				this.banResults = ps.executeQuery();
-				while(this.banResults.next()){
-					
-					int tempUserID = this.banResults.getInt("banned.User_userID");
-					int status = this.banResults.getInt("banned.status");
-					if(status==1 && userID == tempUserID){
-						banned = true;
-						banDescription = this.banResults.getString("banned.description");
-					}
-					
+				ps.setInt(1, userRecdID);
+				
+				this.results = ps.executeQuery();
+				
+				if (this.results.next()) {
+					return true; //they are already banned for this current period
+				}else{
+					return false; //they have not been banned
 				}
 				
 			} catch (SQLException e) {
