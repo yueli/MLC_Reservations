@@ -177,99 +177,106 @@ public class UserSearchServlet extends HttpServlet {
 						int h = 1; // row counter & used to make a unique form ID
 							
 						if(startDate.equals(endDate)){
-							
-							// loop through each room after all times have been checked 
-							for (int i = 0; i < roomNumber.size(); i++){
+							// check to make sure the start time is less than end time
+							if(TimeConverter.isAfter(startTime, endTime)){
+								msg = "Please enter a <b>start time</b> that is <b>less than</b> the <b>end time</b>.";
 								
-								// loop through each date
-								for (int k = 0; k < dates.size(); k++) {
+								url = "user/search.jsp";
+								
+							} else {
+								// loop through each room after all times have been checked 
+								for (int i = 0; i < roomNumber.size(); i++){
 									
-									// loop through each time then increment room
-									for (int j =0; j < times.size(); j++){
+									// loop through each date
+									for (int k = 0; k < dates.size(); k++) {
 										
-										String innerEndTime = TimeConverter.addTime(times.get(j), Integer.parseInt(hourIncrement));
-										System.out.println("Loop Start time = " + times.get(j) + " Loop END TIME = " + innerEndTime);
-										
-										List<String> innerTimes = tc.timeRangeList(times.get(j), innerEndTime);
-										
-										// loop through/display times in range based off hour increment (reservation length)
-										// ex. if hour increment = 1, start time = 9am, end time = 11am --> 9am - 10am, next row = 10am - 11am, etc.
-										// ex. if hour increment = 2, 9am - 11am, increment room --> 9am - 11am
-										for(int l = 0; l < innerTimes.size(); l++){
+										// loop through each time then increment room
+										for (int j =0; j < times.size(); j++){
 											
-											/*
-											 * Check if the building selected is open at the time
-											 * if there is, the building ID is returned
-											 */
-											String buildingCheck = bsq.buildingScheduleCheck(dates.get(k), innerTimes.get(l), buildingID);
-											if(!buildingCheck.isEmpty()){
+											String innerEndTime = TimeConverter.addTime(times.get(j), Integer.parseInt(hourIncrement));
+											System.out.println("Loop Start time = " + times.get(j) + " Loop END TIME = " + innerEndTime);
+											
+											List<String> innerTimes = tc.timeRangeList(times.get(j), innerEndTime);
+											
+											// loop through/display times in range based off hour increment (reservation length)
+											// ex. if hour increment = 1, start time = 9am, end time = 11am --> 9am - 10am, next row = 10am - 11am, etc.
+											// ex. if hour increment = 2, 9am - 11am, increment room --> 9am - 11am
+											for(int l = 0; l < innerTimes.size(); l++){
 												
-												res.doReservationRead(dates.get(k), innerTimes.get(l), roomNumber.get(i));
-											   	/*
-												* Check if there is a reservation at the time.
-												* If there isn't then returned is an empty string.
-												*/
-												String check = res.doReservationResults2();
-												if(check.isEmpty()){
-													// index 0 is the start time of the reservation
-													if(l == 0){
-														//if (!innerTimes.get(l).equals(endTime)){
+												/*
+												 * Check if the building selected is open at the time
+												 * if there is, the building ID is returned
+												 */
+												String buildingCheck = bsq.buildingScheduleCheck(dates.get(k), innerTimes.get(l), buildingID);
+												if(!buildingCheck.isEmpty()){
+													
+													res.doReservationRead(dates.get(k), innerTimes.get(l), roomNumber.get(i));
+												   	/*
+													* Check if there is a reservation at the time.
+													* If there isn't then returned is an empty string.
+													*/
+													String check = res.doReservationResults2();
+													if(check.isEmpty()){
+														// index 0 is the start time of the reservation
+														if(l == 0){
+															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
+																// testing - printing to console
+																System.out.println();
+																System.out.println("DATE " + dates.get(k));
+																System.out.println("END " + endDate);
+																System.out.println("ROOM NUMBER " + roomNumber.get(i));
+																System.out.println("TIME " + innerTimes.get(l));
+																System.out.println();
+																
+																table += "<tr>";
+																table += "<td data-sort='" + h + "'>" + h + "</td>";
+																table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
+																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
+																table += "<td>";
+																table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
+																table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
+																table += "<input type='hidden' name='startTime' value='" + innerTimes.get(l) + "'>";
+																table += "<input type='hidden' name='endTime' value='" + innerEndTime + "'>";
+																table += "<input type='hidden' name='startDate' value='" + dates.get(k) + "'>";
+																table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
+																table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
+																table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
+																table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
+																table += "</form>";
+																table += "</td>";
+																table += "</tr>";
+																h++;
+															}
+														}
+													} else if (!check.isEmpty()){
+														if(l == 0){
 															// testing - printing to console
-															System.out.println();
+															System.out.println("******* RESERVED ********");
+															System.out.println("RESERVE ID = " + check);
 															System.out.println("DATE " + dates.get(k));
-															System.out.println("END " + endDate);
+															System.out.println("END " + dates.get(k));
 															System.out.println("ROOM NUMBER " + roomNumber.get(i));
-															System.out.println("TIME " + innerTimes.get(l));
+															System.out.println("ST TIME " + innerTimes.get(l));
+															System.out.println("END TIME " + innerEndTime);
+															System.out.println("******* RESERVED ********");
 															System.out.println();
 															
 															table += "<tr>";
+															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
 															table += "<td data-sort='" + h + "'>" + h + "</td>";
 															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
 															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
-															table += "<td>";
-															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
-															table += "<input type='hidden' name='roomNumber' value='" + roomNumber.get(i) + "'>";
-															table += "<input type='hidden' name='startTime' value='" + innerTimes.get(l) + "'>";
-															table += "<input type='hidden' name='endTime' value='" + innerEndTime + "'>";
-															table += "<input type='hidden' name='startDate' value='" + dates.get(k) + "'>";
-															table += "<input type='hidden' name='endDate' value='" + dates.get(k) + "'>";
-															table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
-															table += "<input type='hidden' name='hourIncrement' value='" + hourIncrement + "'>";
-															table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
+															table += "<td> **RESERVED**</td>"; 
 															table += "</form>";
-															table += "</td>";
 															table += "</tr>";
-															h++;
-														//}
-													}
-												} else if (!check.isEmpty()){
-													if(l == 0){
-														// testing - printing to console
-														System.out.println("******* RESERVED ********");
-														System.out.println("RESERVE ID = " + check);
-														System.out.println("DATE " + dates.get(k));
-														System.out.println("END " + dates.get(k));
-														System.out.println("ROOM NUMBER " + roomNumber.get(i));
-														System.out.println("ST TIME " + innerTimes.get(l));
-														System.out.println("END TIME " + innerEndTime);
-														System.out.println("******* RESERVED ********");
-														System.out.println();
-														
-														table += "<tr>";
-														table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
-														table += "<td data-sort='" + h + "'>" + h + "</td>";
-														table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
-														table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-														table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-														table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
-														table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
-														table += "<td> **RESERVED**</td>"; 
-														table += "</form>";
-														table += "</tr>";
-														h++; 
+															h++; 
+														}
 													}
 												}
 											}
@@ -325,7 +332,7 @@ public class UserSearchServlet extends HttpServlet {
 													if(check.isEmpty()){
 														// index 0 is the start time of the reservation
 														if(l == 0){
-															//if (!innerTimes.get(l).equals(endTime)){
+															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
 																// testing - printing to console
 																System.out.println();
 																System.out.println("DATE " + dates.get(k));
@@ -359,7 +366,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "</tr>";
 																
 																h++;
-															//}
+															}
 														}
 													} else if (!check.isEmpty()){
 														if(l == 0){
@@ -429,7 +436,7 @@ public class UserSearchServlet extends HttpServlet {
 													if(check.isEmpty()){
 														// index 0 is the start time of the reservation
 														if(l == 0){
-															//if (!innerTimes.get(l).equals(endTime)){
+															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
 																// testing - printing to console
 																System.out.println();
 																System.out.println("DATE " + dates.get(k));
@@ -463,7 +470,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "</tr>";
 																
 																h++;
-															//}
+															}
 														}
 													} else if (!check.isEmpty()){
 														if(l == 0){
@@ -532,7 +539,7 @@ public class UserSearchServlet extends HttpServlet {
 													if(check.isEmpty()){
 														// index 0 is the start time of the reservation
 														if(l == 0){
-															//if (!innerTimes.get(l).equals(endTime)){
+															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
 																// testing - printing to console
 																System.out.println();
 																System.out.println("DATE " + dates.get(k));
@@ -566,7 +573,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "</tr>";
 													
 																h++;
-															//}
+															}
 														}
 													} else if (!check.isEmpty()){
 														if(l == 0){

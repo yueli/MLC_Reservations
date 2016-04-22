@@ -164,6 +164,7 @@ public class TimeConverter {
 	/**
 	 * This method will subtract the hours of a start time by the reservation length (hour)
 	 * For example, 23:00:00 - 2 = 21:00:00
+	 * This mehod subtracts the hour only.
 	 * @param time String time in HH:mm:ss (24-hour) SQL format
 	 * @param hourIncrement Integer reservation length
 	 * @return The difference from of the start time - reservation length (hour increment)
@@ -222,6 +223,7 @@ public class TimeConverter {
 	}
 	/**
 	 * This method will return an array list of all values inclusive between start time and end time
+	 * for times on the hour (both start and end).
 	 * @param startTime String starting time in 24-hour format
 	 * @param endTime String ending time in 24-hour format
 	 * @return String array list of all values inclusive between start time and end time
@@ -390,6 +392,41 @@ public class TimeConverter {
 		
 		return 0;
 	}
+	/**
+	 * This method will check to see if the start time greater than the end time if
+	 * the start and end time are on the hour.
+	 * @param startTime
+	 * @param endTime
+	 * @return true if the start time is > end time.
+	 */
+	public static boolean isAfter (String startTime, String endTime){
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out minutes
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int startHour;
+		int endHour;
+		
+		try {
+			Date convertStartTime = _24HourTimeFormat.parse(startTime);
+			String parsedStartHour = hourFormat.format(convertStartTime);
+			startHour = Integer.parseInt(parsedStartHour);
+			
+			Date convertEndTime = _24HourTimeFormat.parse(endTime);
+			String parsedEndHour = hourFormat.format(convertEndTime);
+			endHour = Integer.parseInt(parsedEndHour);
+			
+			if (startHour > endHour){
+				return true;
+			}
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("**Unable to compare time in TimeConverter.isAfter**");
+		}
+		
+		return false;
+			
+	}
 	
 	/**
 	 *  Main method used for testing. Will output to console.
@@ -418,7 +455,9 @@ public class TimeConverter {
 		}
 		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("09:00:00", "11:00:00"));
 		
-		System.out.println("TEST NEW subtract time = " + TimeConverter.subtractTime("00:00:00", 1));
+		System.out.println("TEST subtract time method = " + TimeConverter.subtractTime("00:00:00", 1));
+		
+		System.out.println("TEST is after Method " + TimeConverter.isAfter("12:00:00", "11:00:00"));
 		
 	}
 

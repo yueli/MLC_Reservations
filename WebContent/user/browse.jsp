@@ -42,7 +42,7 @@
 			</form>
 		</div>
 		<div align="center">
-		<h3>${msg}</h3> 
+		<h3>${msg}</h3><br> 
 		<p>${table}</p>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
