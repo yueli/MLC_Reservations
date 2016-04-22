@@ -59,8 +59,8 @@
 	</head>
 	<body>
 	<div id="header1"></div>
-	<br><br><br><br>
-	
+	<br><br>
+	${message}
 	<br>
 	${table}
 	<div id="footer"></div>
