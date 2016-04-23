@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.ListUserReservationsQuery;
+import model.Admin;
 import model.DbConnect;
 import model.Reservation;
 import model.User;
@@ -54,41 +55,86 @@ public class CancelConfirmServlet extends HttpServlet {
 		String table = "";
 		String message = " ";
 				
-		//get our current session
-		this.session = request.getSession(false); 
 		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
+		// get the current session
+		session = request.getSession(false);
+	
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
+			
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			
+			if (loggedInAdminUser != null){
+				// get the role for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+					
+					message = (String) request.getAttribute("message");	
+					
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+
+					User user = (User) session.getAttribute("user");
+					int userRecdID = user.getUserRecordID();
+					
+					Reservation reservation = new Reservation();
+					
+					reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
+					
+					// have reserve id from the parameter passed from view.jsp
+					// use reserve id to get the rest of the record's data and format into a table	
+					ListUserReservationsQuery lurq = new ListUserReservationsQuery();
+					table = lurq.GetUserReservation(reservation.getReserveID(),userRecdID);
+					
+					//forward our request along
+					request.setAttribute("user", user);
+					request.setAttribute("table",table);
+					request.setAttribute("message",message); 
+					
+					url = "user/confirmCancellation.jsp";	
+					
+
+				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
+				}
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 		
-			User user = (User) session.getAttribute("user");
-			int userRecdID = user.getUserRecordID();
-			
-			Reservation reservation = new Reservation();
-			
-			reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
-			System.out.println("CancelConfServ - resv_id = "+ reservation.getReserveID());
-			
-			// have reserve id from the parameter passed from view.jsp
-			// use reserve id to get the rest of the record's data and format into a table	
-			ListUserReservationsQuery lurq = new ListUserReservationsQuery();
-			table = lurq.GetUserReservation(reservation.getReserveID(),userRecdID);
-			
-			System.out.println("CancelConfirmServlet: table = " + table);
-			//forward our request along
-			request.setAttribute("user", user);
-			request.setAttribute("table",table);
-			request.setAttribute("message",message); 
-			
-			url = "user/confirmCancellation.jsp";	
-			
-		
-		} else { // there isn't an active session.
+		} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-
+			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
