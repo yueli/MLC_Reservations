@@ -54,12 +54,9 @@
 
 
 	<body>
-<<<<<<< HEAD
+
 		<div id="header1"></div>
-=======
-		<!-- Header -->
-		<div id="header"></div>
->>>>>>> master
+
 		<br /><br /><br /><br />
 		
 		<!-- Content -->
