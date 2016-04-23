@@ -54,8 +54,9 @@
 
 
 	<body>
-		<!-- Header -->
+
 		<div id="header1"></div>
+
 		<br /><br /><br /><br />
 		
 		<!-- Content -->

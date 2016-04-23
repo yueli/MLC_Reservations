@@ -38,23 +38,11 @@
 	<body>
 		<!-- Header -->
 		<div id="header1"></div>
-		<br><br><br>
-		
-		<!-- Content -->
-		<div align="center">
-			<h2>Buildings</h2><br>
-			<h3>Listing of all buildings currently added to the site.  <br>
- 				Edit buildings, hours, or rooms.</h3>
- 
- 		<div class="centerdiv">
-    	
-    			${message}
-		</div>
-			<p>${table}</p>
-		</div>
-		<!-- End Content -->
-		
-		<!-- Footer -->
+	<br />
+		${message}
+
+		${table}
+
 		<div id="footer"></div>
 	</body>
 </html>

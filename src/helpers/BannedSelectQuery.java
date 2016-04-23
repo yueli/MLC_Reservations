@@ -99,6 +99,9 @@ public class BannedSelectQuery {
 			//Return table of banned students
 			
 			String table = "";
+
+			table += "<div align='center'><h3>Banning</h3>";
+			table += "<br /><br />";
 			table += "<center><a href=banUser><button type='submit' value=''>Ban A User</button></a>&nbsp;&nbsp";
 
 			table += "<a href=unbanall><button type='submit' value=''>Unban All</button></a></center>";

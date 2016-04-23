@@ -53,10 +53,10 @@ form {
 
 
 <body>
-	<!-- Header -->
-	<div id="header1"></div>
-	<!-- Content -->
-	
+
+		<div id="header1"></div>
+
+
 	${message}
 	<br />
 	${form}
