@@ -18,7 +18,7 @@ import model.DbConnect;
 
 /**
  * @author: Ginger Nix
- * This servlet creates a blank form to add a building
+ * This servlet creates an empty form for an admin to add a building.
  */
 
 /**

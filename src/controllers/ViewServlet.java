@@ -65,7 +65,7 @@ public class ViewServlet extends HttpServlet {
 		
 		String message = " ";
 		String table = "";
-		this.session = request.getSession(false);				
+				
 		// get current session
 		session = request.getSession(false);
 		

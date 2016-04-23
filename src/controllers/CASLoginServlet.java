@@ -202,8 +202,7 @@ public class CASLoginServlet extends HttpServlet {
 			/* the employee type looks like the FSCode so going to check for 00 in the employee type string*/
 			
 			// test1010 should be emp type 01 so allowing them to log on as a student
-			
-			//if (!employeeType.equals(00)) { 
+
 			if (!employeeType.contains("00") && (!loggedInUser.getMyID().equals("test1010"))) { 
 			
 				// they are not a student so send them to a page where all they can do is log out

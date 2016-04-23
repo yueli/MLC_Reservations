@@ -1,7 +1,12 @@
 package controllers;
 /**
- * @author: Ginger Nix
- * added session checks, admin role checks, logged in user checks, messages to forward, 
+ * @author: Ginger Nix added session checks, admin role checks, logged in user checks, messages to forward, etc
+ * @creator: Ronnie Xu
+ * 
+ * This servlet is called when the admin cicks on Unban button on the row of a banned
+ * user. It takes the user and unbans them and sends them back to view the banned users
+ * with a message.
+ * 
  */
 import java.io.IOException;
 

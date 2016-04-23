@@ -29,6 +29,8 @@ public class AdminListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session; 
 	private String url;
+	private String message;
+	private String table = "";
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -50,50 +52,86 @@ public class AdminListServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//get our current session
-		this.session = request.getSession(false); 
 		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
+		// get the current session
+		session = request.getSession(false);
 	
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-			System.out.println("AdminListServlet: logged in admin user adminMyID = " + loggedInAdminUser.getAdminMyID());
-			System.out.println("AdminListServlet: logged in w/role = " + loggedInAdminUser.getRole());
-	
-			String message = "";
-			message = (String) request.getAttribute("message"); 
-			
-			System.out.println("AdminListServlet: message received is: " + message);
-			
-			// blank out message if nothing gotten in message attribute
-			
-			if (message == null || message.isEmpty()) {
-				 message = " ";
-			}
+		
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
 
-			AdminUserHelper adminHelper = new AdminUserHelper();
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
+				
+				// get info for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+				
+					message = (String) request.getAttribute("message"); 
+				
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+
+					AdminUserHelper adminHelper = new AdminUserHelper();
+					
+					// get the admin users
+					table = adminHelper.ListAdmins();
+					
+					//forward our request along
+					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+					request.setAttribute("table", table);
+					request.setAttribute("message", message);
 			
-			// get the admin users
-			String table = "";
-			table = adminHelper.ListAdmins();
+					url = "admin/adminList.jsp";
+					
+				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+					
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
+				}
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 			
-			//forward our request along
-			request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-			request.setAttribute("table", table);
-			request.setAttribute("message", message);
-	
-			url = "admin/adminList.jsp";
-		
-		} else { // there isn't an active session.
+			} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
-		}
+			}
+
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
