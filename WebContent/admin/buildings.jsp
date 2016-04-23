@@ -38,27 +38,11 @@
 	<body>
 		<!-- Header -->
 		<div id="header1"></div>
-		<br><br><br>
-		
-		<!-- Content -->
-		<div align="center">
-			<h2>Buildings</h2><br>
-			<h3>Listing of all buildings currently added to the site.  <br>
- 				Edit buildings, hours, or rooms.</h3>
- 
- 		<div class="centerdiv">
-    		<div>
-				<br><br>
-				<a href='buildingform'><button class='btn btn-lg btn-red' type='submit' value='EditHours'>Add Building</button></a>
-				<br /><br />
-			</div>
-		</div>
+	<br />
+		${message}
 
-			<p>${table}</p>
-		</div>
-		<!-- End Content -->
-		
-		<!-- Footer -->
+		${table}
+
 		<div id="footer"></div>
 	</body>
 </html>

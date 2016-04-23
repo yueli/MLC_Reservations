@@ -45,7 +45,6 @@ public class AdminUserHelper {
 	/*
 	 * This method returns a table listing all the admin users.
 	 * @author: Ginger Nix
-	 * @date: Spring 2016
 	 * @parameters: none
 	 * @return: table of all the admin users
 	 * 
@@ -202,11 +201,13 @@ public class AdminUserHelper {
 		
 		String table = "";
 		
-		String query = "SELECT * FROM tomcatdb.Admin WHERE adminID = '" + adminID + "' LIMIT 1";
+		String query = "SELECT * FROM tomcatdb.Admin WHERE adminID = ? LIMIT 1";
 
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, adminID);
 			this.results = ps.executeQuery();
+			
 			this.results.next();
 		
 			// grab the results we need to display in form

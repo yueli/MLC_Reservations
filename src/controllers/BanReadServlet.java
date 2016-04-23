@@ -68,8 +68,6 @@ public class BanReadServlet extends HttpServlet {
 					
 					message = (String) request.getAttribute("message");	
 					
-					System.out.println("**BanReadServlet: message at beg = " + message);
-					
 					// blank the message if nothing gotten in message attribute
 					if (message == null || message.isEmpty()) {
 						 message = "";
@@ -79,12 +77,8 @@ public class BanReadServlet extends HttpServlet {
 					BannedSelectQuery bsq = new BannedSelectQuery(); 
 					bsq.doRead();
 					
-					System.out.println("BanReadServlet: doPost: back from doRead");
-					
 					//get the html table of banned users
 					String table = bsq.getHTMLTable();
-					
-					System.out.println("BanReadServlet: doPost: after getHTMLTable");
 					
 					request.setAttribute("table", table);
 					request.setAttribute("message", message);
@@ -100,7 +94,7 @@ public class BanReadServlet extends HttpServlet {
 					
 					// forwarding URL
 					url = "AdminViewReservations";
-					System.out.println("BanReadServlet: 4");
+
 				} else {
 					//------------------------------------------------//
 					/*              NOT A VALID ROLE                  */
@@ -119,7 +113,6 @@ public class BanReadServlet extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				System.out.println("BanReadServlet: 6");
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
@@ -131,12 +124,10 @@ public class BanReadServlet extends HttpServlet {
 			// if session has timed out, go to home page
 			// the site should log them out.
 			//url = "LoginServlet";
-			System.out.println("BanReadServlet: 7");
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
 
-		System.out.println("BanReadServlet: 8");
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
