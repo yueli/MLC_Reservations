@@ -119,6 +119,17 @@ public class UserSearchServlet extends HttpServlet {
 						hourIncrement == null || buildingIDSelect.isEmpty() || startDate.isEmpty() || 
 						endDate.isEmpty() || startTime.isEmpty() || hourIncrement.isEmpty()){
 					
+					// If start time is null --> will be on first click on search from main menu
+					if(tc.currentMinutes() > 10){
+						startTime = TimeConverter.addTime((tc.currentHour() + ":00:00"), 1);
+						endTime = TimeConverter.addTime(startTime, 1);
+						
+					} else {
+						
+						startTime = (tc.currentHour() + ":00:00");
+						endTime = TimeConverter.addTime(startTime, 1);
+					}
+					
 					msg = "Please enter all values to begin searching for reservations.";
 					url = "user/search.jsp";
 					
@@ -173,10 +184,14 @@ public class UserSearchServlet extends HttpServlet {
 						table += "</thead>";
 						table += "<tbody>";
 						
+						// TODO for current day = start date, only show results from >= current time
+						// TODO add if to check if past 10 minutes
+						// TODO if past 10 minutes, show room as unavailable. --> same checks as in browse. (-_-)
 						
 						int h = 1; // row counter & used to make a unique form ID
 							
 						if(startDate.equals(endDate)){
+							
 							// check to make sure the start time is less than end time
 							if(TimeConverter.isAfter(startTime, endTime)){
 								msg = "Please enter a <b>start time</b> that is <b>less than</b> the <b>end time</b>.";

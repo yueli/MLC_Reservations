@@ -367,6 +367,56 @@ public class TimeConverter {
 		return null;
 	}
 	/**
+	 * Parse the hour from the current time.
+	 * @return the hour of the current time.
+	 */
+	public Integer currentHour(){
+		DateTimeConverter dtc = new DateTimeConverter();
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int hour;
+		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+		
+		// parse out minute from time in HH:mm:ss format.
+		try {
+			Date convertCurrentTime = _24HourTimeFormat.parse(currentTime);
+			hour = Integer.parseInt(hourFormat.format(convertCurrentTime));
+			return hour;
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the hour of the inputted time.
+	 * @return The hour of the inputted time.
+	 */
+	public Integer parseHour(String time){
+		DateTimeConverter dtc = new DateTimeConverter();
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int hour;
+		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+		
+		// parse out minute from time in HH:mm:ss format.
+		try {
+			Date convertCurrentTime = _24HourTimeFormat.parse(currentTime);
+			hour = Integer.parseInt(hourFormat.format(convertCurrentTime));
+			return hour;
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * This method will only return the minutes from the current time.
 	 * @return minutes - parsed minutes from the current time.
 	 */
