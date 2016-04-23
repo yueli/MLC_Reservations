@@ -38,13 +38,6 @@
 	<body>
 		<!-- Header -->
 		<div id="header1"></div>
-<<<<<<< HEAD
-		<br />
-		${message}
-
-		${table}
- 		
-=======
 		<br><br><br>
 		
 		<!-- Content -->
@@ -55,6 +48,7 @@
  
  		<div class="centerdiv">
     		<div>
+    		${message}
 				<br><br>
 				<a href='buildingform'><button class='btn btn-lg btn-red' type='submit' value='EditHours'>Add Building</button></a>
 				<br /><br />
