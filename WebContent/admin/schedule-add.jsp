@@ -51,11 +51,12 @@
 		</script> 
 	</head>
 	<body>
-			<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-		<div align="center">
+		<!-- Header -->
+		<div id="header1"></div>
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<h2>Add Building Hours</h2><br>
 			<h3>Adding opening and closing hours for a building. <br>
 			Please enter all information below to add hours to a building.</h3><br>
@@ -71,6 +72,9 @@
 			</form>
 			    
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

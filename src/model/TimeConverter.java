@@ -160,6 +160,55 @@ public class TimeConverter {
 		}
 		return null;
 	}
+	
+	/**
+	 * This method will subtract the hours of a start time by the reservation length (hour)
+	 * For example, 23:00:00 - 2 = 21:00:00
+	 * This mehod subtracts the hour only.
+	 * @param time String time in HH:mm:ss (24-hour) SQL format
+	 * @param hourIncrement Integer reservation length
+	 * @return The difference from of the start time - reservation length (hour increment)
+	 */
+	public static String subtractTime (String time, int hourIncrement){
+		String newTime; // the result of adding a second to inputted time
+		int hour; // for calendar object
+		int minute; // for calendar object
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour (in 24-hour format)
+		SimpleDateFormat minuteFormat = new SimpleDateFormat("mm"); // for parsing out minutes
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		try {
+			// parse out hour to add to calendar
+			Date convertStringTimeToDate_Hour = _24HourTimeFormat.parse(time);
+			String hourString = hourFormat.format(convertStringTimeToDate_Hour);
+			hour = Integer.parseInt(hourString);
+	
+			// parse out minute to add to calendar
+			Date convertStringTimeToDate_Minute = _24HourTimeFormat.parse(time);
+			String minuteString = minuteFormat.format(convertStringTimeToDate_Minute);
+			minute = Integer.parseInt(minuteString);
+			
+			// calendar object to correctly add or subtract time
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.HOUR_OF_DAY, hour);
+		    calendar.set(Calendar.MINUTE, minute);
+		    calendar.set(Calendar.SECOND, 00);
+		    
+		    // subtract a second
+		    calendar.add(Calendar.HOUR_OF_DAY, -hourIncrement); 
+		    
+		    //convert calendar to string time
+		    Date nt = calendar.getTime();
+		    newTime = _24HourTimeFormat.format(nt);
+		    return newTime;
+		    
+		} catch (ParseException e) {
+			System.out.println("Error parsing time in TimeConverter.addOneMinute. Please check time parameter " + time);
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	/**
 	 * This method will count the number of hours between start and end time.
 	 * @param reserveStartTime String start time
@@ -173,9 +222,10 @@ public class TimeConverter {
 		return hourIncrement;
 	}
 	/**
-	 * 
-	 * @param stringStartTime String starting time in 24-hour format
-	 * @param stringEndTime String ending time in 24-hour format
+	 * This method will return an array list of all values inclusive between start time and end time
+	 * for times on the hour (both start and end).
+	 * @param startTime String starting time in 24-hour format
+	 * @param endTime String ending time in 24-hour format
 	 * @return String array list of all values inclusive between start time and end time
 	 */
 	public List<String> timeRangeList (String startTime, String endTime){
@@ -317,6 +367,57 @@ public class TimeConverter {
 		return null;
 	}
 	/**
+	 * Parse the hour from the current time.
+	 * @return the hour of the current time.
+	 */
+	public Integer currentHour(){
+		DateTimeConverter dtc = new DateTimeConverter();
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int hour;
+		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+		
+		// parse out minute from time in HH:mm:ss format.
+		try {
+			Date convertCurrentTime = _24HourTimeFormat.parse(currentTime);
+			hour = Integer.parseInt(hourFormat.format(convertCurrentTime));
+			return hour;
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the hour of the inputted time.
+	 * @param time String time in HH:mm:ss (24-Hour) format.
+	 * @return The hour of the inputted time.
+	 */
+	public Integer parseHour(String time){
+		DateTimeConverter dtc = new DateTimeConverter();
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int hour;
+		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+		
+		// parse out minute from time in HH:mm:ss format.
+		try {
+			Date convertCurrentTime = _24HourTimeFormat.parse(currentTime);
+			hour = Integer.parseInt(hourFormat.format(convertCurrentTime));
+			return hour;
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * This method will only return the minutes from the current time.
 	 * @return minutes - parsed minutes from the current time.
 	 */
@@ -341,6 +442,41 @@ public class TimeConverter {
 		
 		
 		return 0;
+	}
+	/**
+	 * This method will check to see if the start time greater than the end time if
+	 * the start and end time are on the hour.
+	 * @param startTime
+	 * @param endTime
+	 * @return true if the start time is > end time.
+	 */
+	public static boolean isAfter (String startTime, String endTime){
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out minutes
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int startHour;
+		int endHour;
+		
+		try {
+			Date convertStartTime = _24HourTimeFormat.parse(startTime);
+			String parsedStartHour = hourFormat.format(convertStartTime);
+			startHour = Integer.parseInt(parsedStartHour);
+			
+			Date convertEndTime = _24HourTimeFormat.parse(endTime);
+			String parsedEndHour = hourFormat.format(convertEndTime);
+			endHour = Integer.parseInt(parsedEndHour);
+			
+			if (startHour > endHour){
+				return true;
+			}
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("**Unable to compare time in TimeConverter.isAfter**");
+		}
+		
+		return false;
+			
 	}
 	
 	/**
@@ -369,6 +505,10 @@ public class TimeConverter {
 			System.out.println("Time is ..." + time);
 		}
 		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("09:00:00", "11:00:00"));
+		
+		System.out.println("TEST subtract time method = " + TimeConverter.subtractTime("00:00:00", 1));
+		
+		System.out.println("TEST is after Method " + TimeConverter.isAfter("12:00:00", "11:00:00"));
 		
 	}
 

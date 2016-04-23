@@ -58,11 +58,12 @@
 		</script> 
 	</head>
 	<body>
-	<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-		<div align="center">
+		<!-- Header -->
+		<div id="header1"></div>
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<h2>Viewing Building Hours</h2><br>
 			<h3>Please select a building and or date to view a building's hours of operation.<br>
 			You can also edit a building's hours or add hours to a building.</h3><br>
@@ -76,6 +77,9 @@
 			<a href="buildings"><button class="btn btn-lg btn-red" type="submit" value="Back to Buildings">Back To Buildings</button></a>  <a href="add-schedule"><button class="btn btn-lg btn-red" type="submit" value="add-schedule">Add Building Hours</button></a>
 		</div>
 		<p>${schedule}</p>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

@@ -56,7 +56,8 @@ public class ExcelCreatorBanned {
                if(con==null)
                         return null;
                   // Database Query               
-                  strQuery = "select * from Banned into OUTFILE BannedStudents.csv;";
+                 // strQuery = "select * from Banned into OUTFILE BannedStudents.csv;";
+                  strQuery = "select * into OUTFILE 'BannedStudents.csv' from tomcatdb.buildings";
                   Statement stmt = con.createStatement();
                   ResultSet rs = stmt.executeQuery(strQuery);
                                                                      
@@ -112,7 +113,6 @@ public class ExcelCreatorBanned {
                           BanEndDate + "," + PenaltyCount + "," + Description + "," + Status + "\n"; 
                 	  
                 	  out.write(outline);
-
                   } //end of while */
                   //out.close();
                  
@@ -120,22 +120,23 @@ public class ExcelCreatorBanned {
         	  System.err.println("Got an exception!");
               System.err.println(e.getMessage());
           }
-			return data;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
+          
+			return strQuery;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
+			//return file; // I commented out line above and put this in instead because I was geting an error - GINGER
+			
+			//return data;// <---- DELETE THIS - I ADDED THIS RETURN SO THAT CLASS WONT CAUSE AN ERROR - BRIAN 
+
      }
           
           /** private String toByteValue(File file)
 			throws IOException {
-
 		byte[] bytes = loadFile(file);
 		
 		String encodedString = new String(bytes);
-
 		return encodedString;
 	}
-
 	private static byte[] loadFile(File file) throws IOException {
 	    InputStream is = new FileInputStream(file);
-
 	    long length = file.length();
 	    if (length > Integer.MAX_VALUE) {
 	        // File is too large
@@ -148,11 +149,9 @@ public class ExcelCreatorBanned {
 	           && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
 	        offset += numRead;
 	    }
-
 	    if (offset < bytes.length) {
 	        throw new IOException("Could not completely read file "+file.getName());
 	    }
-
 	    is.close();
 	    return bytes;
 	} */

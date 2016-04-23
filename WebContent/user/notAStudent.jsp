@@ -53,12 +53,17 @@ form {
 
 </head>
 <body>
-<div id="header1"></div>
-<div align="center">
-	<h2>Login Error - Not a UGA student</h2>
-
-	<p>You are not a UGA student and cannot use this application. If you think this is an error, please contact the MLC administration.</p>
-</div>
-<div id="footer1"></div>
+	<!-- Header -->
+	<div id="header1"></div>
+	
+	<!-- Content -->
+	<div align="center">
+		<h2>Login Error - Not a UGA student</h2>
+		<p>You are not a UGA student and cannot use this application. If you believe this is an error, please contact the MLC Administration.</p>
+	</div>
+	<!-- End Content -->
+	
+	<!-- Footer -->
+	<div id="footer1"></div>
 </body>
 </html>

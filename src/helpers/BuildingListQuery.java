@@ -188,6 +188,7 @@ public class BuildingListQuery {
 					table += building.getBuildingQRName();
 					table += "</td>";
 					
+					//BuildingListUpdateServlet
 					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
 					
 					table += "<td>";
@@ -223,7 +224,7 @@ public class BuildingListQuery {
  * @param none
  * @return table with form to add a building
  */
-		public String createAddBuildingForm(){
+		public String createAddBuildingFormPREVIOUS(){
 			
 			String table = "";
 
@@ -268,6 +269,50 @@ public class BuildingListQuery {
 			return table;
 			
 		}
+
+public String createAddBuildingForm() {
+	String table = "";
+
+	table += "<div align='center'><h3>Add a Building</h3>";
+	table += "<br />";
+	
+	table += "<form action='BuildingListAddServlet' method = 'post'>";
+	
+	table += "Name:<br>";
+	table +=  "<input type='text' name = 'buildingName' required>";
+	table += "<br />";
+	
+	table += "Status:<br>";
+	table += "<select name = 'buildingStatus' required>";
+	table += "<option value='1' selected>Active</option>";
+	table += "<option value='0'>Inactive</option>";	
+	table += "</select>";		
+	table += "<br />";
+	
+	table += "Calendar Name:<br>";
+	table +=  "<input type='text' name = 'buildingCalName' required>";
+	table += "<br />";
+	
+	table += "Calendar URL:<br>";
+	table +=  "<input type='text' name = 'buildingCalUrl' required>";
+	table += "<br />";
+	
+	table += "QR Name:<br>";
+	table +=  "<input type='text' name = 'buildingQRName' required>";
+	table += "<br />";
+	table += "<br />";	
+	table += "<br />";		
+			
+	table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Add Building'>";
+	table += "</form>";
+	
+	table += "<br />";
+	table += "<form action='BuildingListServlet' method = 'post'>";
+	table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
+	table += "</form>";
+			
+	return table;
+}
 
 		
 		

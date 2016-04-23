@@ -11,7 +11,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/DataTables/jquery.dataTables.js"></script>
 		<script type="text/javascript" charset="utf8" src="jquery/Responsive/js/dataTables.responsive.js"></script>
-       <script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
+        <script type="text/javascript" charset="utf8" src="jquery/Timepicker/jquery.timepicker.js"></script>
        
         <!-- CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -57,11 +57,12 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-		<div align="center">
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
 				<h2>Make a Reservation</h2><br>
 				<h3>Please select a building, date, start and end time for your reservation.<br>
@@ -72,10 +73,13 @@
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
-				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
+				<a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> 
 			</form>
 			<p>${table}</p>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

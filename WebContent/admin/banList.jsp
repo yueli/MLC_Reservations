@@ -1,3 +1,4 @@
+<!-- @author: Ginger Nix (Ronnie started - I fixed it and added lines -->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
   
@@ -58,13 +59,18 @@
 		</script> 
 	</head>
 	<body>
-	<div id="header1"></div>
-	<br><br><br><br>
-	<a href=banUser><button type='submit' value=''>Ban A User(List)</button></a>
-	<a href=banUser><button type='submit' value=''>Unban A User(List)</button></a>
-	<a href=unbanall><button type='submit' value=''>Unban All</button></a>
-	<br>
-	${table}
-	<div id="footer"></div>
+		<!-- Header -->
+		<div id="header1"></div>
+	
+		<!-- Content -->
+		<br><br>
+			${message}
+		<br>
+		<div>
+			${table}
+		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
+		<div id="footer"></div>
 	</body>
-</html>

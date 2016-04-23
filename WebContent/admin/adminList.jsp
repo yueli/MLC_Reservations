@@ -54,12 +54,17 @@
 
 
 	<body>
+		<!-- Header -->
 		<div id="header"></div>
 		<br /><br /><br /><br />
+		
+		<!-- Content -->
 		<%= message %>
 
 		<%= table %> 
- 		
+		<!-- End Content -->
+		
+ 		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>
