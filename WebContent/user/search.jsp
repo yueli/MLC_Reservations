@@ -49,9 +49,12 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
 		<br><br>
-		<div align="center">
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<form name="userReserveForm" action="SearchReservations" method="post">
 				<h2>Search Reservations</h2><br>
 				<h3>Search for reservations up to 2 week from today.</h3><br>
@@ -64,8 +67,14 @@
 				Reservation Length: ${hourIncrementSelect}<br><br>
 				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Search"> 
 			</form>
+		</div>
+		
+		<div align="center">
 			<p>${table}</p>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

@@ -41,11 +41,12 @@
 		</script>
 	</head>
 	<body>
-	<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-		<div align="center">
+		<!-- Header -->
+		<div id="header1"></div>
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<h2>Edit Building Schedule</h2><br>
 			<h3>Please update the information below. <br> If you want to cancel, please select "View Building Hours."</h3>
 			<h2>${msg}</h2>
@@ -58,6 +59,9 @@
 				<a href="Schedule"><button class="btn btn-lg btn-red" type="button" value="View Building Hours">View Building Hours</button></a>   <input class="btn btn-lg btn-red" type="submit" value="Submit">
 			</form>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

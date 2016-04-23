@@ -1,5 +1,10 @@
 @CHARSET "UTF-8";
 /* @author Brian Olaogun */
+table{
+	padding-left:40px;
+	padding-right:40px;
+}
+
 table td:hover {
   	background: #f4f4f4;
 	}
@@ -13,7 +18,7 @@ table td {
 	}
 	
 table th {
-	background: #CC0000;
+	background: #cc0033;
 	color: #fff;
 	}
 	

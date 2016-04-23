@@ -55,24 +55,30 @@ form {
 		</script> 
 	</head>
 <body>
-<div id="header1"></div>
-<br />
-<div align="center">
-<div class="container margin-vert-60" style="z-index:1;">
-	<div class="row text-center">
-	<h1>Cancel Confirmation for
-		${user.userFirstName} 
-		${user.userLastName}
-	</h1>
+	<!-- Header -->
+	<div id="header1"></div>
+	<br><br><br>
+
+	<!-- Content -->
+	<div align="center">
+		<div class="container margin-vert-60" style="z-index:1;">
+			<div class="row text-center">
+				<h1>Cancel Confirmation for
+					${user.userFirstName} 
+					${user.userLastName}
+				</h1>
 	
-	<h3>Are you sure you want to cancel this reservation?</h3>
+				<h3>Are you sure you want to cancel this reservation?</h3>
 	
-	<br />
-	<%= table %>
-</div>
-</div>
-</div>
-<div id="footer1"></div>
+				<br />
+				<%= table %>
+			</div>
+		</div>
+	</div>
+	<!-- End Content -->
+
+	<!-- Footer -->
+	<div id="footer1"></div>
 
 </body>
 </html>

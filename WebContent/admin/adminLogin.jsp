@@ -16,26 +16,28 @@
 		</script>
 	</head>
 	<body>
+	<!-- Header -->
 	<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	<br><br><br><br><br><br><br>
+	
+	<!-- Content -->
 	<div align="center">
 		<h1>MLC Study Room Reservations - Administration</h1>
 		
 			${message}
-			
+	</div>
+	
+	<div class="centerdiv">		
 		<form id="loginForm" action="AdminLoginController" method="POST">
 			<h3>Log In</h3><br>
 			<input type="text" name="username" placeholder="Username" required size=35><br>
 			<input type="password" name="password" placeholder ="Password" required size=35><br><br>
 			<input class="btn btn-lg btn-red" type="submit" value="LoginController"><br>
 		</form>
-		</div>
-		<div id="footer"></div>
+	</div>
+	<!-- End Content -->
+	
+	<!-- Footer -->
+	<div id="footer"></div>
 	</body>
 </html>

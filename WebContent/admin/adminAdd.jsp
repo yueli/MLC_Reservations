@@ -54,14 +54,17 @@ form {
 
 
 <body>
-		<div id="header1"></div>
-
+	<!-- Header -->
+	<div id="header1"></div>
+	
+	<!-- Content -->
 	<%= message %>
 	<br />
 	<%= table %>
-
- 		
-		<div id="footer"></div>
+	<!-- End Content -->
+	
+ 	<!-- Footer -->	
+	<div id="footer"></div>
 
 </body>
 </html>

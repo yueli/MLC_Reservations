@@ -22,17 +22,18 @@
 		</script>
 </head>
 <body>
-<div id="header1"></div>
-<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-<div align="center"><p>${table}</p>
-</div>
-<div id="footer"></div>
+	<!-- Header -->
+	<div id="header1"></div>
+	<br><br><br><br><br><br><br>
+
+	<!-- Content -->
+	<div align="center">
+		<p>${table}</p>
+	</div>
+	<!-- End Content -->
+	
+	<!-- Footer -->
+	<div id="footer"></div>
 </body>
 </html>
 
