@@ -85,6 +85,10 @@ public class UserSearchServlet extends HttpServlet {
 				String startDate = startDateSlashed;
 				String endDate = endDateSlashed;
 				
+				// get the current date and current time
+				String currentDate = dtc.parseDate(dtc.datetimeStamp());
+				String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+				
 				//------------------------------------------------//
 				/*            BUILDING INFORMATION                */
 				//------------------------------------------------//
@@ -143,7 +147,7 @@ public class UserSearchServlet extends HttpServlet {
 						
 						msg = "Please enter a <b>start date</b> that's less than the <b>end date</b>.";
 						url = "user/search.jsp";
-						
+					
 					} else {
 						// convert from slashed MM/dd/yyyy format to yyyy-MM-dd format
 						startDate = dtc.slashDateConvert(startDate);

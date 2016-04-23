@@ -61,8 +61,8 @@
 			<h3>Adding opening and closing hours for a building. <br>
 			Please enter all information below to add hours to a building.</h3><br>
 			<h3>${msg}</h3>
-			<p>${buildings}</p>
 			<form name="scheduleForm" action="new-schedule" method="post">
+				${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value=""><br>
 				End Date: <input type="text" id="endDate" name="endDate" value=""><br>
 				Start Time: <input type="text" id="startTime" name="startTime" value=""><br>
