@@ -57,12 +57,19 @@ form {
 	
 
 <body>
-		<div id="header1"></div>
-		<div align='center'>	
+	<!-- Header -->
+	<div id="header1"></div>
+	<br><br><br>	
+	
+	<!-- Content -->	
+	<div align='center'>	
 		<%= message %>
 		<br /><br />
 		<%= table %>
-		</div>
-		<div id="footer"></div>
+	</div>
+	<!-- End Content -->
+	
+	<!-- Footer -->
+	<div id="footer"></div>
 </body>
 </html>

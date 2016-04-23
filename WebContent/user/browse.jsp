@@ -27,25 +27,37 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
 		<br><br><br><br>
+		
+		<!-- Content -->
 		<div align="center">
 			${currentDay}
+		</div>
+		
+		<div class="centerdiv">	
 			<form name="browseForm" action="BrowseFloors" method="post">
 				<h2>${buildingHeader}</h2>
 				<p>${buildings}
-				${buildingSubmit}</p> 
+					${buildingSubmit}</p> 
 			</form>
+			
 			<form name="browseForm2" action="BrowseRooms" method="post">
 				<h2>${floorHeader}</h2>
 				<p>${floor}</p>
 			</form>
+			
 		</div>
+		
 		<div align="center">
-		<h3>${msg}</h3><br> 
-		<p>${table}</p>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<h3>${msg}</h3><br> 
+			<p>${table}</p>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

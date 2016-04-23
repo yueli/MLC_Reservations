@@ -56,19 +56,24 @@ form {
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-		<br>
-		<br>
-
-<div align="center">
-		<h2>Reservations for: 
-			${user.userFirstName} 
-			${user.userLastName}
-		</h2>
+		<br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
+			<h2>Reservations for: 
+				${user.userFirstName} 
+				${user.userLastName}
+			</h2>
+			
 			<%= message %>
 			<%= table %>
-</div>
-
+			
+		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer1"></div>
 	</body>
 </html>

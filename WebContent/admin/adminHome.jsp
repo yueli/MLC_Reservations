@@ -38,13 +38,18 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
 		
-			
+		<!-- Content -->	
+		<div class="centerdiv">
 		<form name="Logout" action="AdminLoginController" method="get">
  			<input class="btn btn-lg btn-red" type="submit" name = "logout" value="Logout">
  		</form>
+ 		</div>
+ 		<!-- End Content -->
  		
+ 		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 

@@ -52,19 +52,17 @@
 		
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<div align="center">
-	
+		<br><br><br><br><br><br><br>
 		
-		<p>${table}</p>
+		<!-- Content -->
+		<div align="center">
+			<p>${table}</p>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

@@ -13,15 +13,15 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="margin-bottom-60" style="z-index:1;">
-		<div id="header"></div>
-		<br>
-			<br>
-			<br>
-			<br>
+			<div id="header"></div>
+			<br><br><br><br>
 		</div>
 		<br>
 		<br>
+		
+		<!-- Content -->
 		<div align="center">
 			<div class="container margin-vert-60" style="z-index:1;">
 				<div class="row">
@@ -31,9 +31,12 @@
 					<p class="text-center margin-top-30">You have been banned due to not checking into a reserved room for two or more times this period.</p>
 			        <p class="text-center">For more information, call (706) 542-7000 or email <a href="mailto:learnctr@uga.edu?Subject=Banned%20from%20Making%20A%20Reservation" target="_top">learnctr@uga.edu</a></p>
 			        
-					</div>
-			     </div>
+				</div>
 			</div>
+		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

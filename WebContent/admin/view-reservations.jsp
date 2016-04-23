@@ -36,10 +36,12 @@
 		</script> 
 	</head>
 	<body>
-	<div id="header1"></div>
-	<br>
-	<br>
-		<div align="center">
+		<!-- Header -->
+		<div id="header1"></div>
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<h2>View All Reservations</h2><br>
 			<h3>Please select a building and or date to search for reservations. <br> 
 			To search by a user's MyID, please enter it in the search box.</h3><br>
@@ -59,7 +61,9 @@
 			<p>${userReservations}</p>
 		</div>
 			<br><br><br><br>
-		
+			<!-- End Content -->
+			
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

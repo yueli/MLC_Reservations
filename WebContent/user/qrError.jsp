@@ -51,17 +51,18 @@ form {
 		</script> 
 	</head>
 <body>
-<div id="header1"></div>
-<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-<h1>Checking In Error Page</h1>
-
-${message}
-<div id="footer1"></div>
+	<!-- Header -->
+	<div id="header1"></div>
+	<br><br><br><br><br><br><br>
+	
+	<!-- Content -->
+	<div align="center">
+		<h1>Checking In Error Page</h1><br>
+		${message}
+	</div>
+	<!-- End Content -->
+	
+	<!-- Footer -->
+	<div id="footer1"></div>
 </body>
 </html>

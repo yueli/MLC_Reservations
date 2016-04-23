@@ -59,10 +59,18 @@
 		</script> 
 	</head>
 	<body>
-	<div id="header1"></div>
-	<br><br>
-	${message}
-	<br>
-	${table}
-	<div id="footer"></div>
+		<!-- Header -->
+		<div id="header1"></div>
+	
+		<!-- Content -->
+		<br><br>
+			${message}
+		<br>
+		<div>
+			${table}
+		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
+		<div id="footer"></div>
 	</body>

@@ -49,9 +49,12 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-		<br><br>
-		<div align="center">
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<form name="userReserveForm" action="SearchReservations" method="post">
 				<h2>Welcome to Search Reservations</h2><br>
 				<h3>Please enter the information below to see rooms available.<br>
@@ -67,6 +70,9 @@
 			</form>
 			<p>${table}</p>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>
