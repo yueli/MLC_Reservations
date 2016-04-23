@@ -53,13 +53,14 @@ form {
 
 
 <body>
+
 		<div id="header1"></div>
 
 
 	${message}
 	<br />
 	${form}
- 		
+ 		<!-- Footer -->
 		<div id="footer"></div>
 
 </body>

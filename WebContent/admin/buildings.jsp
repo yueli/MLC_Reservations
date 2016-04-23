@@ -38,8 +38,7 @@
 	<body>
 		<!-- Header -->
 		<div id="header1"></div>
-
-		<br />
+	<br />
 		${message}
 
 		${table}
