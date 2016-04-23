@@ -49,8 +49,6 @@ public class BanReadServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		System.out.println("BanReadServlet: at beginning");
-	
 		// get the current session
 		session = request.getSession(false);
 	
