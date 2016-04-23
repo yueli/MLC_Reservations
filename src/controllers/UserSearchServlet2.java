@@ -89,7 +89,7 @@ public class UserSearchServlet2 extends HttpServlet {
 					msg = "You have reached the maximum hours (2 hours) for reservations for " + dtc.convertDateLong(startDate) + ".<br>"
 							+ "To make a reservation for another time on " + dtc.convertDateLong(startDate) + " , please cancel a reservation first.";
 					
-					url = "user/search.jsp";
+					url = "user/search.jsp"; //FIXME
 					
 				} else if (incrementSum == 1){
 					if(incrementSum == hourIncrement){
