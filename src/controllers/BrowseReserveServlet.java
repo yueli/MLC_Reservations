@@ -128,7 +128,7 @@ public class BrowseReserveServlet extends HttpServlet {
 				session.setAttribute("incrementSelect", incrementSelect);
 				
 				// This prevents the user from going back to this page after they make a reservation.
-				CASLogoutServlet.clearCache(request, response);
+				//CASLogoutServlet.clearCache(request, response);
 				
 			} else {
 				//------------------------------------------------//
