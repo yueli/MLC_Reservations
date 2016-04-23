@@ -220,7 +220,7 @@ public class AdminUserHelper {
 			// create an HTML form with this information
 
 			table += "<div align='center'><h3>Edit Admin</h3>";
-			table += "<br /><br />";
+			table += "<br />";
 			table += "<form action='AdminSaveServlet' method = 'post'>";
 			
 			table += "First name:<br>";
@@ -326,7 +326,7 @@ public class AdminUserHelper {
 			table += "<input type = 'hidden' name = 'adminID' value='" + adminID + "'>";
 			table += "</form>";
 			
-			table += "<br /><br />";
+			table += "<br />";
 			table += "<form action='AdminListServlet' method = 'post'>";
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			table += "</form>";
@@ -501,7 +501,7 @@ public class AdminUserHelper {
 		
 		table += "<br />";
 		table += "<form action='AdminListServlet' method = 'post'>";
-		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Back'>";
+		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 		table += "</form>";
 				
 		return table;

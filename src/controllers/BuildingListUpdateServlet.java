@@ -1,9 +1,11 @@
 package controllers;
 /**
- * @creator: Ronnix Xu
- * @author: Ginger Nix - added session checks, fixed edit form display
+ * @author: Ginger Nix - added session checks, role checks, etc, fixed edit form display,
  * 
- * This servlet creates a pre-poulated form to edit a building.
+ * @creator: Ronnix Xu
+ * 
+ * This servlet creates a pre-populated form to edit a building.
+ * 
  */
 
 import java.io.IOException;
@@ -92,7 +94,7 @@ public class BuildingListUpdateServlet extends HttpServlet {
 					session.setAttribute("message", message);	
 					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 					
-					// displays a prepoluated form w/ the building info to edit
+					// displays a pre-poluated form w/ the building info to edit
 					url = "/admin/buildingupdate.jsp";
 
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 

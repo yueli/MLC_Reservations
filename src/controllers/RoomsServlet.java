@@ -1,4 +1,8 @@
-/*@author: Ginger Nix
+/**
+ * @author: Ginger Nix
+ * 
+ * This servlet creats a drop-down of all active buildings for the admin
+ * to select a building to view its rooms.
  * 
  */
 
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.BuildingSelectQuery;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class RoomsServlet
@@ -23,6 +28,9 @@ import model.Admin;
 @WebServlet("/RoomsServlet")
 public class RoomsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private HttpSession session; 
+	private String url = "";
+	private String message = "";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,28 +53,87 @@ public class RoomsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// get current session
-		HttpSession session = request.getSession();
+		// get the current session
+		session = request.getSession(false);
+	
 		
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
 
-		// loads building list from db, create dropdown for list, and output as String
-		BuildingSelectQuery bsq = new BuildingSelectQuery();
-		bsq.doBuildingRead(); 
-		
-		// get a list of all the active building to list
-		//String buildings = bsq.getAllActiveBuildings();
-		String buildings = bsq.selectBuildingToViewRooms();
-		
-		System.out.println("RoomsServlet: buildings: " + buildings);
-		
-		// set session attribute
-		session.setAttribute("buildings", buildings);
-		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-		
-		String url = "/admin/rooms.jsp";
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
+				
+				// get info for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+				
+					message = (String) request.getAttribute("message"); 
+				
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
 
+					// loads building list from db, create dropdown for list, and output as String
+					BuildingSelectQuery bsq = new BuildingSelectQuery();
+					bsq.doBuildingRead(); 
+					
+					// get a list of all the active building to list
+					//String buildings = bsq.getAllActiveBuildings();
+					String buildings = bsq.selectBuildingToViewRooms();
+
+					// set session attribute
+					session.setAttribute("buildings", buildings);
+					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+					
+					String url = "/admin/rooms.jsp";						
+						
+				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+					
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
+				}
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
+		
+		} else { // there isn't an active session (session == null).
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+			
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
+		}
+				
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

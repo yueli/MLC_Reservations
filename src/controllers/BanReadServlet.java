@@ -17,7 +17,7 @@ import model.User;
 
 //**By Ronnie Xu~****/
 /**
- * @author: Ginger Nix - fixed all bugs and contributed code
+ * @author: Ginger Nix - fixed all bugs, added code, check sessions, etc
  * 
  * This servlet gets all the currently banned students and puts them
  * in a table for the user to view. If there are no banned students, the

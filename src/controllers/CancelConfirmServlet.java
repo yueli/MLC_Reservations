@@ -1,6 +1,6 @@
 /** @author: Ginger Nix
  * 
- * The CancelConfirmServlet is called when a user clicks the cancel rervation button
+ * The CancelConfirmServlet is called when a user clicks the cancel reservation button
  * next to the reservation they want to cancel. It gets the user's reservation data and sends 
  * it to a jsp where the reservation is displayed and the user confirms that they want to cancel this reservation.
  * 
