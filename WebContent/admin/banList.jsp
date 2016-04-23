@@ -1,4 +1,7 @@
-<!-- @author: Ginger Nix (Ronnie started - I fixed it and added lines -->
+<%-- 
+@author: Ginger Nix (Ronnie Xu started - I fixed it and added lines
+--%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
   

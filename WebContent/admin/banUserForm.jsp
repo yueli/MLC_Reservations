@@ -1,13 +1,9 @@
-<!--  @author: Ginger Nix -->
-<!-- displays a form for the admin user to search for a student to ban -->
+<%--  @author: Ginger Nix -->
+	displays a form for the admin user to search for a student to ban
+--%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%
-    String form = (String) request.getAttribute("form");
-	String message = (String) request.getAttribute("message");
-%> 
 
 <!DOCTYPE html>
 <html>
@@ -61,9 +57,9 @@ form {
 	<div id="header1"></div>
 
 	<!-- Content -->
-	<%= message %>
+	${message}
 	<br />
-	<%= form %>
+	${form}
 	<!-- End Content -->
  	
  	<!-- Footer -->	

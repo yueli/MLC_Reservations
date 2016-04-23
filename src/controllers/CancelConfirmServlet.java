@@ -61,18 +61,9 @@ public class CancelConfirmServlet extends HttpServlet {
 	
 		// check to see if there is a valid session
 		if (session != null){ // there is an active session
+			User user = (User) session.getAttribute("user");
 			
-			// get admin user object from session
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
-			
-			if (loggedInAdminUser != null){
-				// get the role for the currently logged in admin user.
-				String role = loggedInAdminUser.getRole();
-				int status = loggedInAdminUser.getAdminStatus();
-				
-				// push content based off role
-				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-					
+			if(user != null) { // run code if user object is not null				
 					message = (String) request.getAttribute("message");	
 					
 					// blank the message if nothing gotten in message attribute
@@ -80,7 +71,6 @@ public class CancelConfirmServlet extends HttpServlet {
 						 message = "";
 					}
 
-					User user = (User) session.getAttribute("user");
 					int userRecdID = user.getUserRecordID();
 					
 					Reservation reservation = new Reservation();
@@ -99,24 +89,6 @@ public class CancelConfirmServlet extends HttpServlet {
 					
 					url = "user/confirmCancellation.jsp";	
 					
-
-				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
-					//------------------------------------------------//
-					/*                VIEW FOR CLERK                  */
-					//------------------------------------------------//
-					
-					// forwarding URL
-					url = "AdminViewReservations";
-				} else {
-					//------------------------------------------------//
-					/*              NOT A VALID ROLE                  */
-					//------------------------------------------------//
-					// if a new session is created with no user object passed
-					// user will need to login again
-					session.invalidate();
-					response.sendRedirect(DbConnect.urlRedirect());
-					return;
-				}
 			} else {
 				//------------------------------------------------//
 				/*            ADMIN USER INFO EXPIRED             */
@@ -134,7 +106,7 @@ public class CancelConfirmServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
+	
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

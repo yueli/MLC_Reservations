@@ -56,47 +56,62 @@ public class OnlineCheckInServlet extends HttpServlet {
 
 		String message = "";
 		
-		//get our current session
-		this.session = request.getSession(false); 
+		// get current session
+		session = request.getSession(false);
 		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
- 		
-	        User user = (User) session.getAttribute("user");		
-	        int userRecdId = user.getUserRecordID();
-	        
-	    	Reservation reservation = new Reservation();
-			reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
-			int reservationRecdId = reservation.getReserveID();
-			
-			ReservationQuery resvQuery = new ReservationQuery();
-			
-			if (resvQuery.checkInUser(reservationRecdId, userRecdId)) { //if successfully checked in user
+		// If session is active/valid
+		if(session != null){
+			User user = (User) session.getAttribute("user");
+			 
+			if(user != null) { // run code if user object is not null
+	        	
+		        int userRecdId = user.getUserRecordID();
+		        
+		    	Reservation reservation = new Reservation();
+				reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
+				int reservationRecdId = reservation.getReserveID();
 				
-				message += "<div align='center'><h3> Successfully checked in! </h3></div>";
-	
-				url = "ViewServlet";
-			
-			}else{
-				url="user/qrError.jsp"; 
-				message += "Error: The reservation can not be checked in. Please contact adminstrators for help.";
+				ReservationQuery resvQuery = new ReservationQuery();
 				
+				if (resvQuery.checkInUser(reservationRecdId, userRecdId)) { //if successfully checked in user
+					
+					message += "<div align='center'><h3> Successfully checked in! </h3></div>";
+		
+					url = "ViewServlet";
+				
+				}else{
+					url="user/qrError.jsp"; 
+					message += "Error: The reservation can not be checked in. Please contact adminstrators for help.";
+					
+				}
+		        System.out.println("+_+_+_+ OnlineCheckInServ: message = " + message);
+				session.setAttribute("user", user);
+				session.setAttribute("message", message);
+				
+			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				
+				session.invalidate();
+				CASLogoutServlet.clearCache(request, response);
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
 			}
-	        System.out.println("+_+_+_+ OnlineCheckInServ: message = " + message);
-			session.setAttribute("user", user);
-			session.setAttribute("message", message);
 			
-		} else { // there isn't an active session.
+		} else {
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-
+		
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
-		
+			
 		//forward our request along
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
