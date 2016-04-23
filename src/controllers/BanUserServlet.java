@@ -166,6 +166,10 @@ public class BanUserServlet extends HttpServlet {
 									+ "</h3></div>";
 							url = "BanReadServlet";
 							
+							request.setAttribute("table", table);
+							request.setAttribute("message", message);
+
+							
 						}
 					
 					}
@@ -211,8 +215,6 @@ public class BanUserServlet extends HttpServlet {
 			return;
 		}
 			
-			request.setAttribute("table", table);
-			request.setAttribute("message", message);
 			
 			System.out.println("BanUserServlet: message at end = " + message);
 			System.out.println("BanUserServlet: url at end = " + url);

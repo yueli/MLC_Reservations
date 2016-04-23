@@ -15,7 +15,7 @@ import model.User;
 /**
  * @author Ronnie Xu
  * Helper for the Admin side of the website.
- * @contributer to fix bugs: Ginger Nix
+ * @contributer: Ginger Nix - fixed bugs and display
  *
  */
 

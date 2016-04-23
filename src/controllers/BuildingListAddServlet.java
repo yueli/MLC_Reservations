@@ -92,6 +92,9 @@ public class BuildingListAddServlet extends HttpServlet {
 						message = "<br /><br /><div align='center'><h3>A building with this name " + 
 								buildingName + " already exits!</h3></div>";
 						
+						request.setAttribute("message", message);
+						request.setAttribute("loggedInAdminUser", loggedInAdminUser);	
+						
 						url = "BuildingListForm";
 						System.out.println("BuildingListAddServlet: Building already exisits!");
 						
@@ -108,14 +111,16 @@ public class BuildingListAddServlet extends HttpServlet {
 							e.printStackTrace();
 						}
 						
-						message = "Building added";
+						message = "<br /><br /><div align='center'><h3>The building "
+								+  buildingName
+								+ " has been added.</h3></div><br />";
+						
 						url = "BuildingListServlet";
+						request.setAttribute("message", message);
+						request.setAttribute("loggedInAdminUser", loggedInAdminUser);	
+						
 					}		      
-			       
-					
-			       request.setAttribute("message", message);
-			       request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-	
+			       	
 
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
