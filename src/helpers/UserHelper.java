@@ -367,4 +367,35 @@ public class UserHelper {
 		return user;
 	}
 	
+	/**
+	 * 
+	 * @param recd ID of the user/student
+	 * @return all of their info in a user object
+	 * @author Ginger Nix
+	 */
+	public User getUserInfoFromRecdID(int recdID){
+		User user = new User();
+		String query = "SELECT * FROM tomcatdb.User WHERE userID = ? LIMIT 1";
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, recdID);
+			
+			this.results = ps.executeQuery();
+			while(this.results.next()){
+				user.setUserRecordID(this.results.getInt("userID"));
+				user.setMyID(this.results.getString("myID"));
+				user.setUserEmail(this.results.getString("email"));
+				user.setUserFirstName(this.results.getString("fname"));
+				user.setUserLastName(this.results.getString("lname"));
+				user.setLastLogin(this.results.getString("lastLogin"));				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("****Error in UserHelper.java: get admin info method via user recd ID. Query = " + query);
+		}
+		
+		return user;
+	}
 }

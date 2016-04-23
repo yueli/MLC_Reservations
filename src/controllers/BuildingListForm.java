@@ -51,9 +51,7 @@ public class BuildingListForm extends HttpServlet {
 		String url = "";
 		String table = "";
 		String message = "";
-	
-		System.out.println("BuildingListForm: - starting");
-		
+
 		this.session = request.getSession(false);				
 		
 		// check to see if there is a valid session

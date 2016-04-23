@@ -188,6 +188,7 @@ public class BuildingListQuery {
 					table += building.getBuildingQRName();
 					table += "</td>";
 					
+					//BuildingListUpdateServlet
 					table += "<td><a href=updatebuilding?buildingID=" + building.getBuildingID() + "> <button class='btn btn-lg btn-red' type='submit' value='Edit'>Edit Building</button></a></td>";
 					
 					table += "<td>";
