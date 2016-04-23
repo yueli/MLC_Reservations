@@ -1,6 +1,6 @@
-<!--  @author: Ginger Nix -->
-<!-- displays a form w/ building pre-populated to edit a building -->
-
+<%-- @author: Ginger Nix -->
+	displays a form w/ building pre-populated to edit a building
+--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 

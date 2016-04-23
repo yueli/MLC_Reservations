@@ -1,11 +1,11 @@
+<%--
+	@creator: Ronnie Xu
+	@author: Ginger Nix - added headers, css, took out scriptlets
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%
-    String table = (String) request.getAttribute("table");
-	String message = (String) request.getAttribute("message");
-%> 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,9 +59,9 @@ form {
 	<br><br><br>
 	
 	<!-- Content -->
-	<%= message %>
+	${message}
 	<br />
-	<%= table %>
+	${table}
 	<!-- End Content -->
  	
  	<!-- Footer -->	
