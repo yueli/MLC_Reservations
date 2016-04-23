@@ -47,20 +47,14 @@
  				Edit buildings, hours, or rooms.</h3>
  
  		<div class="centerdiv">
-    		<div>
-    		${message}
-				<br><br>
-				<a href='buildingform'><button class='btn btn-lg btn-red' type='submit' value='EditHours'>Add Building</button></a>
-				<br /><br />
-			</div>
+    	
+    			${message}
 		</div>
-
 			<p>${table}</p>
 		</div>
 		<!-- End Content -->
 		
 		<!-- Footer -->
->>>>>>> master
 		<div id="footer"></div>
 	</body>
 </html>
