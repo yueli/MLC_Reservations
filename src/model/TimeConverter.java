@@ -211,13 +211,22 @@ public class TimeConverter {
 	}
 	/**
 	 * This method will count the number of hours between start and end time.
-	 * @param reserveStartTime String start time
-	 * @param reserveEndTime String end time
+	 * @param reserveStartTime String start time in HH:mm:ss (24-hour) format
+	 * @param reserveEndTime String end time in HH:mm:ss (24-hour) format
 	 * @return Int hour increment - the number of hours between start and end time
 	 */
 	public Integer getHourIncrement(String reserveStartTime, String reserveEndTime){
-		List<String> times = timeRangeList(reserveStartTime, reserveEndTime);
-		int hourIncrement = (times.size()-1);
+		int hourIncrement;
+		if (reserveStartTime.equals("00:00:00") && reserveEndTime.equals("00:00:00")){
+			
+			hourIncrement = 24;
+		
+		} else {
+			
+			List<String> times = timeRangeList(reserveStartTime, reserveEndTime);
+			hourIncrement = (times.size()-1);
+			
+		}
 	
 		return hourIncrement;
 	}
@@ -504,7 +513,7 @@ public class TimeConverter {
 			String time = times.get(i);
 			System.out.println("Time is ..." + time);
 		}
-		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("09:00:00", "11:00:00"));
+		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("08:00:00", "00:00:00"));
 		
 		System.out.println("TEST subtract time method = " + TimeConverter.subtractTime("00:00:00", 1));
 		

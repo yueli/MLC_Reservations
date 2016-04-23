@@ -143,7 +143,7 @@ public class AdminReservationsServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
+			session.invalidate();
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
