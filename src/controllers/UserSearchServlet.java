@@ -192,7 +192,7 @@ public class UserSearchServlet extends HttpServlet {
 							
 						if(startDate.equals(endDate)){
 							
-							// check to make sure the start time is less than end time
+							// if start time is not less than end time
 							if(TimeConverter.isAfter(startTime, endTime)){
 								msg = "Please enter a <b>start time</b> that is <b>less than</b> the <b>end time</b>.";
 								
