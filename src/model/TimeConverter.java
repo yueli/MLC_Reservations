@@ -393,6 +393,7 @@ public class TimeConverter {
 	
 	/**
 	 * Get the hour of the inputted time.
+	 * @param time String time in HH:mm:ss (24-Hour) format.
 	 * @return The hour of the inputted time.
 	 */
 	public Integer parseHour(String time){
