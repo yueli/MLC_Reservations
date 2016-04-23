@@ -18,23 +18,26 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-	<br>
-	<br>
-	<br>
+		<br><br><br>
+		
+		<!-- Content -->
+		<h2 align="center">Download Reports</h2>
 	
-	<h2 align="center">Download Reports</h2>
-	
-	<br>
-	<!-- Button to call the downloads servlet -->
-	<div align="center">
-	
+		<br>
+		<!-- Button to call the downloads servlet -->
+		<div class="centerdiv">
+		
 	    <form name="banForm" id="banForm" action="DownloadReports" method="Post">
 	    	<input type="hidden" name="bannedList" value="bannedList">
             <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
     	</form>
-
-	</div>
+    	
+		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 	<div id="footer"></div>
 	</body>
 </html>

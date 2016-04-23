@@ -10,7 +10,7 @@
 		<title>Banning</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script> 
-
+		
 			$(function() {
 				$("#header1").load("admin/adminheader.html"); 
 				$("#footer").load("footer.html"); 
@@ -18,14 +18,12 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-		<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+		<br><br><br><br><br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 		<form name="banForm" action=ban method=get>
 		<!-- Ban ID -->
 		Student ID:<input type=text name=studentID value=""/>
@@ -41,6 +39,11 @@
 		</p>
 		
 		</form>
+		</div>
+
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

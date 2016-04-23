@@ -51,11 +51,15 @@ form {
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-		<br>
+		<br><br><br>
+		
+		<!-- Content -->
+		<p>${buildings}
+		<!-- End Content -->
 
-			<p>${buildings}
-
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

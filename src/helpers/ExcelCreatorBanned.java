@@ -56,7 +56,8 @@ public class ExcelCreatorBanned {
                if(con==null)
                         return null;
                   // Database Query               
-                  strQuery = "select * from Banned into OUTFILE BannedStudents.csv;";
+                 // strQuery = "select * from Banned into OUTFILE BannedStudents.csv;";
+                  strQuery = "select * into OUTFILE 'BannedStudents.csv' from tomcatdb.buildings";
                   Statement stmt = con.createStatement();
                   ResultSet rs = stmt.executeQuery(strQuery);
                                                                      

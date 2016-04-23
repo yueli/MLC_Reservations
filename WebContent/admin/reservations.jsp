@@ -57,11 +57,12 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-		<div align="center">
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
 				<h2>Make a Reservation</h2><br>
 				<h3>Please select a building, date, start and end time for your reservation.<br>
@@ -76,6 +77,9 @@
 			</form>
 			<p>${table}</p>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>
