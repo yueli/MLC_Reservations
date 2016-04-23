@@ -369,7 +369,7 @@ public class DateTimeConverter {
 			    return dates;
 			    
 			} else {
-				System.out.println("ERROR in DateTimeConverter.dateRangeList. Please use the same date format.");
+				System.out.println("ERROR in DateTimeConverter.dateRangeList. Please use the same date format for both parameters.");
 			}
 			
 		    
@@ -388,15 +388,28 @@ public class DateTimeConverter {
 	 */
 	public static boolean isAfter (String from, String to){
 		SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
 		Date date1;
 		Date date2;
 		try {
-			date1 = slashedFormat.parse(from);
-			date2 = slashedFormat.parse(to);
-			
-			if(date1.after(date2)){
-				return true;
-	         }
+			if(from.contains("/") && to.contains("/")){
+				date1 = slashedFormat.parse(from);
+				date2 = slashedFormat.parse(to);
+				
+				if(date1.after(date2)){
+					return true;
+		         }
+			} else if (from.contains("-") && to.contains("-")){
+				date1 = dashedFormat.parse(from);
+				date2 = dashedFormat.parse(to);
+				
+				if(date1.after(date2)){
+					return true;
+		         }
+			} else {
+				System.out.println("ERROR in DateTimeConverter.dateRangeList. Please use the same date format for both parameters.");
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 			System.err.println("**Error parsing date in DateTimeConverter.comapreDate**");
