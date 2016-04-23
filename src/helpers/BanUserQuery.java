@@ -93,7 +93,7 @@ public class BanUserQuery {
 			form += "</form>";
 			form += "<br />";
 			form += "<form action='BanReadServlet' method = 'post'>";
-			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Back'>";
+			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			form += "</form>";
 	
 			return form;

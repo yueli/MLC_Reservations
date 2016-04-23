@@ -3,6 +3,8 @@ package controllers;
 /**
  * @author: Ginger Nix
  * 
+ * This servlet creates the form for an admin user to search for a user to ban.
+ * 
  */
 import java.io.IOException;
 
@@ -62,11 +64,6 @@ public class BanUserFormServlet extends HttpServlet {
 				String role = loggedInAdminUser.getRole();
 				int status = loggedInAdminUser.getAdminStatus();
 				
-				//DOESN'T WORK??
-				System.out.println(">>BanUserFormServ: logged in admin role = " + loggedInAdminUser.getRole());
-				
-				System.out.println(">>BanUserFormServ: logged in admin user name = " + loggedInAdminUser.getFname() + " " + loggedInAdminUser.getLname());
-				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 				
@@ -88,10 +85,7 @@ public class BanUserFormServlet extends HttpServlet {
 					request.setAttribute("message", message);
 				    request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 					url = "/admin/banUserForm.jsp";
-						
-						
-						
-						
+
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
 					/*                VIEW FOR CLERK                  */

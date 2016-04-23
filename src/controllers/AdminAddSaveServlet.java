@@ -53,78 +53,119 @@ public class AdminAddSaveServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = "";
 		
-		//get our current session
-		this.session = request.getSession(false); 
+		// get the current session
+		session = request.getSession(false);
+	
 		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
-			
-				message = (String) request.getAttribute("message"); 
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
+
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
 				
-				// blank the message if nothing gotten in message attribute
-				if (message == null || message.isEmpty()) {
-					 message = "";
+				// get info for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+				
+					message = (String) request.getAttribute("message"); 
+				
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+				
+					// create new admin object to hold data entered in the form to add an admin user
+					Admin adminUserBeingAdded = new Admin();
+					
+					//pull the fields from the form adminEdit.jsp to populate the user being edited's object
+					adminUserBeingAdded.setFname(request.getParameter("fname"));
+					adminUserBeingAdded.setLname(request.getParameter("lname"));
+					adminUserBeingAdded.setAdminMyID(request.getParameter("adminMyID"));
+					adminUserBeingAdded.setRole(request.getParameter("role"));
+					adminUserBeingAdded.setAdminStatus(Integer.parseInt(request.getParameter("status")));
+			
+					AdminUserHelper adminUserHelper = new AdminUserHelper();
+				
+					// check to see if an admin user already exists with this myID which is supposed to be unique
+					boolean alreadyInTable = false;
+					
+					System.out.println("AdminAddSaveServlet: before call to alreadyInTable: MyID to be checked: " + adminUserBeingAdded.getAdminMyID());
+					
+					alreadyInTable = adminUserHelper.inAdminTable(adminUserBeingAdded.getAdminMyID());
+					
+					if (alreadyInTable){
+						// don't add, set message
+						message = "<br /><br /><div align='center'><h3>The admin user " +
+									adminUserBeingAdded.getFname() + " " + adminUserBeingAdded.getLname()   + 
+									" with the UGA MyID ' " + adminUserBeingAdded.getAdminMyID() + 
+									"' already exists!</h3></div>";
+						
+						url = "AdminAddServlet";
+								
+							}else{
+								//add new admin user 
+								adminUserHelper.insertAdminTable(
+										adminUserBeingAdded.getAdminMyID(), 
+										adminUserBeingAdded.getFname(), 
+										adminUserBeingAdded.getLname(), 
+										adminUserBeingAdded.getRole(),
+										adminUserBeingAdded.getAdminStatus()
+										);
+								
+								message = "Admin added";
+								url = "AdminListServlet";
+							}	
+							
+						request.setAttribute("message", message);
+						request.setAttribute("loggedInUser", loggedInAdminUser);
+						
+						
+				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+					
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
 				}
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
 				
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 		
-				// create admin user object w/ session data on the logged in user's info
-				Admin loggedInAdminUser = (Admin) request.getAttribute("loggedInAdminUser");		
-		
-				// create new admin object to hold data entered in the form to add an admin user
-				Admin adminUserBeingAdded = new Admin();
-				
-				//pull the fields from the form adminEdit.jsp to populate the user being edited's object
-				adminUserBeingAdded.setFname(request.getParameter("fname"));
-				adminUserBeingAdded.setLname(request.getParameter("lname"));
-				adminUserBeingAdded.setAdminMyID(request.getParameter("adminMyID"));
-				adminUserBeingAdded.setRole(request.getParameter("role"));
-				adminUserBeingAdded.setAdminStatus(Integer.parseInt(request.getParameter("status")));
-		
-				AdminUserHelper adminUserHelper = new AdminUserHelper();
-			
-				// check to see if an admin user already exists with this myID which is supposed to be unique
-				boolean alreadyInTable = false;
-				
-				System.out.println("AdminAddSaveServlet: before call to alreadyInTable: MyID to be checked: " + adminUserBeingAdded.getAdminMyID());
-				
-				alreadyInTable = adminUserHelper.inAdminTable(adminUserBeingAdded.getAdminMyID());
-				
-				if (alreadyInTable){
-					// don't add, set message
-					message = "<br /><br /><div align='center'><h3>The admin user " +
-								adminUserBeingAdded.getFname() + " " + adminUserBeingAdded.getLname()   + 
-								" with the UGA MyID ' " + adminUserBeingAdded.getAdminMyID() + 
-								"' already exists!</h3></div>";
-					
-					url = "AdminAddServlet";
-					
-				}else{
-					//add new admin user 
-					adminUserHelper.insertAdminTable(
-							adminUserBeingAdded.getAdminMyID(), 
-							adminUserBeingAdded.getFname(), 
-							adminUserBeingAdded.getLname(), 
-							adminUserBeingAdded.getRole(),
-							adminUserBeingAdded.getAdminStatus()
-							);
-					
-					message = "Admin added";
-					url = "AdminListServlet";
-				}	
-				
-			request.setAttribute("message", message);
-			request.setAttribute("loggedInUser", loggedInAdminUser);
-			
-		} else { // there isn't an active session.
+		} else { // there isn't an active session (session == null).
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
+
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);			
