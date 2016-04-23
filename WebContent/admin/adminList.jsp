@@ -34,7 +34,7 @@
 		<script> 
 			// used to load header and footer html
 			$(function() {
-				$("#header").load("admin/adminheader.html"); 
+				$("#header1").load("admin/adminheader.html"); 
 				$("#footer").load("footer.html"); 
 			});
 			// jQuery for Datatable plugin for pagination, sort, and search
@@ -55,7 +55,7 @@
 
 	<body>
 		<!-- Header -->
-		<div id="header"></div>
+		<div id="header1"></div>
 		<br /><br /><br /><br />
 		
 		<!-- Content -->

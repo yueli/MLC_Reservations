@@ -65,41 +65,21 @@ public class ViewServlet extends HttpServlet {
 		
 		String message = " ";
 		String table = "";
-		
-		// get the current session
+		this.session = request.getSession(false);				
+		// get current session
 		session = request.getSession(false);
-	
-		// check to see if there is a valid session
-		if (session != null){ // there is an active session
-			
-			// get admin user object from session
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
-			
-			if (loggedInAdminUser != null){
-				// get the role for the currently logged in admin user.
-				String role = loggedInAdminUser.getRole();
-				int status = loggedInAdminUser.getAdminStatus();
-				
-				// push content based off role
-				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-					
-					message = (String) request.getAttribute("message");	
+		
+		// If session is active/valid
+		if(session != null){
+			User user = (User) session.getAttribute("user");
+			 
+			if(user != null) { // run code if user object is not null
+					message = (String) request.getAttribute("message"); 
 					
 					// blank the message if nothing gotten in message attribute
 					if (message == null || message.isEmpty()) {
 						 message = "";
 					}
-
-					User user = (User) session.getAttribute("user");
-
-					// if from the Cancel Confirmation Servlet via go back to view w/o canceling
-					// need to clear out message
-					String noCancel = request.getParameter("noCancel");
-			
-					if(noCancel == null || noCancel.isEmpty()){
-						session.removeAttribute("message");
-					}
-		
 					ListUserReservationsQuery lurq = new ListUserReservationsQuery();
 		
 					// get all the reservations the user has primary and secondary
@@ -125,62 +105,40 @@ public class ViewServlet extends HttpServlet {
 						System.out.println("View Servlet: something in table ");
 						
 					}
-
-							
+					
+					url = "user/view.jsp";
 					//forward our request along
 					request.setAttribute("user", user);
 					request.setAttribute("table", table);
 					request.setAttribute("message", message);
-					
-					url = "user/view.jsp";	
-					
-		
-				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
-					//------------------------------------------------//
-					/*                VIEW FOR CLERK                  */
-					//------------------------------------------------//
-					
-					// forwarding URL
-					url = "AdminViewReservations";
-					System.out.println("BanReadServlet: 4");
-				} else {
-					//------------------------------------------------//
-					/*              NOT A VALID ROLE                  */
-					//------------------------------------------------//
-					// if a new session is created with no user object passed
-					// user will need to login again
-					session.invalidate();
-					System.out.println("BanReadServlet: 5");
-					response.sendRedirect(DbConnect.urlRedirect());
-					return;
-				}
+
 			} else {
 				//------------------------------------------------//
-				/*            ADMIN USER INFO EXPIRED             */
+				/*               USER INFO EXPIRED                */
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
-				System.out.println("BanReadServlet: 6");
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
-		
-		} else { // there isn't an active session (session == null).
+			
+		} else {
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
-			System.out.println("BanReadServlet: 7");
+		
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
 
+					
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
 	}
-
 }
