@@ -53,17 +53,16 @@
 		<br><br>
 		<div align="center">
 			<form name="userReserveForm" action="SearchReservations" method="post">
-				<h2>Welcome to Search Reservations</h2><br>
-				<h3>Search for reservations up to 2 week from today.<br>
-				To make a reservation for today, please click browse.</h3><br>
+				<h2>Search Reservations</h2><br>
+				<h3>Search for reservations up to 2 week from today.</h3><br>
 				<h3>${msg}</h3><br>
 				Building ${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
-				Start Time: <input id="startTime" name="startTime"><br>
+				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime).trim()}"><br>
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
-				End Time: <input id="endTime" name="endTime"><br>
+				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime).trim()}"><br>
 				Reservation Length: ${hourIncrementSelect}<br><br>
-				<a href="Browse"><button class="btn btn-lg btn-red" type="button" value="Browse">Browse</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Search"> 
 			</form>
 			<p>${table}</p>
 		</div>

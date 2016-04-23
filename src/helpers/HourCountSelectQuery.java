@@ -36,24 +36,26 @@ public class HourCountSelectQuery {
 	 * 0 == no reservations made for that day.
 	 * @param userID User ID of the person who wants to reserve room (primary user)
 	 */
-	public void doIncrementRead(int userID){
+	public void doIncrementRead(int userID, int buildingID){
 		DateTimeConverter dtc = new DateTimeConverter();
 		String currentDate = dtc.parseDate(dtc.datetimeStamp());
 		
 		String query = "SELECT SUM(tomcatdb.Reservations.hourIncrement) as incrementSum "
-				+ "FROM tomcatdb.User, tomcatdb.Reservations "
+				+ "FROM tomcatdb.User, tomcatdb.Reservations, tomcatdb.Building "
 				+ "WHERE tomcatdb.Reservations.primaryUser = tomcatdb.User.userID "
+				+ "AND tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID "
 				+ "AND tomcatdb.Reservations.primaryUser = ? "
 				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
 				+ "AND tomcatdb.Reservations.reserveEndDate = ? "
-				+ "AND tomcatdb.Reservations.free = ?";
+				+ "AND tomcatdb.Reservations.free = ? "
+				+ "AND tomcatdb.Building.buildingID = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			ps.setInt(1, userID);
 			ps.setString(2, currentDate);
 			ps.setString(3, currentDate);
 			ps.setString(4, "N");
-			
+			ps.setInt(5, buildingID);
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,21 +69,24 @@ public class HourCountSelectQuery {
 	 * @param userID userID User ID of the person who wants to reserve room (primary user)
 	 * @param date String date in SQL format.
 	 */
-	public void doIncrementRead(int userID, String date){
+	public void doIncrementRead(int userID, String date, int buildingID){
 		
 		String query = "SELECT SUM(tomcatdb.Reservations.hourIncrement) as incrementSum "
-				+ "FROM tomcatdb.User, tomcatdb.Reservations "
+				+ "FROM tomcatdb.User, tomcatdb.Reservations, tomcatdb.Building "
 				+ "WHERE tomcatdb.Reservations.primaryUser = tomcatdb.User.userID "
+				+ "AND tomcatdb.Reservations.Building_buildingID = tomcatdb.Building.buildingID "
 				+ "AND tomcatdb.Reservations.primaryUser = ? "
 				+ "AND tomcatdb.Reservations.reserveStartDate = ? "
 				+ "AND tomcatdb.Reservations.reserveEndDate = ? "
-				+ "AND tomcatdb.Reservations.free = ?";
+				+ "AND tomcatdb.Reservations.free = ? "
+				+ "AND tomcatdb.Building.buildingID = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			ps.setInt(1, userID);
 			ps.setString(2, date);
 			ps.setString(3, date);
 			ps.setString(4, "N");
+			ps.setInt(5, buildingID);
 			
 			this.results = ps.executeQuery();
 		} catch (SQLException e) {

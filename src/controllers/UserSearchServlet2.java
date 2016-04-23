@@ -80,16 +80,16 @@ public class UserSearchServlet2 extends HttpServlet {
 				
 				// check hour increment
 				HourCountSelectQuery hcsq = new HourCountSelectQuery();
-				hcsq.doIncrementRead(userID, startDate);
+				hcsq.doIncrementRead(userID, startDate, Integer.parseInt(buildingID));
 				int incrementSum = hcsq.incrementResult();
 				
 				// compare hour increment to see the user hasn't maxed out of reservations for selected dat
 				if(incrementSum == 2){
 					// user has maxed out of reservations for the day
-					msg = "You have exceeded the maximum hours (2) for reservations for today.  <br>"
-							+ "To make a reservation for another time for today, please cancel one of your current reservations first.";
+					msg = "You have reached the maximum hours (2 hours) for reservations for " + dtc.convertDateLong(startDate) + ".<br>"
+							+ "To make a reservation for another time on " + dtc.convertDateLong(startDate) + " , please cancel a reservation first.";
 					
-					url = "user/search.jsp";
+					url = "user/search.jsp"; //FIXME
 					
 				} else if (incrementSum == 1){
 					if(incrementSum == hourIncrement){
