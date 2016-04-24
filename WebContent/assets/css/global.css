@@ -87,9 +87,10 @@ body {
   margin-top: 29px;
 }
 .centerdiv {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 561px;
 }
 
 /*-----------------------------------------------------------------------------------*/
