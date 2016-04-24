@@ -109,6 +109,7 @@ public class RoomSaveServlet extends HttpServlet {
 
 					// get the building name for message
 					BuildingListQuery blq = new BuildingListQuery();
+					blq.doRead();
 					
 					String buildingName =  blq.getBuildingName(room.getBuildingID());
 					
