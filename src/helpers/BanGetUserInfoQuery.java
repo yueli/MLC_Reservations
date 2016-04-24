@@ -1,5 +1,6 @@
 /**
  * @author: Ginger Nix
+ * This class contains methods for banning a user
  */
 
 package helpers;
@@ -15,15 +16,9 @@ import model.User;
 
 public class BanGetUserInfoQuery {
 	
-	/**
-	 * Prepared SQL statement (combats: SQL Injections)
-	 */
-
 	private Connection connection;
 	private ResultSet results;
-	private ResultSet banResults;
 	private ResultSet adminResults;
-	//private int numRecords;
 	public String banDescription ="";
 
 	/**
@@ -47,18 +42,23 @@ public class BanGetUserInfoQuery {
 	}
 	
 	
-
-//-------------
+	/**
+	 * The method userData takes a user recd id and gets the user data
+	 * @author: Ginger Nix
+	 * @parameters: the user table record's id
+	 * @return: a User object w/ the user's info
+	 */
 	
-/*
- * Get User Data
- */
 	 public User userData(int userID){
 		
 		User userData = new User();
-		String query = "SELECT User.userID,User.myID,User.fname,User.lname,User.email,User.lastLogin FROM tomcatdb.User WHERE User.userID = "+userID+";";
+		String query = "SELECT * "
+				+ "FROM tomcatdb.User "
+				+ "WHERE userID = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, userID);
+			
 			this.results = ps.executeQuery();
 			while(this.results.next()){
 				userData.setUserRecordID(this.results.getInt("user.userID"));
@@ -79,9 +79,11 @@ public class BanGetUserInfoQuery {
 	
 	 /**
 	  * This method takes the user's MyID and looks gets the user's info from the user table
-	  * @param MyID
-	  * @return
-	  */
+	 * @author: Ginger Nix
+	 * @parameters: the user MyID
+	 * @return: a User object w/ the user's info
+	 */
+	 
 	 public User userDataWithMyID(String MyID){
 			
 		User userData = new User();
@@ -110,7 +112,14 @@ public class BanGetUserInfoQuery {
 		return userData;
 	}
 	 
-	 
+	/**
+	* The method userData takes an admin user's admin record ID and
+	* returns the admin object w/ the admin's data
+	* @author: Ginger Nix
+	* @parameters: the admin table record's id
+	* @return: an Admin object w/ the admin's info
+	*/
+		 
 	 public Admin adminData(int adminID){
 			
 			Admin adminData = new Admin();
@@ -138,44 +147,7 @@ public class BanGetUserInfoQuery {
 			}
 			
 			return adminData;
-		}
-	 
-	 /*
-	  * Check if user is already banned
-	  * 
-	  * NOT NEEDED I THINK SINCE I ALREADY HAVE A METHOD IN USERHELPER TO CHECK THIS
-	  */
-	 public boolean isUserBannedAlready(int userRecdID){
-		 boolean banned = false;
-		 	
-		 
-		 String query = "SELECT * "
-		 		+ "FROM tomcatdb.Banned "
-		 		+ "WHERE status = 1 "
-		 		+ "AND User_userID = ?";
-		 
-			try {
-				PreparedStatement ps = this.connection.prepareStatement(query);
-				ps.setInt(1, userRecdID);
-				
-				this.results = ps.executeQuery();
-				
-				if (this.results.next()) {
-					return true; //they are already banned for this current period
-				}else{
-					return false; //they have not been banned
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
-			}
-			
-			return banned;
-		}
-	 
-	 
-	 
+		} 
 	 
 
 }
