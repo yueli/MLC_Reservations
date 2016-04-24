@@ -723,7 +723,7 @@ public class RoomsSelectQuery {
 					
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("***Error in RoomsSelectQuery updateRoomTable:  Query = " + query);
+				System.out.println("***Error in RoomsSelectQuery room AlreadyExists:  Query = " + query);
 			}
 			
 			return false;
@@ -737,17 +737,22 @@ public class RoomsSelectQuery {
 		 */
 		public void insertRoomsTable(Rooms room) {
 			
+			Rooms roomToInsert = new Rooms();
+			roomToInsert = room;
+			
+			System.out.println("RoomsSelectQuery: insertRoomsTable: room num = " + roomToInsert.getRoomNumber());
+			
 			String query = "INSERT INTO tomcatdb.Rooms "
 					+ "(Admin_adminID, Building_buildingID, roomNumber, roomFloor, roomStatus) "
 					+ "VALUES (?, ?, ?, ?, ?)";
 			
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);		
-				ps.setInt(1, room.getAdminID());
-				ps.setInt(2, room.getBuildingID());
-				ps.setString(3, room.getRoomNumber());
-				ps.setInt(4, room.getRoomFloor());
-				ps.setInt(5, room.getRoomStatus());
+				ps.setInt(1, roomToInsert.getAdminID());
+				ps.setInt(2, roomToInsert.getBuildingID());
+				ps.setString(3, roomToInsert.getRoomNumber());
+				ps.setInt(4, roomToInsert.getRoomFloor());
+				ps.setInt(5, roomToInsert.getRoomStatus());
 
 				ps.executeUpdate();
 				
