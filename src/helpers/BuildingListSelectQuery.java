@@ -1,8 +1,9 @@
 package helpers;
 
 /** 
+ * This helper is used to get building information and create forms
  * @creator: Ronnie Xu
- * @author: Ginger Nix - added input box, added comments, cleaned code
+ * @author: Ginger Nix - added input box, added comments, cleaned code, secured queries
  */
 
 import java.sql.Connection;
@@ -40,12 +41,22 @@ public class BuildingListSelectQuery {
 	}
 	
 	
+	/**
+	 * This method get the building record info based on the building record ID
+	 * @param: buildingID
+	 * @return: nothing
+	 */
+	
 	public void doRead(int buildingID){
 
-		String query = "SELECT Building.buildingID, Building.buildingName, Building.buildingStatus, Building.buildingCalName, Building.buildingCalUrl, Building.Admin_adminID FROM tomcatdb.Building where Building.buildingID= " + buildingID + " ORDER BY buildingID LIMIT 1";
-		// securely run query
+		String query = "SELECT * FROM tomcatdb.Building "
+						+ "WHERE buildingID = ? "
+						+ "LIMIT 1";
+
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, buildingID);
+			
 			results = ps.executeQuery();
 			
 		} catch (SQLException e) {
@@ -54,6 +65,10 @@ public class BuildingListSelectQuery {
 		} 
 	}
 	
+	
+	/**
+	 * This method gets all the buildings
+	 */
 	
 	public Building getBuilding(){ 
 				
@@ -85,6 +100,12 @@ public class BuildingListSelectQuery {
 	}
 	
 	
+	/**
+	 * This method takes a building record ID and pre-populates a table for the admi
+	 * user to edit the bulding's information
+	 * @param: buildingID
+	 * @return: the pre-populated building edit form
+	 */
 	
 	public String buildingEditForm (int buildingID) {
 		String form = "";
@@ -94,6 +115,7 @@ public class BuildingListSelectQuery {
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			ps.setInt(1, buildingID);
+			
 			this.results = ps.executeQuery();
 			
 			this.results.next();
@@ -157,10 +179,8 @@ public class BuildingListSelectQuery {
 			e.printStackTrace();
 			System.out.println("** Error in BuildingListServlet: buildingEditForm w/ query");
 		} 
-
 	
-		return form;
-		
+		return form;		
 		
 	}
 

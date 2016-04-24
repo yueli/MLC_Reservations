@@ -80,7 +80,7 @@ public class CancelConfirmServlet extends HttpServlet {
 					// have reserve id from the parameter passed from view.jsp
 					// use reserve id to get the rest of the record's data and format into a table	
 					ListUserReservationsQuery lurq = new ListUserReservationsQuery();
-					table = lurq.GetUserReservation(reservation.getReserveID(),userRecdID);
+					table = lurq.GetUserReservation(reservation.getReserveID());
 					
 					//forward our request along
 					request.setAttribute("user", user);

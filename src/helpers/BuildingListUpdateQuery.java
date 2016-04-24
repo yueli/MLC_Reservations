@@ -2,9 +2,10 @@ package helpers;
 //**By Ronnie Xu~****/
 
 /** 
+ * This method updates the building data
  * @author: Ginger Nix - rewrote doUpdate 
- * 
  */
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -15,7 +16,6 @@ import model.DbConnect;
 
 public class BuildingListUpdateQuery {
 	private Connection connection;
-
 
 	/**
 	 * 
@@ -40,15 +40,18 @@ public class BuildingListUpdateQuery {
 	
 	
 	
+	/**
+	 * This method updates the building's info in the building table
+	 * @author Ginger Nix
+	 * @param buildingToUpdate object containing all the changed info
+	 * @param adminID of the admin making these changes
+	 */
+	
 	public void doUpdate(Building buildingToUpdate, int adminID){
 		
 		Building building = new Building();
 		building = buildingToUpdate;
-		
-		System.out.println("BuildingListUpdateQuery: doUpdate: adminID = " + adminID);
 
-		System.out.println("BuildingListUpdateQuery: doUpdate: buildingName = " + building.getBuildingName());
-		
 		String query = "UPDATE tomcatdb.Building SET "
 						+ "buildingName = ?, "
 						+ "buildingStatus = ?, "
