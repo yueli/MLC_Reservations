@@ -42,14 +42,14 @@ public class AdminUserHelper {
 
 	}
 	
-	/*
-	 * This method returns a table listing all the admin users.
+	/**
+	 * ListAdmins gets all the admin users and puts them nicely into a table
+	 * 
 	 * @author: Ginger Nix
-	 * @date: Spring 2016
 	 * @parameters: none
 	 * @return: table of all the admin users
-	 * 
 	 */
+	
 	public String ListAdmins(){
 		String table = "";
 		String adminActiveStatus = "";
@@ -73,6 +73,7 @@ public class AdminUserHelper {
 		table += "<th>&nbsp;</th>"; 
 		table += "</thead>";
 		table += "<tbody>";	
+		
 		String query = "SELECT * FROM tomcatdb.Admin ORDER BY lname";
 
 		try {
@@ -146,23 +147,31 @@ public class AdminUserHelper {
 			System.out.println("***Error in AdminUserHelper:  Query = " + query);
 		}
 		
-	
-
 		return table;
 		
 	}
 	
 	
+	/**
+	 * getAdminData gets the record data for the admin recd id passed to it
+	 * and returns an Admin object w the data
+	 * 
+	 * @author: Ginger Nix
+	 * @parameter: the admin's record ID
+	 * @return: admin object w/ all the data for that admin recd id
+	 */
 	
 	public Admin getAdminData(String adminMyID){
 		
 		Admin adminUser = new Admin();
 		
-		String query = "SELECT * FROM tomcatdb.Admin WHERE adminMyID = '" + adminMyID + "' LIMIT 1";
+		String query = "SELECT * FROM tomcatdb.Admin WHERE adminMyID = ? LIMIT 1";
 
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			this.results = ps.executeQuery();
+			ps.setString(1, adminMyID);
+			
 			this.results.next();
 			
 			// set this object's my id w/ the one that was passed to us
@@ -187,26 +196,29 @@ public class AdminUserHelper {
 	
 	
 	/**
-	 * This method takes the admin record's id and based on the
+	 * This method takes the admin to be edited record id and based on the
 	 * role of the logged in admin user it creates a form
-	 * pre-populated with the admin data to be edited	
+	 * pre-populated with the admin to be edited data
+	 * 	
+	 * @author: Ginger Nix
+	 * @parameter: the admin's record ID
+	 * @return: admin object w/ all the data for that admin recd id
 	 */
 		
 	public String getAdminInfo(int adminID, Admin loggedInAdminUser){
 
 		Admin checkLoggedInAdminUser = new Admin();
 		checkLoggedInAdminUser = loggedInAdminUser;
-		
-		System.out.println("AdminUserHelper: getAdminInfo logged in admin user's role = " + checkLoggedInAdminUser.getRole());
-		
-		
+
 		String table = "";
 		
-		String query = "SELECT * FROM tomcatdb.Admin WHERE adminID = '" + adminID + "' LIMIT 1";
+		String query = "SELECT * FROM tomcatdb.Admin WHERE adminID = ? LIMIT 1";
 
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, adminID);
 			this.results = ps.executeQuery();
+			
 			this.results.next();
 		
 			// grab the results we need to display in form
@@ -219,7 +231,7 @@ public class AdminUserHelper {
 			// create an HTML form with this information
 
 			table += "<div align='center'><h3>Edit Admin</h3>";
-			table += "<br /><br />";
+			table += "<br />";
 			table += "<form action='AdminSaveServlet' method = 'post'>";
 			
 			table += "First name:<br>";
@@ -325,7 +337,7 @@ public class AdminUserHelper {
 			table += "<input type = 'hidden' name = 'adminID' value='" + adminID + "'>";
 			table += "</form>";
 			
-			table += "<br /><br />";
+			table += "<br />";
 			table += "<form action='AdminListServlet' method = 'post'>";
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			table += "</form>";
@@ -343,7 +355,11 @@ public class AdminUserHelper {
 	
 	
 	/**
-	 * This function take the role letter (like 'A') and converts it to human readable text	(like "Super User")
+	 * This method takes the role letter (like 'A') and converts it to human readable text	(like "Super User")
+	 *
+	 * @author: Ginger Nix
+	 * @parameter: the admin's role in the admin's record (S, A, V, etc)
+	 * @return: the admin's role as humn readable text (like "Super User")
 	 */
 	public String convertAdminRole (String role){
 		
@@ -366,30 +382,41 @@ public class AdminUserHelper {
 		return roleDesc;
 	}
 	
+	
 	/**
+	 * This method takes the admin's record id and the new info and updates
+	 * the admin table
 	 * 
-	 * @param adminRecordID
-	 * @param fname
-	 * @param lname
-	 * @param adminMyID
-	 * @param role
-	 * @param status
+	 * @author: Ginger Nix
+	 * @parameter: the record id of the admin to update's record
+	 * @parameter: admin's first name
+	 * @parameter: admin's last name
+	 * @parameter: admin's MyID
+	 * @parameter: admin's role
+	 * @parameter: admin's status
+	 * @return: nothing
 	 */
+	
 	public void updateAdminTable(int adminRecordID, String fname, String lname, String adminMyID, String role, int status) {
 
-		String query = "UPDATE tomcatdb.Admin SET adminMyID = '" + adminMyID + "', " +
-				"fname = '" + fname + "'," + 
-				"lname = '" + lname + "'," + 
-				"role = '" + role + "'," + 		
-				"adminStatus = '" + status + "' " + 
-				"WHERE adminID = '" + adminRecordID + "'";
+		String query = "UPDATE tomcatdb.Admin SET adminMyID = ?, " +
+				"fname = ?, " + 
+				"lname = ?, " + 
+				"role = ?, " + 		
+				"adminStatus = ? " + 
+				"WHERE adminID = ? ";
 		
 		System.out.println("AdminUserHelper updateAdminTable:  Query = " + query);
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);		
-			ps.executeUpdate();
-			//this.results.next();	
+			ps.setString(1, adminMyID);
+			ps.setString(2, fname);
+			ps.setString(3, lname);
+			ps.setString(4, role);
+			ps.setInt(5, status);
+			
+			ps.executeUpdate();	
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -399,20 +426,25 @@ public class AdminUserHelper {
 	}
 	
 	/**
-	 * 
-	 * @param myID
-	 * @return
+	 * This method takes the admin user's MyID and checks to see if the admin user 
+	 * is in the admin user table
+	 * @author: Ginger Nix
+	 * @parameter: admin's MyID
+	 * @return: true if admin in table, false if admin not in table
 	 */
+	
 	public boolean inAdminUserTable(String myID){
 		
 		
-		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = '" + myID + "' AND adminStatus = 1 LIMIT 1";
+		String query = "SELECT * from tomcatdb.Admin WHERE adminMyID = ? AND adminStatus = 1 LIMIT 1";
 		
 		System.out.println("UserHelper.java: inAdminUserTable method. Query = " + query);
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-
+			
+			ps.setString(1,myID);
+			
 			this.results = ps.executeQuery();
 			if (this.results.next()) {
 				return true;
@@ -430,9 +462,11 @@ public class AdminUserHelper {
 	
 	/**
 	 * This method creates a blank form to add a new admin user	
-	 * @param loggedInAdminUser
-	 * @return
+	 * @author: Ginger Nix
+	 * @parameter: loggedInAdminUser object
+	 * @return: a form for the admin to add another admin user 
 	 */
+	
 	public String createAddAdminForm(Admin loggedInAdminUser){
 		
 		String table = "";
@@ -500,7 +534,7 @@ public class AdminUserHelper {
 		
 		table += "<br />";
 		table += "<form action='AdminListServlet' method = 'post'>";
-		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Back'>";
+		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 		table += "</form>";
 				
 		return table;
@@ -508,21 +542,26 @@ public class AdminUserHelper {
 
 	/**
 	 * This method take the admin info and adds them to the admin user's table
-	 * @param adminMyID
-	 * @param fname
-	 * @param lname
-	 * @param role
-	 * @param adminStatus
+	 * @author: Ginger Nix
+	 * @parameter: admin to add's MyID
+	 * @parameter: admin to add's first name
+	 * @parameter: admin to add's last name
+	 * @parameter: admin to add's role
+	 * @parameter: admin to add's Status
 	 */
 	public void insertAdminTable(String adminMyID, String fname, String lname, String role, int adminStatus) {
 		
 		String query = "INSERT INTO tomcatdb.Admin (adminMyID, fname, lname, role, adminStatus) "
-				+ "VALUES ('" + adminMyID + "','" + fname + "','" + lname + 
-				"','" + role + "','"+ adminStatus + "')";
+				+ "VALUES (?, ?, ?, ?, ?)";
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-		
+			ps.setString(1,adminMyID);
+			ps.setString(2,fname);
+			ps.setString(3,lname);
+			ps.setString(4,role);
+			ps.setInt(5,adminStatus);
+			
 			ps.executeUpdate();
 			System.out.println("Success in AdminUserHelper.java: insert into table method. Query = " + query);
 
@@ -535,10 +574,12 @@ public class AdminUserHelper {
 
 	/**
 	 * This method will take the myID and check to see if
-	 * this Admin exists already	
-	 * @param myID
-	 * @return
+	 * this Admin user already exists in the admin table	
+	 * @author: Ginger Nix
+	 * @parameter: the admin to check's myID
+	 * @return: true if the admin is in the table, false if the admin is not in the table
 	 */
+	
 	public boolean inAdminTable(String myID){
 		
 		System.out.println("AdminUserHelper inAdminTable: myID = " + myID);

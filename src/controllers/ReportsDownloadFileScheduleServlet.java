@@ -1,13 +1,6 @@
+
 package controllers;
-/**
- * @author: Ginger Nix added session checks, admin role checks, logged in user checks, messages to forward, etc
- * @creator: Ronnie Xu
- * 
- * This servlet is called when the admin cicks on Unban button on the row of a banned
- * user. It takes the user and unbans them and sends them back to view the banned users
- * with a message.
- * 
- */
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -18,46 +11,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.UnbanUserQuery;
-import helpers.UserHelper;
+import helpers.ReportsExcelCreatorScheduleSchedule;
 import model.Admin;
+import model.Building;
 import model.DbConnect;
-import model.User;
 
+@WebServlet(description = "Download Reports Schedule", urlPatterns = { "/DownloadReportsSchedule" })
 /**
- * Servlet implementation class UnbanUserServlet
+ * This servlet will download the actual file when the download button is clicked on
+ * downloadreports.jsp
+ * @author Victoria Chambers
+ *
  */
-@WebServlet({ "/UnbanUserServlet", "/unban" })
-public class UnbanUserServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private HttpSession session;  
-    private String url = "";
-   
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UnbanUserServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+public class ReportsDownloadFileServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doPost(request, response);
-	}
-	
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String message = "";
-		
-		// get the current session
-		session = request.getSession(false);
-	
+    private HttpSession session; 
+    private String url;
+
+    public ReportsDownloadFileServlet() {
+    
+    }
+   
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	doPost(request,response);
+    	
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.session = request.getSession(false);
 		
 		// check to see if there is a valid session
 		if (session != null){ // there is an active session
@@ -65,40 +47,39 @@ public class UnbanUserServlet extends HttpServlet {
 			// get admin user object from session
 			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
 			if (loggedInAdminUser != null){
-				
 				// get the role for the currently logged in admin user.
 				String role = loggedInAdminUser.getRole();
 				int status = loggedInAdminUser.getAdminStatus();
 				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-
-					message = (String) request.getAttribute("message"); 
 					
-					// blank the message if nothing gotten in message attribute
-					if (message == null || message.isEmpty()) {
-						 message = "";
+					String schedule = request.getParameter("Schedule"); 
+					
+					// if the download schedule button is clicked, download file
+					if(schedule != null && !schedule.isEmpty()){
+						String strMessage = "";
+			            try {	
+							response.reset();
+							response.setContentType("application/vnd.ms-excel");
+							response.setHeader("Content-Disposition", "attachment;filename=BannedStudents.xls");
+							ReportsExcelCreatorSchedule rec = new ReportsExcelCreatorSchedule();
+							  
+							//Calling method download banned list 
+							strMessage = rec.downloadSchedule(response.getOutputStream());
+							request.setAttribute("Message",strMessage);
+							
+							// the url to forward
+							url = "admin/downloadreports.jsp";
+							
+							// since outputting to response, a return is needed
+							return;
+			
+			            } catch (Exception e) {
+			            	e.getMessage();
+			            }
+					
 					}
-
-					// unban the user
-					int bannedRecdID = Integer.parseInt(request.getParameter("bannedRecdID"));
-					UnbanUserQuery uuq = new UnbanUserQuery();		
-					uuq.unbanUser(bannedRecdID);
-					
-					// get the unbanned user's my id to get more info for the message
-					String myID = request.getParameter("myID");
-
-					UserHelper uh = new UserHelper();
-					User user = new User();
-					user = uh.getUserInfo(myID);
-					
-					message = "<br /><br /><div align='center'><h3>User with the MyID '"
-							+ user.getMyID() + "' and name is '"
-							+ user.getUserFirstName() + " " + user.getUserLastName()
-							+ "' is no longer banned.</h3></div>";							
-					
-					url = "/banread";
-		
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
 					/*                VIEW FOR CLERK                  */
@@ -106,7 +87,6 @@ public class UnbanUserServlet extends HttpServlet {
 					
 					// forwarding URL
 					url = "AdminViewReservations";
-					
 				} else {
 					//------------------------------------------------//
 					/*              NOT A VALID ROLE                  */
@@ -118,6 +98,7 @@ public class UnbanUserServlet extends HttpServlet {
 					response.sendRedirect(DbConnect.urlRedirect());
 					return;
 				}
+					
 			} else {
 				//------------------------------------------------//
 				/*            ADMIN USER INFO EXPIRED             */
@@ -136,20 +117,13 @@ public class UnbanUserServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
-					
-		request.setAttribute("message", message);	
-
-		//Redirect to BanList
-		url = "/banread";
+		
+		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
+
 	}
-
-
-
 }

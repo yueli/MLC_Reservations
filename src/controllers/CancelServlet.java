@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.CancelQuery;
+import model.Admin;
 import model.DbConnect;
 import model.Reservation;
 import model.User;
@@ -53,44 +54,95 @@ public class CancelServlet extends HttpServlet {
 		
 		String message = "";		  
 
-		//get our current session
-		this.session = request.getSession(false); 
+		// get the current session
+		session = request.getSession(false);
+	
 		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
-						
-			User user = (User) session.getAttribute("user");
-			
-			Reservation reservation = new Reservation();
-			reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
-			
-			CancelQuery cq = new CancelQuery();
-			cq.cancelReservation(reservation.getReserveID());
-			
-			// cancel reservation, then go back to the view servlet to get 
-			// the user's reservations to list again
-			
-			message += "<div align='center'><h3> Reservation has been cancelled. </h3></div>";
-			
-			//forward our request along
-			session.setAttribute("message", message);
-			session.setAttribute("user", user);
-				
-			url = "ViewServlet";
-			
-			System.out.println("CancelServlet: message before leaving servlet = " + message);
-		
-		} else { // there isn't an active session.
-			//------------------------------------------------//
-			/*        INVALID SESSION (SESSION == NULL)       */
-			//------------------------------------------------//
-			// if session has timed out, go to home page
-			// the site should log them out.
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
 
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
+				
+				// get info for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+				
+					message = (String) request.getAttribute("message"); 
+				
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+												
+					User user = (User) session.getAttribute("user");
+					
+					Reservation reservation = new Reservation();
+					reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
+					
+					CancelQuery cq = new CancelQuery();
+					cq.cancelReservation(reservation.getReserveID());
+					
+					// cancel reservation, then go back to the view servlet to get 
+					// the user's reservations to list again
+					
+					message += "<div align='center'><h3> Reservation has been cancelled. </h3></div>";
+					
+					//forward our request along
+					session.setAttribute("message", message);
+					session.setAttribute("user", user);
+						
+					url = "ViewServlet";
+					
+					System.out.println("CancelServlet: message before leaving servlet = " + message);
+					
+					
+			}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+				//------------------------------------------------//
+				/*                VIEW FOR CLERK                  */
+				//------------------------------------------------//
+				
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+			} else {
+				//------------------------------------------------//
+				/*              NOT A VALID ROLE                  */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
+		} else {
+			//------------------------------------------------//
+			/*            ADMIN USER INFO EXPIRED             */
+			//------------------------------------------------//
+			// if a new session is created with no user object passed
+			// user will need to login again
+			session.invalidate();
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
-		}	
+		}
 		
+		} else { // there isn't an active session (session == null).
+		//------------------------------------------------//
+		/*        INVALID SESSION (SESSION == NULL)       */
+		//------------------------------------------------//
+		// if session has timed out, go to home page
+		// the site should log them out.
+		
+		response.sendRedirect(DbConnect.urlRedirect());
+		return;
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}

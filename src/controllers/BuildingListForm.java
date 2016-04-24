@@ -18,6 +18,7 @@ import model.DbConnect;
 
 /**
  * @author: Ginger Nix
+ * This servlet creates an empty form for an admin to add a building.
  */
 
 /**
@@ -79,9 +80,7 @@ public class BuildingListForm extends HttpServlet {
 					}
 
 					BuildingListQuery buildingListQuery = new BuildingListQuery();
-					
-					System.out.println("BuildingListForm: - building table form");
-					
+				
 					// creates table to display an empty form to add a building
 					table = buildingListQuery.createAddBuildingForm();
 
@@ -99,8 +98,6 @@ public class BuildingListForm extends HttpServlet {
 					//------------------------------------------------//
 					/*                VIEW FOR CLERK                  */
 					//------------------------------------------------//
-					System.out.println("BuildingListForm: - admin user is a clerk");
-					
 					// forwarding URL
 					url = "AdminViewReservations";
 					
@@ -123,7 +120,6 @@ public class BuildingListForm extends HttpServlet {
 				// if a new session is created with no user object passed
 				// user will need to login again
 				session.invalidate();
-				System.out.println("BuildingListForm: - admin user info expired");
 				
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
@@ -135,14 +131,11 @@ public class BuildingListForm extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			System.out.println("BuildingListForm: - there is not an active session");
 			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
 
-//=======================================================	
-		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}

@@ -15,7 +15,8 @@ import model.User;
 /**
  * @author Ronnie Xu
  * Helper for the Admin side of the website.
- * @contributer to fix bugs: Ginger Nix
+ * 
+ * @contributer: Ginger Nix - fixed bugs, fixed queries, displays, cleaned up code, and added comments
  *
  */
 
@@ -46,10 +47,13 @@ public class BannedSelectQuery {
 		}
 		
 		
-
+		/**
+		 * The method doRead gets all the banned users from the Banned table
+		 * parameter: none
+		 * return: none
+		 */
+		
 		public void doRead(){
-
-			//String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, Banned.status FROM Banned WHERE Banned.status=1;";
 			String query = "SELECT * FROM tomcatdb.Banned "
 					+ "WHERE status=1 "
 					+ "AND penaltyCount > 1 "
@@ -71,34 +75,20 @@ public class BannedSelectQuery {
 			} 
 		}
 		
-		
-		public void doReadSearch(){
-
-			String query = "SELECT Banned.bannedID, Banned.User_userID, Banned.Admin_adminID, "
-					+ "Banned.banStart, Banned.banEnd, Banned.penaltyCount, Banned.description, "
-					+ "Banned.status FROM Banned WHERE Banned.status=1;";
+	
+		/**
+		 * The method getHTMLTable gets all teh banned students and puts them into a table
+		 * parameter: none
+		 * return: the table of all the banned users
+		 */
 			
-		
-			
-			// securely run query
-			try {
-				PreparedStatement ps = this.connection.prepareStatement(query);
-				results = ps.executeQuery();
-				
-			
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Error in BannedSelectQuery.java: getHTMLTable method. Please check connection or SQL statement: " + query);
-			} 
-		}
-		
-		
-		
 		public String getHTMLTable(){ 
 			//Return table of banned students
 			
 			String table = "";
+
+			table += "<div align='center'><h3>Banning</h3>";
+			table += "<br /><br />";
 			table += "<center><a href=banUser><button type='submit' value=''>Ban A User</button></a>&nbsp;&nbsp";
 
 			table += "<a href=unbanall><button type='submit' value=''>Unban All</button></a></center>";
@@ -203,11 +193,6 @@ public class BannedSelectQuery {
 			
 			return table;
 		}
-		
-		
-		
-
-		
 		
 
 }

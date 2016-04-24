@@ -1,3 +1,12 @@
+/**
+ * @author: Ginger Nix
+ * @creator: Ronnie Xu - I rewrote almost all of it adding session checks, adding QR name, and 
+ * messages to send to next screen on success, and check if building name already exists.
+ * 
+ * This servlet BuildingListBuildingUpdateServlet takes the data from the building edit form
+ * and updates the building's record. There is a check to make sure a buidling by this name doesn't already exist.
+ * 
+ */
 package controllers;
 
 import java.io.IOException;
@@ -10,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import helpers.BuildingListAddQuery;
 import helpers.BuildingListUpdateQuery;
 import model.Admin;
 import model.Building;
@@ -46,7 +55,7 @@ public class BuildingListBuildingUpdateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = "";
-	
+		
 		// get the current session
 		session = request.getSession(false);
 		
@@ -63,30 +72,65 @@ public class BuildingListBuildingUpdateServlet extends HttpServlet {
 				
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-				
-					message = (String) request.getAttribute("message"); 
 					
+					message = (String) request.getAttribute("message"); 
+										
 					// blank the message if nothing gotten in message attribute
 					if (message == null || message.isEmpty()) {
 						 message = "";
 					}
-							
-					//Get current building
-					 Building building = (Building) session.getAttribute("building");					
 					
-					 building.setBuildingName(request.getParameter("buildingName"));
-					 building.setBuildingStatus(Integer.parseInt(request.getParameter("buildingStatus")));
-					 building.setBuildingCalName(request.getParameter("buildingCalName"));
-					 building.setBuildingCalUrl(request.getParameter("buildingCalUrl"));
-					 building.setBuildingQRName(request.getParameter("buildingQRName"));
-					 
-					 BuildingListUpdateQuery bluq = new BuildingListUpdateQuery();
-					 bluq.doUpdate(building);
-					 
-					 
-					String url = "buildinglist";
-		
-		
+					Building buildingToUpdate  = new Building();
+					
+					//pull the fields from the form adminEdit.jsp to populate the user being edited's object
+					buildingToUpdate.setBuildingID(Integer.parseInt(request.getParameter("buildingID")));
+					buildingToUpdate.setAdmin(loggedInAdminUser.getAdminMyID());
+					buildingToUpdate.setBuildingName(request.getParameter("buildingName"));
+					buildingToUpdate.setBuildingStatus(Integer.parseInt(request.getParameter("status")));
+					buildingToUpdate.setBuildingCalName(request.getParameter("buildingCalName"));
+					buildingToUpdate.setBuildingCalUrl(request.getParameter("buildingCalUrl"));
+					buildingToUpdate.setBuildingQRName(request.getParameter("buildingQRName"));
+					
+					
+					// check to see if there is already a building w/ this name
+					// and if so, send back with a message and don't update building
+					
+					boolean buildingAlreadyExists;
+					
+					BuildingListAddQuery blaq = new BuildingListAddQuery();
+					
+					buildingAlreadyExists = blaq.inBuildingTable(buildingToUpdate.getBuildingName());
+					
+					if (buildingAlreadyExists){  // there is already a building w/ this name, so don't add
+						
+						message = "<br /><br /><div align='center'><h3>The "
+								+  buildingToUpdate.getBuildingName() 
+								+ " already exists.</h3></div><br />";
+						
+						url = "BuildingListForm";
+	
+						request.setAttribute("message", message);
+						request.setAttribute("loggedInAdminUser", loggedInAdminUser);	
+						
+					}else{ //this is a new building, so add 
+						
+					
+						// go update this bulding's record
+						BuildingListUpdateQuery bluq = new BuildingListUpdateQuery();
+						bluq.doUpdate(buildingToUpdate, loggedInAdminUser.getAdminID());
+						 					 
+						message = "<br /><br /><div align='center'><h3>The "
+								+  buildingToUpdate.getBuildingName() 
+								+ " building has been updated.</h3></div><br />";
+						
+						url = "BuildingListServlet";
+	
+						request.setAttribute("message", message);
+						request.setAttribute("loggedInAdminUser", loggedInAdminUser);	
+
+					}
+					
+					
 					
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
@@ -125,7 +169,7 @@ public class BuildingListBuildingUpdateServlet extends HttpServlet {
 		//------------------------------------------------//
 		// if session has timed out, go to home page
 		// the site should log them out.
-		//url = "LoginServlet";
+
 		response.sendRedirect(DbConnect.urlRedirect());
 		return;
 		}

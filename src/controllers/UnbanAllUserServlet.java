@@ -2,6 +2,10 @@ package controllers;
 
 /**
  * @author: Ginger Nix - rewrote servlet
+ * @creator: Ronnie Xu
+ * 
+ * This servlet gets all the users who are currently banned and un-bans them. It goes back
+ * to the page that lists all the banned users w/ a message.
  * 
  */
 import java.io.IOException;

@@ -24,6 +24,7 @@ import model.User;
 
 /**
  * @author: Ginger Nix - rewrote servlet
+ * 
  * This servlet gets the user's my id to search in the user
  * table to see if the user exists, make sure the user is not already banned,
  * and ban the user
@@ -103,9 +104,7 @@ public class BanUserServlet extends HttpServlet {
 					//Check to see if user is in the user table
 					UserHelper userHelper = new UserHelper();
 					boolean inUserTable = userHelper.inUserTable(MyID);
-					
-					System.out.println("BanUserServlet: after in user table : "  + inUserTable);
-					
+
 					if (!inUserTable){
 						// they are not in the user table, so can't ban them
 						message = "<br /><br /><div align='center'><h3>The user with the UGA My Id '" 
@@ -125,8 +124,7 @@ public class BanUserServlet extends HttpServlet {
 						//Check if student is already banned or not
 						
 						boolean bannedAlready  = userHelper.alreadyBanned(userRecdID);
-						
-					
+										
 						if(bannedAlready){
 							
 							message = "<br /><br /><div align='center'><h3>The user with the UGA MyId '" 
@@ -165,6 +163,10 @@ public class BanUserServlet extends HttpServlet {
 									+ MyID  + " has been banned."
 									+ "</h3></div>";
 							url = "BanReadServlet";
+							
+							request.setAttribute("table", table);
+							request.setAttribute("message", message);
+
 							
 						}
 					
@@ -211,8 +213,6 @@ public class BanUserServlet extends HttpServlet {
 			return;
 		}
 			
-			request.setAttribute("table", table);
-			request.setAttribute("message", message);
 			
 			System.out.println("BanUserServlet: message at end = " + message);
 			System.out.println("BanUserServlet: url at end = " + url);

@@ -1,5 +1,10 @@
 package helpers;
 //**By Ronnie Xu~****/
+
+/** 
+ * @author: Ginger Nix - rewrote doUpdate 
+ * 
+ */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -35,26 +40,44 @@ public class BuildingListUpdateQuery {
 	
 	
 	
-	public void doUpdate(Building building){
+	public void doUpdate(Building buildingToUpdate, int adminID){
 		
+		Building building = new Building();
+		building = buildingToUpdate;
 		
-		
-		String query = "UPDATE tomcatdb.Building SET buildingName='"+building.getBuildingName()+"', buildingCalName='"+building.getBuildingCalName()+"', buildingCalUrl='"+building.getBuildingCalUrl()+"', Admin_adminID=1 WHERE buildingID="+building.getBuildingID()+";";
+		System.out.println("BuildingListUpdateQuery: doUpdate: adminID = " + adminID);
 
-		// securely run query
+		System.out.println("BuildingListUpdateQuery: doUpdate: buildingName = " + building.getBuildingName());
+		
+		String query = "UPDATE tomcatdb.Building SET "
+						+ "buildingName = ?, "
+						+ "buildingStatus = ?, "
+						+ "buildingCalName = ?, "
+						+ "buildingCalUrl = ?, "
+						+ "Admin_adminID = ?, "
+						+ "buildingQRName = ? "
+						+ "WHERE buildingID = ? ";
+
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, building.getBuildingName());
+			ps.setInt(2, building.getBuildingStatus());
+			ps.setString(3, building.getBuildingCalName());
+			ps.setString(4, building.getBuildingCalUrl());
+			ps.setInt(5,adminID);
+			ps.setString(6, building.getBuildingQRName());
+			ps.setInt(7, building.getBuildingID());
+					
 			ps.executeUpdate();
-			
-			
-			
-		
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Please check connection or SQL statement.");
+			System.out.println("**Error: BuildingListUpdateQuery - doUpdate: Error with query.");
 		} 
+		
+		System.out.println("BuildingListUpdateQuery: doUpdate: query = " + query);
+		
 	}
+	
 
 }
