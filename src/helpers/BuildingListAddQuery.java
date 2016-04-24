@@ -1,6 +1,11 @@
 package helpers;
+
 /**
- * @author: Ginger Nix
+ * @author: Ronnie Xu
+ * @author: Ginger Nix - commented, cleaned, secured queries, and added methods
+ * 
+ * This helper is used to see if a building is already in the building table and to insert new buildings
+ * 
  */
 
 import java.sql.Connection;
@@ -19,7 +24,6 @@ public class BuildingListAddQuery {
 	private int buildingCount;
 
 	/**
-	 * 
 	 * Connect to database.  This is hard coded in DBConnect.java
 	 */
 	public BuildingListAddQuery() {
@@ -37,78 +41,67 @@ public class BuildingListAddQuery {
 			e.printStackTrace();
 		} 
 	}
-		
-		public int getLastBuildingID(){
-			
-		String query = "SELECT buildingID FROM tomcatdb.Building ORDER BY buildingID DESC LIMIT 1;";
-		buildingCount = 0;
-		int buildingID = 0;
-		try{
-			PreparedStatement ps = connection.prepareStatement(query);
-			results = ps.executeQuery();
-			while(results.next()){
-				buildingID = results.getInt("buildingID");
-				System.out.println("BuildingID in while:" + buildingID);
-			}
-			
-			System.out.println("BuldingID outside:"+ buildingID);
-			buildingCount = buildingID +1 ;
-			
-			
-			
-			} catch(SQLException e){
-			e.printStackTrace();
-			}
-		
-		return buildingCount;
-		}
 
-		/*
-		 * 
+
+		/**
+		 * This method takes the new building's info and stores it in the building table
+		 * @param buildingName
+		 * @param buildingStatus
+		 * @param buildingCalName
+		 * @param buildingCalUrl
+		 * @param adminID
+		 * @param buildingQRName
+		 * @throws SQLException
+		 * @return: nothing
 		 */
+	
 		public void addBuilding(String buildingName, int buildingStatus, 
 				String buildingCalName, String buildingCalUrl, int adminID, String buildingQRName) throws SQLException{
 
 			String query = "INSERT INTO tomcatdb.Building "
 					+ "(buildingName, buildingStatus, buildingCalName, buildingCalUrl, Admin_adminID, buildingQRName)"
-					+ "VALUES ('" 
-					+ buildingName + "', '" 
-					+ buildingStatus  +"', '"
-					+ buildingCalName + "', '" 
-					+ buildingCalUrl + "', '"
-					+ adminID + "', '"
-					+ buildingQRName+"');";
+					+ "VALUES (?, ?, ?, ?, ?, ?)";
 			
 			System.out.println("BuildingListAddQuery: addBuilding: query = " + query);
 			
 			try {
 				PreparedStatement ps = connection.prepareStatement(query);
+				
+				ps.setString(1, buildingName);
+				ps.setInt(2, buildingStatus);
+				ps.setString(3, buildingCalName);
+				ps.setString(4, buildingCalUrl);
+				ps.setInt(5, adminID);
+				ps.setString(6, buildingQRName);
+								
 				ps.executeUpdate();
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
+			}		
 		}
 
 
 		/**
-		 * This method will take the myID and check to see if a building with this
+		 * This method will take the building's name and check to see if a building with this
 		 * name already exists
-		 * @param myID
-		 * @return
+		 * @author: Ginger Nix
+		 * @param: bulding name to check
+		 * @return: true if a building w/ this name is in the building table, else
+		 * false if it is not
 		 */
+		
 		public boolean inBuildingTable(String buildingName){
 			
-			String query = "SELECT * from tomcatdb.Building WHERE buildingName = '" + buildingName + "' LIMIT 1";
+			String query = "SELECT * from tomcatdb.Building WHERE buildingName = ? LIMIT 1";
 			
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
-
+				
+				ps.setString(1, buildingName);
 				this.results = ps.executeQuery();
 				
-
 				boolean results = this.results.next();
 				System.out.println("BuildingListAddQuery: in building table: results found " + results + " query = " + query);
 				
@@ -129,11 +122,11 @@ public class BuildingListAddQuery {
 			return false;
 		}
 
+
 		/**
-		 * This method take the building info and adds it to the building table
-		 **/
-		
-		public void insertBuildingTable(String buildingName, String buildingStatus, String buildingCalName,
+		 * USED??
+		 */
+/*		public void insertBuildingTable(String buildingName, String buildingStatus, String buildingCalName,
 						String buildingCalUrl, String buildingQRName) {
 			
 			String query = "INSERT INTO tomcatdb.Building (buildingName, buildingSatus, buildingCalName, buildingCalUrl, buildingQRName) "
@@ -151,8 +144,35 @@ public class BuildingListAddQuery {
 				System.out.println("***Error in BuildingListAddQuery: insertBuilding:  insert into table method. Query = " + query);
 			}
 			
+		}*/
+		
+		/**
+		 * USED???
+		 */
+/*	
+		public int getLastBuildingID(){
+			
+		String query = "SELECT buildingID FROM tomcatdb.Building ORDER BY buildingID DESC LIMIT 1;";
+		buildingCount = 0;
+		int buildingID = 0;
+		try{
+			PreparedStatement ps = connection.prepareStatement(query);
+			results = ps.executeQuery();
+			while(results.next()){
+				buildingID = results.getInt("buildingID");
+				System.out.println("BuildingID in while:" + buildingID);
+			}
+			
+			System.out.println("BuldingID outside:"+ buildingID);
+			buildingCount = buildingID +1 ;
+					
+		} catch(SQLException e){
+			e.printStackTrace();
 		}
-	
+		
+		return buildingCount;
+		}*/
+		
 
 }
 

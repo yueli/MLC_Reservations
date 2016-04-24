@@ -381,8 +381,9 @@ public class RoomsSelectQuery {
 		 * This method takes a building record id and lists all the rooms in that building
 		 * @author: Ginger Nix
 		 * @param buildingID, action (where to send it when canceling/going back to previous calling page
-		 * @return the html table
+		 * @return the html table containing the rooms in the building
 		 */
+		
 		public String ListRoomsInBuilding(int buildingID, String cancelAction){
 			
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -499,6 +500,7 @@ public class RoomsSelectQuery {
 		 * @return String HTML table for the edited room
 		 * @author: Ginger Nix
 		 */
+		
 		public String createEditRoomForm (int roomID, String cancelAction){
 		
 			String table = "";

@@ -78,9 +78,11 @@ public class BuildingSelectQuery {
 		
 	}
 	
+	/**
+	 * This method returns all the currently online buildings
+	 */
+	
 	public void doAdminBuildingRead(){
-		// query to use for testing
-		//String query = "SELECT buildingID, buildingName FROM tomcatdb.Building";
 		
 		// Admins can view buildings that are online
 		String query = "SELECT tomcatdb.Building.buildingID, "
@@ -214,14 +216,16 @@ public class BuildingSelectQuery {
 		}
 		return buildingName;
 	}
+	
 	/**
+	 * This method brings back all the active buildings for a pull down list
 	 * @author: Ginger Nix
-	 * @return This method brings back all the active buildings for a pull down list
+	 * @return: pull-down list of all online buildings
 	 */
+	
 	public String getAllActiveBuildings(){
-		
-		//String select = "<select id='buildingList' name='buildingList'>";
-		String select = "<select id='buildingList' name='buildingID'>"; //GINGER CHANGED 04-09-16
+
+		String select = "<select id='buildingList' name='buildingID'>"; 
 		
 		// go through all the active buildings to put into a list
 		String query = "SELECT * FROM tomcatdb.Building "
@@ -258,17 +262,20 @@ public class BuildingSelectQuery {
 		
 		select += "</select>";
 		
-		
 		return select;
 	}
 
+	
 	/**
-	 * @author: Ginger Nix
-	 * 
-	 * creates page for person to select a building to view its rooms
+	 * This method creates page for a person to select a building to view its rooms
 	 * calls on getAllActiveBuildings above to list the select pull down of all active buildings
 	 * 
+	 * @author: Ginger Nix
+	 * @param: none
+	 * @return: pull-down form w/ all online buildings
+	 * 
 	 */
+	
 	public String selectBuildingToViewRooms() {
 		String table = "";
 		
@@ -291,23 +298,22 @@ public class BuildingSelectQuery {
 	}
 	
 	/**
-	 * 
 	 * This method takes just a building record id and returns the human readable name
 	 * @author: Ginger Nix
 	 * @param buildingID
 	 * @return the building Name
 	 */
+	
 	public String getBuildingNameFromID (int buildingID){
 		
 		String buildingName = "Unknown Building";
 		
 		String query = "SELECT * FROM tomcatdb.Building " + 
-						"WHERE buildingID = " + buildingID ;
-		
-		System.out.println("BuildingSelectQuery getBuildingNameFromID BEFORE executing query = " + query);
+						"WHERE buildingID = ? ";
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, buildingID);
 			
 			this.results = ps.executeQuery();
 			
@@ -315,8 +321,7 @@ public class BuildingSelectQuery {
 			
 			buildingName = this.results.getString("buildingName");
 			
-			System.out.println("BuildingSelectQuery getBuildingNameFromID AFTER executing query building name = " + buildingName);
-			
+			System.out.println("BuildingSelectQuery getBuildingNameFromID AFTER executing query building name = " + buildingName);			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -327,6 +332,7 @@ public class BuildingSelectQuery {
 			
 		
 	}
+	
 	/**
 	 * Return the building ID of the first value in the Building table.
 	 * This is for admin functionality.
@@ -464,12 +470,6 @@ public class BuildingSelectQuery {
 						+ "WHERE Building_buildingID = ? "
 						+ "AND startDate = ?"
 						+ "LIMIT 1";	
-		/*String query = "SELECT startTime FROM tomcatdb.Schedule "
-				+ "WHERE Building_buildingID = '" + buildingID +  "' "
-				+ "AND startDate = '" + dateToSearch + "' "
-				+ "LIMIT 1";
-		*/
-		//System.out.println("BSQ: getBuildingStartTime: query= " + query);	
 		
 		try {
 

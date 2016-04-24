@@ -66,6 +66,12 @@ public class BuildingListQuery {
 			} 
 		}
 		
+		
+		/**
+		 * Get the name of a building from it's record id
+		 * @param buildingID
+		 * @return name of the building
+		 */
 		public String getBuildingName(int buildingID){
 			String bName = "";
 			try {
@@ -86,13 +92,22 @@ public class BuildingListQuery {
 				return bName;
 			}
 		
+		/**
+		 * This method gets all the rooms in a building.
+		 * @param buildingID
+		 */
 		
 		public void doReadRooms(int buildingID){
 
-			String query = "SELECT `rooms`.`roomID`,`rooms`.`Admin_adminID`,`rooms`.`Building_buildingID`,`rooms`.`roomNumber`,`rooms`.`roomFloor`,`rooms`.`roomStatus`,`rooms`.`qrUrl` FROM `tomcatdb`.`rooms` WHERE `rooms`.`Building_buildingID` = '"+buildingID+"';";
+			String query = "SELECT * "
+					+ "FROM tomcatdb.Rooms	 "
+					+ "WHERE Building_buildingID = ? ";
+			
 			// securely run query
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, buildingID);
+				
 				this.results = ps.executeQuery();
 				
 			} catch (SQLException e) {
@@ -101,6 +116,12 @@ public class BuildingListQuery {
 			} 
 		}
 		
+		
+		/**
+		 * This method gets the room Number based on the room's record id
+		 * @param roomID
+		 * @return room number for this record
+		 */
 		
 		public String getRoomName(int roomID){
 			String rNumber = "";
@@ -124,12 +145,13 @@ public class BuildingListQuery {
 			}
 	
 		/**
-		 * @return
-		 * This method returns a table containing all the buildings
+		 * This method gets all the buildings and puts them in a table.
+		 * @param: none
+		 * @return:This method returns a table containing all the buildings
 		 */
+		
 		public String getHTMLTable(){ 
-			//Return table of buildings
-			
+			//Return table of buildings			
 			String table = "";
 				  
 			try {
@@ -229,15 +251,16 @@ public class BuildingListQuery {
 			return table;
 		}
 		
-/**
- * @author: Ginger Nix
- * @param none
- * @return table with form to add a building
- */
-		public String createAddBuildingFormPREVIOUS(){
-			
+		/**
+		 * This method creates a form for the admin user to add a building
+		 * @author: Ginger Nix
+		 * @param none
+		 * @return table with form to add a building
+		 */
+		
+		public String createAddBuildingForm() {
 			String table = "";
-
+		
 			table += "<div align='center'><h3>Add a Building</h3>";
 			table += "<br />";
 			
@@ -249,8 +272,8 @@ public class BuildingListQuery {
 			
 			table += "Status:<br>";
 			table += "<select name = 'buildingStatus' required>";
-			table += "<option value='1' selected>Online</option>";
-			table += "<option value='0'>Offline</option>";	
+			table += "<option value='1' selected>Active</option>";
+			table += "<option value='0'>Inactive</option>";	
 			table += "</select>";		
 			table += "<br />";
 			
@@ -277,52 +300,7 @@ public class BuildingListQuery {
 			table += "</form>";
 					
 			return table;
-			
 		}
-
-public String createAddBuildingForm() {
-	String table = "";
-
-	table += "<div align='center'><h3>Add a Building</h3>";
-	table += "<br />";
-	
-	table += "<form action='BuildingListAddServlet' method = 'post'>";
-	
-	table += "Name:<br>";
-	table +=  "<input type='text' name = 'buildingName' required>";
-	table += "<br />";
-	
-	table += "Status:<br>";
-	table += "<select name = 'buildingStatus' required>";
-	table += "<option value='1' selected>Active</option>";
-	table += "<option value='0'>Inactive</option>";	
-	table += "</select>";		
-	table += "<br />";
-	
-	table += "Calendar Name:<br>";
-	table +=  "<input type='text' name = 'buildingCalName' required>";
-	table += "<br />";
-	
-	table += "Calendar URL:<br>";
-	table +=  "<input type='text' name = 'buildingCalUrl' required>";
-	table += "<br />";
-	
-	table += "QR Name:<br>";
-	table +=  "<input type='text' name = 'buildingQRName' required>";
-	table += "<br />";
-	table += "<br />";	
-	table += "<br />";		
-			
-	table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Add Building'>";
-	table += "</form>";
-	
-	table += "<br />";
-	table += "<form action='BuildingListServlet' method = 'post'>";
-	table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
-	table += "</form>";
-			
-	return table;
-}
 
 		
 		

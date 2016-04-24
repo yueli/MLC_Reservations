@@ -15,7 +15,7 @@ import model.TimeConverter;
 
 /**
  * @author Ronnie Xu
- * Helper for the Admin side of the website.
+ * Helper for the Admin side to ban users
  * 
  * @author: Ginger Nix: fixed bugs and contributed methods
  * 
@@ -26,7 +26,6 @@ public class BanUserQuery {
 	private Connection connection;
 
 	/**
-	 * 
 	 * Connect to database.  This is hard coded in DBConnect.java
 	 */
 	public BanUserQuery() {
@@ -45,6 +44,14 @@ public class BanUserQuery {
 		}
 		
 	}
+	
+	/**
+	 * The method banUser takes the banned user object and stores the
+	 * data in the banned table thereby banning this user
+	 * 
+	 * @parameter: the banned user object
+	 * @return: nothing
+	 */
 	
 	public void banUser(Banned ban){
 
@@ -75,9 +82,10 @@ public class BanUserQuery {
 		/**
 		 * This method creates a blank form for admin to search for a user to ban
 		 * @author: Ginger Nix
-		 * @param 
-		 * @return
+		 * @param: none
+		 * @return: the blank form for searching for a user to ban
 		 */
+	
 		public String createBanUserForm(){
 			String form = "";
 			
@@ -108,9 +116,10 @@ public class BanUserQuery {
 		 * for other users
 		 * 
 		 * @author: Ginger Nix
-		 * @param 
-		 * @return
+		 * @param: the recd ID of the banned user 
+		 * @return: none
 		 **/
+		
 		public void cancelBannedUserReservations(int userRecdID){
 			// look for any reservations that this user has as a primary user
 			// and set the free field to yes indicating that the reservation
@@ -132,10 +141,8 @@ public class BanUserQuery {
 				System.out.println("****ERROR: BanUSerQuery: cancel resv: query = " + query);
 				e.printStackTrace();
 			}
-			
-			
+						
 		}	
-	
-	
+
 
 }
