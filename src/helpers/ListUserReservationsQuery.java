@@ -112,15 +112,19 @@ public class ListUserReservationsQuery {
 					currentHour = hourFormat.format(time);
 					System.out.println("List User Resv: current hour = " + currentHour);
 					
+					// get the user's name to be able to display on page
+					UserHelper uh = new UserHelper();
+					User user = uh.getUserInfoFromRecdID(userRecordID);
 					
+					table += "<div align='center'><h3>Reservations for: " 
+							+ user.getUserFirstName() + " "  
+							+ user.getUserLastName() + "</h3></div>"; 
 					
 					while(this.results.next()){ //go through all records returned
 						Reservation resv = new Reservation();
 						resv.setReserveID(this.results.getInt("reserveID"));
 						System.out.println("In WHILE in List User Resv.java: list user reservations method. ReserveID = " + resv.getReserveID());
 						
-						
-
 						// get both the primary and secondary on the reservation to list
 						// get the primary and secondary user record id's to get more info
 						
@@ -129,7 +133,6 @@ public class ListUserReservationsQuery {
 						int primaryOnResvRecdID = this.results.getInt("primaryUser");
 						int secondaryOnResvRecdID = this.results.getInt("secondaryUser");
 						
-						UserHelper uh = new UserHelper();
 						User primary = new User();
 						User secondary = new User();
 						
@@ -179,7 +182,7 @@ public class ListUserReservationsQuery {
 								
 								if (firstTime){
 
-									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' style='width:95%;'>";
+									table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 									table += "<thead>";
 									table += "<tr>";
 									table += "<th> Date</th>";									

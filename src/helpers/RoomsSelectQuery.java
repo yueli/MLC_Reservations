@@ -688,19 +688,24 @@ public class RoomsSelectQuery {
 		 */
 		public boolean roomAlreadExists (Rooms room){
 			
+			Rooms roomToFind = new Rooms();
+			
 			String query = "SELECT * FROM tomcatdb.Rooms "
 							+ "WHERE Building_buildingID = ? "
 							+ "AND roomNumber = ? "
 							+ "AND roomFloor = ? "
 							+ "LIMIT 1";
-							
+				
+			System.out.println("RoomsSelectQuery: roomAlreadyExists: building id: " + roomToFind.getBuildingID());
+			
 			try {
-				PreparedStatement ps = this.connection.prepareStatement(query);		
-				ps.setInt(1, room.getBuildingID());
-				ps.setString(2, room.getRoomNumber());
-				ps.setInt(3, room.getRoomFloor());
+				PreparedStatement ps = this.connection.prepareStatement(query);	
+				
+				ps.setInt(1, roomToFind.getBuildingID());
+				ps.setString(2, roomToFind.getRoomNumber());
+				ps.setInt(3, roomToFind.getRoomFloor());
 
-				ps.executeUpdate();
+				this.results = ps.executeQuery();
 
 				boolean results = this.results.next();
 				

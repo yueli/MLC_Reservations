@@ -1,4 +1,4 @@
-package controllers;
+	package controllers;
 /**
  * @author: Ginger Nix - added session checks, role checks, etc, fixed edit form display,
  * 
@@ -90,7 +90,7 @@ public class BuildingListUpdateServlet extends HttpServlet {
 					// get the building info to populate edit form
 					form = blsq.buildingEditForm(buildingID);
 							
-					session.setAttribute("form", form);	
+					session.setAttribute("form", form);		
 					session.setAttribute("message", message);	
 					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 					
