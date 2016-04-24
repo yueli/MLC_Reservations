@@ -62,6 +62,7 @@ public class AdminReservationsServlet extends HttpServlet {
 					
 					// remove message 
 					session.removeAttribute("msg");
+					session.removeAttribute("table");
 					
 					//------------------------------------------------//
 					/*               VIEW FOR ADMIN                   */
@@ -98,11 +99,15 @@ public class AdminReservationsServlet extends HttpServlet {
 						}
 					} 
 					
+					String startTime = "00:00:00";
+					String endTime = "00:00:00";
 					
 					// forwarding URL
 					url = "admin/reservations.jsp";
 					
 					// set session and request variables
+					session.setAttribute("startTime", startTime);
+					session.setAttribute("endTime", endTime);
 					session.setAttribute("adminUser", loggedInAdminUser);
 					session.setAttribute("buildingID", buildingID);
 					session.setAttribute("buildings", buildings);
