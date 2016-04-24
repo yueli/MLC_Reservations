@@ -55,7 +55,7 @@
 			<h3>Please update the information below. <br> If you want to cancel, please select "View Building Hours."</h3><br>
 			<form name="scheduleEdit" id="scheduleEdit" method="post" action="schedule-confirm">
 				<h3>Edit schedule entry #${scheduleID} for ${buildingName}</h3><br>
-				<h3>${msg}</h3><br>
+				<h3color="#cc0033">${msg}</h3><br>
 				Date: <input type="text" id="datepicker" name="startDateEdit" value="${startDate}"><br>
 				Start Time: <input type="text" id="startTime" name="startTimeEdit" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input type="text" id="endTime" name="endTimeEdit" value="${tc.convertTimeTo12(endTime)}"><br>

@@ -262,6 +262,10 @@ h1.logo-text a {
 /*-----------------------------------------------------------------------------------*/
 /* Padding/Margins */
 /*-----------------------------------------------------------------------------------*/
+.padding-horiz-3{
+  padding-left: 3px;
+  padding-right: 3px;
+}
 .padding-horiz-10 {
   padding-left: 10px;
   padding-right: 10px;

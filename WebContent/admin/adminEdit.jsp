@@ -1,12 +1,12 @@
+<%-- 
+	@author: Ginger Nix
+	This page displays the form for an admin to add another admin user
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%
-    String table = (String) request.getAttribute("table");
-	String message = (String) request.getAttribute("message");
-%> 
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -59,9 +59,9 @@ form {
 	<div id="header1"></div>
 	
 	<!-- Content -->
-	<%= message %>
+	${message}
 	<br /><br />
-	<%= table %>
+	${table}
 	<!-- End Content -->
  		
 	<!-- Footer -->
