@@ -65,7 +65,7 @@
 		<!-- Content -->
 		<div align="center">
 			<h2>Viewing Building Hours</h2><br>
-			<h3>Please select a building and/or date to view a building's hours of operation.<br>
+			<h3>${scheduleHeader}<br>
 			You can also edit a building's hours or add hours to a building.</h3><br>
 			<h3>${msg}</h3><br>
 			<h2>Hours for ${buildingName}</h2><br>
