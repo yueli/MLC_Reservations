@@ -274,8 +274,8 @@ public class DateTimeConverter {
 	public String slashDateConvert (){
 		
 		try {
-			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); // used to convert String time to 24-hour DateTeime
-	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); // used to convert 24-hour DateTime to 12-hour DateTime
+			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	        Date d = slashedFormat.parse(this.datetime); // changes from string to date object
 	        return dashedFormat.format(d); // returns date in SQL format
 	        
@@ -294,10 +294,48 @@ public class DateTimeConverter {
 		
 		this.datetime = date.trim(); // removes leading and trailing whitespace
 		try {
-			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); // used to convert String time to 24-hour DateTeime
-	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); // used to convert 24-hour DateTime to 12-hour DateTime
+			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); 
 	        Date d = slashedFormat.parse(this.datetime); // changes from string to date object
 	        return dashedFormat.format(d); // returns date in SQL format
+	        
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert slashed date format to SQL format.**";
+		}
+	}
+	
+	/**
+	 * Converts a yyyy-MM-dd (SQL date) to MM/dd/yyyy format
+	 * @param date String date in yyyy-MM-dd (SQL Format)
+	 * @return date in MM/dd/yyyy format
+	 */
+	public String convertToSlashed (){
+		
+		try {
+			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+	        Date d = dashedFormat.parse(this.datetime); // changes from string to date object
+	        return slashedFormat.format(d); // returns date in SQL format
+	        
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "**Error, unable to convert slashed date format to SQL format.**";
+		}
+	}
+	
+	/**
+	 * Converts a yyyy-MM-dd (SQL date) to MM/dd/yyyy format
+	 * @param date String date in yyyy-MM-dd (SQL Format)
+	 * @return date in MM/dd/yyyy format
+	 */
+	public String convertToSlashed (String date){
+		this.datetime = date.trim(); // removes leading and trailing whitespace
+		try {
+			SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy"); 
+	        SimpleDateFormat dashedFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+	        Date d = dashedFormat.parse(this.datetime); // changes from string to date object
+	        return slashedFormat.format(d); // returns date in SQL format
 	        
 		} catch (ParseException e) {
 			e.printStackTrace();
