@@ -135,6 +135,7 @@ public class RoomsListServlet extends HttpServlet {
 					
 					//forward our request along
 					request.setAttribute("table", table);
+					request.setAttribute("message", message);
 					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		
 					url = "admin/roomsList.jsp";

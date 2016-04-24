@@ -169,8 +169,9 @@ public class AdminUserHelper {
 
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-			this.results = ps.executeQuery();
+	
 			ps.setString(1, adminMyID);
+			this.results = ps.executeQuery();
 			
 			this.results.next();
 			
