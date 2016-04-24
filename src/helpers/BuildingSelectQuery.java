@@ -185,6 +185,7 @@ public class BuildingSelectQuery {
 		
 		return select;
 	}
+	
 	/**
 	 * This method takes into account the building schedule. 
 	 * If the building is not online, an empty string is returned. 
@@ -288,8 +289,6 @@ public class BuildingSelectQuery {
 	
 		
 	}
-	
-	
 	
 	/**
 	 * 
@@ -450,20 +449,6 @@ public class BuildingSelectQuery {
 	}
 	
 	/**
-	 * Java Main Method used to test methods above.
-	 * @param args Java Main Method
-	 * @author Brian Olaogun
-	 */
-	public static void main (String [] args){
-		BuildingSelectQuery bsq = new BuildingSelectQuery();
-		boolean buildingsCheck = bsq.buildingsOnline();
-		System.out.println("Are there any buildings online? " + buildingsCheck);
-		
-	}
-	
-	
-	
-	/**
 	 *  Gets the start time for the building on the date and building id sent 
 	 * @param building id, date to check
 	 * @author Ginger Nix 
@@ -541,6 +526,21 @@ public class BuildingSelectQuery {
 		}
 		
 		return endTime; //will be empty if no start date is returned
-	}	
+	}
+	
+	/**
+	 * Java Main Method used to test methods above.
+	 * @param args Java Main Method
+	 * @author Brian Olaogun
+	 */
+	public static void main (String [] args){
+		BuildingSelectQuery bsq = new BuildingSelectQuery();
+		boolean buildingsCheck = bsq.buildingsOnline();
+		System.out.println("Are there any buildings online? " + buildingsCheck);
+		bsq.doAdminBuildingRead();
+		System.out.println(bsq.getBuildingResults(2));
+		
+	}
+	
 	
 }

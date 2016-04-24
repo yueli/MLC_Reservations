@@ -48,8 +48,8 @@
 			<div id="search-container">
 				<h2>${msg}</h2>
 				<form name="adminViewForm" action="view-reservations?update" method="post">
-					<p>Building ${buildings} Date <input type="text" name="datepicker" id="datepicker">
-					<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
+					<p>Building ${buildings} <br> Date <input type="text" name="datepicker" id="datepicker">
+					<input align="center" class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
 				</form>
 			</div>
 			<br>
