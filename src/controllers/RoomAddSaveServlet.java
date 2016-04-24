@@ -101,11 +101,16 @@ public class RoomAddSaveServlet extends HttpServlet {
 						RoomsSelectQuery rsq = new RoomsSelectQuery();
 						boolean roomExists = rsq.roomAlreadExists(room);
 						
+						System.out.println("RoomAddSaveServlet: after check ig room exists: " + roomExists);
+						
 						if (roomExists){
 							// don't add, set message
 							
-							message = "<br /><br /><div align='center'><h3>This room already exists."
+							message = "<br /><br /><div align='center'><h3>This room in this building with the room number"
+									+ room.getRoomNumber() + " on the "
+									+ room.getRoomFloor() + " floor already exists."
 									+ "</h3></div>";
+							url = "RoomAddServlet";
 							
 						}else{
 							//add new room 
@@ -114,9 +119,9 @@ public class RoomAddSaveServlet extends HttpServlet {
 							
 							message = "<br /><br /><div align='center'><h3>Room was added."
 									+ "</h3></div>";	
+							url = "RoomsListServlet";	
 						}
-						
-						url = "RoomsListServlet";	
+											
 						
 						request.setAttribute("message", message);
 						request.setAttribute("loggedInUser", loggedInAdminUser);

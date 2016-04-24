@@ -688,6 +688,14 @@ public class RoomsSelectQuery {
 		 */
 		public boolean roomAlreadExists (Rooms room){
 			
+			Rooms roomToCheck = new Rooms();
+			roomToCheck = room;
+			
+			System.out.println("RoomsSelectQuery: roomAlreadyExists: room building id, rm num, flr = "
+								+ roomToCheck.getBuildingID() + " "
+								+ roomToCheck.getRoomNumber() + " "
+								+ roomToCheck.getRoomFloor());
+			
 			String query = "SELECT * FROM tomcatdb.Rooms "
 							+ "WHERE Building_buildingID = ? "
 							+ "AND roomNumber = ? "
@@ -696,24 +704,26 @@ public class RoomsSelectQuery {
 							
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);		
-				ps.setInt(1, room.getBuildingID());
-				ps.setString(2, room.getRoomNumber());
-				ps.setInt(3, room.getRoomFloor());
-
-				ps.executeUpdate();
+				ps.setInt(1, roomToCheck.getBuildingID());
+				ps.setString(2, roomToCheck.getRoomNumber());
+				ps.setInt(3, roomToCheck.getRoomFloor());
+				
+				this.results = ps.executeQuery();
 
 				boolean results = this.results.next();
 				
 				if (results) {//the room is in the room table already
+					System.out.println("RoomsSelectQuery: roomAlreadyExists: TRUE");
 					return true;
 				}else{
+					System.out.println("RoomsSelectQuery: roomAlreadyExists: FALSE");
 					return false;
 				}
 
 					
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("***Error in RoomsSelectQuery updateRoomTable:  Query = " + query);
+				System.out.println("***Error in RoomsSelectQuery room AlreadyExists:  Query = " + query);
 			}
 			
 			return false;
@@ -727,17 +737,22 @@ public class RoomsSelectQuery {
 		 */
 		public void insertRoomsTable(Rooms room) {
 			
+			Rooms roomToInsert = new Rooms();
+			roomToInsert = room;
+			
+			System.out.println("RoomsSelectQuery: insertRoomsTable: room num = " + roomToInsert.getRoomNumber());
+			
 			String query = "INSERT INTO tomcatdb.Rooms "
 					+ "(Admin_adminID, Building_buildingID, roomNumber, roomFloor, roomStatus) "
 					+ "VALUES (?, ?, ?, ?, ?)";
 			
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);		
-				ps.setInt(1, room.getAdminID());
-				ps.setInt(2, room.getBuildingID());
-				ps.setString(3, room.getRoomNumber());
-				ps.setInt(4, room.getRoomFloor());
-				ps.setInt(5, room.getRoomStatus());
+				ps.setInt(1, roomToInsert.getAdminID());
+				ps.setInt(2, roomToInsert.getBuildingID());
+				ps.setString(3, roomToInsert.getRoomNumber());
+				ps.setInt(4, roomToInsert.getRoomFloor());
+				ps.setInt(5, roomToInsert.getRoomStatus());
 
 				ps.executeUpdate();
 				
