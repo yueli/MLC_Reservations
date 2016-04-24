@@ -9,11 +9,10 @@ import java.util.Date;
 
 import model.DbConnect;
 
-
-
 /**
  * @author Ronnie Xu
  * Helper for the Admin side of the website.
+ * @author: Ginger Nix - cleaned up code, added comments, made queries safe
  **/
 
 public class UnbanUserQuery {
@@ -41,21 +40,26 @@ public class UnbanUserQuery {
 		
 	}
 	
+	/**
+	 * This method un-bans a user
+	 * @param banID
+	 */
+	
 	public void unbanUser(int banID){
 		//Set Date to CurrentTime
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d = new Date();
 		String date = dateFormat.format(d);
 		
-		
-		String query = "UPDATE tomcatdb.Banned SET banEnd='"+ date + "', status=0 WHERE bannedID="+banID+"";
-		System.out.println(query);
-
+		String query = "UPDATE tomcatdb.Banned SET banEnd = ?, status = ? "
+				+ "WHERE bannedID = ? ";		
 		
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 
-
+			ps.setString(1, date);
+			ps.setInt(2, 0);
+			ps.setInt(3, banID);
 			
 			ps.executeUpdate();
 			

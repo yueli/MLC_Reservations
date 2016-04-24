@@ -41,7 +41,7 @@ public class BanUserSearchResultsServlet extends HttpServlet {
 		
 		//Pull Data from DB
 		BanUserSearchQuery busq = new BanUserSearchQuery();
-		busq.doRead(fname, lname);
+		//busq.doRead(fname, lname); // commented out due to calling a non-needed method and this servlet is not used anyway
 		
 		
 		//Create Table with results
