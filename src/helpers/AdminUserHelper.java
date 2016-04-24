@@ -236,7 +236,7 @@ public class AdminUserHelper {
 			table += "<form action='AdminSaveServlet' method = 'post'>";
 			
 			table += "First name:<br>";
-			table +=  "<input type='text' name = 'fname' value = '" + fname + "' required>";
+			table +=  "<input type='text' id = 'fname' name = 'fname' value = '" + fname + "' required>";
 			table += "<br />";
 			
 			table += "Last name:<br>";
@@ -480,7 +480,7 @@ public class AdminUserHelper {
 		table += "<form action='AdminAddSaveServlet' method = 'post'>";
 		
 		table += "First name:<br>";
-		table +=  "<input type='text' name = 'fname' required>";
+		table +=  "<input type='text' id='fname' name = 'fname' required>";
 		table += "<br />";
 		
 		table += "Last name:<br>";

@@ -267,7 +267,7 @@ public class BuildingListQuery {
 			table += "<form action='BuildingListAddServlet' method = 'post'>";
 			
 			table += "Name:<br>";
-			table +=  "<input type='text' name = 'buildingName' required>";
+			table +=  "<input type='text' id = 'buildingName' name = 'buildingName' required>";
 			table += "<br />";
 			
 			table += "Status:<br>";

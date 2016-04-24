@@ -536,7 +536,7 @@ public class RoomsSelectQuery {
 				
 		
 				table += "Room Number: &nbsp; &nbsp;";
-				table +=  "<input type='text' name = 'roomNumber' value = '" + roomNumber + "' required>";
+				table +=  "<input type='text' id = 'roomNumber' name = 'roomNumber' value = '" + roomNumber + "' required>";
 				
 				table += "<br /><br />";
 				table += "Room Floor: &nbsp; &nbsp;";
@@ -643,7 +643,7 @@ public class RoomsSelectQuery {
 				table += "<form action='RoomAddSaveServlet' method = 'post'>";
 				
 				table += "Room Number: &nbsp;&nbsp;";
-				table +=  "<input type='text' name = 'roomNumber' required>";
+				table +=  "<input type='text' id = 'roomNumber' name = 'roomNumber' required>";
 				table += "<br /><br />";
 				
 				table += "Room Floor: &nbsp;&nbsp;";

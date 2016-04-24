@@ -48,6 +48,11 @@ form {
 				         ]
 				});
 			});
+			
+			window.onload = function() {
+				  var input = document.getElementById("userMyID").focus();
+			}
+			
 		</script> 
 	</head>
 
