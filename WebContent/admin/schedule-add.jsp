@@ -57,10 +57,10 @@
 		
 		<!-- Content -->
 		<div class="centerdiv">
-			<h2>Add Building Hours</h2><br>
-			<h3>Adding opening and closing hours for a building. <br>
+			<h2 align="center">Add Building Hours</h2><br>
+			<h3 align="center">Adding opening and closing hours for a building. <br>
 			Please enter all information below to add hours to a building.</h3><br>
-			<h3>${msg}</h3>
+			<h3 align="center">${msg}</h3>
 			<form name="scheduleForm" action="new-schedule" method="post">
 				${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value=""><br>
