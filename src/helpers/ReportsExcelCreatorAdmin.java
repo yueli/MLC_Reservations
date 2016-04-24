@@ -94,10 +94,6 @@ public class ReportsExcelCreatorAdmin {
               cell = row.createCell(1);
               cell.setCellValue("Admin MyID");
               cell.setCellStyle(cellStyle);
-              
-              /*cell = row.createCell(2);
-              cell.setCellValue("Admin MyID");
-              cell.setCellStyle(cellStyle);*/
              
               cell = row.createCell(2);
               cell.setCellValue("First Name");
@@ -122,18 +118,15 @@ public class ReportsExcelCreatorAdmin {
              
               // Reading one row of table at a time and putting the values into excel cell
               while(rs.next()){
-            	DateTimeConverter dtc = new DateTimeConverter();
             	
-                
-            	User user = new User();
         	  	Admin admin = new Admin();
                 admin.setAdminID(rs.getInt(1));
-                user.setAdminMyID(rs.getString(2));
+                admin.setAdminMyID(rs.getString(2));
         	  	admin.setFname(rs.getString(3));
                 admin.setLname(rs.getString(4));
                 admin.setRole(rs.getString(5));
                 admin.setAdminStatus(rs.getInt(6));
-        	  	admin.setcantBeDeleted(rs.getInt(7));           
+        	  	admin.setCantBeDeleted(rs.getInt(7));           
                           
         	  	row = sheet.createRow(nRow);
                 // Create a cell and put a value in it.

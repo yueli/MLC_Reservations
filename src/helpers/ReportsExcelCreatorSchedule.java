@@ -15,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import model.Schedule;
+import model.TimeConverter;
 import model.DateTimeConverter;
 import model.DbConnect;
 import model.Building;
@@ -62,7 +63,7 @@ public class ReportsExcelCreatorSchedule {
               		+ "Schedule.endTime, "
               		+ "Schedule.summary, "
               		+ "Schedule.createdBy, "
-              		+ "Building.buildingId "
+              		+ "Building.buildingID "
               		+ "FROM tomcatdb.Schedule, tomcatdb.Building "
               		+ "WHERE Schedule.Building_buildingID = Building.buildingID ";
               
@@ -78,7 +79,8 @@ public class ReportsExcelCreatorSchedule {
               sheet.setColumnWidth(5, 7000);
               sheet.setColumnWidth(6, 5000);
               sheet.setColumnWidth(7, 5000);
-             
+              sheet.setColumnWidth(8, 5000);
+              
               // Creating the Font Style here 
               HSSFFont boldFont = wb.createFont();
               boldFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
@@ -129,20 +131,19 @@ public class ReportsExcelCreatorSchedule {
              
               // Reading one row of table at a time and putting the values into excel cell
               while(rs.next()){
+            	TimeConverter tc = new TimeConverter();
             	DateTimeConverter dtc = new DateTimeConverter();
             	
-                
-            	Building building = new Building();
         	  	Schedule schedule = new Schedule();
                 schedule.setScheduleID(rs.getInt(1));
-                user.setAllDayEvent(rs.getInt(2));
+                schedule.setAllDayEvent(rs.getInt(2));
         	  	schedule.setStartDate(rs.getString(3));
                 schedule.setEndDate(rs.getString(4));
                 schedule.setStartTime(rs.getString(5));
                 schedule.setEndTime(rs.getString(6));
         	  	schedule.setSummary(rs.getString(7));
-        	  	schedule.setCreatedBy(rs.getString(7));
-        	  	schedule.setBuildingID(rs.getInt(7));
+        	  	schedule.setCreatedBy(rs.getString(8));
+        	  	schedule.setBuildingID(rs.getInt(9));
                 
         	  	row = sheet.createRow(nRow);
                 // Create a cell and put a value in it.
@@ -152,13 +153,13 @@ public class ReportsExcelCreatorSchedule {
                 cell = row.createCell(1);
                 cell.setCellValue(schedule.getAllDayEvent());
                 cell = row.createCell(2);
-                cell.setCellValue(dtc.parseDate(schedule.getStartDate()));
+                cell.setCellValue(dtc.convertDateLong(schedule.getStartDate()));
                 cell = row.createCell(3);
-                cell.setCellValue(dtc.parseDate(schedule.getEndDate()));
+                cell.setCellValue(dtc.convertDateLong(schedule.getEndDate()));
                 cell = row.createCell(4);
-                cell.setCellValue(dtc.dateTimeTo12Long(schedule.getStartTime()));
+                cell.setCellValue(tc.convertTimeTo12(schedule.getStartTime()));
                 cell = row.createCell(5);
-                cell.setCellValue(dtc.dateTimeTo12Long(schedule.getEndTime()));
+                cell.setCellValue(tc.convertTimeTo12(schedule.getEndTime()));
                 cell = row.createCell(6);
                 cell.setCellValue(schedule.getSummary());
                 cell = row.createCell(7);

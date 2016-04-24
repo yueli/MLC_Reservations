@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.ReportsExcelCreatorAdminAdmin;
+import helpers.ReportsExcelCreatorAdmin;
 import model.Admin;
 import model.DbConnect;
 
@@ -22,13 +22,13 @@ import model.DbConnect;
  * @author Victoria Chambers
  *
  */
-public class ReportsDownloadFileServlet extends HttpServlet {
+public class ReportsDownloadFileAdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     private HttpSession session; 
     private String url;
 
-    public ReportsDownloadFileServlet() {
+    public ReportsDownloadFileAdminServlet() {
     
     }
    
@@ -61,7 +61,7 @@ public class ReportsDownloadFileServlet extends HttpServlet {
 			            try {	
 							response.reset();
 							response.setContentType("application/vnd.ms-excel");
-							response.setHeader("Content-Disposition", "attachment;filename=BannedStudents.xls");
+							response.setHeader("Content-Disposition", "attachment;filename=AdminReport.xls");
 							ReportsExcelCreatorAdmin rec = new ReportsExcelCreatorAdmin();
 							  
 							//Calling method download admin list 
