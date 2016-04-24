@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.ReportsExcelCreatorScheduleSchedule;
+import helpers.ReportsExcelCreatorSchedule;
 import model.Admin;
-import model.Building;
 import model.DbConnect;
 
 @WebServlet(description = "Download Reports Schedule", urlPatterns = { "/DownloadReportsSchedule" })
@@ -23,13 +22,13 @@ import model.DbConnect;
  * @author Victoria Chambers
  *
  */
-public class ReportsDownloadFileServlet extends HttpServlet {
+public class ReportsDownloadFileScheduleServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     private HttpSession session; 
     private String url;
 
-    public ReportsDownloadFileServlet() {
+    public ReportsDownloadFileScheduleServlet() {
     
     }
    
@@ -54,7 +53,7 @@ public class ReportsDownloadFileServlet extends HttpServlet {
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 					
-					String schedule = request.getParameter("Schedule"); 
+					String schedule = request.getParameter("schedule"); 
 					
 					// if the download schedule button is clicked, download file
 					if(schedule != null && !schedule.isEmpty()){
@@ -62,7 +61,7 @@ public class ReportsDownloadFileServlet extends HttpServlet {
 			            try {	
 							response.reset();
 							response.setContentType("application/vnd.ms-excel");
-							response.setHeader("Content-Disposition", "attachment;filename=BannedStudents.xls");
+							response.setHeader("Content-Disposition", "attachment;filename=ScheduleReport.xls");
 							ReportsExcelCreatorSchedule rec = new ReportsExcelCreatorSchedule();
 							  
 							//Calling method download banned list 
