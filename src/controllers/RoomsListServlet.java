@@ -57,6 +57,8 @@ public class RoomsListServlet extends HttpServlet {
 		int buildingID = 0;
 		String message = "";
 
+		System.out.println("RoomsListServlet: beginning");
+		
 		// get the current session
 		session = request.getSession(false);
 	

@@ -99,9 +99,8 @@ public class AdminAddSaveServlet extends HttpServlet {
 					
 					if (alreadyInTable){
 						// don't add, set message
-						message = "<br /><br /><div align='center'><h3>The admin user " +
-									adminUserBeingAdded.getFname() + " " + adminUserBeingAdded.getLname()   + 
-									" with the UGA MyID ' " + adminUserBeingAdded.getAdminMyID() + 
+						message = "<br /><br /><div align='center'><h3>The admin with the UGA MyID ' " 
+									+ adminUserBeingAdded.getAdminMyID() + 
 									"' already exists!</h3></div>";
 						
 						url = "AdminAddServlet";

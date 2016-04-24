@@ -4,8 +4,8 @@
  * messages to send to next screen on success, and check if building name already exists.
  * 
  * This servlet BuildingListBuildingUpdateServlet takes the data from the building edit form
- * and updates the building's record. There is a check to make sure a buidling by this name doesn't already exist.
- * 
+ * and updates the building's record. 
+ * 	
  */
 package controllers;
 
@@ -94,42 +94,19 @@ public class BuildingListBuildingUpdateServlet extends HttpServlet {
 					
 					// check to see if there is already a building w/ this name
 					// and if so, send back with a message and don't update building
+									
+					// go update this bulding's record
+					BuildingListUpdateQuery bluq = new BuildingListUpdateQuery();
+					bluq.doUpdate(buildingToUpdate, loggedInAdminUser.getAdminID());
+					 					 
+					message = "<br /><br /><div align='center'><h3>The "
+							+  buildingToUpdate.getBuildingName() 
+							+ " building has been updated.</h3></div><br />";
 					
-					boolean buildingAlreadyExists;
-					
-					BuildingListAddQuery blaq = new BuildingListAddQuery();
-					
-					buildingAlreadyExists = blaq.inBuildingTable(buildingToUpdate.getBuildingName());
-					
-					if (buildingAlreadyExists){  // there is already a building w/ this name, so don't add
-						
-						message = "<br /><br /><div align='center'><h3>The "
-								+  buildingToUpdate.getBuildingName() 
-								+ " already exists.</h3></div><br />";
-						
-						url = "BuildingListForm";
-	
-						request.setAttribute("message", message);
-						request.setAttribute("loggedInAdminUser", loggedInAdminUser);	
-						
-					}else{ //this is a new building, so add 
-						
-					
-						// go update this bulding's record
-						BuildingListUpdateQuery bluq = new BuildingListUpdateQuery();
-						bluq.doUpdate(buildingToUpdate, loggedInAdminUser.getAdminID());
-						 					 
-						message = "<br /><br /><div align='center'><h3>The "
-								+  buildingToUpdate.getBuildingName() 
-								+ " building has been updated.</h3></div><br />";
-						
-						url = "BuildingListServlet";
-	
-						request.setAttribute("message", message);
-						request.setAttribute("loggedInAdminUser", loggedInAdminUser);	
+					url = "BuildingListServlet";
 
-					}
-					
+					request.setAttribute("message", message);
+					request.setAttribute("loggedInAdminUser", loggedInAdminUser);	
 					
 					
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
