@@ -64,10 +64,10 @@
 		<!-- Content -->
 		<div class="centerdiv">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
-				<h2>Make a Reservation</h2><br>
-				<h3>Please select a building, date, start and end time for your reservation.<br>
+				<h2 align="center">Make a Reservation</h2><br>
+				<h3 align="center">Please select a building, date, start and end time for your reservation.<br>
 				Please also enter the name or group the room is reserved under.</h3><br>
-				<p>${msg}</p>
+				<p align="center">${msg}</p>
 				Building ${buildings}<br>
 				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
