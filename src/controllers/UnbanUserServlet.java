@@ -90,7 +90,7 @@ public class UnbanUserServlet extends HttpServlet {
 
 					UserHelper uh = new UserHelper();
 					User user = new User();
-					user = uh.getUserInfo(myID);
+					user = uh.getUserInfoFromMyID(myID);
 					
 					message = "<br /><br /><div align='center'><h3>User with the MyID '"
 							+ user.getMyID() + "' and name is '"

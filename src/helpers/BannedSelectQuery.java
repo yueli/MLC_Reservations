@@ -177,8 +177,6 @@ public class BannedSelectQuery {
 							+ "<input class='btn btn-lg btn-red' type='submit' value='Unban'>" 
 							+ "</form>"
 							+ "</td>";
-
-						
 					
 					table += "</tr>";
 				}

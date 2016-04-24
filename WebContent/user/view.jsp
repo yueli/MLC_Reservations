@@ -18,7 +18,7 @@ form {
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Reservations View</title>
+<title>View Reservations</title>
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -56,16 +56,10 @@ form {
 		<br><br>
 		
 		<!-- Content -->
-		<div class="centerdiv">
-			<h2>Reservations for: 
-				${user.userFirstName} 
-				${user.userLastName}
-			</h2>
-			
+		
 			${table}
 			${message}
 			
-		</div>
 		<!-- End Content -->
 		
 		<!-- Footer -->

@@ -40,18 +40,17 @@ public class CancelQuery {
 	 * showing that the day, time, and room are now free for someone to reserve
 	 * @param resv_id reservation ID
 	 */
+	
 	public void cancelReservation(int resv_id){
-		// this method cancels the reservation by setting the free field to 'Y'
-		// showing that the day, time, and room are now free for someone to reserve
 		
 		String query = "UPDATE tomcatdb.Reservations SET Reservations.free = 'Y' "
-				+ "WHERE Reservations.reserveID = '" + resv_id + "'";
+				+ "WHERE Reservations.reserveID = ? ";
 		
 		System.out.println("cancel query - cancel reservation. Query = " + query);
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-		
+			ps.setInt(1, resv_id);
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {

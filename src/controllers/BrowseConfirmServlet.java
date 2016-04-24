@@ -129,7 +129,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 						int primaryUserID = primaryUser.getUserRecordID();
 						
 							  // secondary user 
-						User secondaryUser = uh.getUserInfo(secondaryMyID);
+						User secondaryUser = uh.getUserInfoFromMyID(secondaryMyID);
 						int secondaryUserID = secondaryUser.getUserRecordID();
 						
 						System.out.println("SECONDARY USER INFO FROM BROWSE CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());

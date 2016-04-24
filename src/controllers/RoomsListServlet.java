@@ -57,6 +57,8 @@ public class RoomsListServlet extends HttpServlet {
 		int buildingID = 0;
 		String message = "";
 
+		System.out.println("RoomsListServlet: beginning");
+		
 		// get the current session
 		session = request.getSession(false);
 	
@@ -133,6 +135,7 @@ public class RoomsListServlet extends HttpServlet {
 					
 					//forward our request along
 					request.setAttribute("table", table);
+					request.setAttribute("message", message);
 					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 		
 					url = "admin/roomsList.jsp";

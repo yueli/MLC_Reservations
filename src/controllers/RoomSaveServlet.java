@@ -110,6 +110,8 @@ public class RoomSaveServlet extends HttpServlet {
 					// get the building name for message
 					BuildingListQuery blq = new BuildingListQuery();
 					
+					blq.doRead();
+					
 					String buildingName =  blq.getBuildingName(room.getBuildingID());
 					
 					// check if a room w/ this room number on this floor in this building already exists

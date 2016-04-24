@@ -1,9 +1,6 @@
-/*
+/**
  * @author: Ginger Nix
- * 
  * This class contains methods to help with listing a user's reservations.
- * 
- * MAKE SURE TO TAKE OUT THE HARDCODING OF THE MINUTE FOR TESTING CHECKING IN
  */
 
 package helpers;
@@ -48,7 +45,13 @@ public class ListUserReservationsQuery {
 	}
 
 
-
+	/**
+	 * This method returns a user's reservations from this time forward based on the
+	 * user's recd ID
+	 * @param userRecordID
+	 * @return a table listing all the user's reservations
+	 */
+	
 	public String ListUserReservations(int userRecordID){
 		
 		String table = "";
@@ -77,9 +80,9 @@ public class ListUserReservationsQuery {
 		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building"
 					+ " WHERE Reservations.Rooms_roomID = Rooms.roomID"
 					+ " AND Rooms.Building_buildingID = Building.buildingID"
-					+ " AND (Reservations.primaryUser = '" + userRecordID + "' OR Reservations.secondaryUser = '" + userRecordID + "')"
+					+ " AND (Reservations.primaryUser = ? OR Reservations.secondaryUser = ? ) "
 					+ " AND Reservations.free = 'N' "
-					+ " AND Reservations.reserveStartDate >= '" + currentDate + "'"
+					+ " AND Reservations.reserveStartDate >= ? "
 					+ " ORDER BY reserveStartDate, reserveStartTime";
 
 	
@@ -87,7 +90,10 @@ public class ListUserReservationsQuery {
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
-		
+			ps.setInt(1, userRecordID);
+			ps.setInt(2, userRecordID);
+			ps.setString(3, currentDate);
+			
 			this.results = ps.executeQuery();
 			System.out.println("Success in List User Resv.java: list user reservations method. Query = " + query);
 		
@@ -106,15 +112,19 @@ public class ListUserReservationsQuery {
 					currentHour = hourFormat.format(time);
 					System.out.println("List User Resv: current hour = " + currentHour);
 					
+					// get the user's name to be able to display on page
+					UserHelper uh = new UserHelper();
+					User user = uh.getUserInfoFromRecdID(userRecordID);
 					
+					table += "<div align='center'><h3>Reservations for: " 
+							+ user.getUserFirstName() + " "  
+							+ user.getUserLastName() + "</h3></div>"; 
 					
 					while(this.results.next()){ //go through all records returned
 						Reservation resv = new Reservation();
 						resv.setReserveID(this.results.getInt("reserveID"));
 						System.out.println("In WHILE in List User Resv.java: list user reservations method. ReserveID = " + resv.getReserveID());
 						
-						
-
 						// get both the primary and secondary on the reservation to list
 						// get the primary and secondary user record id's to get more info
 						
@@ -123,7 +133,6 @@ public class ListUserReservationsQuery {
 						int primaryOnResvRecdID = this.results.getInt("primaryUser");
 						int secondaryOnResvRecdID = this.results.getInt("secondaryUser");
 						
-						UserHelper uh = new UserHelper();
 						User primary = new User();
 						User secondary = new User();
 						
@@ -173,7 +182,7 @@ public class ListUserReservationsQuery {
 								
 								if (firstTime){
 
-									table = "<table id = '' class = 'mdl-data-table' cellspacing = '0' style='width:95%;'>";
+									table += "<table id = '' class = 'mdl-data-table' cellspacing = '0' width = '95%'>";
 									table += "<thead>";
 									table += "<tr>";
 									table += "<th> Date</th>";									
@@ -230,9 +239,9 @@ public class ListUserReservationsQuery {
 								// convert minute to integer to see if more than 10
 								int currentMinuteInt = Integer.parseInt(currentMinute);
 								
-								//FOR TESTING - TAKE OUT
-								//currentMinuteInt = 2; //!!!!!!!!!!!
-								//currentMinuteInt = 20; //!!!!!!!!!!
+								//FOR TESTING 
+								//currentMinuteInt = 2; 
+								//currentMinuteInt = 20; 
 								
 								System.out.println("In WHILE in List User Resv.java: current minute INT = " + currentMinuteInt);	
 								
@@ -378,7 +387,13 @@ public class ListUserReservationsQuery {
 	}
 	
 	
-	public String GetUserReservation(int resv_id, int userRecdID){
+	/**
+	 * This method gets a user's single reservation info from the reservation record id 
+	 * @param resv_id
+	 * @return table containing the user's reservation
+	 */
+	
+	public String GetUserReservation(int resv_id){
 		String table = "";
 		// Used to convert date and time from SQL format to more standard format for display.
 		TimeConverter tc = new TimeConverter();
@@ -387,10 +402,12 @@ public class ListUserReservationsQuery {
 		String query = "SELECT * FROM tomcatdb.Reservations, tomcatdb.Rooms, tomcatdb.Building "
 				+ "WHERE Reservations.Rooms_roomID = Rooms.roomID "
 				+ "AND Rooms.Building_buildingID = Building.buildingID "
-				+ "AND Reservations.reserveID = '" + resv_id + "'";
+				+ "AND Reservations.reserveID = ? ";
 
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, resv_id);
+			
 			this.results = ps.executeQuery();
 			this.results.next();
 			
@@ -405,7 +422,7 @@ public class ListUserReservationsQuery {
 			String roomFloor = this.results.getString("roomFloor");
 			String roomNumber = this.results.getString("roomNumber");
 
-			// get the primary and secondar user names to list
+			// get the primary and secondary user names to list
 			int primaryOnResvRecdID = this.results.getInt("primaryUser");
 			int secondaryOnResvRecdID = this.results.getInt("secondaryUser");
 			
@@ -454,17 +471,12 @@ public class ListUserReservationsQuery {
 			
 			table += "</tr></tbody></table>";
 
-			//table += "<td>"
 			table += "<br /><br />";
 			table += "<form action='ViewServlet' method = 'post'>";
 			table += "<input class='btn btn-lg btn-red' type='submit' value='Go back to viewing reservations'>";
 			table += "<input type='hidden' name='noCancel' value='noCancel'>";
 			table += "</form>";
-				//	+ "</td>";	
-			
-
-			
-			
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("***Error in List User Resv: get user reservation. Query = " + query);

@@ -10,25 +10,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import helpers.AdminScheduleSelectQuery;
+import helpers.AdminUpdateQuery;
+import helpers.BuildingSelectQuery;
 import model.Admin;
+import model.DateTimeConverter;
 import model.DbConnect;
+import model.Schedule;
 import model.TimeConverter;
 
 /**
- * Servlet implementation class AdminScheduleEditServlet2. This servlet will allow admins to edit building hours.
- * @author Brian Olaogun
+ * Servlet implementation class AdminScheduleEditServlet3
  */
-@WebServlet({ "/AdminScheduleEditServlet2", "/schedule-edit" })
-public class AdminScheduleEditServlet2 extends HttpServlet {
+@WebServlet({ "/AdminScheduleEditServlet3", "/schedule-confirm" })
+public class AdminScheduleEditServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private HttpSession session;
     private String url;
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminScheduleEditServlet2() {
+    public AdminScheduleEditServlet3() {
         super();
-        
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -64,16 +69,16 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					
 					session.removeAttribute("scheduleHeader");
 					
-					// values passed from schedule.jsp/AdminScheduleSelectQuery
-					String scheduleID = request.getParameter("scheduleID");
-					String buildingName = request.getParameter("buildingName");
+					String scheduleID = (String) session.getAttribute("scheduleID");
+					String buildingName = (String) session.getAttribute("buildingName");
 					String buildingID = (String) session.getAttribute("buildingID");
-					String startTime = request.getParameter("startTime");
-					String endTime = request.getParameter("endTime");
-					String startDate = request.getParameter("startDate");
-					String endDate = request.getParameter("endDate");
-					String summary = request.getParameter("summary");
-					String createdBy = request.getParameter("createdBy");
+					String startTime = (String) session.getAttribute("startTime");
+					String endTime = (String) session.getAttribute("endTime");
+					String startDate = (String) session.getAttribute("startDate");
+					String endDate = (String) session.getAttribute("endDate");
+					String summary = (String) session.getAttribute("summary");
+					String createdBy = (String) session.getAttribute("createdBy");
+					
 					
 					// edited values from schedule-edit.jsp
 					String startDateEdit  = request.getParameter("startDateEdit");
@@ -83,52 +88,91 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					
 					// Others
 					TimeConverter tc = new TimeConverter();
+					DateTimeConverter dtc = new DateTimeConverter();
 					String msg = "";
 					String newSchedule = "";
+
 					
-					// null check for variables coming in from Admin Schedule Edit Servlet & schedule-edit.jsp
-					if (buildingName != null && buildingID != null && startTime != null && 
-							endTime != null && startDate != null && endDate != null &&
-							summary != null && createdBy != null &&
-							scheduleID != null || startDateEdit != null && startTimeEdit != null && 
-							endTimeEdit != null && summaryEdit != null){
+					if(startDateEdit == null || startDateEdit.isEmpty()){
 						
-						// forward to edit the schedule 
+						msg = "Please enter a date. A date is required.";
 						url = "admin/schedule-edit.jsp";
 						
-						if(startDate == null || startDate.isEmpty()){
-							
-							msg = "Please enter a date. A date is required.";
-							url = "admin/schedule-edit.jsp";
-							
-						} else if (startTime == null || startTime.isEmpty() || endTime == null || endTime.isEmpty()){
-							
-							msg = "Please enter start time <b>and</b> end time.";
-							url = "admin/schedule-edit.jsp";
-							
-						} else if (summary == null || summary.isEmpty()){
-							
-							msg = "Please enter a summary.  A summary is required.";
-							url = "admin/schedule-edit.jsp";
-						} else {
-							
-							url = "admin/schedule-edit.jsp";
+					} else if (startTimeEdit == null || startTimeEdit.isEmpty() || endTimeEdit == null || endTimeEdit.isEmpty()){
+						
+						msg = "Please enter a start time <b>and</b> end time.";
+						url = "admin/schedule-edit.jsp";
+						
+					} else if (summaryEdit == null || summaryEdit.isEmpty()){
+						
+						msg = "Please enter a summary.  A summary is required.";
+						url = "admin/schedule-edit.jsp";
+						
+					} else {
+						
+						// get scheduleID from session
+						scheduleID = (String) session.getAttribute("scheduleID");
+						
+						// place variables from jsp (user altered) into standard variables
+						// the start and end date have to be the same
+						startDate = startDateEdit;
+						endDate = startDateEdit;
+						
+						// convert from 24-hour time
+						startTimeEdit = tc.convertTimeTo24(startTimeEdit);
+						startTime = startTimeEdit;
+					
+						// convert to 24-hour time
+						endTimeEdit = tc.convertTimeTo24(endTimeEdit);
+						endTime = endTimeEdit;
+						
+						summary = summaryEdit;
+						createdBy = "admin"; // notate that admin made a change in database
+						
+						/* 
+						 * Add the 59 seconds from the time selector.
+						 * Added a custom time of 11:59pm and can't add the seconds to it
+						 * so doing it in java.
+						 */
+						if(endTime.equals("23:59:00")){
+							endTime = "23:59:59";
 						}
 						
-						this.session.setAttribute("msg", msg);
-						this.session.setAttribute("tc", tc);
-						this.session.setAttribute("scheduleID", scheduleID);
-						this.session.setAttribute("buildingName", buildingName);
-						this.session.setAttribute("buildingID", buildingID);
-						this.session.setAttribute("startTime", startTime);
-						this.session.setAttribute("endTime", endTime);
-						this.session.setAttribute("startDate", startDate);
-						this.session.setAttribute("endDate", endDate);
-						this.session.setAttribute("summary", summary);
-						this.session.setAttribute("createdBy", createdBy);
-						this.session.setAttribute("schedule", newSchedule);
-					}
+						BuildingSelectQuery bsq = new BuildingSelectQuery();
 						
+						// get building name
+						buildingName = bsq.getBuildingNameFromID(Integer.parseInt(buildingID));
+						msg = "Successfully edited hours for " + dtc.convertDateLong(startDate) + ".";
+						
+						// Update Schedule edits into database
+						int scheduleInt = Integer.parseInt(scheduleID);
+						Schedule schedule = new Schedule(scheduleInt, startDate, endDate,
+								startTime, endTime, summary, createdBy);
+						AdminUpdateQuery suq = new AdminUpdateQuery();
+						suq.doScheduleUpdate(schedule);
+						
+						// list hours and have the edit hour only listed in the table
+						AdminScheduleSelectQuery ssq = new AdminScheduleSelectQuery();
+						ssq.doRead(buildingID, dtc.convertToSlashed(endDate), dtc.convertToSlashed(startDate));
+						newSchedule = ssq.listSchedule();
+						
+						url = "admin/schedule.jsp";
+					
+					}
+					
+					this.session.setAttribute("msg", msg);
+					this.session.setAttribute("tc", tc);
+					this.session.setAttribute("scheduleID", scheduleID);
+					this.session.setAttribute("buildingName", buildingName);
+					this.session.setAttribute("buildingID", buildingID);
+					this.session.setAttribute("startTime", startTime);
+					this.session.setAttribute("endTime", endTime);
+					this.session.setAttribute("startDate", startDate);
+					this.session.setAttribute("endDate", endDate);
+					this.session.setAttribute("summary", summary);
+					this.session.setAttribute("createdBy", createdBy);
+					this.session.setAttribute("schedule", newSchedule);
+					
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
 					/*                VIEW FOR CLERK                  */

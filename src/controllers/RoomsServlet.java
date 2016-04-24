@@ -52,11 +52,12 @@ public class RoomsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		System.out.println("RoomsServlet: Beginning");
 		
 		// get the current session
 		session = request.getSession(false);
 	
-		
 		// check to see if there is a valid session
 		if (session != null){ // there is an active session
 
@@ -71,6 +72,8 @@ public class RoomsServlet extends HttpServlet {
 				// push content based off role
 				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
 				
+					System.out.println("RoomsServlet: In body");
+					
 					message = (String) request.getAttribute("message"); 
 				
 					// blank the message if nothing gotten in message attribute
@@ -90,7 +93,11 @@ public class RoomsServlet extends HttpServlet {
 					session.setAttribute("buildings", buildings);
 					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 					
-					String url = "/admin/rooms.jsp";						
+					url = "/admin/rooms.jsp";
+					
+					System.out.println("RoomsServlet: towards end - url = "  + url);
+					
+											
 						
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
@@ -134,6 +141,8 @@ public class RoomsServlet extends HttpServlet {
 			return;
 		}
 				
+		System.out.println("RoomsServlet: very end before dispatcher - url = "  + url);
+		
 		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
