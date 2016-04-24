@@ -128,7 +128,7 @@ public class UserHelper {
 	}
 	
 	/**
-	 * This method takes the user info and insterts them into the user table
+	 * This method takes the user info and inserts them into the user table
 	 * @param myID
 	 * @param fname
 	 * @param lname
@@ -187,7 +187,7 @@ public class UserHelper {
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
 			
-			ps.setString(2, myID);
+			ps.setString(1, myID);
 			
 			this.results = ps.executeQuery();
 			
@@ -213,7 +213,7 @@ public class UserHelper {
 	
 	public boolean alreadyBanned(int userID){
 
-		System.out.println("UserHelper inBannedTable: myID = " + userID);
+		System.out.println("UserHelper alreadyBanned: myID = " + userID);
 		
 		String query = "SELECT * from tomcatdb.Banned WHERE User_userID = ? "
 					+ "AND banEnd IS NULL "

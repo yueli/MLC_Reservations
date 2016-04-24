@@ -399,12 +399,13 @@ public class AdminUserHelper {
 	
 	public void updateAdminTable(int adminRecordID, String fname, String lname, String adminMyID, String role, int status) {
 
-		String query = "UPDATE tomcatdb.Admin SET adminMyID = ?, " +
-				"fname = ?, " + 
-				"lname = ?, " + 
-				"role = ?, " + 		
-				"adminStatus = ? " + 
-				"WHERE adminID = ? ";
+		String query = "UPDATE tomcatdb.Admin "
+					+ "SET adminMyID = ?, " 
+					+ "fname = ?, " 
+					+ "lname = ?, "
+					+ "role = ?, " 		
+					+ "adminStatus = ? " 
+					+ "WHERE adminID = ? ";
 		
 		System.out.println("AdminUserHelper updateAdminTable:  Query = " + query);
 		
@@ -415,6 +416,7 @@ public class AdminUserHelper {
 			ps.setString(3, lname);
 			ps.setString(4, role);
 			ps.setInt(5, status);
+			ps.setInt(6, adminRecordID);
 			
 			ps.executeUpdate();	
 			
