@@ -48,11 +48,17 @@ form {
 				         ]
 				});
 			});
-		</script> 
+			
+			window.onload = function() {
+				  var input = document.getElementById("fname").focus();
+			}
+			
+			</script> 
 	</head>
 
 
 <body>
+
 	<!-- Header -->
 	<div id="header1"></div>
 	
