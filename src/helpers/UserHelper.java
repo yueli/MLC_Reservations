@@ -290,7 +290,7 @@ public class UserHelper {
 	 * @return all of their info in a user object
 	 * @author Brian Olaogun
 	 */
-	public User getUserInfo(String myID){
+	public User getUserInfoFromMyID(String myID){
 		User user = new User();
 		String query = "SELECT * FROM tomcatdb.User WHERE myID = ? LIMIT 1";
 		try {
