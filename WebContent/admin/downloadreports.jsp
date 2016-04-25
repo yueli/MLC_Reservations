@@ -18,23 +18,37 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-	<br>
-	<br>
-	<br>
+		<br><br><br>
+		
+		<!-- Content -->
+		<h2 align="center">Download Reports</h2><br><br>
+		<h3 align="center">Reports will download as an Excel (.xls) File</h3><br>
 	
-	<h2 align="center">Download Reports</h2>
-	
-	<br>
-	<!-- Button to call the downloads servlet -->
-	<div align="center">
-	
-	    <form id="downloadBanned" action="?action=bannedreport" method="Post">
-            <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br>
-            
-    </form>
-
-	</div>
+		<br>
+		<!-- Buttons to call the downloads servlets -->
+		<div align="center" class="padding-horiz-3">
+		
+	    <form name="banForm" id="banForm" action="DownloadReports" method="Post">
+	    	<input type="hidden" name="bannedList" value="bannedList">
+            <input class="btn btn-lg btn-red" type="submit" value="Banned Student List"><br><br>
+    	</form> 
+    	
+    	<form name="adminForm" id="adminForm" action="DownloadReportsAdmin" method="Post">
+	    	<input type="hidden" name="adminList" value="adminList">
+            <input class="btn btn-lg btn-red" type="submit" value="Admin Stats"><br><br>
+    	</form>
+    	
+    	<form name="scheduleForm" id="scheduleForm" action="DownloadReportsSchedule" method="Post">
+	    	<input type="hidden" name="schedule" value="schedule">
+            <input class="btn btn-lg btn-red" type="submit" value="Building Schedule List">
+    	</form>
+    	
+		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 	<div id="footer"></div>
 	</body>
 </html>

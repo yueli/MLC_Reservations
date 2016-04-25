@@ -1,11 +1,11 @@
+<%--
+	@creator: Ronnie Xu
+	@author: Ginger Nix - added headers, css, took out scriptlets
+ --%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%
-    String table = (String) request.getAttribute("table");
-	String message = (String) request.getAttribute("message");
-%> 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,19 +49,28 @@ form {
 				         ]
 				});
 			});
+			
+			window.onload = function() {
+				  var input = document.getElementById("buildingName").focus();
+			}
+			
 		</script> 
 	</head>
 
 
 <body>
-		<div id="header1"></div>
-
-	<%= message %>
+	<!-- Header -->
+	<div id="header1"></div>
+	<br><br><br>
+	
+	<!-- Content -->
+	${message}
 	<br />
-	<%= table %>
-
- 		
-		<div id="footer"></div>
+	${table}
+	<!-- End Content -->
+ 	
+ 	<!-- Footer -->	
+	<div id="footer"></div>
 
 </body>
 </html>

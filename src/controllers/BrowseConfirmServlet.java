@@ -73,11 +73,10 @@ public class BrowseConfirmServlet extends HttpServlet {
 				
 				// input validation for secondary myID
 				if(secondaryMyID.isEmpty() || secondaryMyID.equals("")){
-					msg = "Please enter a myID of a secondary person to reserve a room";
+					msg = "Please enter a myID of a secondary person to reserve a room.";
 					url = "user/reservation.jsp";
 				} else if (secondaryMyID.equalsIgnoreCase(primaryUser.getMyID())){
-					msg = "Please enter a myID other than your own. <br> The person also needs to have "
-							+ "logged into the site at least once to be added to a reservation.";
+					msg = "Please enter a myID other than your own.";
 					url = "user/reservation.jsp";
 							
 				} else if (User.containsSpaces(secondaryMyID) == true){
@@ -111,7 +110,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 					else if(!uh.inUserTable(secondaryMyID)){
 						msg = "Please have " + secondaryMyID + " login once into the application. <br>"
 								+ "Logging in once serves as a form of user registration.<br> Once " + secondaryMyID 
-								+ " has logged in once, you can add them to any future reservation. ";
+								+ " has logged in once, you can add them to any reservation. ";
 						url = "user/reservation.jsp";
 					} else {
 						
@@ -130,7 +129,7 @@ public class BrowseConfirmServlet extends HttpServlet {
 						int primaryUserID = primaryUser.getUserRecordID();
 						
 							  // secondary user 
-						User secondaryUser = uh.getUserInfo(secondaryMyID);
+						User secondaryUser = uh.getUserInfoFromMyID(secondaryMyID);
 						int secondaryUserID = secondaryUser.getUserRecordID();
 						
 						System.out.println("SECONDARY USER INFO FROM BROWSE CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());

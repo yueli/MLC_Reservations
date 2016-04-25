@@ -122,23 +122,25 @@ public class UserSearchServlet3 extends HttpServlet {
 						
 					} else {
 						
-						//-----------------------//
-						  // MAKE A RESERVATION
-						//-----------------------//
+						//------------------------------------------------//
+						/*              MAKE A RESERVATION                */
+						//------------------------------------------------//
 						String free = "N"; // room is not free
 						
 						 
-						// TODO If statement if endTime is 23:59:59
+						// If statement if endTime is 23:59:59
 						if(endTime.equals("23:59:59")){
 							endTime = "00:00:00";
 						}
 						
-						//--- user information ---//
-						       // primary user
+						//------------------------------------------------//
+						/*               USER INFORMATION                 */
+						//------------------------------------------------//
+						          /****** PRIMARY USER *******/
 						int primaryUserID = primaryUser.getUserRecordID();
 						
-							  // secondary user 
-						User secondaryUser = uh.getUserInfo(secondaryMyID);
+							     /****** SECONDARY USER ******/
+						User secondaryUser = uh.getUserInfoFromMyID(secondaryMyID);
 						int secondaryUserID = secondaryUser.getUserRecordID();
 						
 						System.out.println("SECONDARY USER INFO FROM SEARCH CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
@@ -148,14 +150,14 @@ public class UserSearchServlet3 extends HttpServlet {
 						// check if reservation is available
 						ReservationSelectQuery rsq = new ReservationSelectQuery();
 						rsq.doReservationRead(startDate, startTime, roomNumber);
-						String reservationCheck = rsq.doReservationResults();
+						String reservationCheck = rsq.doReservationResults(); // reserveID is return if there is a reservation
 						
 						// a returned value = the room was reserved at the time
 						// an empty result set/string =  the room is free at the time
 						if(!reservationCheck.isEmpty()){ // the room the user selected is reserved
 							
-							msg = "Another user just reserved this room at this time.  Please select another time. "
-									+ "";
+							msg = "Another user just reserved this room at this time.  Please select another time. ";
+				
 							url = "user/searchConfirm.jsp";
 							
 						} else { // the room selected is not reserved = make a reservation

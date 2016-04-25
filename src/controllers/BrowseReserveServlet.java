@@ -77,7 +77,7 @@ public class BrowseReserveServlet extends HttpServlet {
 				// Check to see if user has reservations. Get sum of hour increment.
 				//------------------------------------------------------------------//
 				HourCountSelectQuery hcsq = new HourCountSelectQuery();
-				hcsq.doIncrementRead(userID);
+				hcsq.doIncrementRead(userID, buildingID);
 				int incrementSum = hcsq.incrementResult();
 				System.out.println("PRINT OF THE HOUR INCREMENT SUM in BrowseReserveServlet: " + incrementSum);
 				
@@ -102,8 +102,8 @@ public class BrowseReserveServlet extends HttpServlet {
 				} else if (incrementSum >= 2){ 
 					// either 2 1-hour reservations or 1 2-hour reservation was made
 					// user has reached 2 hour max for the day
-					msg = "You have exceeded the maximum hours (2) for reservations for today.  <br>"
-							+ "To make a reservation for another time for today, please cancel one of your current reservations first.";
+					msg = "You have reached the maximum hours (2 hours) for reservations today.  <br>"
+							+ "Please cancel one of your reservations first to make another for a different time.";
 					url = "user/browse.jsp"; 
 					
 				} 
@@ -128,7 +128,7 @@ public class BrowseReserveServlet extends HttpServlet {
 				session.setAttribute("incrementSelect", incrementSelect);
 				
 				// This prevents the user from going back to this page after they make a reservation.
-				CASLogoutServlet.clearCache(request, response);
+				//CASLogoutServlet.clearCache(request, response);
 				
 			} else {
 				//------------------------------------------------//

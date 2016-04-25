@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import helpers.RoomsSelectQuery;
 import model.Admin;
+import model.DbConnect;
 
 /**
  * Servlet implementation class RoomEditServlet
@@ -52,47 +53,95 @@ public class RoomEditServlet extends HttpServlet {
 		String table = "";
 		String message = "";
 			
-		//get our current session
-		session = request.getSession();
-
-		message = (String) request.getAttribute("message"); 
-		// blank message if nothing gotten in message attribute		
-		if (message == null || message.isEmpty()) {
-			 message = "";
-		}
-		
-		// create admin user object w/ session data on the logged in user's info
-		Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
+		// get the current session
+		session = request.getSession(false);
 	
-		// hidden parameters to use and to pass on
-		int roomID = Integer.parseInt(request.getParameter("roomID")); 
-		int buildingID = Integer.parseInt(request.getParameter("buildingID")); 
-		String cancelAction = request.getParameter("cancelAction"); 
 		
-		System.out.println("RoomEditServlet: roomID = " + roomID);
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
 
-		/*
-		 * create a table of a form with all the room's data pre-populated
-		 * in it to edit
-		 */
-		 
-		RoomsSelectQuery rsq = new RoomsSelectQuery();	
-		table = rsq.createEditRoomForm(roomID, cancelAction);
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
+				
+				// get info for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+				
+					message = (String) request.getAttribute("message"); 
+				
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}				
+	
+					// hidden parameters to use and to pass on
+					int roomID = Integer.parseInt(request.getParameter("roomID")); 
+					int buildingID = Integer.parseInt(request.getParameter("buildingID")); 
+					String cancelAction = request.getParameter("cancelAction"); 
+					
+					System.out.println("RoomEditServlet: roomID = " + roomID);
+					
+					// create a pre-populated form for the admin to edit a room
+					RoomsSelectQuery rsq = new RoomsSelectQuery();	
+					table = rsq.createEditRoomForm(roomID, cancelAction);					
+					
+					//forward our request along
+					request.setAttribute("table", table);
+					request.setAttribute("message", message);
+					request.setAttribute("loggedInAdminUser", loggedInAdminUser);
+			
+					url = "admin/roomEdit.jsp";	
+						
+						
+				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+					
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
+				}
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 		
-		
-		//forward our request along
-		request.setAttribute("table", table);
-		request.setAttribute("message", message);
-		request.setAttribute("loggedInAdminUser", loggedInAdminUser);
-
-		url = "admin/roomEdit.jsp";	
+		} else { // there isn't an active session (session == null).
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+			
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
+		}
+					
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-
 	
-		
-
-		
 	}
 
 }

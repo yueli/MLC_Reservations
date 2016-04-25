@@ -3,7 +3,7 @@ package model;
 public class Banned {
 	
 		private int banID;
-		private int studentID;
+		private int userRecdID;
 		private int adminID;
 		private String banStart;
 		private String banEnd;
@@ -19,7 +19,7 @@ public class Banned {
 				String description, int status) {
 			super();
 			this.banID = banID;
-			this.studentID = studentID;
+			this.userRecdID = userRecdID;
 			this.adminID = adminID;
 			this.banStart = banStart;
 			this.banEnd = banEnd;
@@ -31,7 +31,7 @@ public class Banned {
 		public Banned(int studentID, int adminID, String banStart, String banEnd, int penaltyCount,
 				String description, int status) {
 			super();
-			this.studentID = studentID;
+			this.userRecdID = userRecdID;
 			this.adminID = adminID;
 			this.banStart = banStart;
 			this.banEnd = banEnd;
@@ -46,11 +46,11 @@ public class Banned {
 		public void setBanID(int banID) {
 			this.banID = banID;
 		}
-		public int getStudentID() {
-			return studentID;
+		public int getUserRecdID() {
+			return userRecdID;
 		}
-		public void setStudentID(int studentID) {
-			this.studentID = studentID;
+		public void setUserRecdID(int userRecdID) {
+			this.userRecdID = userRecdID;
 		}
 		public int getAdminID() {
 			return adminID;
@@ -90,7 +90,7 @@ public class Banned {
 		}
 		@Override
 		public String toString() {
-			return "Banned [banID=" + banID + ", studentID=" + studentID + ", adminID=" + adminID + ", banStart="
+			return "Banned [banID=" + banID + ", studentID=" + userRecdID + ", adminID=" + adminID + ", banStart="
 					+ banStart + ", banEnd=" + banEnd + ", penaltyCount=" + penaltyCount + ", description="
 					+ description + ", status=" + status + "]";
 		}

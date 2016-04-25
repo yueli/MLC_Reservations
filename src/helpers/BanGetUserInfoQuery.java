@@ -1,3 +1,8 @@
+/**
+ * @author: Ginger Nix
+ * This class contains methods for banning a user
+ */
+
 package helpers;
 
 import java.sql.Connection;
@@ -11,15 +16,9 @@ import model.User;
 
 public class BanGetUserInfoQuery {
 	
-	/**
-	 * Prepared SQL statement (combats: SQL Injections)
-	 */
-
 	private Connection connection;
 	private ResultSet results;
-	private ResultSet banResults;
 	private ResultSet adminResults;
-	//private int numRecords;
 	public String banDescription ="";
 
 	/**
@@ -43,18 +42,58 @@ public class BanGetUserInfoQuery {
 	}
 	
 	
-
-//-------------
+	/**
+	 * The method userData takes a user recd id and gets the user data
+	 * @author: Ginger Nix
+	 * @parameters: the user table record's id
+	 * @return: a User object w/ the user's info
+	 */
 	
-/*
- * Get User Data
- */
 	 public User userData(int userID){
 		
 		User userData = new User();
-		String query = "SELECT User.userID,User.myID,User.fname,User.lname,User.email,User.lastLogin FROM tomcatdb.User WHERE User.userID = "+userID+";";
+		String query = "SELECT * "
+				+ "FROM tomcatdb.User "
+				+ "WHERE userID = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setInt(1, userID);
+			
+			this.results = ps.executeQuery();
+			while(this.results.next()){
+				userData.setUserRecordID(this.results.getInt("user.userID"));
+				userData.setMyID(this.results.getString("user.myID"));
+				userData.setUserFirstName(this.results.getString("user.fname"));
+				userData.setUserLastName(this.results.getString("user.lname"));
+				userData.setUserEmail(this.results.getString("user.email"));
+				userData.setLastLogin(this.results.getString("user.lastLogin"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
+		}
+		
+		return userData;
+	}
+	
+	 /**
+	  * This method takes the user's MyID and looks gets the user's info from the user table
+	 * @author: Ginger Nix
+	 * @parameters: the user MyID
+	 * @return: a User object w/ the user's info
+	 */
+	 
+	 public User userDataWithMyID(String MyID){
+			
+		User userData = new User();
+		String query = "SELECT * "
+					+ "FROM tomcatdb.User WHERE User.myID = ?";
+		
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, MyID);
+			
 			this.results = ps.executeQuery();
 			while(this.results.next()){
 				userData.setUserRecordID(this.results.getInt("user.userID"));
@@ -73,13 +112,23 @@ public class BanGetUserInfoQuery {
 		return userData;
 	}
 	 
-	 
+	/**
+	* The method userData takes an admin user's admin record ID and
+	* returns the admin object w/ the admin's data
+	* @author: Ginger Nix
+	* @parameters: the admin table record's id
+	* @return: an Admin object w/ the admin's info
+	*/
+		 
 	 public Admin adminData(int adminID){
 			
 			Admin adminData = new Admin();
-			String query = "SELECT Admin.adminID,Admin.adminMyID,Admin.fname,Admin.lname,Admin.role,Admin.adminStatus,Admin.cantBeDeleted FROM tomcatdb.Admin WHERE Admin.adminID = "+adminID+";";
+			String query = "SELECT * "
+					+ "FROM tomcatdb.Admin WHERE Admin.adminID = ?";
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
+				ps.setInt(1, adminID);
+				
 				this.adminResults = ps.executeQuery();
 				while(this.adminResults.next()){
 					adminData.setAdminID(this.adminResults.getInt("Admin.adminID"));
@@ -94,44 +143,11 @@ public class BanGetUserInfoQuery {
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
+				System.out.println("****Error - BanGetUSerQuery: adminData query = " + query);
 			}
 			
 			return adminData;
-		}
-	 
-	 /*
-	  * Check if user is already banned
-	  */
-	 public boolean isUserBannedAlready(int userID){
-		 boolean banned = false;
-		 	
-		 
-		 String query = "SELECT Banned.bannedID,Banned.User_userID,Banned.Admin_adminID,Banned.banStart,Banned.banEnd,Banned.penaltyCount,Banned.description,Banned.status FROM tomcatdb.Banned WHERE Banned.status = 1 AND Banned.User_userID = "+userID+";";
-			try {
-				PreparedStatement ps = this.connection.prepareStatement(query);
-				this.banResults = ps.executeQuery();
-				while(this.banResults.next()){
-					
-					int tempUserID = this.banResults.getInt("banned.User_userID");
-					int status = this.banResults.getInt("banned.status");
-					if(status==1 && userID == tempUserID){
-						banned = true;
-						banDescription = this.banResults.getString("banned.description");
-					}
-					
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("****Error in UserHelper.java: inUserTable method. Query = " + query);
-			}
-			
-			return banned;
-		}
-	 
-	 
-	 
+		} 
 	 
 
 }

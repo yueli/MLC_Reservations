@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.AdminUpdateQuery;
 import model.Admin;
 import model.DbConnect;
-import model.Schedule;
 import model.TimeConverter;
 
 /**
@@ -64,15 +62,12 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					/*              EDIT SCHEDULE CONT.               */
 					//------------------------------------------------//
 					
-					System.out.println(request.getRequestURI());
-					String msg = "";
-					
-					TimeConverter tc = new TimeConverter();
+					session.removeAttribute("scheduleHeader");
 					
 					// values passed from schedule.jsp/AdminScheduleSelectQuery
 					String scheduleID = request.getParameter("scheduleID");
 					String buildingName = request.getParameter("buildingName");
-					String buildingID = request.getParameter("buildingID");
+					String buildingID = (String) session.getAttribute("buildingID");
 					String startTime = request.getParameter("startTime");
 					String endTime = request.getParameter("endTime");
 					String startDate = request.getParameter("startDate");
@@ -86,6 +81,10 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					String endTimeEdit  = request.getParameter("endTimeEdit");
 					String summaryEdit  = request.getParameter("summaryEdit");
 					
+					// Others
+					TimeConverter tc = new TimeConverter();
+					String msg = "";
+					String newSchedule = "";
 					
 					// null check for variables coming in from Admin Schedule Edit Servlet & schedule-edit.jsp
 					if (buildingName != null && buildingID != null && startTime != null && 
@@ -97,39 +96,22 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 						// forward to edit the schedule 
 						url = "admin/schedule-edit.jsp";
 						
-						// null check for variables coming in from schedule-edit.jsp (admin edited variables)
-						if (startDateEdit != null && startTimeEdit != null && endTimeEdit != null && summaryEdit != null){
-							// get scheduleID from session
-							scheduleID = (String) session.getAttribute("scheduleID");
+						if(startDate == null || startDate.isEmpty()){
 							
-							// place variables from jsp (user altered) into standard variables
-							// the start and end date have to be the same
-							startDate = startDateEdit;
-							endDate = startDateEdit;
+							msg = "Please enter a date. A date is required.";
+							url = "admin/schedule-edit.jsp";
 							
-							// convert from 24-hour time
-							startTimeEdit = tc.convertTimeTo24(startTimeEdit);
-							startTime = startTimeEdit;
-						
-							// convert to 24-hour time
-							endTimeEdit = tc.convertTimeTo24(endTimeEdit);
-							endTime = endTimeEdit;
+						} else if (startTime == null || startTime.isEmpty() || endTime == null || endTime.isEmpty()){
 							
-							summary = summaryEdit;
-							createdBy = "admin"; // notate that admin made a change in database
+							msg = "Please enter start time <b>and</b> end time.";
+							url = "admin/schedule-edit.jsp";
 							
-							msg = "Successfully edited";
+						} else if (summary == null || summary.isEmpty()){
 							
-							// Update Schedule edits into database
-							int scheduleInt = Integer.parseInt(scheduleID);
-							Schedule schedule = new Schedule(scheduleInt, startDate, endDate,
-									startTime, endTime, summary, createdBy);
-							AdminUpdateQuery suq = new AdminUpdateQuery();
-							suq.doScheduleUpdate(schedule);
-							
-							url = "Schedule";
+							msg = "Please enter a summary.  A summary is required.";
+							url = "admin/schedule-edit.jsp";
 						} else {
-							msg = "All values must be entered.";
+							
 							url = "admin/schedule-edit.jsp";
 						}
 						
@@ -144,6 +126,7 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 						this.session.setAttribute("endDate", endDate);
 						this.session.setAttribute("summary", summary);
 						this.session.setAttribute("createdBy", createdBy);
+						this.session.setAttribute("schedule", newSchedule);
 					}
 						
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 

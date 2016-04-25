@@ -51,26 +51,30 @@
 		</script> 
 	</head>
 	<body>
-			<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-		<div align="center">
-			<h2>Add Building Hours</h2><br>
-			<h3>Adding opening and closing hours for a building. <br>
+		<!-- Header -->
+		<div id="header1"></div>
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
+			<h2 align="center">Add Building Hours</h2><br>
+			<h3 align="center">Adding opening and closing hours for a building. <br>
 			Please enter all information below to add hours to a building.</h3><br>
-			<h3>${msg}</h3>
-			<p>${buildings}</p>
+			<h3 align="center">${msg}</h3>
 			<form name="scheduleForm" action="new-schedule" method="post">
-				Start Date: <input type="text" id="startDate" name="startDate" value=""><br>
-				End Date: <input type="text" id="endDate" name="endDate" value=""><br>
-				Start Time: <input type="text" id="startTime" name="startTime" value=""><br>
-				End Time: <input type="text" id="endTime" name="endTime" value=""><br>
-				Summary: <input type="text" name="summary" value=""><br><br>
+				${buildings}<br>
+				Start Date: <input type="text" id="startDate" name="startDate" value="" required><br>
+				End Date: <input type="text" id="endDate" name="endDate" value="" required><br>
+				Start Time: <input type="text" id="startTime" name="startTime" value="" required><br>
+				End Time: <input type="text" id="endTime" name="endTime" value="" required><br>
+				Summary: <input type="text" name="summary" value="" required><br><br>
 				<a href="Schedule"><button class="btn btn-lg btn-red" type="button" value="Schedule">View Building Hours</button></a>  <input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter"> <br>
 			</form>
 			    
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

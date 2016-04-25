@@ -62,6 +62,10 @@ public class AdminReservationsServlet extends HttpServlet {
 					
 					// remove message 
 					session.removeAttribute("msg");
+					session.removeAttribute("table");
+					session.removeAttribute("startDate");
+					session.removeAttribute("endDate");
+					session.removeAttribute("reserveName");
 					
 					//------------------------------------------------//
 					/*               VIEW FOR ADMIN                   */
@@ -98,11 +102,15 @@ public class AdminReservationsServlet extends HttpServlet {
 						}
 					} 
 					
+					String startTime = "00:00:00";
+					String endTime = "00:00:00";
 					
 					// forwarding URL
 					url = "admin/reservations.jsp";
 					
 					// set session and request variables
+					session.setAttribute("startTime", startTime);
+					session.setAttribute("endTime", endTime);
 					session.setAttribute("adminUser", loggedInAdminUser);
 					session.setAttribute("buildingID", buildingID);
 					session.setAttribute("buildings", buildings);
@@ -143,7 +151,7 @@ public class AdminReservationsServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			//url = "LoginServlet";
+			session.invalidate();
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

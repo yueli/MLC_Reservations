@@ -54,6 +54,7 @@ public class TimeConverter {
 	/**
 	 * Convert time from 24-hour HH:mm format to 12- hour h:mm a format.
 	 * @return String: the converted time from 24-hour format
+	 * @author Brian Olaogun
 	 */
 	public String convertTimeTo12(){
 
@@ -93,6 +94,7 @@ public class TimeConverter {
 	/**
 	 * Convert time from 12-hour hh:mma or hh:mm format to 24-hour HH:mm:ss format.
 	 * @return converted time from 12 hour to 24 hour format
+	 * @author Brian Olaogun
 	 */
 	public String convertTimeTo24(){
 		this.time = this.time.replaceAll("\\s+",""); // remove leading and trailing whitespace as well whitespace within string
@@ -113,6 +115,7 @@ public class TimeConverter {
 	 * Convert time from 12-hour hh:mma or hh:mm format to 24-hour HH:mm:ss format.
 	 * @param time String in 12-hour format
 	 * @return converted time from 12 hour to 24 hour format
+	 * @author Brian Olaogun
 	 */
 	public String convertTimeTo24(String time){
 		time = time.trim().replaceAll("\\s+",""); // remove leading and trailing whitespace as well whitespace within string
@@ -137,6 +140,7 @@ public class TimeConverter {
 	 * @param reserveStartTime start time
 	 * @param hourIncrement the number to add to the start time
 	 * @return endTime the result of adding the hour increment and the time
+	 * @author Brian Olaogun
 	 */
 	public static String addTime(String reserveStartTime, int hourIncrement){
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -164,9 +168,11 @@ public class TimeConverter {
 	/**
 	 * This method will subtract the hours of a start time by the reservation length (hour)
 	 * For example, 23:00:00 - 2 = 21:00:00
+	 * This mehod subtracts the hour only.
 	 * @param time String time in HH:mm:ss (24-hour) SQL format
 	 * @param hourIncrement Integer reservation length
 	 * @return The difference from of the start time - reservation length (hour increment)
+	 * @author Brian Olaogun
 	 */
 	public static String subtractTime (String time, int hourIncrement){
 		String newTime; // the result of adding a second to inputted time
@@ -210,21 +216,33 @@ public class TimeConverter {
 	}
 	/**
 	 * This method will count the number of hours between start and end time.
-	 * @param reserveStartTime String start time
-	 * @param reserveEndTime String end time
+	 * @param reserveStartTime String start time in HH:mm:ss (24-hour) format
+	 * @param reserveEndTime String end time in HH:mm:ss (24-hour) format
 	 * @return Int hour increment - the number of hours between start and end time
+	 * @author Brian Olaogun
 	 */
 	public Integer getHourIncrement(String reserveStartTime, String reserveEndTime){
-		List<String> times = timeRangeList(reserveStartTime, reserveEndTime);
-		int hourIncrement = (times.size()-1);
+		int hourIncrement;
+		if (reserveStartTime.equals("00:00:00") && reserveEndTime.equals("00:00:00")){
+			
+			hourIncrement = 24;
+		
+		} else {
+			
+			List<String> times = timeRangeList(reserveStartTime, reserveEndTime);
+			hourIncrement = (times.size()-1);
+			
+		}
 	
 		return hourIncrement;
 	}
 	/**
 	 * This method will return an array list of all values inclusive between start time and end time
+	 * for times on the hour (both start and end).
 	 * @param startTime String starting time in 24-hour format
 	 * @param endTime String ending time in 24-hour format
 	 * @return String array list of all values inclusive between start time and end time
+	 * @author Brian Olaogun
 	 */
 	public List<String> timeRangeList (String startTime, String endTime){
 		// integer to place the parsed hour from the time.
@@ -275,6 +293,7 @@ public class TimeConverter {
 	 * time overlap.
 	 * @param time in format 00:00:00
 	 * @return inputted time with one second subtracted
+	 * @author Brian Olaogun
 	 */
 	public static String subtractOneSecondToTime (String time){
 		String newTime; // the result of adding a second to inputted time
@@ -321,6 +340,7 @@ public class TimeConverter {
 	 * is more user friendly when displayed on the website.
 	 * @param time in 00:00:00 24-hour format
 	 * @return inputted time with one second subtracted
+	 * @author Brian Olaogun
 	 */
 	public static String addOneSecondToTime (String time){
 		String newTime; // the result of adding a second to inputted time
@@ -365,8 +385,62 @@ public class TimeConverter {
 		return null;
 	}
 	/**
+	 * Parse the hour from the current time.
+	 * @return the hour of the current time.
+	 * @author Brian Olaogun
+	 */
+	public Integer currentHour(){
+		DateTimeConverter dtc = new DateTimeConverter();
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int hour;
+		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+		
+		// parse out minute from time in HH:mm:ss format.
+		try {
+			Date convertCurrentTime = _24HourTimeFormat.parse(currentTime);
+			hour = Integer.parseInt(hourFormat.format(convertCurrentTime));
+			return hour;
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get the hour of the inputted time.
+	 * @param time String time in HH:mm:ss (24-Hour) format.
+	 * @return The hour of the inputted time.
+	 * @author Brian Olaogun
+	 */
+	public Integer parseHour(String time){
+		DateTimeConverter dtc = new DateTimeConverter();
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out hour
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int hour;
+		String currentTime = dtc.parsedTimeTo24(dtc.datetimeStamp());
+		
+		// parse out minute from time in HH:mm:ss format.
+		try {
+			Date convertCurrentTime = _24HourTimeFormat.parse(currentTime);
+			hour = Integer.parseInt(hourFormat.format(convertCurrentTime));
+			return hour;
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * This method will only return the minutes from the current time.
 	 * @return minutes - parsed minutes from the current time.
+	 * @author Brian Olaogun
 	 */
 	public int currentMinutes(){
 		DateTimeConverter dtc = new DateTimeConverter();
@@ -389,6 +463,42 @@ public class TimeConverter {
 		
 		
 		return 0;
+	}
+	/**
+	 * This method will check to see if the start time greater than the end time if
+	 * the start and end time are on the hour.
+	 * @param startTime
+	 * @param endTime
+	 * @return true if the start time is > end time.
+	 * @author Brian Olaogun
+	 */
+	public static boolean isAfter (String startTime, String endTime){
+		SimpleDateFormat hourFormat = new SimpleDateFormat("HH"); // for parsing out minutes
+		SimpleDateFormat _24HourTimeFormat = new SimpleDateFormat("HH:mm:ss"); // for formatting inputted string & to format result
+		
+		int startHour;
+		int endHour;
+		
+		try {
+			Date convertStartTime = _24HourTimeFormat.parse(startTime);
+			String parsedStartHour = hourFormat.format(convertStartTime);
+			startHour = Integer.parseInt(parsedStartHour);
+			
+			Date convertEndTime = _24HourTimeFormat.parse(endTime);
+			String parsedEndHour = hourFormat.format(convertEndTime);
+			endHour = Integer.parseInt(parsedEndHour);
+			
+			if (startHour > endHour){
+				return true;
+			}
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println("**Unable to compare time in TimeConverter.isAfter**");
+		}
+		
+		return false;
+			
 	}
 	
 	/**
@@ -416,9 +526,11 @@ public class TimeConverter {
 			String time = times.get(i);
 			System.out.println("Time is ..." + time);
 		}
-		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("09:00:00", "11:00:00"));
+		System.out.println("HOUR INCREMENT METHOD = " + tc.getHourIncrement("08:00:00", "00:00:00"));
 		
-		System.out.println("TEST NEW subtract time = " + TimeConverter.subtractTime("00:00:00", 1));
+		System.out.println("TEST subtract time method = " + TimeConverter.subtractTime("00:00:00", 1));
+		
+		System.out.println("TEST is after Method " + TimeConverter.isAfter("12:00:00", "11:00:00"));
 		
 	}
 

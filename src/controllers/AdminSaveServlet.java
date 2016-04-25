@@ -57,16 +57,33 @@ public class AdminSaveServlet extends HttpServlet {
 		String message = "";
 		boolean update = true;
 		
-		//get our current session
-		this.session = request.getSession(false); 
 		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
-			
-			// create admin user object w/ session data on the logged in user's info
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser");
-			
-			System.out.println("AdminSaveServlet: logged in admin user's record ID = " + loggedInAdminUser.getAdminID());
+		// get the current session
+		session = request.getSession(false);
+	
+		
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
+
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
+				
+				// get info for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+				
+					message = (String) request.getAttribute("message"); 
+				
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+				
+		System.out.println("AdminSaveServlet: logged in admin user's record ID = " + loggedInAdminUser.getAdminID());
 			
 			Admin adminUserBeingEdited = new Admin();
 			
@@ -137,16 +154,47 @@ public class AdminSaveServlet extends HttpServlet {
 				request.setAttribute("loggedInAdminUser", loggedInAdminUser);
 	
 			}
-		
-		} else { // there isn't an active session.
+					
+			}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+				//------------------------------------------------//
+				/*                VIEW FOR CLERK                  */
+				//------------------------------------------------//
+				
+				// forwarding URL
+				url = "AdminViewReservations";
+				
+			} else {
+				//------------------------------------------------//
+				/*              NOT A VALID ROLE                  */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
+		} else {
 			//------------------------------------------------//
-			/*        INVALID SESSION (SESSION == NULL)       */
+			/*            ADMIN USER INFO EXPIRED             */
 			//------------------------------------------------//
-			// if session has timed out, go to home page
-			// the site should log them out.
-
+			// if a new session is created with no user object passed
+			// user will need to login again
+			session.invalidate();
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
+		}
+		
+		} else { // there isn't an active session (session == null).
+		//------------------------------------------------//
+		/*        INVALID SESSION (SESSION == NULL)       */
+		//------------------------------------------------//
+		// if session has timed out, go to home page
+		// the site should log them out.
+		
+		response.sendRedirect(DbConnect.urlRedirect());
+		return;
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

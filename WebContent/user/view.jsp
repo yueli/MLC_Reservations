@@ -5,12 +5,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%
-    String table = (String) request.getAttribute("table");
-	String message = (String) request.getAttribute("message");
-%> 
-    
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +18,7 @@ form {
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Reservations View</title>
+<title>View Reservations</title>
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -56,19 +51,18 @@ form {
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-		<br>
-		<br>
-
-<div align="center">
-		<h2>Reservations for: 
-			${user.userFirstName} 
-			${user.userLastName}
-		</h2>
-			<%= message %>
-			<%= table %>
-</div>
-
+		<br><br>
+		
+		<!-- Content -->
+		
+			${table}
+			${message}
+			
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer1"></div>
 	</body>
 </html>

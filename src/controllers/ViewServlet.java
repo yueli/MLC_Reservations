@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Admin;
+import model.DbConnect;
 //import org.apache.tomcat.jni.User;
 import model.User;
 
@@ -63,75 +65,80 @@ public class ViewServlet extends HttpServlet {
 		
 		String message = " ";
 		String table = "";
+				
+		// get current session
+		session = request.getSession(false);
+		
+		// If session is active/valid
+		if(session != null){
+			User user = (User) session.getAttribute("user");
+			 
+			if(user != null) { // run code if user object is not null
+					message = (String) request.getAttribute("message"); 
+					
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+					ListUserReservationsQuery lurq = new ListUserReservationsQuery();
+		
+					// get all the reservations the user has primary and secondary
+					// and put them into a table. If no reservations, send message
+					
+					try {
+						System.out.println("Fell into try/catch");
+						table = lurq.ListUserReservations(user.getUserRecordID());
+					}
+					catch (Exception e){
+						System.out.println("Inside catch");
+						table = "";
+					}
+					
+					System.out.println("After try/catch");
+					
+					if(table == null || table.isEmpty()){
+						message="<div align='center'><h3> You have no current reservations. </h3></div>";
+						System.out.println("View Servlet: no records found");
+						
+					}
+					else {
+						System.out.println("View Servlet: something in table ");
+						
+					}
+					
+					url = "user/view.jsp";
+					//forward our request along
+					request.setAttribute("user", user);
+					request.setAttribute("table", table);
+					request.setAttribute("message", message);
 
-		
-		//get our current session
-		session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		
-		System.out.println("+++++:View Servlet: message BEFORE GETTING FROM SESSION= " + message);
-	
-		message = (String) session.getAttribute("message"); 
-		System.out.println("+++++:View Servlet: message AFTER GETTING FROM SESSION= " + message);
-
-		// blank message if nothing gotten in message attribute
-		
-		if (message == null || message.isEmpty()) {
-			 message = "";
-		}
-		
-		// if from the Cancel Confirmation Servlet via go back to view w/o cancelling
-		// need to clear out message
-		String noCancel = request.getParameter("noCancel");
-
-		if(noCancel == null || noCancel.isEmpty()){
-			session.removeAttribute("message");
-		}
-		
-		System.out.println("+++++:View Servlet: message AFTER = " + message);
-
-		
-		ListUserReservationsQuery lurq = new ListUserReservationsQuery();
-		
-		
-		
-		//see how many records the student has, and if none, set error message, and if has at least one, 
-		//put reservations found in a table
-		System.out.println("Before try/catch");
-		
-		try {
-			System.out.println("Fell into try/catch");
-			table = lurq.ListUserReservations(user.getUserRecordID());
-		}
-		catch (Exception e){
-			System.out.println("Inside catch");
-			table = "";
-		}
-		
-		System.out.println("After try/catch");
-		
-		if(table == null || table.isEmpty()){
-			message="<div align='center'><h3> You have no current reservations. </h3></div>";
-			System.out.println("View Servlet: no records found");
+			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				
+				session.invalidate();
+				CASLogoutServlet.clearCache(request, response);
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 			
-		}
-		else {
-			System.out.println("View Servlet: something in table ");
-			
-		}
-
-		//forward our request along
-		request.setAttribute("user", user);
-		request.setAttribute("table", table);
-		request.setAttribute("message", message);
+		} else {
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
 		
-		System.out.println("+++++:View Servlet: message AT END = " + message);
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
+		}
 
-		url = "user/view.jsp";	
+					
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
-		
 	}
-
 }

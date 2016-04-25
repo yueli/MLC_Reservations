@@ -1,6 +1,6 @@
 /** @author: Ginger Nix
  * 
- * The CancelConfirmServlet is called when a user clicks the cancel rervation button
+ * The CancelConfirmServlet is called when a user clicks the cancel reservation button
  * next to the reservation they want to cancel. It gets the user's reservation data and sends 
  * it to a jsp where the reservation is displayed and the user confirms that they want to cancel this reservation.
  * 
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.ListUserReservationsQuery;
+import model.Admin;
 import model.DbConnect;
 import model.Reservation;
 import model.User;
@@ -54,44 +55,63 @@ public class CancelConfirmServlet extends HttpServlet {
 		String table = "";
 		String message = " ";
 				
-		//get our current session
-		this.session = request.getSession(false); 
+		// get current session
+		session = request.getSession(false);
 		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
-		
+		// If session is active/valid
+		if(session != null){
 			User user = (User) session.getAttribute("user");
-			int userRecdID = user.getUserRecordID();
-			
-			Reservation reservation = new Reservation();
-			
-			reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
-			System.out.println("CancelConfServ - resv_id = "+ reservation.getReserveID());
-			
-			// have reserve id from the parameter passed from view.jsp
-			// use reserve id to get the rest of the record's data and format into a table	
-			ListUserReservationsQuery lurq = new ListUserReservationsQuery();
-			table = lurq.GetUserReservation(reservation.getReserveID(),userRecdID);
-			
-			System.out.println("CancelConfirmServlet: table = " + table);
-			//forward our request along
-			request.setAttribute("user", user);
-			request.setAttribute("table",table);
-			request.setAttribute("message",message); 
-			
-			url = "user/confirmCancellation.jsp";	
-			
+			 
+			if(user != null) { // run code if user object is not null
 		
-		} else { // there isn't an active session.
+					message = (String) request.getAttribute("message");	
+					
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+
+					int userRecdID = user.getUserRecordID();
+					
+					Reservation reservation = new Reservation();
+					
+					reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
+					
+					// have reserve id from the parameter passed from view.jsp
+					// use reserve id to get the rest of the record's data and format into a table	
+					ListUserReservationsQuery lurq = new ListUserReservationsQuery();
+					table = lurq.GetUserReservation(reservation.getReserveID());
+					
+					//forward our request along
+					request.setAttribute("user", user);
+					request.setAttribute("table",table);
+					request.setAttribute("message",message); 
+					
+					url = "user/confirmCancellation.jsp";	
+			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				
+				session.invalidate();
+				CASLogoutServlet.clearCache(request, response);
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
+			
+		} else {
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-
+		
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
+	
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

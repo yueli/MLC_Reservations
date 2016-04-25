@@ -34,6 +34,7 @@
 			// jQuery for datepicker plugin
 			$(function() {
 			    $( "#startDate" ).datepicker({
+			      minDate: 0,
 			      defaultDate: null,
 			      changeMonth: true,
 			      numberOfMonths: 3,
@@ -57,25 +58,28 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-	<br>
-	<br>
-	<br>
-		<div align="center">
+		<br><br><br>
+		
+		<!-- Content -->
+		<div class="centerdiv">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
-				<h2>Make a Reservation</h2><br>
-				<h3>Please select a building, date, start and end time for your reservation.<br>
-				Please also enter the name or group the room is reserved under.</h3><br>
-				<p>${msg}</p>
+				<h2 align="center">Make a Reservation</h2><br>
+				<h3 align="center">Please enter all information below to make a reservation.</h3><br>
+				<h3 align="center">${msg}</h3><br>
 				Building ${buildings}<br>
 				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
-				<a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> 
+				<a href="AdminViewReservations"><button align="center" class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> 
 			</form>
 			<p>${table}</p>
 		</div>
+		<!-- End Content -->
+		
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

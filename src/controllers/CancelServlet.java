@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import helpers.CancelQuery;
+import model.Admin;
 import model.DbConnect;
 import model.Reservation;
 import model.User;
@@ -53,44 +54,76 @@ public class CancelServlet extends HttpServlet {
 		
 		String message = "";		  
 
-		//get our current session
-		this.session = request.getSession(false); 
-		
-		// if this session is not null (active/valid)
-		if (this.session != null){	
-						
+		System.out.println("CancelServlet: at beg before checks");
+		// get the current session
+		// get the current session
+		session = request.getSession(false);
+	
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
 			User user = (User) session.getAttribute("user");
 			
-			Reservation reservation = new Reservation();
-			reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
+			System.out.println("CancelConfirmServlet: ");
 			
-			CancelQuery cq = new CancelQuery();
-			cq.cancelReservation(reservation.getReserveID());
-			
-			// cancel reservation, then go back to the view servlet to get 
-			// the user's reservations to list again
-			
-			message += "<div align='center'><h3> Reservation has been cancelled. </h3></div>";
-			
-			//forward our request along
-			session.setAttribute("message", message);
-			session.setAttribute("user", user);
+			if(user != null) { // run code if user object is not null				
+					message = (String) request.getAttribute("message");	
+					
+					// blank the message if nothing gotten in message attribute
+					if (message == null || message.isEmpty()) {
+						 message = "";
+					}
+					
+					Reservation reservation = new Reservation();
+					int resvID = Integer.parseInt(request.getParameter("resv_id"));
+					
+					reservation.setReserveID(resvID);
+					
+
+					System.out.println("CancelServlet: calling cancelReservation rev id = " + resvID);
+					
+					CancelQuery cq = new CancelQuery();
+					cq.cancelReservation(reservation.getReserveID());
+					
+
+					System.out.println("CancelServlet: after calling cancelReservation.");
+					
+					// cancel reservation, then go back to the view servlet to get 
+					// the user's reservations to list again
+					
+					message += "<div align='center'><h3> Reservation has been cancelled. </h3></div>";
+					
+					//forward our request along
+					session.setAttribute("message", message);
+					session.setAttribute("user", user);
+						
+					url = "ViewServlet";
+					
+					System.out.println("CancelServlet: message before leaving servlet = " + message);
+					
+			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
 				
-			url = "ViewServlet";
+				session.invalidate();
+				CASLogoutServlet.clearCache(request, response);
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 			
-			System.out.println("CancelServlet: message before leaving servlet = " + message);
-		
-		} else { // there isn't an active session.
+		} else {
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-
+		
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
-		}	
-		
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}

@@ -36,18 +36,21 @@
 		</script> 
 	</head>
 	<body>
-	<div id="header1"></div>
-	<br>
-	<br>
+		<!-- Header -->
+		<div id="header1"></div>
+		<br><br><br>
+		
+		<!-- Content -->
 		<div align="center">
 			<h2>View All Reservations</h2><br>
 			<h3>Please select a building and or date to search for reservations. <br> 
 			To search by a user's MyID, please enter it in the search box.</h3><br>
-			<div id="search-container">
+			</div>
+			<div class="centerdiv" id="search-container">
 				<h2>${msg}</h2>
 				<form name="adminViewForm" action="view-reservations?update" method="post">
-					<p>Building ${buildings} Date <input type="text" name="datepicker" id="datepicker">
-					<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
+					<p>Building ${buildings} <br> Date <input type="text" name="datepicker" id="datepicker">
+					<input align="center" class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
 				</form>
 			</div>
 			<br>
@@ -59,7 +62,9 @@
 			<p>${userReservations}</p>
 		</div>
 			<br><br><br><br>
-		
+			<!-- End Content -->
+			
+		<!-- Footer -->
 		<div id="footer"></div>
 	</body>
 </html>

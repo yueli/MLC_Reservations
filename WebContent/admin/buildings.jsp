@@ -1,3 +1,7 @@
+<%--
+	@author: Ginger Nix (Ronnie Xu started it and I added css, headers, and rmvd scriptlets
+ --%>
+ 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
    
@@ -6,6 +10,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Buildings</title>
+		
 		<!-- JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -36,19 +41,13 @@
 		</script> 
 	</head>
 	<body>
+		<!-- Header -->
 		<div id="header1"></div>
-		<br>
-		<br>
-		<div align="center">
-		<h2>Buildings</h2><br>
-		<h3>Listing of all buildings currently added to the site.  <br>
- -		Edit buildings, hours, or rooms.</h3>
-		<br><br>
-		<a href='buildingform'><button class='btn btn-lg btn-red' type='submit' value='EditHours'>Add Building</button></a>
-		<br /><br />
+	<br />
+		${message}
 
-		<p>${table}</p>
-		</div>
+		${table}
+
 		<div id="footer"></div>
 	</body>
 </html>

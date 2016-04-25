@@ -65,7 +65,12 @@ public class AdminScheduleEditServlet extends HttpServlet {
 					//------------------------------------------------//
 					
 					// remove message 
+					System.out.println();
+					System.out.println("----");
 					session.removeAttribute("msg");
+					session.removeAttribute("buildingID");
+					session.removeAttribute("startDate");
+
 					
 					// get session and request variables
 					String buildings = ""; // the string that contains the html dropdown list
@@ -75,9 +80,13 @@ public class AdminScheduleEditServlet extends HttpServlet {
 					
 					String to = request.getParameter("to");
 					String from = request.getParameter("from");
+					
 					String msg = "";
 					String schedule = "";
-					System.out.println();
+					String buildingName = "";
+					String scheduleHeader = "Please select a building and/or date to view a building's hours of operation.";
+					
+					System.out.println("Building ID in Schedule Edit 1 = " + buildingID);
 					
 					BuildingSelectQuery bsq = new BuildingSelectQuery();
 					// if there is no buildingID from request, then display building dropdown
@@ -85,9 +94,14 @@ public class AdminScheduleEditServlet extends HttpServlet {
 						buildingID = Integer.toString(bsq.getFirstBuildingID());
 						int bldg = Integer.parseInt(buildingID);
 						// query building
-						
+						scheduleHeader = "Please select a building and/or date to view a building's hours of operation.";
 						bsq.doAdminBuildingRead();
 						buildings = bsq.getBuildingResults(bldg);
+					} else {
+						
+						// buildingID is not null so make the selected building persist in drop down.
+						bsq.doAdminBuildingRead();
+						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in dropdown.
 					}
 
 					// if there is a buildingID from session, it becomes the buildingID
@@ -96,12 +110,18 @@ public class AdminScheduleEditServlet extends HttpServlet {
 						buildingID = buildingIDSelect;
 						buildings = bsq.getBuildingResults(Integer.parseInt(buildingID)); // keep value selected in dropdown.
 					} else if (buildingIDSession != null){
-						if(buildingIDSession.equalsIgnoreCase(buildingID)){
+						if(!buildingIDSession.equalsIgnoreCase(buildingID)){
 							buildingID = buildingIDSession;
+						} else {
+							buildingID = request.getParameter("buildingID");
+							bsq.doAdminBuildingRead();
+							buildings = bsq.getBuildingResults(Integer.parseInt(buildingID));
 						}
 					}
+					if (buildingID != null){
+						buildingName = bsq.getBuildingNameFromID(Integer.parseInt(buildingID));
+					}
 					
-					String buildingName = bsq.getBuildingNameFromID(Integer.parseInt(buildingID));
 					System.out.println("Building in Schedule Edit is " + buildingName + " Building ID is " + buildingID);
 					
 					// query the database to get
@@ -125,6 +145,7 @@ public class AdminScheduleEditServlet extends HttpServlet {
 					session.setAttribute("buildingID", buildingID);
 					session.setAttribute("buildings", buildings);
 					session.setAttribute("schedule", schedule);
+					session.setAttribute("scheduleHeader", scheduleHeader);
 					
 					// set the forwarding URL
 					url = "/admin/schedule.jsp";

@@ -1,28 +1,22 @@
-/* @Author Victoria Chambers */
 
 package controllers;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import helpers.ExcelCreatorBanned;
+import model.Admin;
+import model.DbConnect;
 
 /**
- * Servlet implementation class ReportsServlet
+ * This servlet will forward to the download reports jsp
+ * @author Brian Olaogun & Victoria Chambers
  */
 @WebServlet({ "/ReportsServlet", "/Reports" })
 public class ReportsServlet extends HttpServlet {
@@ -50,98 +44,66 @@ public class ReportsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.session = request.getSession(false);
-		//try{
+		
+		// check to see if there is a valid session
+		if (session != null){ // there is an active session
 
-	
-		url = "admin/downloadreports.jsp";
+			// get admin user object from session
+			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
+			if (loggedInAdminUser != null){
+				// get the role for the currently logged in admin user.
+				String role = loggedInAdminUser.getRole();
+				int status = loggedInAdminUser.getAdminStatus();
+				
+				// push content based off role
+				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
+					
+					url = "admin/downloadreports.jsp";
+					
+				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
+					//------------------------------------------------//
+					/*                VIEW FOR CLERK                  */
+					//------------------------------------------------//
+					
+					// forwarding URL
+					url = "AdminViewReservations";
+				} else {
+					//------------------------------------------------//
+					/*              NOT A VALID ROLE                  */
+					//------------------------------------------------//
+					// if a new session is created with no user object passed
+					// user will need to login again
+					session.invalidate();
+					
+					response.sendRedirect(DbConnect.urlRedirect());
+					return;
+				}
+					
+			} else {
+				//------------------------------------------------//
+				/*            ADMIN USER INFO EXPIRED             */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				session.invalidate();
+				
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 		
-		String action = request.getParameter("action");
-		if ("bannedreport".equalsIgnoreCase(action)){
-			String data = "";
-			
-			
-			PrintWriter out = response.getWriter();
-			ExcelCreatorBanned ecb = new ExcelCreatorBanned();
-			data = ecb.downloadExcel();
-			
-			// VVV For testing
-			response.setContentType("text/html");
-			out.print("TEST:" + data + "</br>");
-			// ^^^ For testing
-			
-			/**
-			 * response.setContentType("text/csv");
-			 * response.setHeader("Content-Disposition", "attachment; filename=\FILENAMEHERE.csv\"");
-			 * out.print(data.getBytes());
-			 */
-			
-			
-			
-			
-			
-			
-			// VVV OLD CODE
-			//response.setHeader("Content-Disposition", "attachment;filename=BannedStudents.csv");
-			//ServletContext ctx = getServletContext();
-			//out.println("Banned List Button Test</br>");
-			//File bannedreport = ecb.downloadExcel();
-			//out.println("data:application/octet-stream;base64," + toByteValue(bannedreport));
-			//out.println("data:application/octet-stream;base64,");
-			// ^^^ OLD CODE
-			
-			//Make Byte Buffer and write printwriter out to browser
+		} else { // there isn't an active session (session == null).
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
-		else{
 		
+		// forward the request
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		//System.out.println(request);
-		}
-		
-		
-	/**	catch {
-			null = System.out.println("No Information");
-		} */
-	
+
 	}
-
-	private Object getOutputStream() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/** private String toByteValue(File file)
-			throws IOException {
-
-		byte[] bytes = loadFile(file);
-		
-		String encodedString = new String(bytes);
-
-		return encodedString;
-	}
-
-	private static byte[] loadFile(File file) throws IOException {
-	    InputStream is = new FileInputStream(file);
-
-	    long length = file.length();
-	    if (length > Integer.MAX_VALUE) {
-	        // File is too large
-	    }
-	    byte[] bytes = new byte[(int)length];
-	    
-	    int offset = 0;
-	    int numRead = 0;
-	    while (offset < bytes.length
-	           && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
-	        offset += numRead;
-	    }
-
-	    if (offset < bytes.length) {
-	        throw new IOException("Could not completely read file "+file.getName());
-	    }
-
-	    is.close();
-	    return bytes;
-	} */
-
 }

@@ -32,7 +32,7 @@ public class UserSearchServlet2 extends HttpServlet {
      */
     public UserSearchServlet2() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	/**
@@ -80,16 +80,20 @@ public class UserSearchServlet2 extends HttpServlet {
 				
 				// check hour increment
 				HourCountSelectQuery hcsq = new HourCountSelectQuery();
-				hcsq.doIncrementRead(userID, startDate);
+				hcsq.doIncrementRead(userID, startDate, Integer.parseInt(buildingID));
 				int incrementSum = hcsq.incrementResult();
 				
 				// compare hour increment to see the user hasn't maxed out of reservations for selected dat
 				if(incrementSum == 2){
 					// user has maxed out of reservations for the day
-					msg = "You have exceeded the maximum hours (2) for reservations for today.  <br>"
-							+ "To make a reservation for another time for today, please cancel one of your current reservations first.";
+					msg = "You have reached the maximum hours (2 hours) for reservations for " + dtc.convertDateLong(startDate) + ".<br>"
+							+ "To make a reservation for another time on " + dtc.convertDateLong(startDate) + " , please cancel a reservation first.";
 					
-					url = "user/search.jsp";
+					// convert time back to slashed format to work with jQuery
+					startDate = dtc.convertToSlashed(startDate);
+					endDate = dtc.convertToSlashed(endDate);
+					
+					url = "user/search.jsp"; 
 					
 				} else if (incrementSum == 1){
 					if(incrementSum == hourIncrement){
@@ -99,6 +103,10 @@ public class UserSearchServlet2 extends HttpServlet {
 					} else {
 						msg = "You already have a 1-hour reservation set for " + dtc.convertDateLong(startDate) + "<br>"
 								+ "You can only make another 1-hour reservation to not exceed the maximum of 2 hours per day.";
+						
+						// convert time back to slashed format to work with jQuery
+						startDate = dtc.convertToSlashed(startDate);
+						endDate = dtc.convertToSlashed(endDate);
 						
 						url = "user/search.jsp";
 					}
@@ -111,6 +119,11 @@ public class UserSearchServlet2 extends HttpServlet {
 					} else {
 						
 						msg = "Please enter a valid hour increment.";
+						
+						// convert time back to slashed format to work with jQuery
+						startDate = dtc.convertToSlashed(startDate);
+						endDate = dtc.convertToSlashed(endDate);
+						
 						url = "user/search.jsp";
 					}
 				}
