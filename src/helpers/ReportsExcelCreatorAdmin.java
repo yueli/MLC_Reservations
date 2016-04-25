@@ -23,6 +23,7 @@ import model.User;
 /**
  * 
  * @author Victoria Chambers
+ * @contributor Brian Olaogun
  * This Class is used to generate the reports for admins.
  *
  */
@@ -54,13 +55,12 @@ public class ReportsExcelCreatorAdmin {
                 return "Connection Failed";
               }
               // Database Query  
-              strQuery = "SELECT Admin.adminID, "
+              strQuery = "SELECT "
               		+ "Admin.AdminMyID, "
               		+ "Admin.fname, "
               		+ "Admin.lname, "
               		+ "Admin.role, "
-              		+ "Admin.adminStatus, "
-              		+ "Admin.cantBeDeleted "
+              		+ "Admin.adminStatus "
               		+ "FROM tomcatdb.Admin ";
               	
               PreparedStatement ps = connection.prepareStatement(strQuery);
@@ -68,13 +68,10 @@ public class ReportsExcelCreatorAdmin {
            
               // Setting Font Style for Header Row 
               sheet.setColumnWidth(0, 5000);
-              sheet.setColumnWidth(1, 6000);
+              sheet.setColumnWidth(1, 7000);
               sheet.setColumnWidth(2, 7000);
               sheet.setColumnWidth(3, 7000);
               sheet.setColumnWidth(4, 5000);
-              sheet.setColumnWidth(5, 7000);
-              sheet.setColumnWidth(6, 5000);
-              sheet.setColumnWidth(7, 5000);
              
               // Creating the Font Style here 
               HSSFFont boldFont = wb.createFont();
@@ -88,70 +85,70 @@ public class ReportsExcelCreatorAdmin {
               row = sheet.createRow(0);
              
               cell = row.createCell(0);
-              cell.setCellValue("Admin Id");
-              cell.setCellStyle(cellStyle);
-             
-              cell = row.createCell(1);
               cell.setCellValue("Admin MyID");
               cell.setCellStyle(cellStyle);
              
-              cell = row.createCell(2);
+              cell = row.createCell(1);
               cell.setCellValue("First Name");
               cell.setCellStyle(cellStyle);
               
-              cell = row.createCell(3);
+              cell = row.createCell(2);
               cell.setCellValue("Last Name");
               cell.setCellStyle(cellStyle);
               
-              cell = row.createCell(4);
+              cell = row.createCell(3);
               cell.setCellValue("Role");
               cell.setCellStyle(cellStyle);
               
-              cell = row.createCell(5);
+              cell = row.createCell(4);
               cell.setCellValue("Admin Status");
               cell.setCellStyle(cellStyle);
               
-              cell = row.createCell(6);
-              cell.setCellValue("Can't Be Deleted");
-              cell.setCellStyle(cellStyle);
-             
              
               // Reading one row of table at a time and putting the values into excel cell
               while(rs.next()){
             	
         	  	Admin admin = new Admin();
-                admin.setAdminID(rs.getInt(1));
-                admin.setAdminMyID(rs.getString(2));
-        	  	admin.setFname(rs.getString(3));
-                admin.setLname(rs.getString(4));
-                admin.setRole(rs.getString(5));
-                admin.setAdminStatus(rs.getInt(6));
-        	  	admin.setCantBeDeleted(rs.getInt(7));           
-                          
+                admin.setAdminMyID(rs.getString(1));
+        	  	admin.setFname(rs.getString(2));
+                admin.setLname(rs.getString(3));
+                admin.setRole(rs.getString(4));
+                admin.setAdminStatus(rs.getInt(5));           
+                
+                // convert role text that easier for display
+                AdminUserHelper auh = new AdminUserHelper();   
+                String adminRole = auh.convertAdminRole(admin.getRole());
+                
+                // convert status to words
+                String adminStatus = "";
+                int status = admin.getAdminStatus();
+                if(status == 1){
+                	adminStatus = "Active";
+                } else {
+                	adminStatus = "Not Active";
+                }
+                
         	  	row = sheet.createRow(nRow);
                 // Create a cell and put a value in it.
                 cell = row.createCell(0);
                
-                cell.setCellValue(admin.getAdminID());
-                cell = row.createCell(1);
                 cell.setCellValue(admin.getAdminMyID());
-                cell = row.createCell(2);
+                cell = row.createCell(1);
                 cell.setCellValue(admin.getFname());
-                cell = row.createCell(3);
+                cell = row.createCell(2);
                 cell.setCellValue(admin.getLname());
+                cell = row.createCell(3);
+                cell.setCellValue(adminRole);
                 cell = row.createCell(4);
-                cell.setCellValue(admin.getRole());
+                cell.setCellValue(adminStatus);
                 cell = row.createCell(5);
-                cell.setCellValue(admin.getAdminStatus());
-                cell = row.createCell(6);
-                cell.setCellValue(admin.getCantBeDeleted());
-                cell = row.createCell(7);
                 nRow++;
               }
              
               wb.write(out);
               out.close();
               System.out.println("End of ReportsExcelCreatorAdmin");
+              connection.close();
               return "File downloaded successfully";
               
         }
