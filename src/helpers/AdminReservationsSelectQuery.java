@@ -156,8 +156,8 @@ public class AdminReservationsSelectQuery {
 				table += "<th>First</th>";
 				table += "<th>Last</th>";
 				table += "<th>Reserve Name</th>";
-				table += "<th>Start Date</th>";
-				table += "<th>End Date</th>";
+				table += "<th>Date</th>";
+				//table += "<th>End Date</th>";
 				table += "<th>Start Time</th>";
 				table += "<th>End Time</th>";
 				table += "<th>Hours</th>";
@@ -191,7 +191,7 @@ public class AdminReservationsSelectQuery {
 					table += "<td data-search='" + admin.getLname() + "'>" + admin.getLname() + "</td>";
 					table += "<td data-search='" + reservation.getReserveName() + "'>" + reservation.getReserveName() + "</td>";
 					table += "<td>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
-					table += "<td>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
+					//table += "<td>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
 					table += "<td data-order='" + reservation.getReserveStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
 					table += "<td data-order='" + reservation.getReserveEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
 					table += "<td>" + reservation.getHourIncrement() + "</td>";
@@ -224,8 +224,8 @@ public class AdminReservationsSelectQuery {
 			table += "<th>First</th>";
 			table += "<th>Last</th>";
 			table += "<th>Reserve Name</th>";
-			table += "<th>Start Date</th>";
-			table += "<th>End Date</th>";
+			table += "<th>Date</th>";
+			//table += "<th>End Date</th>";
 			table += "<th>Start Time</th>";
 			table += "<th>End Time</th>";
 			table += "<th>Hours</th>";
@@ -261,7 +261,7 @@ public class AdminReservationsSelectQuery {
 				table += "<td data-search='" + admin.getLname() + "'>" + admin.getLname() + "</td>";
 				table += "<td data-search='" + reservation.getReserveName() + "'>" + reservation.getReserveName() + "</td>";
 				table += "<td>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
-				table += "<td>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
+				//table += "<td>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
 				table += "<td data-order='" + reservation.getReserveStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
 				table += "<td data-order='" + reservation.getReserveEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
 				table += "<td>" + reservation.getHourIncrement() + "</td>";
@@ -295,8 +295,8 @@ public class AdminReservationsSelectQuery {
 			table += "<th>Room Number </th>";
 			table += "<th>Primary </th>";
 			table += "<th>Secondary</th>";
-			table += "<th>Start Date</th>";
-			table += "<th>End Date</th>";
+			table += "<th>Date</th>";
+			//table += "<th>End Date</th>";
 			table += "<th>Start Time</th>";
 			table += "<th>End Time</th>";
 			table += "<th>Hours</th>";
@@ -330,7 +330,7 @@ public class AdminReservationsSelectQuery {
 				table += "<td data-search='" + primary.getMyID() + "'>" + primary.getMyID() + "</td>";
 				table += "<td data-search='" + secondary.getMyID() + "'>" + secondary.getMyID() + "</td>";
 				table += "<td data-search='" + reservation.getReserveStartDate()+ "'>" + dtc.convertDateLong(reservation.getReserveStartDate()) + "</td>";
-				table += "<td data-search='" + reservation.getReserveEndDate() + "'>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
+				//table += "<td data-search='" + reservation.getReserveEndDate() + "'>" + dtc.convertDateLong(reservation.getReserveEndDate()) + "</td>";
 				table += "<td data-order='" + reservation.getReserveStartTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveStartTime()) + "</td>";
 				table += "<td data-order='" + reservation.getReserveEndTime().replace(":", "").trim() + "'>" + tc.convertTimeTo12(reservation.getReserveEndTime()) + "</td>";
 				table += "<td>" + reservation.getHourIncrement() + "</td>";
