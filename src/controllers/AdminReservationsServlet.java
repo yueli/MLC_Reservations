@@ -63,6 +63,9 @@ public class AdminReservationsServlet extends HttpServlet {
 					// remove message 
 					session.removeAttribute("msg");
 					session.removeAttribute("table");
+					session.removeAttribute("startDate");
+					session.removeAttribute("endDate");
+					session.removeAttribute("reserveName");
 					
 					//------------------------------------------------//
 					/*               VIEW FOR ADMIN                   */
