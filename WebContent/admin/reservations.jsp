@@ -34,6 +34,7 @@
 			// jQuery for datepicker plugin
 			$(function() {
 			    $( "#startDate" ).datepicker({
+			      minDate: 0,
 			      defaultDate: null,
 			      changeMonth: true,
 			      numberOfMonths: 3,
