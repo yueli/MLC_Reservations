@@ -99,19 +99,29 @@ public class CancelServlet extends HttpServlet {
 					url = "ViewServlet";
 					
 					System.out.println("CancelServlet: message before leaving servlet = " + message);
-
-		
-		} else { // there isn't an active session (session == null).
-		//------------------------------------------------//
-		/*        INVALID SESSION (SESSION == NULL)       */
-		//------------------------------------------------//
-		// if session has timed out, go to home page
-		// the site should log them out.
-		
-		System.out.println("CancelServlet: invalid session");
+					
+			} else {
+				//------------------------------------------------//
+				/*               USER INFO EXPIRED                */
+				//------------------------------------------------//
+				// if a new session is created with no user object passed
+				// user will need to login again
+				
+				session.invalidate();
+				CASLogoutServlet.clearCache(request, response);
+				response.sendRedirect(DbConnect.urlRedirect());
+				return;
+			}
 			
-		response.sendRedirect(DbConnect.urlRedirect());
-		return;
+		} else {
+			//------------------------------------------------//
+			/*        INVALID SESSION (SESSION == NULL)       */
+			//------------------------------------------------//
+			// if session has timed out, go to home page
+			// the site should log them out.
+		
+			response.sendRedirect(DbConnect.urlRedirect());
+			return;
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
