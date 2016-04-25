@@ -227,11 +227,11 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 								}
 								AdminUpdateQuery suq = new AdminUpdateQuery();
 								if(startDate.equals(endDate)){
-									msg += "Successfully updated schedule for " + dtc.convertDateLong(date)+ ".<br>";
+									msg = "Successfully updated schedule for " + dtc.convertDateLong(date)+ ".<br>";
 									
 								} else {
 									
-									msg += "Successfully updated schedule for dates " + dtc.convertDateLong(startDate) + " - " + dtc.convertDateLong(endDate) + "!";
+									msg = "Successfully updated schedule for dates " + dtc.convertDateLong(startDate) + " - " + dtc.convertDateLong(endDate) + "!";
 								}									
 								
 								suq.doScheduleUpdate(updateSchedule);
