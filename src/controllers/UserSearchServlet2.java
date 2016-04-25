@@ -15,6 +15,7 @@ import helpers.HourCountSelectQuery;
 import helpers.RoomsSelectQuery;
 import model.DateTimeConverter;
 import model.DbConnect;
+import model.TimeConverter;
 import model.User;
 
 /**
@@ -69,6 +70,7 @@ public class UserSearchServlet2 extends HttpServlet {
 				
 				// time and date conversion methods
 				DateTimeConverter dtc = new DateTimeConverter();
+				TimeConverter tc = new TimeConverter();
 				
 				// get the building name
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -89,6 +91,10 @@ public class UserSearchServlet2 extends HttpServlet {
 					msg = "You have reached the maximum hours (2 hours) for reservations for " + dtc.convertDateLong(startDate) + ".<br>"
 							+ "To make a reservation for another time on " + dtc.convertDateLong(startDate) + " , please cancel a reservation first.";
 					
+					// convert time back to slashed format to work with jQuery
+					startDate = dtc.convertToSlashed(startDate);
+					endDate = dtc.convertToSlashed(endDate);
+					
 					url = "user/search.jsp"; //FIXME
 					
 				} else if (incrementSum == 1){
@@ -99,6 +105,10 @@ public class UserSearchServlet2 extends HttpServlet {
 					} else {
 						msg = "You already have a 1-hour reservation set for " + dtc.convertDateLong(startDate) + "<br>"
 								+ "You can only make another 1-hour reservation to not exceed the maximum of 2 hours per day.";
+						
+						// convert time back to slashed format to work with jQuery
+						startDate = dtc.convertToSlashed(startDate);
+						endDate = dtc.convertToSlashed(endDate);
 						
 						url = "user/search.jsp";
 					}
@@ -111,6 +121,11 @@ public class UserSearchServlet2 extends HttpServlet {
 					} else {
 						
 						msg = "Please enter a valid hour increment.";
+						
+						// convert time back to slashed format to work with jQuery
+						startDate = dtc.convertToSlashed(startDate);
+						endDate = dtc.convertToSlashed(endDate);
+						
 						url = "user/search.jsp";
 					}
 				}

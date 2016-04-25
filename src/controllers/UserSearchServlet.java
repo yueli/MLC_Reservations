@@ -197,7 +197,7 @@ public class UserSearchServlet extends HttpServlet {
 						if(startDate.equals(endDate)){
 							
 							// if start time is not less than end time
-							if(TimeConverter.isAfter(startTime, endTime)){
+							if(TimeConverter.isAfter(startTime, endTime) && !startTime.equals("23:00:00") && !endTime.equals("00:00:00")){
 								msg = "Please enter a <b>start time</b> that is <b>less than</b> the <b>end time</b>.";
 								
 								url = "user/search.jsp";
