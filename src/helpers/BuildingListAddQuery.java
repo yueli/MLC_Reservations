@@ -123,56 +123,6 @@ public class BuildingListAddQuery {
 		}
 
 
-		/**
-		 * USED??
-		 */
-/*		public void insertBuildingTable(String buildingName, String buildingStatus, String buildingCalName,
-						String buildingCalUrl, String buildingQRName) {
-			
-			String query = "INSERT INTO tomcatdb.Building (buildingName, buildingSatus, buildingCalName, buildingCalUrl, buildingQRName) "
-					+ "VALUES ('" + buildingName + "','" + buildingStatus + "','" + buildingCalName + 
-					"','" + buildingCalUrl + "','"+ buildingQRName + "')";
-			
-			try {
-				PreparedStatement ps = this.connection.prepareStatement(query);
-			
-				ps.executeUpdate();
-				System.out.println("Success in BuildingListAddQuery: insertBuilding: insert into table method. Query = " + query);
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("***Error in BuildingListAddQuery: insertBuilding:  insert into table method. Query = " + query);
-			}
-			
-		}*/
-		
-		/**
-		 * USED???
-		 */
-/*	
-		public int getLastBuildingID(){
-			
-		String query = "SELECT buildingID FROM tomcatdb.Building ORDER BY buildingID DESC LIMIT 1;";
-		buildingCount = 0;
-		int buildingID = 0;
-		try{
-			PreparedStatement ps = connection.prepareStatement(query);
-			results = ps.executeQuery();
-			while(results.next()){
-				buildingID = results.getInt("buildingID");
-				System.out.println("BuildingID in while:" + buildingID);
-			}
-			
-			System.out.println("BuldingID outside:"+ buildingID);
-			buildingCount = buildingID +1 ;
-					
-		} catch(SQLException e){
-			e.printStackTrace();
-		}
-		
-		return buildingCount;
-		}*/
-		
 
 }
 
