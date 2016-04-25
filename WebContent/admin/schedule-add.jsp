@@ -63,11 +63,11 @@
 			<h3 align="center">${msg}</h3>
 			<form name="scheduleForm" action="new-schedule" method="post">
 				${buildings}<br>
-				Start Date: <input type="text" id="startDate" name="startDate" value=""><br>
-				End Date: <input type="text" id="endDate" name="endDate" value=""><br>
-				Start Time: <input type="text" id="startTime" name="startTime" value=""><br>
-				End Time: <input type="text" id="endTime" name="endTime" value=""><br>
-				Summary: <input type="text" name="summary" value=""><br><br>
+				Start Date: <input type="text" id="startDate" name="startDate" value="" required><br>
+				End Date: <input type="text" id="endDate" name="endDate" value="" required><br>
+				Start Time: <input type="text" id="startTime" name="startTime" value="" required><br>
+				End Time: <input type="text" id="endTime" name="endTime" value="" required><br>
+				Summary: <input type="text" name="summary" value="" required><br><br>
 				<a href="Schedule"><button class="btn btn-lg btn-red" type="button" value="Schedule">View Building Hours</button></a>  <input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter"> <br>
 			</form>
 			    
