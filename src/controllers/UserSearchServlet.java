@@ -188,12 +188,12 @@ public class UserSearchServlet extends HttpServlet {
 						table += "</thead>";
 						table += "<tbody>";
 						
-						// TODO for current day = start date, only show results from >= current time
-						// TODO add if to check if past 10 minutes
-						// TODO if past 10 minutes, show room as unavailable. --> same checks as in browse. (-_-)
-						
 						int h = 1; // row counter & used to make a unique form ID
-							
+						
+						/*
+						 * If the start date and end date are equal, make sure query
+						 * is w
+						 */
 						if(startDate.equals(endDate)){
 							
 							// if start time is not less than end time
@@ -203,15 +203,18 @@ public class UserSearchServlet extends HttpServlet {
 								url = "user/search.jsp";
 								
 							} else {
+								
 								// loop through each room after all times have been checked 
 								for (int i = 0; i < roomNumber.size(); i++){
 									
 									// loop through each date
 									for (int k = 0; k < dates.size(); k++) {
+										
 										// if the start date is equal to the current date, only show times that are >= current hour
 										if(dates.get(k).equals(currentDate) && !TimeConverter.isAfter(startTime, currentHourBlock)){
 											times = tc.timeRangeList(currentHourBlock, TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement)));
 										} 
+										
 										// loop through each time then increment room
 										for (int j =0; j < times.size(); j++){
 											
@@ -335,25 +338,28 @@ public class UserSearchServlet extends HttpServlet {
 						} else {
 							/*
 							 * From the start date, loop through all times between the user
-							 * inputted start time - end time of midnight - hour increment
+							 * inputted start time - (end time of midnight - hour increment)
 							 */
-							// loop through each room after all times have been checked 
-							//for (int i = 0; i < roomNumber.size(); i++){
-							for (int k = 0; k < dates.size(); k++) {	
 							
-								// loop through each date
-								//for (int k = 0; k < dates.size(); k++) {
-								for (int i = 0; i < roomNumber.size(); i++){
+							//for (int i = 0; i < roomNumber.size(); i++){
+							for (int k = 0; k < dates.size(); k++) { // loop through each date	
+							
+								//for (int k = 0; k < dates.size(); k++) { 
+								for (int i = 0; i < roomNumber.size(); i++){ // loop through each room after all times have been checked
+									
 									System.out.println("*************************");
 									System.out.println();
 									System.out.println("Loop Date = " + dates.get(k));
 									System.out.println();
 									System.out.println("*************************");
+									
 									if(dates.get(k).equals(startDate)){
+										
 										// if the start date is equal to the current date, only show times that are >= current hour
 										if(dates.get(k).equals(currentDate) && !TimeConverter.isAfter(startTime, currentHourBlock)){
 											times2 = tc.timeRangeList(currentHourBlock, TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement)));
 										} 
+										
 										// loop through each time then increment room
 										for (int j =0; j < times2.size(); j++){
 											
@@ -385,6 +391,17 @@ public class UserSearchServlet extends HttpServlet {
 														if(l == 0){
 															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
 																if((innerTimes.get(l).equals(currentHourBlock)) && (tc.currentMinutes() > 10)){
+																	
+																	/*----------------- Room is not available -----------------*/
+																	/* 10 minutes has gone by without someone reserving a room.
+																	 * 
+																	 * Rooms can only be reserved every hour. 
+																	 * 
+																	 * If not reserved after 10 minutes, show as unavailable 
+																	 * if reservation start time is the current hour.
+																	 */
+																	/*---------------------------------------------------------*/
+																	
 																	// testing - printing to console
 																	System.out.println("******* NOT AVAILABLE ********");
 																	System.out.println("RESERVE ID = " + check);
@@ -409,6 +426,9 @@ public class UserSearchServlet extends HttpServlet {
 																	table += "</tr>";
 																	h++; 
 																} else {
+																	
+																	/*----------- Room is available to reserve ------------*/
+																	
 																	// testing - printing to console
 																	System.out.println();
 																	System.out.println("DATE " + dates.get(k));
@@ -445,6 +465,9 @@ public class UserSearchServlet extends HttpServlet {
 														}
 													} else if (!check.isEmpty()){
 														if(l == 0){
+															
+															/*----------- Room is reserved ------------*/
+															
 															// testing - printing to console
 															System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
@@ -512,6 +535,9 @@ public class UserSearchServlet extends HttpServlet {
 														// index 0 is the start time of the reservation
 														if(l == 0){
 															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
+																
+																/*----------- Room is available to reserve ------------*/
+																
 																// testing - printing to console
 																System.out.println();
 																System.out.println("DATE " + dates.get(k));
@@ -547,6 +573,9 @@ public class UserSearchServlet extends HttpServlet {
 														}
 													} else if (!check.isEmpty()){
 														if(l == 0){
+															
+															/*----------- Room is reserved ------------*/
+															
 															// testing - printing to console
 															System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
@@ -613,6 +642,9 @@ public class UserSearchServlet extends HttpServlet {
 														// index 0 is the start time of the reservation
 														if(l == 0){
 															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
+																
+																/*----------- Room is available to reserve ------------*/
+																
 																// testing - printing to console
 																System.out.println();
 																System.out.println("DATE " + dates.get(k));
@@ -648,6 +680,9 @@ public class UserSearchServlet extends HttpServlet {
 														}
 													} else if (!check.isEmpty()){
 														if(l == 0){
+															
+															/*----------- Room is reserved ------------*/
+															
 															// testing - printing to console
 															System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
