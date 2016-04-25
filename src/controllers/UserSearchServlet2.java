@@ -15,7 +15,6 @@ import helpers.HourCountSelectQuery;
 import helpers.RoomsSelectQuery;
 import model.DateTimeConverter;
 import model.DbConnect;
-import model.TimeConverter;
 import model.User;
 
 /**
@@ -33,7 +32,7 @@ public class UserSearchServlet2 extends HttpServlet {
      */
     public UserSearchServlet2() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	/**
@@ -70,7 +69,6 @@ public class UserSearchServlet2 extends HttpServlet {
 				
 				// time and date conversion methods
 				DateTimeConverter dtc = new DateTimeConverter();
-				TimeConverter tc = new TimeConverter();
 				
 				// get the building name
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -95,7 +93,7 @@ public class UserSearchServlet2 extends HttpServlet {
 					startDate = dtc.convertToSlashed(startDate);
 					endDate = dtc.convertToSlashed(endDate);
 					
-					url = "user/search.jsp"; //FIXME
+					url = "user/search.jsp"; 
 					
 				} else if (incrementSum == 1){
 					if(incrementSum == hourIncrement){

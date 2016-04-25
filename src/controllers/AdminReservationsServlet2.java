@@ -155,7 +155,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 					if(reserveName == null || reserveName.isEmpty() || startDate == null || startDate.isEmpty()){
 						msg = "Please enter a date and/or reserve name.";
 						
-					} else if(TimeConverter.isAfter(startTime, endTime)){
+					} else if(TimeConverter.isAfter(startTime, endTime) && !startTime.equals("23:00:00") && !endTime.equals("00:00:00")){
 						msg = "Please enter a <b>start time</b> that is <b>less than</b> the <b>end time</b>.";
 						
 					} else if (startTime.equals(endTime)){
