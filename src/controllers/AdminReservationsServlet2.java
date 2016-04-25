@@ -20,6 +20,7 @@ import model.DbConnect;
 import model.TimeConverter;
 
 /**
+ * This Servlet is used to generate the table with reservation availability.
  * Servlet implementation class AdminReservationsServlet2
  * @author Brian Olaogun
  */
@@ -233,7 +234,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 											table += "<input type='hidden' name='endDate' value='" + dtc.slashDateConvert(endDate) + "'>";
 											table += "<input type='hidden' name='buildingID' value='" + buildingID + "'>";
 											table += "<input type='hidden' name='reserveName' value='" + reserveName + "'>";
-											table += "<input type='submit' value='Make Reservation'>";
+											table += "<input class='btn btn-lg btn-red' type='submit' value='Make Reservation'>";
 											table += "</form>";
 											table += "</td>";
 											table += "</tr>";
