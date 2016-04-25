@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 		
 		Admin loggedInAdminUser = new Admin();
 		User user = new User();
-		/*
+	
 		loggedInAdminUser.setAdminID(1);
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setRole("A");
@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 		user.setUserFirstName("Brian");
 		user.setUserLastName("Olaogun");
 		user.setUserRecordID(1);
-		*/
+		/*
 		loggedInAdminUser.setAdminID(2);
 		loggedInAdminUser.setAdminStatus(1);
 		loggedInAdminUser.setRole("S");
@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
 		user.setUserFirstName("Ginger");
 		user.setUserLastName("Nix");
 		user.setUserRecordID(19);
-		
+		*/
 		
 		// Switch Home Pages
 		url = "UserHome"; // user home page
