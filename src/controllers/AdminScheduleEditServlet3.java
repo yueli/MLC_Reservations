@@ -20,7 +20,11 @@ import model.Schedule;
 import model.TimeConverter;
 
 /**
+ * This servlet is used in Admin Building Hours Edit.  This servlet will
+ * verify the user inputted values for for editing hours and run the query to 
+ * update the database.
  * Servlet implementation class AdminScheduleEditServlet3
+ * @author Brian Olaogun
  */
 @WebServlet({ "/AdminScheduleEditServlet3", "/schedule-confirm" })
 public class AdminScheduleEditServlet3 extends HttpServlet {

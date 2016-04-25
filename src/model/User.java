@@ -105,6 +105,7 @@ public class User {
 	 * Checking if text entered for myID is valid
 	 * @param myID
 	 * @return true if valid myID, false if not valid.
+	 * @author Brian Olaogun
 	 */
 	public static boolean containsSpaces(String myID){
 		Pattern pattern = Pattern.compile("\\s");
