@@ -75,8 +75,8 @@ public class LoginServlet extends HttpServlet {
 		*/
 		
 		// Switch Home Pages
-		url = "UserHome"; // user home page
-		//url = "AdminHome"; // admin home page
+		//url = "UserHome"; // user home page
+		url = "AdminHome"; // admin home page
 		
 		System.out.println("LOGIN SERVLET!");
 		System.out.println("LoginServlet: url = " + url);
