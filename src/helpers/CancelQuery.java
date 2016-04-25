@@ -46,7 +46,11 @@ public class CancelQuery {
 		String query = "UPDATE tomcatdb.Reservations SET Reservations.free = 'Y' "
 				+ "WHERE Reservations.reserveID = ? ";
 		
+		
 		System.out.println("cancel query - cancel reservation. Query = " + query);
+		
+
+		System.out.println("cancel query - cancel reservation. resv_id =  " + resv_id);
 		
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(query);
@@ -55,7 +59,7 @@ public class CancelQuery {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("***Error in Cance Query cancelReservation. Query = " + query);
+			System.out.println("***Error in Cancel Query cancelReservation. Query = " + query);
 		}			
 	}
 	

@@ -54,38 +54,38 @@ public class CancelServlet extends HttpServlet {
 		
 		String message = "";		  
 
+		System.out.println("CancelServlet: at beg before checks");
+		// get the current session
 		// get the current session
 		session = request.getSession(false);
 	
-		
 		// check to see if there is a valid session
 		if (session != null){ // there is an active session
-
-			// get admin user object from session
-			Admin loggedInAdminUser = (Admin) session.getAttribute("loggedInAdminUser"); 
-			if (loggedInAdminUser != null){
-				
-				// get info for the currently logged in admin user.
-				String role = loggedInAdminUser.getRole();
-				int status = loggedInAdminUser.getAdminStatus();
-				
-				// push content based off role
-				if((role.equalsIgnoreCase("A") || role.equalsIgnoreCase("S")) && status == 1){
-				
-					message = (String) request.getAttribute("message"); 
-				
+			User user = (User) session.getAttribute("user");
+			
+			System.out.println("CancelConfirmServlet: ");
+			
+			if(user != null) { // run code if user object is not null				
+					message = (String) request.getAttribute("message");	
+					
 					// blank the message if nothing gotten in message attribute
 					if (message == null || message.isEmpty()) {
 						 message = "";
 					}
-												
-					User user = (User) session.getAttribute("user");
 					
 					Reservation reservation = new Reservation();
-					reservation.setReserveID(Integer.parseInt(request.getParameter("resv_id")));
+					int resvID = Integer.parseInt(request.getParameter("resv_id"));
+					
+					reservation.setReserveID(resvID);
+					
+
+					System.out.println("CancelServlet: calling cancelReservation rev id = " + resvID);
 					
 					CancelQuery cq = new CancelQuery();
 					cq.cancelReservation(reservation.getReserveID());
+					
+
+					System.out.println("CancelServlet: after calling cancelReservation.");
 					
 					// cancel reservation, then go back to the view servlet to get 
 					// the user's reservations to list again
@@ -99,38 +99,7 @@ public class CancelServlet extends HttpServlet {
 					url = "ViewServlet";
 					
 					System.out.println("CancelServlet: message before leaving servlet = " + message);
-					
-					
-			}  else if (role.equalsIgnoreCase("C") && status == 1){ 
-				//------------------------------------------------//
-				/*                VIEW FOR CLERK                  */
-				//------------------------------------------------//
-				
-				// forwarding URL
-				url = "AdminViewReservations";
-				
-			} else {
-				//------------------------------------------------//
-				/*              NOT A VALID ROLE                  */
-				//------------------------------------------------//
-				// if a new session is created with no user object passed
-				// user will need to login again
-				session.invalidate();
-				
-				response.sendRedirect(DbConnect.urlRedirect());
-				return;
-			}
-		} else {
-			//------------------------------------------------//
-			/*            ADMIN USER INFO EXPIRED             */
-			//------------------------------------------------//
-			// if a new session is created with no user object passed
-			// user will need to login again
-			session.invalidate();
-			
-			response.sendRedirect(DbConnect.urlRedirect());
-			return;
-		}
+
 		
 		} else { // there isn't an active session (session == null).
 		//------------------------------------------------//
@@ -139,6 +108,8 @@ public class CancelServlet extends HttpServlet {
 		// if session has timed out, go to home page
 		// the site should log them out.
 		
+		System.out.println("CancelServlet: invalid session");
+			
 		response.sendRedirect(DbConnect.urlRedirect());
 		return;
 		}
