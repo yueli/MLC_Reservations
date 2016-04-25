@@ -83,12 +83,20 @@ public class ReservationQuery {
 			int buildingID = 0;		
 			
 			String query = "SELECT buildingID FROM tomcatdb.Building WHERE buildingQRName = ? LIMIT 1";
+			
+			System.out.println("ReservationQuery: betBuildingID: Top: buildingQRName = " + buildingQRName);
+			
 				
 			try {
 				PreparedStatement ps = this.connection.prepareStatement(query);
 		
-				this.results = ps.executeQuery();
+				System.out.println("ReservationQuery: betBuildingID: before execute query: buildingQRName = " + buildingQRName);
+				
 				ps.setString(1, buildingQRName);
+				
+				this.results = ps.executeQuery();
+				
+				System.out.println("ReservationQuery: betBuildingID: after execute query");
 				
 				this.results.next();
 				
@@ -100,6 +108,7 @@ public class ReservationQuery {
 				System.out.println("***Error in Reservation.java: get building ID method. Query = " + query);
 			}
 			
+			System.out.println("ReservationQuery: betBuildingID: End: buildingQRName = " + buildingQRName);
 			return buildingID;	
 			
 		}
@@ -115,7 +124,7 @@ public class ReservationQuery {
 			int roomID = 0;		
 			
 			String query = "SELECT roomID FROM tomcatdb.Rooms WHERE roomNumber = ? "
-					+ " AND Building_buildingID = '? LIMIT 1 ";
+					+ " AND Building_buildingID = ? LIMIT 1 ";
 			
 			System.out.println("Reservation: get room id: roomQR = " + roomQRNum + " bulding ID = " + buildingID);
 			
