@@ -87,9 +87,9 @@ body {
   margin-top: 29px;
 }
 .centerdiv {
-    margin-left: auto;
+    margin-left: 43%;
     margin-right: auto;
-    text-align: center;
+    text-align: left;
     width: 561px;
 }
 
