@@ -73,12 +73,12 @@
 		</div>
 			<form name="BuildingSelect" action="Schedule" method="post"> <br>
 				<div class="centerdiv">
-					<p>${buildings}
+					<p>${buildings}<br>
 					<label for="from">From </label> <input type="text" id="from" name="from" placeholder="mm/dd/yyyy"> <br>
 					<label for="to">To </label> <input type="text" id="to" name="to" placeholder="mm/dd/yyyy"><br>
 				</div>
 				<div align="center">
-					<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"> </p>
+					<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"> <br><br>
 				</div>
 			</form>
 		
