@@ -441,7 +441,7 @@ public class UserSearchServlet extends HttpServlet {
 																	table += "<tr>";
 																	table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
 																	table += "<td data-sort='" + h + "'>" + h + "</td>";
-																	table += "<td data-sort='" + roomNumber.get(i) + "'><b>" + roomNumber.get(i) + "</b></td>";
+																	table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
 																	//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
