@@ -189,7 +189,7 @@ public class UserSearchServlet extends HttpServlet {
 						table += "<th>Room #</th>";
 						table += "<th>Start Date</th>";
 						table += "<th>Start Time</th>";
-						table += "<th>End Date</th>";
+						//table += "<th>End Date</th>";
 						table += "<th>End Time</th>";
 						table += "<th></th>";
 						table += "</tr>";
@@ -254,6 +254,17 @@ public class UserSearchServlet extends HttpServlet {
 														if(l == 0){
 															if (!innerTimes.get(l).equals(bsq.getBuildingEndTime(Integer.parseInt(buildingID), dates.get(k)))){
 																if((innerTimes.get(l).equals(currentHourBlock)) && (tc.currentMinutes() > 10)){
+																	
+																	/*----------------- Room is not available -----------------*/
+																	/* 10 minutes has gone by without someone reserving a room.
+																	 * 
+																	 * Rooms can only be reserved every hour. 
+																	 * 
+																	 * If not reserved after 10 minutes, show as unavailable 
+																	 * if reservation start time is the current hour.
+																	 */
+																	/*---------------------------------------------------------*/
+																	
 																	// testing - printing to console
 																	System.out.println("******* NOT AVAILABLE ********");
 																	System.out.println("RESERVE ID = " + check);
@@ -271,13 +282,16 @@ public class UserSearchServlet extends HttpServlet {
 																	table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																	//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 																	table += "<td> **NOT AVAILABLE**</td>"; 
 																	table += "</form>";
 																	table += "</tr>";
 																	h++; 
 																} else {
+																	
+																	/*----------- Room is available to reserve ------------*/
+																	
 																	// testing - printing to console
 																	System.out.println();
 																	System.out.println("DATE " + dates.get(k));
@@ -291,7 +305,7 @@ public class UserSearchServlet extends HttpServlet {
 																	table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																	//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 																	table += "<td>";
 																	table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -312,6 +326,9 @@ public class UserSearchServlet extends HttpServlet {
 														}
 													} else if (!check.isEmpty()){
 														if(l == 0){
+															
+															/*----------- Room is reserved ------------*/
+															
 															// testing - printing to console
 															System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
@@ -329,7 +346,7 @@ public class UserSearchServlet extends HttpServlet {
 															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 															table += "<td> **RESERVED**</td>"; 
 															table += "</form>";
@@ -424,10 +441,10 @@ public class UserSearchServlet extends HttpServlet {
 																	table += "<tr>";
 																	table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
 																	table += "<td data-sort='" + h + "'>" + h + "</td>";
-																	table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
+																	table += "<td data-sort='" + roomNumber.get(i) + "'><b>" + roomNumber.get(i) + "</b></td>";
 																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																	//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 																	table += "<td> **NOT AVAILABLE**</td>"; 
 																	table += "</form>";
@@ -451,7 +468,7 @@ public class UserSearchServlet extends HttpServlet {
 																	table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																	table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																	//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																	table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 																	table += "<td>";
 																	table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -493,7 +510,7 @@ public class UserSearchServlet extends HttpServlet {
 															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 															table += "<td> **RESERVED**</td>"; 
 															table += "</form>";
@@ -560,7 +577,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 																table += "<td>";
 																table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -601,7 +618,7 @@ public class UserSearchServlet extends HttpServlet {
 															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 															table += "<td> **RESERVED**</td>"; 
 															table += "</form>";
@@ -667,7 +684,7 @@ public class UserSearchServlet extends HttpServlet {
 																table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-																table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+																//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 																table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 																table += "<td>";
 																table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -708,7 +725,7 @@ public class UserSearchServlet extends HttpServlet {
 															table += "<td data-sort='" + roomNumber.get(i) + "'>" + roomNumber.get(i) + "</td>";
 															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerTimes.get(l)) + "</td>";
-															table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
+															//table += "<td>" + dtc.convertDateLong(dates.get(k)) + "</td>";
 															table += "<td>" + tc.convertTimeTo12(innerEndTime) + "</td>";
 															table += "<td> **RESERVED**</td>"; 
 															table += "</form>";
