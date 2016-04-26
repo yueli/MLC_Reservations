@@ -48,7 +48,7 @@
 						<input type="text" name="secondary" id="secondary" placeholder="MyID" required></p>
 					</div>
 					<div align="center">
-						<button class="btn btn-lg btn-red" onclick="goBack()">Cancel</button>    <input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
+						<input class="btn btn-lg btn-red" type="submit" value="Make Reservation">  <button class="btn btn-lg btn-red" onclick="goBack()">Cancel</button> 
 					</div>
 					</form>
 				</div>	
