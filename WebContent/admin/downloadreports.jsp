@@ -23,7 +23,7 @@
 		<br><br><br>
 		
 		<!-- Content -->
-		<h2 align="center">Download Reports</h2><br><br>
+		<h2 align="center">Download Reports</h2><br>
 		<h3 align="center">Reports will download as an Excel (.xls) File</h3><br>
 	
 		<br>
