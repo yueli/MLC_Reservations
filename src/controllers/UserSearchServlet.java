@@ -85,7 +85,7 @@ public class UserSearchServlet extends HttpServlet {
 				String startDate = startDateSlashed;
 				String endDate = endDateSlashed;
 				
-				// get the current date and current time
+				// get the current date and current hour block
 				String currentDate = dtc.parseDate(dtc.datetimeStamp());
 				String currentHourBlock = tc.currentHour() + ":00:00";
 				
@@ -163,13 +163,21 @@ public class UserSearchServlet extends HttpServlet {
 						ReservationSelectQuery res = new ReservationSelectQuery();
 						RoomsSelectQuery rsq = new RoomsSelectQuery();
 						
+						// check to make sure hour increment is not greater than user selected time range
+						List<String> timesCheck = tc.timeRangeList(startTime, endTime);
+						if (startDate.equals(endDate) && (timesCheck.size() -1) < Integer.parseInt(hourIncrement)){
+							hourIncrement = "1";
+						}
+						
 						// list for the room number.  Below will print all times, inclusive between start and end
 						List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
 						
+						// Array list for the user selected times
 						List<String> times = tc.timeRangeList(startTime, TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement))); 
 						List<String> times2 = tc.timeRangeList(startTime, TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
 						List<String> times3 = tc.timeRangeList("00:00:00", TimeConverter.subtractTime("00:00:00", Integer.parseInt(hourIncrement)));
 						List<String> times4 = tc.timeRangeList("00:00:00", TimeConverter.subtractTime(endTime, Integer.parseInt(hourIncrement)));
+						
 						
 						// date range list.  Print all dates between start and end date inclusive
 						List<String> dates = dtc.dateRangeList(startDate, endDate);
