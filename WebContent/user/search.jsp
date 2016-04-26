@@ -67,8 +67,8 @@
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime).trim()}"><br>
 				Reservation Length: ${hourIncrementSelect}<br><br>
-			</div>
 				<input align="center" class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Search"> 
+			</div>
 			</form>
 		</div>
 		
