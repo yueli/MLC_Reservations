@@ -64,7 +64,8 @@ public class ReportsExcelCreatorSchedule {
               		+ "Schedule.createdBy, "
               		+ "Building.buildingID "
               		+ "FROM tomcatdb.Schedule, tomcatdb.Building "
-              		+ "WHERE Schedule.Building_buildingID = Building.buildingID ";
+              		+ "WHERE Schedule.Building_buildingID = Building.buildingID "
+              		+ "AND Schedule.startDate >= CURDATE() ";
               
               PreparedStatement ps = connection.prepareStatement(strQuery);
               ResultSet rs = ps.executeQuery();

@@ -57,7 +57,7 @@
 		<div align="center">
 			<form name="userReserveForm" action="SearchReservations" method="post">
 				<h2>Search Reservations</h2><br>
-				<h3>Search for reservations up to 2 week from today.</h3><br>
+				<h3>Search for reservations up to 2 weeks from today.</h3><br>
 				<h3>${msg}</h3><br>
 		</div>
 		<div class="centerdiv">
