@@ -55,6 +55,7 @@ public class ReportsExcelCreatorSchedule {
               if(connection == null){
                 return "Connection Failed";
               }
+              DateTimeConverter dtc = new DateTimeConverter();
               // Database Query  
               strQuery = "SELECT "
               		+ "Schedule.startDate, "
@@ -65,7 +66,8 @@ public class ReportsExcelCreatorSchedule {
               		+ "Building.buildingID "
               		+ "FROM tomcatdb.Schedule, tomcatdb.Building "
               		+ "WHERE Schedule.Building_buildingID = Building.buildingID "
-              		+ "AND Schedule.startDate >= CURDATE() ";
+              		+ "AND Schedule.startDate >= '" + dtc.parseDate(dtc.datetimeStamp()) + "' "
+              		+ "ORDER BY startDate ASC, Building.buildingID ";
               
               PreparedStatement ps = connection.prepareStatement(strQuery);
               ResultSet rs = ps.executeQuery();
@@ -117,7 +119,7 @@ public class ReportsExcelCreatorSchedule {
               // Reading one row of table at a time and putting the values into excel cell
               while(rs.next()){
             	TimeConverter tc = new TimeConverter();
-            	DateTimeConverter dtc = new DateTimeConverter();
+            	
             	
         	  	Schedule schedule = new Schedule();
         	  	schedule.setStartDate(rs.getString(1));

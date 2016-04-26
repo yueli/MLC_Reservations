@@ -346,9 +346,9 @@ public class RoomsSelectQuery {
 					table += "<table>";
 					table += "<tbody class='room'>";
 					table += "<tr>";
-					table += "<th COLSPAN=4 ALIGN=CENTER><h3>";
+					table += "<th COLSPAN=4 ALIGN=CENTER>";
 					table += "Key";
-					table += "</h3></th>";
+					table += "</th>";
 					table += "</tr>";
 					table += "</tbody>";
 					table += "<tbody class='subcategory'>";

@@ -14,7 +14,7 @@
 		
         <!-- Template CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="table.css">
+        <link rel="stylesheet" type="text/css" href="user/search.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js">
         <link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
@@ -67,8 +67,8 @@
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime).trim()}"><br>
 				Reservation Length: ${hourIncrementSelect}<br><br>
-			</div>
 				<input align="center" class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Search"> 
+			</div>
 			</form>
 		</div>
 		

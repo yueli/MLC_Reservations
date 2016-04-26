@@ -57,7 +57,7 @@ public class UserSearchServlet3 extends HttpServlet {
 			User primaryUser = (User) session.getAttribute("user");
 			 
 			if(primaryUser != null) { // run code if user object is not null
-				
+				session.removeAttribute("msg");
 				String buildingName = (String) session.getAttribute("buildingName");
 				String buildingID = (String) session.getAttribute("buildingID");
 				int roomID = (Integer) session.getAttribute("roomID");
@@ -73,18 +73,18 @@ public class UserSearchServlet3 extends HttpServlet {
 				// input validation for secondary myID
 				if(secondaryMyID.isEmpty() || secondaryMyID.equals("")){
 					
-					msg = "Please enter a myID of a secondary person to reserve a room";
+					msg = "Please enter a myID of a secondary person to reserve a room.<br>";
 					url = "user/searchConfirm.jsp";
 					
 				} else if (secondaryMyID.equalsIgnoreCase(primaryUser.getMyID())){
 					
-					msg = "Please enter a myID other than your own. <br> The person also needs to have "
-							+ "logged into the site at least once to be added to a reservation.";
+					msg = "You cannot enter your MyID as a secondary ID. "
+							+ "Please enter a myID other than your own. <br>";
 					url = "user/searchConfirm.jsp";
 							
 				} else if (User.containsSpaces(secondaryMyID) == true){
 					
-					msg = "Please remove spaces from the ID entered.";
+					msg = "Please remove spaces from the ID entered.<br>";
 					url = "user/searchConfirm.jsp";
 					
 				} else {
@@ -103,10 +103,10 @@ public class UserSearchServlet3 extends HttpServlet {
 					
 					// secondary user ID check
 					// make sure inputted ID is not their own
-					if(primaryUser.getMyID() == secondaryMyID){
+					if(primaryUser.getMyID().equalsIgnoreCase(secondaryMyID)){
 						
 						msg = "You cannot enter your MyID as a secondary ID. "
-								+ "Please Enter a MyID other than your own. ";
+								+ "Please Enter a MyID other than your own. <br>";
 						url = "user/searchConfirm.jsp";
 						
 					}
@@ -115,9 +115,9 @@ public class UserSearchServlet3 extends HttpServlet {
 					// if user is not in our local database, have them login once to register
 					else if(!uh.inUserTable(secondaryMyID)){
 						
-						msg = "Please have " + secondaryMyID + " login once into the application. <br>"
+						msg = "Please have <b>" + secondaryMyID + "</b> login once into the application. <br><br>"
 								+ "Logging in once serves as a form of user registration.<br> Once " + secondaryMyID 
-								+ " has logged in once, you can add them to any future reservation. ";
+								+ " has logged in once, you can add them to any future reservation. <br><br>";
 						url = "user/searchConfirm.jsp";
 						
 					} else {
@@ -233,7 +233,6 @@ public class UserSearchServlet3 extends HttpServlet {
 					}
 					
 					// set session attributes
-					session.setAttribute("msg", msg);
 					session.setAttribute("buildingID", buildingID);
 					session.setAttribute("buildingName", buildingName);
 					session.setAttribute("hourIncrement", hourIncrement);
@@ -244,6 +243,8 @@ public class UserSearchServlet3 extends HttpServlet {
 					session.setAttribute("endTime", endTime);
 					session.setAttribute("roomID", roomID);
 				}
+				// set session attribute for message
+				session.setAttribute("msg", msg);
 				
 			} else {
 				//------------------------------------------------//
