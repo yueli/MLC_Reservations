@@ -49,6 +49,11 @@ form {
 				         ]
 				});
 			});
+			
+			window.onload = function() {
+				  var input = document.getElementById("fname").focus();
+			}
+			
 		</script> 
 	</head>
 

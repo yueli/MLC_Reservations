@@ -133,7 +133,7 @@ public class BuildingListSelectQuery {
 			form += "<form action='BuildingListBuildingUpdateServlet' method = 'post'>";
 			
 			form += "Building Name:<br>";
-			form +=  "<input type='text' name = 'buildingName' value = '" + buildingName + "' required>";
+			form +=  "<input type='text' id = 'buildingName' name = 'buildingName' value = '" + buildingName + "' required>";
 			form += "<br />";
 			
 			form += "Building Status:<br>";

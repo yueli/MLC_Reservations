@@ -52,6 +52,11 @@ form {
 				         ]
 				});
 			});
+			
+			window.onload = function() {
+				  var input = document.getElementById("roomNumber").focus();
+			}
+			
 		</script> 
 	</head>
 <body>

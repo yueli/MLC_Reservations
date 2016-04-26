@@ -69,6 +69,7 @@ public class AdminScheduleEditServlet extends HttpServlet {
 					System.out.println("----");
 					session.removeAttribute("msg");
 					session.removeAttribute("buildingID");
+					session.removeAttribute("startDate");
 
 					
 					// get session and request variables

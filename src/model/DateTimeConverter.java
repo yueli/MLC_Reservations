@@ -51,6 +51,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will parse the date and convert it to MMMM dd, yyyy hh:mm a format from a date in yyyy-MM-dd format
 	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
+	 * @author Brian Olaogun
 	 */
 	public String convertDateLong(){
 		
@@ -69,6 +70,7 @@ public class DateTimeConverter {
 	 * This method will parse the date and convert it to MMMM dd, yyyy hh:mm a format from a date in yyyy-MM-dd format
 	 * @param date String date
 	 * @return converted date from mySQL format to "Month day, year" format.  Ex. January 23, 2015.
+	 * @author Brian Olaogun
 	 */
 	public String convertDateLong(String date){
 		
@@ -87,6 +89,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will parse the date and convert it to MMMM dd, yyyy hh:mm a format from a date time in yyyy-MM-dd HH:mm:ss format
 	 * @return parsed Date from datetime in Month date, year format.
+	 * @author Brian Olaogun
 	 */
 	public String parseDateLong(){
 	
@@ -105,6 +108,7 @@ public class DateTimeConverter {
 	 * This method will parse the date and convert it to MMMM dd, yyyy hh:mm a format from a date time in yyyy-MM-dd HH:mm:ss format
 	 * @param datetime String date time
 	 * @return parsed Date from datetime in Month date, year format.
+	 * @author Brian Olaogun
 	 */
 	public String parseDateLong(String datetime){
 		
@@ -122,6 +126,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will convert it to MMMM dd, yyyy hh:mm a (12-hour) format from a date time in yyyy-MM-dd HH:mm:ss format
 	 * @return String datetime in long date format (Month dd, yyyy) with 12-hour time
+	 * @author Brian Olaogun
 	 */
 	public String dateTimeTo12Long(){
 		try{
@@ -139,6 +144,7 @@ public class DateTimeConverter {
 	 * This method will convert it to MMMM dd, yyyy hh:mm a (12-hour) format from a date time in yyyy-MM-dd HH:mm:ss format
 	 * @param datetime String date Time
 	 * @return String datetime in long date format (Month dd, yyyy) with 12-hour time
+	 * @author Brian Olaogun
 	 */
 	public String dateTimeTo12Long(String datetime){
 		
@@ -157,6 +163,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will parse the date and convert it to yyyy-MM-dd format from a date time in yyyy-MM-dd HH:mm:ss format
 	 * @return parsed date from a datetime string
+	 * @author Brian Olaogun
 	 */
 	public String parseDate(){
 		
@@ -175,6 +182,7 @@ public class DateTimeConverter {
 	 * This method will parse the date and convert it to yyyy-MM-dd format from a date time in yyyy-MM-dd HH:mm:ss format
 	 * @param datetime String Date Time
 	 * @return parsed Date from datetime in Month date, year format.
+	 * @author Brian Olaogun
 	 */
 	public String parseDate(String datetime){
 		
@@ -193,6 +201,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will parse the time and convert it to hh:mm a (12-hour) format from a date time in format yyyy-MM-dd HH:mm:ss
 	 * @return String: parsed time from datetime. Converted time from 24-hour format to 12-hour format.
+	 * @author Brian Olaogun
 	 */
 	public String parsedTimeTo12(){
 		
@@ -212,6 +221,7 @@ public class DateTimeConverter {
 	 * This method will parse the time and convert it to hh:mm a (12-hour) format from a date time in format yyyy-MM-dd HH:mm:ss
 	 * @param datetime String datetime
 	 * @return String: parsed time from datetime. Converted time from 24-hour format to 12-hour format.
+	 * @author Brian Olaogun
 	 */
 	public String parsedTimeTo12(String datetime){
 		
@@ -231,6 +241,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will parse the time and convert it to HH:mm:ss (24-hour) format from a date time in format yyyy-MM-dd HH:mm:ss
 	 * @return parses the time from a date time string.  The date time should be already in 24-hour format.
+	 * @author Brian Olaogun
 	 */
 	public String parsedTimeTo24(){
 		
@@ -251,6 +262,7 @@ public class DateTimeConverter {
 	 * This method will parse the time and convert it to HH:mm:ss (24-hour) format from a date time in format yyyy-MM-dd HH:mm:ss
 	 * @param datetime String date time
 	 * @return parses the time from a date time string.  The date time should be already in 24-hour format.
+	 * @author Brian Olaogun
 	 */
 	public String parsedTimeTo24(String datetime){
 		
@@ -270,6 +282,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will convert the date from MM/dd/yyyy to yyyy-MM-dd (SQL format)
 	 * @return date in mySQL format from MM/dd/yyyy format.
+	 * @author Brian Olaogun
 	 */
 	public String slashDateConvert (){
 		
@@ -289,6 +302,7 @@ public class DateTimeConverter {
 	 * This method will convert the date from MM/dd/yyyy to yyyy-MM-dd (SQL format)
 	 * @param date in MM/dd/yyyy format
 	 * @return date in mySQL format from MM/dd/yyyy format.
+	 * @author Brian Olaogun
 	 */
 	public String slashDateConvert (String date){
 		
@@ -309,6 +323,7 @@ public class DateTimeConverter {
 	 * Converts a yyyy-MM-dd (SQL date) to MM/dd/yyyy format
 	 * @param date String date in yyyy-MM-dd (SQL Format)
 	 * @return date in MM/dd/yyyy format
+	 * @author Brian Olaogun
 	 */
 	public String convertToSlashed (){
 		
@@ -328,6 +343,7 @@ public class DateTimeConverter {
 	 * Converts a yyyy-MM-dd (SQL date) to MM/dd/yyyy format
 	 * @param date String date in yyyy-MM-dd (SQL Format)
 	 * @return date in MM/dd/yyyy format
+	 * @author Brian Olaogun
 	 */
 	public String convertToSlashed (String date){
 		this.datetime = date.trim(); // removes leading and trailing whitespace
@@ -346,6 +362,7 @@ public class DateTimeConverter {
 	/**
 	 * This method will create a date time stamp in the format yyyy-MM-dd HH:mm:ss
 	 * @return current datetime in mySQL Format
+	 * @author Brian Olaogun
 	 */
 	public String datetimeStamp(){
 		
@@ -361,6 +378,7 @@ public class DateTimeConverter {
 	 * @param stringStartDate String start date
 	 * @param stringEndDate String end date
 	 * @return an arraylist of all dates in range of start date and end date inclusive.
+	 * @author Brian Olaogun
 	 */
 	public List<String> dateRangeList(String stringStartDate, String stringEndDate){
 		
@@ -423,6 +441,7 @@ public class DateTimeConverter {
 	 * @param to String ending date in MM/dd/yyyy format
 	 * @param from String starting date in MM/dd/yyyy format
 	 * @return boolean true if from > to
+	 * @author Brian Olaogun
 	 */
 	public static boolean isAfter (String from, String to){
 		SimpleDateFormat slashedFormat = new SimpleDateFormat("MM/dd/yyyy");

@@ -48,6 +48,11 @@ form {
 				         ]
 				});
 			});
+			
+			window.onload = function() {
+				  var input = document.getElementById("buildingName").focus();
+			}
+			
 		</script> 
 	</head>
 

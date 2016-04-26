@@ -99,6 +99,7 @@ public class DbConnect {
 	/**
 	 * This method will set the credentials to connect to the MySQL database.
 	 * @return Driver Manager used in connection assignment.  This contains the url, database, username, and password to connect to the SQL database.
+	 * @author Brian Olaogun
 	 */
 	public Connection credentials(){	
 		
@@ -113,6 +114,7 @@ public class DbConnect {
 	/**
 	 * This method will set the credentials to connect to the MySQL database.
 	 * @return Driver Manager used in connection assignment.  This contains the url, database, username, and password to connect to the SQL database.
+	 * @author Brian Olaogun
 	 */
 	public static Connection devCredentials(){
 		String url = "jdbc:mysql://localhost:3306/tomcatdb";
@@ -132,6 +134,7 @@ public class DbConnect {
 	/**
 	 * Set the URL to redirect to the login page after sessions expire.
 	 * @return String of the url redirect if the session is null.
+	 * @author Brian Olaogun
 	 */
 	public static String urlRedirect(){
 		return "http://ebus.terry.uga.edu:8080/MLC_Reservations";

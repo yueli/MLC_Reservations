@@ -55,15 +55,15 @@ public class CancelConfirmServlet extends HttpServlet {
 		String table = "";
 		String message = " ";
 				
-		
-		// get the current session
+		// get current session
 		session = request.getSession(false);
-	
-		// check to see if there is a valid session
-		if (session != null){ // there is an active session
+		
+		// If session is active/valid
+		if(session != null){
 			User user = (User) session.getAttribute("user");
-			
-			if(user != null) { // run code if user object is not null				
+			 
+			if(user != null) { // run code if user object is not null
+		
 					message = (String) request.getAttribute("message");	
 					
 					// blank the message if nothing gotten in message attribute
@@ -88,28 +88,30 @@ public class CancelConfirmServlet extends HttpServlet {
 					request.setAttribute("message",message); 
 					
 					url = "user/confirmCancellation.jsp";	
-					
 			} else {
 				//------------------------------------------------//
-				/*            ADMIN USER INFO EXPIRED             */
+				/*               USER INFO EXPIRED                */
 				//------------------------------------------------//
 				// if a new session is created with no user object passed
 				// user will need to login again
+				
 				session.invalidate();
+				CASLogoutServlet.clearCache(request, response);
 				response.sendRedirect(DbConnect.urlRedirect());
 				return;
 			}
-		
-		} else { // there isn't an active session (session == null).
+			
+		} else {
 			//------------------------------------------------//
 			/*        INVALID SESSION (SESSION == NULL)       */
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-	
+		
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}
+	
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

@@ -23,8 +23,8 @@
 		<br><br><br>
 		
 		<!-- Content -->
-		<h2 align="center">Download Reports</h2><br><br>
-		<h3 align="center">Reports will download as an Excel (CSV) File</h3><br>
+		<h2 align="center">Download Reports</h2><br>
+		<h3 align="center">Reports will download as an Excel (.xls) File</h3><br>
 	
 		<br>
 		<!-- Buttons to call the downloads servlets -->
@@ -32,17 +32,17 @@
 		
 	    <form name="banForm" id="banForm" action="DownloadReports" method="Post">
 	    	<input type="hidden" name="bannedList" value="bannedList">
-            <input class="btn btn-lg btn-red" type="submit" value="Download Banned Student List"><br><br>
+            <input class="btn btn-lg btn-red" type="submit" value="Banned Student List"><br><br>
     	</form> 
     	
     	<form name="adminForm" id="adminForm" action="DownloadReportsAdmin" method="Post">
 	    	<input type="hidden" name="adminList" value="adminList">
-            <input class="btn btn-lg btn-red" type="submit" value="Download Admin Stats"><br><br>
+            <input class="btn btn-lg btn-red" type="submit" value="Admin Stats"><br><br>
     	</form>
     	
     	<form name="scheduleForm" id="scheduleForm" action="DownloadReportsSchedule" method="Post">
 	    	<input type="hidden" name="schedule" value="schedule">
-            <input class="btn btn-lg btn-red" type="submit" value="Download Building Schedule">
+            <input class="btn btn-lg btn-red" type="submit" value="Building Schedule List">
     	</form>
     	
 		</div>

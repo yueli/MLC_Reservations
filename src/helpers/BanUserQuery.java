@@ -95,7 +95,7 @@ public class BanUserQuery {
 			form += "<form action='BanUserServlet' method = 'post'>";
 			
 			form += "Student's UGA MyID:<br>";
-			form +=  "<input type='text' name = 'userMyID' required>";
+			form +=  "<input type='text' id = 'userMyID' name = 'userMyID' required>";
 			form += "<br /> <br />";
 			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Ban Student'>";
 			form += "</form>";

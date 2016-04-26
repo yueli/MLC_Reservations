@@ -203,7 +203,9 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 
 								} else {
 									msg = "Successfully added schedule for dates " + dtc.convertDateLong(startDate) + " - " + dtc.convertDateLong(endDate) + "!";
-								}									siq.doScheduleInsert(schedule);
+								}									
+								
+								siq.doScheduleInsert(schedule);
 								
 								session.removeAttribute("buildingID");
 								session.removeAttribute("startDate");
@@ -224,8 +226,14 @@ public class AdminScheduleAddServlet2 extends HttpServlet {
 									updateSchedule = new Schedule(scheduleID, date, date, tc.convertTimeTo24(startTime), tc.convertTimeTo24(endTime), summary, createdBy);
 								}
 								AdminUpdateQuery suq = new AdminUpdateQuery();
+								if(startDate.equals(endDate)){
+									msg = "Successfully updated schedule for " + dtc.convertDateLong(date)+ ".<br>";
+									
+								} else {
+									
+									msg = "Successfully updated schedule for dates " + dtc.convertDateLong(startDate) + " - " + dtc.convertDateLong(endDate) + "!";
+								}									
 								
-								msg += "Successfully updated schedule for " + dtc.convertDateLong(date)+ ".<br>";
 								suq.doScheduleUpdate(updateSchedule);
 								
 								session.removeAttribute("buildingID");
