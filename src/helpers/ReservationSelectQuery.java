@@ -75,6 +75,45 @@ public class ReservationSelectQuery {
 	}
 	
 	/**
+	 * This query will check if the user has a reservation at the selected time 
+	 * in all building other than the current one selected.
+	 * @param currentDate the date in yyyy-MM-dd format
+	 * @param startTime time in HH:mm:ss format
+	 * @param userID ID of the logged in user
+	 * @param buildingID buildingID of the building the user is currently searching
+	 */
+	public void reservationsInOtherBuildings (String currentDate, String startTime, int userID, int buildingID){
+		String query = "SELECT Reservations.reserveID "
+				+ "FROM tomcatdb.Reservations, tomcatdb.Building, tomcatdb.User AS a, tomcatdb.User AS b "
+				+ "WHERE ((Reservations.reserveStartDate = ?) "
+				+ "AND ((Reservations.reserveStartTime = ?) OR (? BETWEEN reserveStartTime AND reserveEndTime))) "
+				+ "AND Building.buildingID = Reservations.Building_buildingID "
+				+ "AND Reservations.primaryUser = a.userID "
+				+ "AND Reservations.secondaryUser = b.userID "
+				+ "AND (a.userID = ? OR b.userID = ?) "
+				+ "AND Building.buildingID != ? "
+				+ "AND tomcatdb.Reservations.free = ? ";
+		
+		// securely run query
+		try {
+			PreparedStatement ps = this.connection.prepareStatement(query);
+			ps.setString(1, currentDate);
+			ps.setString(2, startTime);
+			ps.setString(3, startTime);
+			ps.setInt(4, userID);
+			ps.setInt(5, userID);
+			ps.setInt(6, buildingID);
+			ps.setString(7, "N");
+			
+			this.results = ps.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error in ReservationSelectQuery.java: reservationsInOtherBuildings method. Please check connection or SQL statement: " + query);
+		} 
+	}
+	
+	/**
 	 * Different from the version below.  The connection has to be closed
 	 * since there are too many open connections in RoomsSelectQuery.getRoomsTable.
 	 * @return reservation ID if there is a reservation or an empty string if there isn't.
@@ -127,13 +166,13 @@ public class ReservationSelectQuery {
 		String endDate = "2016-03-17";
 		String startTime = "11:00:00";
 		String endTime = "12:00:00";
-		String buildingID = "1";
+		int buildingID = 1;
 		TimeConverter tc = new TimeConverter();
 		ReservationSelectQuery res = new ReservationSelectQuery();
 		RoomsSelectQuery rsq = new RoomsSelectQuery();
 		
 		// list for the room number.  Below will print all times, inclusive between start and end
-		List<String> roomNumber = rsq.roomList(Integer.parseInt(buildingID));
+		List<String> roomNumber = rsq.roomList(buildingID);
 		List<String> times = tc.timeRangeList(startTime, endTime);
 		
 		// loop through each room after all times have been checked 
