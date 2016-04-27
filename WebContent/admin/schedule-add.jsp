@@ -70,7 +70,7 @@
 				End Time: <input type="text" id="endTime" name="endTime" value=""><br>
 				Summary: <input type="text" name="summary" value=""><br><br>
 			</div>
-			<div align="center"></div>
+			<div align="center">
 				<input class="btn btn-lg btn-red" name="scheduleAdd" type="submit" value="Enter"> <a href="Schedule"><button align="center" class="btn btn-lg btn-red" type="button" value="Schedule">View Building Hours</button></a> <br>
 			</form>   
 			</div>
