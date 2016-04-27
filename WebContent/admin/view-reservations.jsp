@@ -56,7 +56,7 @@
 				</form>
 			</div>
 			<br>
-			<div>
+		<div align="center">
 			<h2>Admin Reservations for ${currentDateLong}</h2>
 			<p>${adminReservations}</p>
 			</div>
