@@ -68,18 +68,17 @@
 			<h3>${scheduleHeader}<br>
 			You can also edit a building's hours or add hours to a building.</h3><br>
 			<h3>${msg}</h3><br>
-		
 			<h2>Hours for ${buildingName}</h2><br>
 		</div>
+		<div class="centerdiv">
 			<form name="BuildingSelect" action="Schedule" method="post"> <br>
-				<div class="centerdiv">
 					<p>${buildings}<br>
 					<label for="from">From </label> <input type="text" id="from" name="from" placeholder="mm/dd/yyyy"> <br>
 					<label for="to">To </label> <input type="text" id="to" name="to" placeholder="mm/dd/yyyy"><br>
-				</div>
-				<div align="center">
+		</div>
+		<div align="center">
 					<input class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"> <br><br>
-				</div>
+		</div>
 			</form>
 		
 		<div align="center">	
