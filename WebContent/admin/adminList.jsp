@@ -54,10 +54,11 @@
 		<br /><br /><br /><br />
 		
 		<!-- Content -->
+		<div align="center">
 		${message}
 
 		${table}
-		
+		</div>
 		<!-- End Content -->
 		
  		<!-- Footer -->
