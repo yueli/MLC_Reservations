@@ -63,9 +63,11 @@ form {
 	<div id="header1"></div>
 	
 	<!-- Content -->
+	<div align="center">
 	${message}
 	<br />
 	${table}
+	</div>
 	<!-- End Content -->
 	
  	<!-- Footer -->	
