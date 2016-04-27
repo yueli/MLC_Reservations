@@ -63,20 +63,23 @@
 		<br><br><br>
 		
 		<!-- Content -->
-		<div class="centerdiv">
+		<div align="center">
 			<form name="adminReserveForm" action="admin-reservations" method="post">
-				<h2 align="center">Make a Reservation</h2><br>
-				<h3 align="center">Please enter all information below to make a reservation.</h3><br>
-				<h3 align="center">${msg}</h3><br>
+				<h2>Make a Reservation</h2><br>
+				<h3>Please enter all information below to make a reservation.</h3><br>
+				<h3>${msg}</h3><br>
+		</div>
+			<div class="centerdiv">
 				Building ${buildings}<br>
 				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
-				<a href="AdminViewReservations"><button align="center" class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> 
+		<div align="center">
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> <a href="AdminViewReservations"><button align="center" class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
 			</form>
-			<p>${table}</p>
 		</div>
+			<p>${table}</p>
 		<!-- End Content -->
 		
 		<!-- Footer -->

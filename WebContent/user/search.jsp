@@ -14,7 +14,7 @@
 		
         <!-- Template CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="table.css">
+        <link rel="stylesheet" type="text/css" href="user/search.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js">
         <link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
@@ -54,18 +54,21 @@
 		<br><br>
 		
 		<!-- Content -->
-		<div class="centerdiv">
+		<div align="center">
 			<form name="userReserveForm" action="SearchReservations" method="post">
 				<h2>Search Reservations</h2><br>
-				<h3>Search for reservations up to 2 week from today.</h3><br>
+				<h3>Search for reservations up to 2 weeks from today.</h3><br>
 				<h3>${msg}</h3><br>
+		</div>
+		<div class="centerdiv">
 				Building ${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime).trim()}"><br>
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime).trim()}"><br>
 				Reservation Length: ${hourIncrementSelect}<br><br>
-				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Search"> 
+				<input align="center" class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Search"> 
+			</div>
 			</form>
 		</div>
 		

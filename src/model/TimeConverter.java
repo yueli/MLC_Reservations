@@ -168,7 +168,7 @@ public class TimeConverter {
 	/**
 	 * This method will subtract the hours of a start time by the reservation length (hour)
 	 * For example, 23:00:00 - 2 = 21:00:00
-	 * This mehod subtracts the hour only.
+	 * This method subtracts the hour only.
 	 * @param time String time in HH:mm:ss (24-hour) SQL format
 	 * @param hourIncrement Integer reservation length
 	 * @return The difference from of the start time - reservation length (hour increment)
