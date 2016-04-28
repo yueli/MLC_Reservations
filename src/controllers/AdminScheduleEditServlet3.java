@@ -85,7 +85,7 @@ public class AdminScheduleEditServlet3 extends HttpServlet {
 					
 					
 					// edited values from schedule-edit.jsp
-					String startDateEdit  = request.getParameter("startDateEdit");
+					//String startDateEdit  = request.getParameter("startDateEdit");
 					String startTimeEdit  = request.getParameter("startTimeEdit");
 					String endTimeEdit  = request.getParameter("endTimeEdit");
 					String summaryEdit  = request.getParameter("summaryEdit");
@@ -97,7 +97,7 @@ public class AdminScheduleEditServlet3 extends HttpServlet {
 					String newSchedule = "";
 
 					
-					if(startDateEdit == null || startDateEdit.isEmpty()){
+					if(startDate == null || startDate.isEmpty()){
 						
 						msg = "Please enter a date. A date is required.";
 						url = "admin/schedule-edit.jsp";
@@ -119,8 +119,8 @@ public class AdminScheduleEditServlet3 extends HttpServlet {
 						
 						// place variables from jsp (user altered) into standard variables
 						// the start and end date have to be the same
-						startDate = startDateEdit;
-						endDate = startDateEdit;
+						//startDate = startDateEdit;
+						endDate = startDate;
 						
 						// convert from 24-hour time
 						startTimeEdit = tc.convertTimeTo24(startTimeEdit);
