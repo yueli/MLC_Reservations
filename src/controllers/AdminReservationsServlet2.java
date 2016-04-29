@@ -159,7 +159,7 @@ public class AdminReservationsServlet2 extends HttpServlet {
 						msg = "Please enter a <b>start time</b> that is <b>less than</b> the <b>end time</b>.";
 						
 					} else if (startTime.equals(endTime)){
-						msg = "The <b>start time</b> of a reservation <b>cannot</b> equal the <b>end time</b>.";
+						msg += "The <b>start time</b> of a reservation <b>cannot</b> equal the <b>end time</b>.";
 						
 					} else if ((dtc.slashDateConvert(startDate).equals(currentDate)) && (!TimeConverter.isAfter(startTime, currentHourBlock))){
 						msg = "Please select a start time that is greater than or equal to the current hour.";
