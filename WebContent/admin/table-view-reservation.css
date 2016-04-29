@@ -34,13 +34,14 @@ input[type="search"] {
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
 	/* Force table to not be like tables anymore */
-	#DataTables_Table_0 table, #DataTables_Table_0 thead, #DataTables_Table_0 tbody, #DataTables_Table_0 th, #DataTables_Table_0 td, #DataTables_Table_0 tr {
+	#DataTables_Table_0 table, #DataTables_Table_0 thead, #DataTables_Table_0 tbody, #DataTables_Table_0 th, #DataTables_Table_0 td, #DataTables_Table_0 tr, 
+	#DataTables_Table_01 table, #DataTables_Table_1 thead, #DataTables_Table_1 tbody, #DataTables_Table_1 th, #DataTables_Table_1 td, #DataTables_Table_1 tr {
 		display: block;
 		text-align: center;
 	}
 
 	/* Hide table headers (but not display: none;, for accessibility) */
-	#DataTables_Table_0 thead tr {
+	#DataTables_Table_0 thead tr, #DataTables_Table_1 thead tr {
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
