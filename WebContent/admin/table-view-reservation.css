@@ -21,6 +21,13 @@ table th {
 	background: #cc0033;
 	color: #fff;
 	}
+
+input[type="search"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-right: 95px;
+}	
 	
 /* CSS FOR RESPONSIVE TABLES */
 @media only screen and (max-width: 760px),
