@@ -76,7 +76,9 @@
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
 			</div>
-				<input align="center" class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> <a href="AdminViewReservations"><button align="center" class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
+			<div align="center">
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> <a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
+			</div>
 			</form>
 		
 			<p>${table}</p>

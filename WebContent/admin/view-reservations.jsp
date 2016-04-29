@@ -60,6 +60,7 @@
 			<h2>Admin Reservations for ${currentDateLong}</h2>
 			<p>${adminReservations}</p>
 			</div>
+		<div align="center">
 			<h2>Student Reservations for ${currentDateLong}</h2>
 			<p>${userReservations}</p>
 		</div>
