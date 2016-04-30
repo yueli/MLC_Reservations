@@ -213,12 +213,13 @@ public class Email {
 		// EMAIL ADDRESSES
         this.cc = cc;
         this.to = to;
+        //String from = "study.room.reserve@gmail.com";
         String from = "learnctr@uga.edu"; // Reply Email for the MLC
         
         // MAIL SERVER
-        //String host = "smtp.office365.com";
-        String host = ""; 
-
+        //String host = "smtp.gmail.com";
+        String host = "";
+        
         // Create properties for the Session
         Properties props = new Properties();
 

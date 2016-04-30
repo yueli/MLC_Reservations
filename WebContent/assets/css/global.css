@@ -247,7 +247,7 @@ h1.logo-text a {
   color: #ebebeb;
 }
 .color-primary {
-  color: ##cc00333;
+  color: ##cc0033;
 }
 .color-primary[class^="fa-"]:before,
 .color-primary[class*=" fa-"]:before {

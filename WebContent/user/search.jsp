@@ -14,7 +14,7 @@
 		
         <!-- Template CSS -->
   		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="table.css">
+        <link rel="stylesheet" type="text/css" href="user/search.css">
  		<link rel="stylesheet" type="text/css" href="jquery/DataTables/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="jquery/DataTables/dataTables.uikit.js">
         <link rel="stylesheet" type="text/css" href="jquery/Responsive/css/responsive.dataTables.css">
@@ -57,7 +57,7 @@
 		<div align="center">
 			<form name="userReserveForm" action="SearchReservations" method="post">
 				<h2>Search Reservations</h2><br>
-				<h3>Search for reservations up to 2 week from today.</h3><br>
+				<h3>Search for reservations up to 2 weeks from today.</h3><br>
 				<h3>${msg}</h3><br>
 		</div>
 		<div class="centerdiv">

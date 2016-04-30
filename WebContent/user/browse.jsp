@@ -36,15 +36,15 @@
 			${currentDay}
 		</div>
 		
-		<div class="centerdiv">	
+		<div align="center">	
 			<form name="browseForm" action="BrowseFloors" method="post">
-				<h2>${buildingHeader}</h2>
+				<h3>${buildingHeader}</h3>
 				<p>${buildings}
 					${buildingSubmit}</p> 
 			</form>
 			
 			<form name="browseForm2" action="BrowseRooms" method="post">
-				<h2>${floorHeader}</h2>
+				<h3>${floorHeader}</h3>
 				<p>${floor}</p>
 			</form>
 			

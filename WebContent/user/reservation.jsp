@@ -27,13 +27,16 @@
 		<!-- Content -->
 		<div class="clearfix"></div>
 		<div id="container margin-vert-60" style="z-index:1;" >
-			<div class="row text-center centerdiv">
+			<div class="row text-center">
 				<div id="reservation_div">	
+					<div align="center">
 					<form name="browse_reservation" id ="browse_reservation" action="BrowseConfirmation" method="post">
 						<h2>Make a Reservation</h2><br>
 						<h3>Please fill out additional information below to make a reservation.</h3><br>
 						<h3>${msg}</h3><br>
 						<h3>Reservation for ${currentDateLong}</h3>
+					</div>
+					<div class="centerdiv">
 						<p>Building:
 							<input type="text" name="building" id="building" value="${buildingName}" disabled></p>				
 						<p>Room Number:  
@@ -43,7 +46,10 @@
 						<p>Reservation Length: ${incrementSelect}</p>
 						<p>Please enter myID of secondary person:<br>
 						<input type="text" name="secondary" id="secondary" placeholder="MyID" required></p>
-						<button class="btn btn-lg btn-red" onclick="goBack()">Cancel</button>    <input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
+					</div>
+					<div align="center">
+						<input class="btn btn-lg btn-red" type="submit" value="Make Reservation">  <button class="btn btn-lg btn-red" onclick="goBack()">Cancel</button> 
+					</div>
 					</form>
 				</div>	
 			</div>
