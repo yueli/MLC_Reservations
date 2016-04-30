@@ -111,7 +111,8 @@ public class BanUserServlet extends HttpServlet {
 									+ MyID  + "' is not a user of this application (they have never logged into this site)."
 									+ "</h3></div>";
 						url = "BanUserFormServlet";
-						
+						request.setAttribute("table", table);
+						request.setAttribute("message", message);
 						
 					}else{
 						// user to be banned is in the user table
@@ -130,7 +131,12 @@ public class BanUserServlet extends HttpServlet {
 							message = "<br /><br /><div align='center'><h3>The user with the UGA MyId '" 
 									+ MyID  + "' is already banned."
 									+ "</h3></div>";
+							
 							url = "BanUserFormServlet";
+							
+							request.setAttribute("table", table);
+							request.setAttribute("message", message);
+
 							
 						}
 						
