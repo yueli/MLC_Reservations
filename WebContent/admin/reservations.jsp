@@ -82,6 +82,8 @@
 			</form>
 			</div>
 			<p>${table}</p>
+			<!-- </div>  -->
+
 		<!-- End Content -->
 		
 		<!-- Footer -->
