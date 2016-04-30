@@ -22,18 +22,25 @@ table th {
 	color: #fff;
 	}
 	
+input[type="search"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-right: 95px;
+	}	
+	
 /* CSS FOR RESPONSIVE TABLES */
 @media only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
 	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr {
+	#DataTables_Table_0 table, #DataTables_Table_0 thead, #DataTables_Table_0 tbody, #DataTables_Table_0 th, #DataTables_Table_0 td, #DataTables_Table_0 tr {
 		display: block;
 		text-align: center;
 	}
 
 	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr {
+	#DataTables_Table_0 thead tr {
 		position: absolute;
 		top: -9999px;
 		left: -9999px;
@@ -61,14 +68,14 @@ table th {
 	}
 		
 		/* Label the data */
-		#DataTables_Table_0 td:nth-of-type(1):before { content: "#"; }
-		#DataTables_Table_0 td:nth-of-type(2):before { content: "Student ID"; }
-		#DataTables_Table_0 td:nth-of-type(3):before { content: "Admin ID"; }
-		#DataTables_Table_0 td:nth-of-type(4):before { content: "Start Date/Time"; }
-		#DataTables_Table_0 td:nth-of-type(5):before { content: "End Date/Time"; }
+		#DataTables_Table_0 td:nth-of-type(1):before { content: "+"; }
+		#DataTables_Table_0 td:nth-of-type(2):before { content: "Last Name"; }
+		#DataTables_Table_0 td:nth-of-type(3):before { content: "MyID"; }
+		#DataTables_Table_0 td:nth-of-type(4):before { content: "Admin"; }
+		#DataTables_Table_0 td:nth-of-type(5):before { content: "Ban Start"; }
 		#DataTables_Table_0 td:nth-of-type(6):before { content: "Penalty Count"; }
 		#DataTables_Table_0 td:nth-of-type(7):before { content: "Description"; }
-		#DataTables_Table_0 td:nth-of-type(8):before { content: "Status"; }
+		#DataTables_Table_0 td:nth-of-type(8):before { content: ""; }
 }
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen

@@ -320,9 +320,13 @@ public class Email {
                         msg.getSubject() +
                         "</title></head><body><h1>" +
                         msg.getSubject() +
-                        "</h1><p style='font-size:120%'>Thanks for reserving a room at " + building + "! " +
-                        "Your reservation is set for room " + roomNumber + " on " + dtc.convertDateLong(reserveDate) + " from " + tc.convertTimeTo12(startTime) + " to " + tc.convertTimeTo12(endTime) + ". <br><br>" + 
-                        "To check-in, view, or cancel your reservation, please visit " + websiteURL + "</body></html>";
+                        "</h1><p style='font-size:120%'>" +
+                        "Your reservation is set for room " + roomNumber + " on " + dtc.convertDateLong(reserveDate) + " from " + tc.convertTimeTo12(startTime) + " to " + tc.convertTimeTo12(endTime) + ". <br><br>" +
+                        "<b>You and one other person on your reservation MUST check-in to your room within 10 minutes of the start of your reservation.</b> "
+                        + "Failure to do so will result in losing your reservation and receiving a mark on your record.  Two marks against your record "
+                        + "will result in being banned from the system for one semester. <br><br>" + 
+                        "To check-in, view, or cancel your reservation, please visit " + websiteURL + " or use the QR code on the group study room you have reserved. <br><br>"
+                        		+ "<b>Questions?</b> Please email us at learnctr@uga.edu </body></html>";
 
         // HTMLDataSource is a static nested class
         msg.setDataHandler(new DataHandler(new HTMLDataSource(html)));
