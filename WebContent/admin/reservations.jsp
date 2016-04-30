@@ -68,7 +68,7 @@
 				<h3>Please enter all information below to make a reservation.</h3><br>
 				<h3>${msg}</h3><br>
 		</div>
-	<div class="centerdiv">
+			<div class="centerdiv">
 			  <form name="adminReserveForm" action="admin-reservations" method="post">
 
 				Building ${buildings}<br>
