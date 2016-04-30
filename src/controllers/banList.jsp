@@ -60,9 +60,9 @@
 	<body>
 	<div id="header1"></div>
 	<br><br><br><br>
-	<a href=banUser><button type='submit' value=''>Ban A User(List)</button></a>
-	<a href=banUser><button type='submit' value=''>Unban A User(List)</button></a>
-	<a href=unbanall><button type='submit' value=''>Unban All</button></a>
+	<a href=banUser><button class="btn btn-lg btn-red" type='submit' value=''>Ban A User(List)</button></a>
+	<a href=banUser><button class="btn btn-lg btn-red" type='submit' value=''>Unban A User(List)</button></a>
+	<a href=unbanall><button class="btn btn-lg btn-red" type='submit' value=''>Unban All</button></a>
 	<br>
 	${table}
 	<div id="footer"></div>

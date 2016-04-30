@@ -77,7 +77,8 @@
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
 			</div>
 			<div align="center">
-				<input align="center" class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter">   <a href="AdminViewReservations"><button align="center" class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> <a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
+			</div>
 			</form>
 			</div>
 			<p>${table}</p>
