@@ -500,6 +500,7 @@ h1.logo-text a {
 /* Button Colors */
 .btn {
   border-radius: 0px;
+  margin: 2px;
 }
 .btn-default {
   background-color: rgba(0, 0, 0, 0.043);
