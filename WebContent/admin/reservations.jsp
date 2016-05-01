@@ -37,7 +37,7 @@
 			      minDate: 0,
 			      defaultDate: null,
 			      changeMonth: true,
-			      numberOfMonths: 3,
+			      numberOfMonths: 1,
 			    });
 			});
 			// function for back button
@@ -77,7 +77,7 @@
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
 			</div>
 			<div align="center">
-				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> <a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br><br> <a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
 			</div>
 			</form>
 			</div>
