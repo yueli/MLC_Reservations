@@ -32,7 +32,7 @@
 		
 		<!-- Content -->
 		<div class="clearfix"></div>
-		<div id="container margin-vert-60 centerdiv" style="z-index:1;" >
+		<div id="container margin-vert-60 ccol-md-3 col-md-offset-5 col-sm-offset-5" style="z-index:1;" >
 			<div class="row text-center">
 				<div id="reservation_div">	
 					<form name="searchConfirmForm" id ="searchConfirmForm" action="SearchReservation-Confirm" method="post">
@@ -50,7 +50,10 @@
 						<p>Reservation Length: ${reservationLength}</p>
 						<p>Please enter myID of secondary person:<br>
 						<input type="text" name="secondary" id="secondary" placeholder="MyID" required></p>
+					</div>
+					<div class="col-md-12" align="center">
 						<button class="btn btn-lg btn-red" onclick="goBack()">Cancel</button>    <input class="btn btn-lg btn-red" type="submit" value="Make Reservation">
+					</div>
 					</form>
 				</div>	
 			</div>

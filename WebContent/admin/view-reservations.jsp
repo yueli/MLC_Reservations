@@ -46,21 +46,22 @@
 			<h3>Please select a building and or date to search for reservations. <br> 
 			To search by a user's MyID, please enter it in the search box.</h3><br>
 		</div>
-			<div class="centerdiv" id="search-container">
+			<div class="col-md-3 col-md-offset-5 col-sm-offset-5" id="search-container">
 				<h2>${msg}</h2>
 				<form name="adminViewForm" action="view-reservations?update" method="post">
 					<p>Building ${buildings} <br> Date <input type="text" name="datepicker" id="datepicker">
 			</div>
-			<div align="center">
+			<div class="col-md-12" align="center">
 					<input align="center" class="btn btn-lg btn-red" name="enterBuilding" type="submit" value="Enter"></p>
 				</form>
 			</div>
 			<br>
-		<div align="center">
+			<br>
+		<div class="col-md-12" align="center">
 			<h2>Admin Reservations for ${currentDateLong}</h2>
-			<p>${adminReservations}</p>
+			<p class="col-md-10">${adminReservations}</p>
 			</div>
-		<div align="center">
+		<div class="col-md-12" align="center">
 			<h2>Student Reservations for ${currentDateLong}</h2>
 			<p>${userReservations}</p>
 		</div>
