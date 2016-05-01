@@ -44,9 +44,12 @@
 		<!-- Header -->
 		<div id="header1"></div>
 	<br />
+	
+	<div align="center">
 		${message}
 
 		${table}
+	</div>
 
 		<div id="footer"></div>
 	</body>

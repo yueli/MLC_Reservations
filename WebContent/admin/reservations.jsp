@@ -37,7 +37,7 @@
 			      minDate: 0,
 			      defaultDate: null,
 			      changeMonth: true,
-			      numberOfMonths: 3,
+			      numberOfMonths: 1,
 			    });
 			});
 			// function for back button
@@ -64,22 +64,26 @@
 		
 		<!-- Content -->
 		<div align="center">
-			<form name="adminReserveForm" action="admin-reservations" method="post">
 				<h2>Make a Reservation</h2><br>
 				<h3>Please enter all information below to make a reservation.</h3><br>
 				<h3>${msg}</h3><br>
 		</div>
 			<div class="centerdiv">
+			  <form name="adminReserveForm" action="admin-reservations" method="post">
 				Building ${buildings}<br>
 				Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>
 				Reservation Name: <input type = "text" id="reserveName" name="reserveName" value="${reserveName}"><br><br>
-		<div align="center">
-				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br> <a href="AdminViewReservations"><button align="center" class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
+			</div>
+			<div align="center">
+				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"><br><br><a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
+			</div>
 			</form>
-		</div>
+			</div>
 			<p>${table}</p>
+			<!-- </div>  -->
+
 		<!-- End Content -->
 		
 		<!-- Footer -->
