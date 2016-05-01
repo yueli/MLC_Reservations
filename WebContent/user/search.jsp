@@ -60,7 +60,7 @@
 				<h3>Search for reservations up to 2 weeks from today.</h3><br>
 				<h3>${msg}</h3><br>
 		</div>
-		<div class="centerdiv">
+		<div class="col-md-3 col-md-offset-5 col-sm-offset-5">
 				Building ${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime" value="${tc.convertTimeTo12(startTime).trim()}"><br>
