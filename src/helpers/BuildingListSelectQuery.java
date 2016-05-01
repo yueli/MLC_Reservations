@@ -132,6 +132,7 @@ public class BuildingListSelectQuery {
 			form += "<br />";
 			form += "<form action='BuildingListBuildingUpdateServlet' method = 'post'>";
 			
+			form += "<div class='col-md-3 col-md-offset-5 col-sm-offset-5'>";
 			form += "Building Name:<br>";
 			form +=  "<input type='text' id = 'buildingName' name = 'buildingName' value = '" + buildingName + "' required>";
 			form += "<br />";
@@ -164,7 +165,9 @@ public class BuildingListSelectQuery {
 			form += "Building QR Name:<br>";
 			form +=  "<input type='text' name = 'buildingQRName' value = '" + buildingQRName + "' required>";
 			form += "<br />";
+			form += "</div>";
 			
+			form += "<div class='col-md-12' align='center'>";
 			form += "<br />";
 			form += "<input class='btn btn-lg btn-red' type = 'submit' value = Update>";
 			form += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
@@ -174,6 +177,7 @@ public class BuildingListSelectQuery {
 			form += "<form action='BuildingListServlet' method = 'post'>";
 			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			form += "</form>";
+			form += "</div>";
 
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -61,7 +61,7 @@
 				To make a reservation for today, please click browse.</h3><br>
 				<h3>${msg}</h3><br>
 			</div>
-			<div class="centerdiv">
+			<div class="col-md-3 col-md-offset-5 col-sm-offset-5">
 				Building ${buildings}<br>
 				Start Date: <input type="text" id="startDate" name="startDate" value="${startDate}"><br>
 				Start Time: <input id="startTime" name="startTime"><br>
@@ -69,7 +69,9 @@
 				<!--End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime)}"><br>-->
 				Reservation Length: ${hourIncrementSelect}<br><br>
 			</div>
+			<div class="col-md-12" align="center">
 				<a href="Browse"><button align="center" class="btn btn-lg btn-red" type="button" value="Browse">Browse</button></a>   <input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> 
+			</div>
 			</form>
 			<p>${table}</p>
 		</div>
