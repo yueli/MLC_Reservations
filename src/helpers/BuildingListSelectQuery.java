@@ -144,12 +144,12 @@ public class BuildingListSelectQuery {
 			// check to see the building's status and put into a pull-down
 			// with the current status being the default
 			if (Objects.equals("1", buildingStatus)){ //default to Active
-				form += "<option value='1' selected>Active</option>";
-				form += "<option value='0'>Inactive</option>";
+				form += "<option value='1' selected>Online</option>";
+				form += "<option value='0'>Offline</option>";
 				
 			}else{ //default to Inactive
-				form += "<option value='1'>Active</option>";
-				form += "<option value='0' selected>Inactive</option>";		
+				form += "<option value='1'>Online</option>";
+				form += "<option value='0' selected>Offline</option>";		
 			}					
 			form += "</select>";
 			form += "<br />";

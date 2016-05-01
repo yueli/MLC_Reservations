@@ -275,8 +275,8 @@ public class BuildingListQuery {
 			
 			table += "Status:<br>";
 			table += "<select name = 'buildingStatus' required>";
-			table += "<option value='1' selected>Active</option>";
-			table += "<option value='0'>Inactive</option>";	
+			table += "<option value='1' selected>Online</option>";
+			table += "<option value='0'>Offline</option>";	
 			table += "</select>";		
 			table += "<br />";
 			

@@ -90,7 +90,6 @@ public class BannedSelectQuery {
 			table += "<div align='center'><h2>Banning</h2>";
 			table += "<br /><br />";
 			table += "<center><a href=banUser><button class='btn btn-lg btn-red' type='submit' value=''>Ban A User</button></a>&nbsp;&nbsp";
-
 			table += "<a href=unbanall><button class='btn btn-lg btn-red' type='submit' value=''>Unban All</button></a></center>";
 			table += "<tr></tr>";
 			try {
@@ -168,8 +167,7 @@ public class BannedSelectQuery {
 						table += ban.getDescription();
 						}
 					table += "</td>";
-					
-					//table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
+		
 					table += "<td>"
 							+ "<form action='unban' method = 'post'>"
 							+ "<input type='hidden' name='bannedRecdID' value='" + ban.getBanID() + "'>"
