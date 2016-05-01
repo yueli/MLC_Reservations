@@ -56,14 +56,14 @@
 			<form name="scheduleEdit" id="scheduleEdit" method="post" action="schedule-confirm">
 				<h3>Edit schedule entry for ${buildingName}</h3><br>
 		</div>
-		<div class="centerdiv">
+		<div class="col-md-3 col-md-offset-5 col-sm-offset-5">
 				<h3color="#cc0033">${msg}</h3><br>
 				Date: <input type="text" id="datepicker" name="startDateEdit" value="${startDate}" disabled><br>
 				Start Time: <input type="text" id="startTime" name="startTimeEdit" value="${tc.convertTimeTo12(startTime)}"><br>
 				End Time: <input type="text" id="endTime" name="endTimeEdit" value="${tc.convertTimeTo12(endTime)}"><br>
 				Summary: <input type="text" name="summaryEdit" value="${summary}"><br><br>
 		</div>
-		<div align="center">
+		<div class="col-md-12" align="center">
 				<input class="btn btn-lg btn-red" type="submit" value="Submit"> <a href="Schedule"><button align="center" class="btn btn-lg btn-red" type="button" value="View Building Hours">View Building Hours</button></a>   
 		</div>
 			</form>

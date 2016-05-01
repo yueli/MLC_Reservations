@@ -57,7 +57,7 @@ public class AdminUserHelper {
 		
 		System.out.println("AdminUserHelper: ListAdmins");
 
-		table += "<div align='center'><h3>Admins</h3>";
+		table += "<div align='center'><h2>Admins</h2>";
 		table += "<br /><br />";
 		table += "<form action='AdminAddServlet' method = 'post'>" +
 				"<input class='btn btn-lg btn-red' type='submit' value='Add An Admin'>" +

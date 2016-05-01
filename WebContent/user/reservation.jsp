@@ -36,7 +36,7 @@
 						<h3>${msg}</h3><br>
 						<h3>Reservation for ${currentDateLong}</h3>
 					</div>
-					<div class="centerdiv">
+					<div class="col-md-3 col-md-offset-5 col-sm-offset-5">
 						<p>Building:
 							<input type="text" name="building" id="building" value="${buildingName}" disabled></p>				
 						<p>Room Number:  
@@ -47,7 +47,7 @@
 						<p>Please enter myID of secondary person:<br>
 						<input type="text" name="secondary" id="secondary" placeholder="MyID" required></p>
 					</div>
-					<div align="center">
+					<div class="col-md-12" align="center">
 						<input class="btn btn-lg btn-red" type="submit" value="Make Reservation">  <button class="btn btn-lg btn-red" onclick="goBack()">Cancel</button> 
 					</div>
 					</form>

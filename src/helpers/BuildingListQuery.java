@@ -155,13 +155,14 @@ public class BuildingListQuery {
 			String table = "";
 				  
 			try {
-				table += "<div align='center'><h3>Buildings</h3>";
+				table += "<div align='center'><h2>Buildings</h2></div>";
 				
 				table += "<br /><br />";
 				table += "<form action='buildingform' method = 'post'>" +
 						"<input class='btn btn-lg btn-red' type='submit' value='Add A Building'>" +
 						"</form>";
 				
+				table += "<div class'col-md-3 col-md-offset-5 col-sm-offset-5'>";
 				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
 				table += "<thead>"
 						+ "<tr>"
@@ -176,6 +177,7 @@ public class BuildingListQuery {
 						+ "</tr>"
 						+ "</thead>"
 						+ "<tbody>";
+				 table += "</div>";
 				while(results.next()){
 
 					
@@ -216,6 +218,7 @@ public class BuildingListQuery {
 					table += "</td>";
 					
 					// calls BuildingListUpdateServlet
+					table += "<div class='col-md-12' align='center'>";
 					table += "<td>";
 					table += "<form name='buildingID' action='updatebuilding' method='post'>";
 					table += "<input type='hidden' name='buildingID' value='" + building.getBuildingID() + "'>";
@@ -237,7 +240,7 @@ public class BuildingListQuery {
 					table += "<input class='btn btn-lg btn-red' type='submit' value='View/Edit Rooms'>";
 					table += "</form>";
 					table += "</td>"; //Ginger Added
-					
+					table += "</div>";
 					
 					table += "</tr>";
 				}
@@ -261,7 +264,7 @@ public class BuildingListQuery {
 		public String createAddBuildingForm() {
 			String table = "";
 		
-			table += "<div align='center'><h3>Add a Building</h3>";
+			table += "<div align='center'><h2>Add a Building</h2>";
 			table += "<br />";
 			
 			table += "<form action='BuildingListAddServlet' method = 'post'>";
@@ -289,15 +292,18 @@ public class BuildingListQuery {
 			table +=  "<input type='text' name = 'buildingQRName' required>";
 			table += "<br />";
 			table += "<br />";	
-			table += "<br />";		
-					
+			table += "<br />";	
+			table += "</div>";
+			
+			table += "<div align='center'>";
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Add Building'>";
 			table += "</form>";
 			
-			table += "<br />";
+			table += "<br>";
 			table += "<form action='BuildingListServlet' method = 'post'>";
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			table += "</form>";
+			table += "</div>";
 					
 			return table;
 		}
