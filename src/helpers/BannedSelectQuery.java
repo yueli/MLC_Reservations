@@ -77,7 +77,7 @@ public class BannedSelectQuery {
 		
 	
 		/**
-		 * The method getHTMLTable gets all teh banned students and puts them into a table
+		 * The method getHTMLTable gets all the banned students and puts them into a table
 		 * parameter: none
 		 * return: the table of all the banned users
 		 */
@@ -89,9 +89,9 @@ public class BannedSelectQuery {
 
 			table += "<div align='center'><h3>Banning</h3>";
 			table += "<br /><br />";
-			table += "<center><a href=banUser><button type='submit' value=''>Ban A User</button></a>&nbsp;&nbsp";
+			table += "<center><a href=banUser><button class='btn btn-lg btn-red'  type='submit' value=''>Ban A User</button></a>&nbsp;&nbsp";
 
-			table += "<a href=unbanall><button type='submit' value=''>Unban All</button></a></center>";
+			table += "<a href=unbanall><button class='btn btn-lg btn-red' type='submit' value=''>Unban All</button></a></center>";
 			table += "<tr></tr>";
 			try {
 				table += "<table id='' class='mdl-data-table' cellspacing='0' width='95%'>";
@@ -168,8 +168,7 @@ public class BannedSelectQuery {
 						table += ban.getDescription();
 						}
 					table += "</td>";
-					
-					//table += "<td><a href=unban?banID=" + ban.getBanID() + "> <button type='submit' value='Unban'>Unban</button></a></td>";
+		
 					table += "<td>"
 							+ "<form action='unban' method = 'post'>"
 							+ "<input type='hidden' name='bannedRecdID' value='" + ban.getBanID() + "'>"
