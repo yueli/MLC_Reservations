@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Admin;
+import model.DateTimeConverter;
 import model.DbConnect;
 import model.TimeConverter;
 
@@ -82,6 +83,7 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 					String summaryEdit  = request.getParameter("summaryEdit");
 					
 					// Others
+					DateTimeConverter dtc = new DateTimeConverter();
 					TimeConverter tc = new TimeConverter();
 					String msg = "";
 					String newSchedule = "";
@@ -115,6 +117,7 @@ public class AdminScheduleEditServlet2 extends HttpServlet {
 							url = "admin/schedule-edit.jsp";
 						}
 						
+						this.session.setAttribute("dtc", dtc);
 						this.session.setAttribute("msg", msg);
 						this.session.setAttribute("tc", tc);
 						this.session.setAttribute("scheduleID", scheduleID);

@@ -447,9 +447,9 @@ public class RoomsSelectQuery {
 					room.setRoomStatus(this.results.getInt("roomStatus"));
 
 					if (room.getRoomStatus() == 1){ // the room is active
-						roomStatus = "Active";
+						roomStatus = "Online";
 					}else{
-						roomStatus = "Inactive";
+						roomStatus = "Offline";
 					}
 					
 					
@@ -550,12 +550,12 @@ public class RoomsSelectQuery {
 				table += "<select name = 'roomStatus' required>";
 				
 				if (roomStatus == 1){
-					table += "<option value='1' selected>Active</option>";
-					table += "<option value='0'>Inactive</option>";
+					table += "<option value='1' selected>Online</option>";
+					table += "<option value='0'>Offline</option>";
 					
 				}else{
-					table += "<option value='1'>Active</option>";
-					table += "<option value='0' selected>Inactive</option>";		
+					table += "<option value='1'>Online</option>";
+					table += "<option value='0' selected>Offline</option>";		
 				}		
 				
 				table += "</select>";
@@ -655,8 +655,8 @@ public class RoomsSelectQuery {
 					
 				table += "Room Status: &nbsp;&nbsp;";
 				table += "<select name = 'roomStatus' required>";
-				table += "<option value='1' selected>Active</option>";
-				table += "<option value='0'>Inactive</option>";							
+				table += "<option value='1' selected>Online</option>";
+				table += "<option value='0'>Offline</option>";							
 				table += "</select>";	
 				
 				table += "<br /><br />";
