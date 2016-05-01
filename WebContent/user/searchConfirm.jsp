@@ -17,6 +17,12 @@
 			function goBack() {
 			    window.history.back();
 			}
+			
+			window.onload = function() {
+				  var input = document.getElementById("secondary").focus();
+			}
+			
+			
 		</script> 
 	</head>
 	<body>
