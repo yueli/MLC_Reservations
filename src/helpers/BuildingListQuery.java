@@ -69,7 +69,7 @@ public class BuildingListQuery {
 		
 		/**
 		 * Get the name of a building from it's record id
-		 * @param buildingID
+		 * @param buildingID table record ID of the building from the database table
 		 * @return name of the building
 		 */
 		public String getBuildingName(int buildingID){
@@ -94,9 +94,8 @@ public class BuildingListQuery {
 		
 		/**
 		 * This method gets all the rooms in a building.
-		 * @param buildingID
+		 * @param buildingID table record ID of the building from the database table
 		 */
-		
 		public void doReadRooms(int buildingID){
 
 			String query = "SELECT * "
@@ -119,10 +118,9 @@ public class BuildingListQuery {
 		
 		/**
 		 * This method gets the room Number based on the room's record id
-		 * @param roomID
+		 * @param roomID the table record ID from the room table for a room
 		 * @return room number for this record
 		 */
-		
 		public String getRoomName(int roomID){
 			String rNumber = "";
 			try {
@@ -146,10 +144,8 @@ public class BuildingListQuery {
 	
 		/**
 		 * This method gets all the buildings and puts them in a table.
-		 * @param: none
-		 * @return:This method returns a table containing all the buildings
+		 * @return This method returns a table containing all the buildings
 		 */
-		
 		public String getHTMLTable(){ 
 			//Return table of buildings			
 			String table = "";
@@ -259,10 +255,8 @@ public class BuildingListQuery {
 		/**
 		 * This method creates a form for the admin user to add a building
 		 * @author: Ginger Nix
-		 * @param none
 		 * @return table with form to add a building
 		 */
-		
 		public String createAddBuildingForm() {
 			String table = "";
 		

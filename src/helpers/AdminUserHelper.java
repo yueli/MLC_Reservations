@@ -46,10 +46,8 @@ public class AdminUserHelper {
 	 * ListAdmins gets all the admin users and puts them nicely into a table
 	 * 
 	 * @author: Ginger Nix
-	 * @parameters: none
 	 * @return: table of all the admin users
 	 */
-	
 	public String ListAdmins(){
 		String table = "";
 		String adminActiveStatus = "";
@@ -156,11 +154,10 @@ public class AdminUserHelper {
 	 * getAdminData gets the record data for the admin recd id passed to it
 	 * and returns an Admin object w the data
 	 * 
-	 * @author: Ginger Nix
-	 * @parameter: the admin's record ID
-	 * @return: admin object w/ all the data for that admin recd id
+	 * @author Ginger Nix
+	 * @param adminMyID the admin's record ID
+	 * @return admin object w/ all the data for that admin recd id
 	 */
-	
 	public Admin getAdminData(String adminMyID){
 		
 		Admin adminUser = new Admin();
@@ -201,11 +198,11 @@ public class AdminUserHelper {
 	 * role of the logged in admin user it creates a form
 	 * pre-populated with the admin to be edited data
 	 * 	
-	 * @author: Ginger Nix
-	 * @parameter: the admin's record ID
-	 * @return: admin object w/ all the data for that admin recd id
+	 * @author Ginger Nix
+	 * @param adminID the admin's record ID
+	 * @param loggedInAdminUser admin user object from session (the person who logged in)
+	 * @return admin object w/ all the data for that admin recd id
 	 */
-		
 	public String getAdminInfo(int adminID, Admin loggedInAdminUser){
 
 		Admin checkLoggedInAdminUser = new Admin();
@@ -361,9 +358,9 @@ public class AdminUserHelper {
 	/**
 	 * This method takes the role letter (like 'A') and converts it to human readable text	(like "Super User")
 	 *
-	 * @author: Ginger Nix
-	 * @parameter: the admin's role in the admin's record (S, A, V, etc)
-	 * @return: the admin's role as humn readable text (like "Super User")
+	 * @author Ginger Nix
+	 * @param role the admin's role in the admin's record (S, A, V, etc)
+	 * @return the admin's role as humn readable text (like "Super User")
 	 */
 	public String convertAdminRole (String role){
 		
@@ -391,16 +388,14 @@ public class AdminUserHelper {
 	 * This method takes the admin's record id and the new info and updates
 	 * the admin table
 	 * 
-	 * @author: Ginger Nix
-	 * @parameter: the record id of the admin to update's record
-	 * @parameter: admin's first name
-	 * @parameter: admin's last name
-	 * @parameter: admin's MyID
-	 * @parameter: admin's role
-	 * @parameter: admin's status
-	 * @return: nothing
+	 * @author Ginger Nix
+	 * @param adminRecordID the record id of the admin to update's record
+	 * @param fname admin's first name
+	 * @param lname admin's last name
+	 * @param adminMyID admin's MyID
+	 * @param role admin's role
+	 * @param status admin's status
 	 */
-	
 	public void updateAdminTable(int adminRecordID, String fname, String lname, String adminMyID, String role, int status) {
 
 		String query = "UPDATE tomcatdb.Admin "
@@ -434,11 +429,10 @@ public class AdminUserHelper {
 	/**
 	 * This method takes the admin user's MyID and checks to see if the admin user 
 	 * is in the admin user table
-	 * @author: Ginger Nix
-	 * @parameter: admin's MyID
-	 * @return: true if admin in table, false if admin not in table
+	 * @author Ginger Nix
+	 * @param myID admin's MyID
+	 * @return true if admin in table, false if admin not in table
 	 */
-	
 	public boolean inAdminUserTable(String myID){
 		
 		
@@ -468,11 +462,10 @@ public class AdminUserHelper {
 	
 	/**
 	 * This method creates a blank form to add a new admin user	
-	 * @author: Ginger Nix
-	 * @parameter: loggedInAdminUser object
-	 * @return: a form for the admin to add another admin user 
+	 * @author Ginger Nix
+	 * @param loggedInAdminUser object
+	 * @return a form for the admin to add another admin user 
 	 */
-	
 	public String createAddAdminForm(Admin loggedInAdminUser){
 		
 		String table = "";
@@ -553,12 +546,12 @@ public class AdminUserHelper {
 
 	/**
 	 * This method take the admin info and adds them to the admin user's table
-	 * @author: Ginger Nix
-	 * @parameter: admin to add's MyID
-	 * @parameter: admin to add's first name
-	 * @parameter: admin to add's last name
-	 * @parameter: admin to add's role
-	 * @parameter: admin to add's Status
+	 * @author Ginger Nix
+	 * @param adminMyID admin to add's MyID
+	 * @param fname admin to add's first name
+	 * @param lname admin to add's last name
+	 * @param role admin to add's role
+	 * @param adminStatus admin to add's Status
 	 */
 	public void insertAdminTable(String adminMyID, String fname, String lname, String role, int adminStatus) {
 		
@@ -586,9 +579,9 @@ public class AdminUserHelper {
 	/**
 	 * This method will take the myID and check to see if
 	 * this Admin user already exists in the admin table	
-	 * @author: Ginger Nix
-	 * @parameter: the admin to check's myID
-	 * @return: true if the admin is in the table, false if the admin is not in the table
+	 * @author Ginger Nix
+	 * @param myID the admin to check's myID
+	 * @return true if the admin is in the table, false if the admin is not in the table
 	 */
 	
 	public boolean inAdminTable(String myID){

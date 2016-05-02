@@ -1,5 +1,6 @@
 /**
- * 
+ * This Class is used to connect to the MySQL database and contains
+ * the method to set the URL for redirecting users to the login page.
  */
 package model;
 

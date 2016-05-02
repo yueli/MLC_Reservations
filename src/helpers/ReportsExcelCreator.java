@@ -22,7 +22,7 @@ import model.User;
 
 /**
  * 
- * @author Brian Olaogun & Victoria Chambers
+ * @author Brian Olaogun, Victoria Chambers
  * This Class is used to generate the reports for admins.
  *
  */

@@ -43,10 +43,8 @@ public class BuildingListSelectQuery {
 	
 	/**
 	 * This method get the building record info based on the building record ID
-	 * @param: buildingID
-	 * @return: nothing
+	 * @param buildingID table record ID form the building database table
 	 */
-	
 	public void doRead(int buildingID){
 
 		String query = "SELECT * FROM tomcatdb.Building "
@@ -68,8 +66,8 @@ public class BuildingListSelectQuery {
 	
 	/**
 	 * This method gets all the buildings
+	 * @return Query result set into a Building object.
 	 */
-	
 	public Building getBuilding(){ 
 				
 		Building buildingReturn = new Building();
@@ -103,10 +101,9 @@ public class BuildingListSelectQuery {
 	/**
 	 * This method takes a building record ID and pre-populates a table for the admi
 	 * user to edit the bulding's information
-	 * @param: buildingID
-	 * @return: the pre-populated building edit form
+	 * @param buildingID table record ID from teh building database table
+	 * @return the pre-populated building edit form
 	 */
-	
 	public String buildingEditForm (int buildingID) {
 		String form = "";
 		

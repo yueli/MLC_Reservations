@@ -81,6 +81,6 @@
 		<!-- End Content -->
 		
 		<!-- Footer -->
-		<div id="footer"></div>
+		<div class="col-md-12" id="footer"></div>
 	</body>
 </html>

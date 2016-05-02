@@ -382,9 +382,9 @@ public class RoomsSelectQuery {
 		 * This method takes a building record id and lists all the rooms in that building
 		 * @author: Ginger Nix
 		 * @param buildingID, action (where to send it when canceling/going back to previous calling page
+		 * @param cancelAction send Cancel action redirect to buildings or rooms servlet
 		 * @return the html table containing the rooms in the building
 		 */
-		
 		public String ListRoomsInBuilding(int buildingID, String cancelAction){
 			
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -502,10 +502,10 @@ public class RoomsSelectQuery {
 		 * This method takes the room ID and creates a form already populated
 		 * with the room info. The form is meant to edit the room data by an amin.	 
 		 * @param roomID ID of the room the user wants to edit
+		 * @param cancelAction send cancellation
 		 * @return String HTML table for the edited room
 		 * @author: Ginger Nix
 		 */
-		
 		public String createEditRoomForm (int roomID, String cancelAction){
 		
 			String table = "";
@@ -604,11 +604,11 @@ public class RoomsSelectQuery {
 		/**
 		 * This method takes the data about the room and updates the room's record in the Rooms table
 		 * @author Ginger Nix
-		 * @param roomID
-		 * @param roomNumber
-		 * @param roomFloor
-		 * @param roomStatus
-		 * @param adminID
+		 * @param roomID table record ID for room
+		 * @param roomNumber room number
+		 * @param roomFloor the floor of the room in the building
+		 * @param roomStatus 0 for offline, 1 for online
+		 * @param adminID table record ID for the admin in the database
 		 */
 		public void updateRoomTable(int roomID, String roomNumber, int roomFloor, int roomStatus, int adminID) {
 
@@ -637,8 +637,9 @@ public class RoomsSelectQuery {
 
 		/**
 		 * This method creates a blank form to add a new room to the building ID provided
-		 * @param buildingID
-		 * @return
+		 * @param buildingID table record ID in the building database table
+		 * @param cancelAction send cancel action of not adding a room
+		 * @return String HTML table form to add a room
 		 * @author: Ginger Nix
 		 */
 		public String createAddRoomForm(int buildingID, String cancelAction){
