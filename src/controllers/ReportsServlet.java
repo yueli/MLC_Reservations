@@ -16,7 +16,7 @@ import model.DbConnect;
 
 /**
  * This servlet will forward to the download reports jsp
- * @author Brian Olaogun & Victoria Chambers
+ * @author Brian Olaogun and Victoria Chambers
  */
 @WebServlet({ "/ReportsServlet", "/Reports" })
 public class ReportsServlet extends HttpServlet {
