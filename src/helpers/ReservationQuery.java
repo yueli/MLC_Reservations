@@ -48,9 +48,8 @@ public class ReservationQuery {
 
 		/**
 		 * This method cancels a reservation based on the reservations' record ID
-		 * @param resv_id
+		 * @param resv_id the table record ID in the reservations table in the database
 		 */
-		
 		public void cancelReservation(int resv_id){
 			// this method cancels the reservation by setting the free field to 'Y'
 			// showing that the day, time, and room are now free for someone to reserve
@@ -75,10 +74,9 @@ public class ReservationQuery {
 
 		/**
 		 * This method returns the record ID for the building based on the QR Name
-		 * @param buildingQRName
+		 * @param buildingQRName the building name for the QR code
 		 * @return building record ID 
 		 */
-		
 		public int getBuildingID(String buildingQRName){
 			int buildingID = 0;		
 			
@@ -115,11 +113,10 @@ public class ReservationQuery {
 	
 		/**
 		 * This method returns the record ID for this room having this QR room number
-		 * @param roomQRNum
-		 * @param buildingID
+		 * @param roomQRNum the QR code room number
+		 * @param buildingID table record ID for the building
 		 * @return the record id for the room with this QR room number
 		 */
-
 		public int getRoomID(String roomQRNum, int buildingID){
 			int roomID = 0;		
 			
@@ -152,12 +149,11 @@ public class ReservationQuery {
 		/**
 		 * This method gets the user, building, and room and checks to see if there is a reservation at this time
 		 * 
-		 * @param userRecdID
-		 * @param buildingRecdID
-		 * @param roomRecdID
+		 * @param userRecdID table record ID of the user
+		 * @param buildingRecdID table record ID of the building
+		 * @param roomRecdID table record ID for the room
 		 * @return 1 if reservation found, 0 if reservation is not found
 		 */
-
 		public int getUserReservation(int userRecdID, int buildingRecdID, int roomRecdID){
 			
 			int reservationID = 0;
@@ -224,11 +220,10 @@ public class ReservationQuery {
 			/**
 			 * This method takes the reservation's recd id and user's recd ID
 			 * and checks them into their room
-			 * @param reservationID
-			 * @param userRecordID
+			 * @param reservationID table record ID for reservation
+			 * @param userRecordID table record ID for user
 			 * @return true if user was checked in, false if not
-			 */
-				
+			 */	
 			public boolean checkInUser(int reservationID, int userRecordID){
 
 					DateFormat currentTime = new SimpleDateFormat("H:mm:ss"); // get current time format ex/ 13:02:23
@@ -262,10 +257,9 @@ public class ReservationQuery {
 
 				/**
 				 * This method checks to see if someone has already checked into a room
-				 * @param reservationID
+				 * @param reservationID record ID of the reservation (reservation table in database)
 				 * @return true if the user has already checked into their room, false if they have not
 				 */
-			
 				public boolean alreadyCheckedIn(int reservationID){
 
 					String query = "SELECT * FROM tomcatdb.CheckIn "

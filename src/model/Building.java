@@ -18,12 +18,13 @@ public class Building {
 	
 	/**
 	 * 
-	 * @param buildingID
-	 * @param buildingName
-	 * @param buildingStatus
-	 * @param buildingCalName
-	 * @param buildingCalUrl
-	 * @param admin
+	 * @param buildingID the building table record ID
+	 * @param buildingName the name of the building
+	 * @param buildingStatus 0 if offline and 1 if online
+	 * @param buildingCalName the name of the google calendar
+	 * @param buildingCalUrl URL of the google calenadar
+	 * @param admin the admin record ID
+	 * @param buildingQRName the QR code name of the building
 	 */
 	//public Building(int buildingID, String buildingName, int buildingStatus, String buildingCalName,
 	//		String buildingCalUrl, String admin, String buildingQRName) {
@@ -39,11 +40,11 @@ public class Building {
 	
 	/**
 	 * 
-	 * @param buildingName
-	 * @param buildingStatus
-	 * @param buildingCalName
-	 * @param buildingCalUrl
-	 * @param admin
+	 * @param buildingName the name of the building
+	 * @param buildingStatus of if offline and 1 if online
+	 * @param buildingCalName the name of the google calendar
+	 * @param buildingCalUrl URL of the google calendar
+	 * @param admin the admin record ID
 	 */
 	public Building(String buildingName, int buildingStatus, String buildingCalName,
 			String buildingCalUrl, String admin) {
@@ -56,9 +57,9 @@ public class Building {
 	
 	/**
 	 * 
-	 * @param buildingName
-	 * @param buildingStatus
-	 * @param admin
+	 * @param buildingName the name of the building
+	 * @param buildingStatus 0 for offline, 1 for online
+	 * @param admin the admin record ID
 	 */
 	public Building(String buildingName, int buildingStatus, String admin) {
 		this.buildingName = buildingName;

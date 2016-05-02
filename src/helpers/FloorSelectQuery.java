@@ -60,6 +60,7 @@ public class FloorSelectQuery {
 	}
 	/**
 	 * String result set of the query above placed in an html select (drop down) list
+	 * @return an HTML select drop down with the floors for the selected building
 	 */
 	public String getFloorResults(){
 		// Create the String for HTML

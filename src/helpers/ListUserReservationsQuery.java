@@ -48,10 +48,9 @@ public class ListUserReservationsQuery {
 	/**
 	 * This method returns a user's reservations from this time forward based on the
 	 * user's recd ID
-	 * @param userRecordID
+	 * @param userRecordID user record ID for a user
 	 * @return a table listing all the user's reservations
 	 */
-	
 	public String ListUserReservations(int userRecordID){
 		
 		String table = "";
@@ -389,10 +388,9 @@ public class ListUserReservationsQuery {
 	
 	/**
 	 * This method gets a user's single reservation info from the reservation record id 
-	 * @param resv_id
+	 * @param resv_id the table record ID in the reservations table in the database
 	 * @return table containing the user's reservation
 	 */
-	
 	public String GetUserReservation(int resv_id){
 		String table = "";
 		// Used to convert date and time from SQL format to more standard format for display.

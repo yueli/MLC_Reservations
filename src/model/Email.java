@@ -63,6 +63,7 @@ public class Email {
 	 * @param endTime reservation end time
 	 * @param building the name of the building where the reservation is made
 	 * @param roomNumber room number
+	 * @param websiteURL the main URL of the website
 	 */
 	public Email(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL){
 		this.to = to;
@@ -201,6 +202,7 @@ public class Email {
 	 * @param endTime reservation end time
 	 * @param building the name of the building where the reservation is made
 	 * @param roomNumber room number
+	 * @param websiteURL the main URL of the website
 	 */
 	public void sendMail(String to, String cc, String reserveDate, String startTime, String endTime, String building, String roomNumber, String websiteURL) {
         // ROOM RESERVATION DETAILS
@@ -310,6 +312,7 @@ public class Email {
 	 * @param endTime reservation end time
 	 * @param building the building where the reservation was made
 	 * @param roomNumber room number
+	 * @param websiteURL the main URL of the website
 	 * @throws MessagingException error in sending message
 	 * Set the message of the email.  This is an HTML email message
 	 */

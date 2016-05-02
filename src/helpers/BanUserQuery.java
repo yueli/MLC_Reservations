@@ -49,10 +49,8 @@ public class BanUserQuery {
 	 * The method banUser takes the banned user object and stores the
 	 * data in the banned table thereby banning this user
 	 * 
-	 * @parameter: the banned user object
-	 * @return: nothing
+	 * @param ban banned user object
 	 */
-	
 	public void banUser(Banned ban){
 
 		String query = "INSERT INTO tomcatdb.Banned "
@@ -81,11 +79,9 @@ public class BanUserQuery {
 	
 		/**
 		 * This method creates a blank form for admin to search for a user to ban
-		 * @author: Ginger Nix
-		 * @param: none
-		 * @return: the blank form for searching for a user to ban
+		 * @author Ginger Nix
+		 * @return the blank form for searching for a user to ban
 		 */
-	
 		public String createBanUserForm(){
 			String form = "";
 			
@@ -116,10 +112,8 @@ public class BanUserQuery {
 		 * for other users
 		 * 
 		 * @author: Ginger Nix
-		 * @param: the recd ID of the banned user 
-		 * @return: none
+		 * @param userRecdID of the banned user 
 		 **/
-		
 		public void cancelBannedUserReservations(int userRecdID){
 			// look for any reservations that this user has as a primary user
 			// and set the free field to yes indicating that the reservation

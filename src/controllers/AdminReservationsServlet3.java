@@ -91,7 +91,7 @@ public class AdminReservationsServlet3 extends HttpServlet {
 					
 					// check if reservation is available
 					ReservationSelectQuery rsq = new ReservationSelectQuery();
-					rsq.doReservationRead(startDate, startTime, roomNumber); //TODO add end date to method - NOT YET
+					rsq.doReservationRead(startDate, startTime, roomNumber); 
 					String reservationCheck = rsq.doReservationResults();
 					
 					// a returned value = the room was reserved at the time

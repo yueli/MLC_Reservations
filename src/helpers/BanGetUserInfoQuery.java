@@ -44,11 +44,10 @@ public class BanGetUserInfoQuery {
 	
 	/**
 	 * The method userData takes a user recd id and gets the user data
-	 * @author: Ginger Nix
-	 * @parameters: the user table record's id
-	 * @return: a User object w/ the user's info
+	 * @author Ginger Nix
+	 * @param userID the user table record's id
+	 * @return a User object w/ the user's info
 	 */
-	
 	 public User userData(int userID){
 		
 		User userData = new User();
@@ -79,11 +78,10 @@ public class BanGetUserInfoQuery {
 	
 	 /**
 	  * This method takes the user's MyID and looks gets the user's info from the user table
-	 * @author: Ginger Nix
-	 * @parameters: the user MyID
-	 * @return: a User object w/ the user's info
+	 * @author Ginger Nix
+	 * @param MyID the user MyID
+	 * @return a User object w/ the user's info
 	 */
-	 
 	 public User userDataWithMyID(String MyID){
 			
 		User userData = new User();
@@ -115,11 +113,10 @@ public class BanGetUserInfoQuery {
 	/**
 	* The method userData takes an admin user's admin record ID and
 	* returns the admin object w/ the admin's data
-	* @author: Ginger Nix
-	* @parameters: the admin table record's id
-	* @return: an Admin object w/ the admin's info
-	*/
-		 
+	* @author Ginger Nix
+	* @param adminID the admin table record's id
+	* @return an Admin object w/ the admin's info
+	*/	 
 	 public Admin adminData(int adminID){
 			
 			Admin adminData = new Admin();

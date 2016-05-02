@@ -42,7 +42,7 @@ public class UnbanUserQuery {
 	
 	/**
 	 * This method un-bans a user
-	 * @param banID
+	 * @param banID the record ID in the ban database table
 	 */
 	
 	public void unbanUser(int banID){

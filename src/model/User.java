@@ -103,7 +103,7 @@ public class User {
 	}
 	/**
 	 * Checking if text entered for myID is valid
-	 * @param myID
+	 * @param myID UGA myID of the inputted user
 	 * @return true if valid myID, false if not valid.
 	 * @author Brian Olaogun
 	 */
