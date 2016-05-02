@@ -59,7 +59,7 @@ form {
 		
 			${table}
 			${message}
-			
+			<div class="clearfix"></div>
 		<!-- End Content -->
 		
 		<!-- Footer -->

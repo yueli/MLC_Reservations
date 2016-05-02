@@ -79,9 +79,11 @@
 			<div class="col-md-12" align="center">
 				<input class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Enter"> <a href="AdminViewReservations"><button class="btn btn-lg btn-red" type="button" value="AdminViewReservations">Cancel</button></a>
 			</div>
+			<div class="clearfix"></div>
 			</form>
 			</div>
 			<p>${table}</p>
+			<div class="clearfix"></div>
 			<!-- </div>  -->
 
 		<!-- End Content -->

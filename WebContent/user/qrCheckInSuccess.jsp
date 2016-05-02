@@ -57,6 +57,7 @@ form {
 	
 	<!-- Content -->
 	<p align="center"> ${message}</p>
+	<div class="clearfix"></div>
 	<!-- End Content -->
 
 	<!-- Footer -->

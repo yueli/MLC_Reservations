@@ -65,6 +65,7 @@
 			<h2>Student Reservations for ${currentDateLong}</h2>
 			<p>${userReservations}</p>
 		</div>
+		<div class="clearfix"></div>
 			<br><br><br><br>
 			<!-- End Content -->
 			
