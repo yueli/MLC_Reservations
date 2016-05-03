@@ -60,6 +60,7 @@ form {
 		<h1>Checking In Error Page</h1><br>
 		${message}
 	</div>
+	<div class="clearfix"></div>
 	<!-- End Content -->
 	
 	<!-- Footer -->

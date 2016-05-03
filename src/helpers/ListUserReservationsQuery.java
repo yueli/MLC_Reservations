@@ -115,9 +115,9 @@ public class ListUserReservationsQuery {
 					UserHelper uh = new UserHelper();
 					User user = uh.getUserInfoFromRecdID(userRecordID);
 					
-					table += "<div align='center'><h3>Reservations for: " 
+					table += "<div align='center'><h2>Reservations for: " 
 							+ user.getUserFirstName() + " "  
-							+ user.getUserLastName() + "</h3></div>"; 
+							+ user.getUserLastName() + "</h2></div>"; 
 					
 					while(this.results.next()){ //go through all records returned
 						Reservation resv = new Reservation();

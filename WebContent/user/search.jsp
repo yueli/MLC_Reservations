@@ -77,6 +77,7 @@
 		<div align="center">
 			<p>${table}</p>
 		</div>
+		<div class="clearfix"></div>
 		<!-- End Content -->
 		
 		<!-- Footer -->

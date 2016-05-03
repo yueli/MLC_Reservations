@@ -228,23 +228,25 @@ public class AdminUserHelper {
 		
 			// create an HTML form with this information
 
-			table += "<div align='center'><h3>Edit Admin</h3>";
+			table += "<div align='center'><h2>Edit Admin</h2></div>";
 			table += "<br />";
+			
+			table += "<div align='left' class='col-md-3 col-md-offset-5 col-sm-offset-5'>";
 			table += "<form action='AdminSaveServlet' method = 'post'>";
 			
-			table += "First name:<br>";
+			table += "First name: ";
 			table +=  "<input type='text' id = 'fname' name = 'fname' value = '" + fname + "' required>";
 			table += "<br />";
 			
-			table += "Last name:<br>";
+			table += "Last name: ";
 			table +=  "<input type='text' name = 'lname' value = '" + lname + "'required>";
 			table += "<br />";
 			
-			table += "MyID:<br>";
+			table += "MyID: ";
 			table +=  "<input type='text' name = 'adminMyID' value = '" + adminMyID + "'required>";
 			table += "<br />";
 			
-			table += "Role:<br>";
+			table += "Role: ";
 
 			// pull down of all the roles based on logged in admin's role, w/ the role being the default
 			
@@ -311,7 +313,7 @@ public class AdminUserHelper {
 			
 			// based on the admin user being edited's status, list the status with the default selected
 			
-			table += "Admin Status:<br>";
+			table += "Admin Status: ";
 			table += "<select name = 'status'required>";
 			
 			// if the admin being edited is active (=1)
@@ -327,19 +329,20 @@ public class AdminUserHelper {
 			table += "</select>";
 			table += "<br />";	
 			table += "<br />";
+			table += "</div>";
 			
 			System.out.println("AdminUserHelper: getAdminInfo adminID = " + adminID);
 			
-					
+			table += "<div class='col-md-12' align='center'>";
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";
 			table += "<input type = 'hidden' name = 'adminID' value='" + adminID + "'>";
 			table += "</form>";
 			
-			table += "<br />";
 			table += "<form action='AdminListServlet' method = 'post'>";
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			table += "</form>";
-	
+			table += "</div>";
+			table += "<div class='clearfix'></div>";
 	
 			
 		} catch (SQLException e) {
@@ -467,24 +470,25 @@ public class AdminUserHelper {
 		
 		String table = "";
 
-		table += "<div align='center'><h3>Add an Admin</h3>";
-		table += "<br />";
+		table += "<div align='center'><h2>Add an Admin</h2></div";
+		table += "<br /><br>";
 		
+		table += "<div align='left' class='col-md-3 col-md-offset-5 col-sm-offset-5'>";
 		table += "<form action='AdminAddSaveServlet' method = 'post'>";
 		
-		table += "First name:<br>";
+		table += "First name: ";
 		table +=  "<input type='text' id='fname' name = 'fname' required>";
 		table += "<br />";
 		
-		table += "Last name:<br>";
+		table += "Last name: ";
 		table +=  "<input type='text' name = 'lname' required>";
 		table += "<br />";
 		
-		table += "MyID:<br>";
+		table += "MyID: ";
 		table +=  "<input type='text' name = 'adminMyID' required>";
 		table += "<br />";
 		
-		table += "Role:<br>";
+		table += "Role: ";
 
 		// pull down of all the roles based on logged in admin's role, w/ the role being the default
 		
@@ -517,14 +521,16 @@ public class AdminUserHelper {
 		table += "</select>";
 		table += "<br />";
 				
-		table += "Admin Status:<br>";
+		table += "Admin Status: ";
 		table += "<select name = 'status' required>";
 		table += "<option value='1' selected>Active</option>";
 		table += "<option value='0'>Inactive</option>";	
 		table += "</select>";
 		table += "<br />";	
-		table += "<br />";		
-				
+		table += "<br />";	
+		table += "</div>";
+		
+		table += "<div class='col-md-12' align='center'>";
 		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Add Admin'>";
 		table += "</form>";
 		
@@ -532,6 +538,8 @@ public class AdminUserHelper {
 		table += "<form action='AdminListServlet' method = 'post'>";
 		table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 		table += "</form>";
+		table += "</div>";
+		table += "<div class='clearfix'></div>";
 				
 		return table;
 	}
