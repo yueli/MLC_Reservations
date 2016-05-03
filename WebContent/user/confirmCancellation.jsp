@@ -72,6 +72,7 @@ form {
 			</div>
 		</div>
 	</div>
+	<div class="clearfix"></div>
 	<!-- End Content -->
 
 	<!-- Footer -->

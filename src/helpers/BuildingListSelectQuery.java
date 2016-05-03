@@ -173,8 +173,10 @@ public class BuildingListSelectQuery {
 			form += "<br />";
 			form += "<form action='BuildingListServlet' method = 'post'>";
 			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
-			form += "</form>";
 			form += "</div>";
+			form += "</form>";
+			form += "<div class='clearfix'></div>";
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();

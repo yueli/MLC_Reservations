@@ -93,6 +93,10 @@ body {
     width: 561px;
 }
 
+.leading {
+	line-height: 1.75em;
+}
+
 /*-----------------------------------------------------------------------------------*/
 /* Header */
 /*-----------------------------------------------------------------------------------*/
@@ -481,6 +485,13 @@ h1.logo-text a {
   margin-left: -40px;
   margin-right: -40px;
 }
+
+/* Half Line Break */
+
+hbr {
+	margin: 3em;
+}
+
 /* Background Colors */
 .background-gray-darker {
   background-color: #222222;
@@ -1514,5 +1525,6 @@ a.slicknav_item [class*=" fa-"] {
   display: block;
   line-height: 40px;
   min-height: 40px;
-  text-align: center;
+  text-align: left;
+  margin: 2px;
 }

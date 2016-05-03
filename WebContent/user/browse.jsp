@@ -53,8 +53,10 @@
 		<div align="center">
 			<h3>${msg}</h3><br> 
 			<p>${table}</p>
+			
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
+		<div class="clearfix"></div>
 		<!-- End Content -->
 		
 		<!-- Footer -->
