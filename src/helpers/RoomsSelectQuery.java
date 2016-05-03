@@ -184,6 +184,7 @@ public class RoomsSelectQuery {
 				e.printStackTrace();
 			}
 			table += "</ul>";
+			
 			// Class to convert 24 hour time to 12 hour
 			TimeConverter tc = new TimeConverter();
 			int j = 0; // used for jQuery tabs creation
@@ -336,6 +337,7 @@ public class RoomsSelectQuery {
 							}
 						}
 						
+						table += "</td>";
 					}
 					table += "</tr>";
 					table += "</tbody>";
@@ -369,11 +371,12 @@ public class RoomsSelectQuery {
 					table += "</div>";
 					
 					j++; // used for jQuery tabs creation
-				}	
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			table += "</div>";
+			table += "<br><br><br><br><br><br><br><br><br><br><br>";
 			return table;
 		}
 		
