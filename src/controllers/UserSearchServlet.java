@@ -157,7 +157,8 @@ public class UserSearchServlet extends HttpServlet {
 						startTime = tc.convertTimeTo24(startTime);
 						endTime = tc.convertTimeTo24(endTime);
 						
-						System.out.println("User Search Reservations --> start time = " + startTime + " end time = " + endTime);
+						// Print the start and end time of the reservation the user selected to console
+						//System.out.println("User Search Reservations --> start time = " + startTime + " end time = " + endTime);
 						
 						// query for reservation check and listing of all rooms in a building.
 						ReservationSelectQuery res = new ReservationSelectQuery();
@@ -266,6 +267,7 @@ public class UserSearchServlet extends HttpServlet {
 																	/*---------------------------------------------------------*/
 																	
 																	// testing - printing to console
+																	/*
 																	System.out.println("******* NOT AVAILABLE ********");
 																	System.out.println("RESERVE ID = " + check);
 																	System.out.println("DATE " + dates.get(k));
@@ -274,7 +276,7 @@ public class UserSearchServlet extends HttpServlet {
 																	System.out.println("ST TIME " + innerTimes.get(l));
 																	System.out.println("END TIME " + innerEndTime);
 																	System.out.println("******* NOT AVAILABLE ********");
-																	System.out.println();
+																	System.out.println();*/
 																	
 																	table += "<tr>";
 																	table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -293,12 +295,12 @@ public class UserSearchServlet extends HttpServlet {
 																	/*----------- Room is available to reserve ------------*/
 																	
 																	// testing - printing to console
-																	System.out.println();
+																	/*System.out.println();
 																	System.out.println("DATE " + dates.get(k));
 																	System.out.println("END " + endDate);
 																	System.out.println("ROOM NUMBER " + roomNumber.get(i));
 																	System.out.println("TIME " + innerTimes.get(l));
-																	System.out.println();
+																	System.out.println();*/
 																	
 																	table += "<tr>";
 																	table += "<td data-sort='" + h + "'>" + h + "</td>";
@@ -330,7 +332,7 @@ public class UserSearchServlet extends HttpServlet {
 															/*----------- Room is reserved ------------*/
 															
 															// testing - printing to console
-															System.out.println("******* RESERVED ********");
+															/*System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
 															System.out.println("DATE " + dates.get(k));
 															System.out.println("END " + dates.get(k));
@@ -338,7 +340,7 @@ public class UserSearchServlet extends HttpServlet {
 															System.out.println("ST TIME " + innerTimes.get(l));
 															System.out.println("END TIME " + innerEndTime);
 															System.out.println("******* RESERVED ********");
-															System.out.println();
+															System.out.println();*/
 															
 															table += "<tr>";
 															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -371,12 +373,12 @@ public class UserSearchServlet extends HttpServlet {
 							
 								//for (int k = 0; k < dates.size(); k++) { 
 								for (int i = 0; i < roomNumber.size(); i++){ // loop through each room after all times have been checked
-									
-									System.out.println("*************************");
+									// Print to console.  Used for testing.
+									/*System.out.println("*************************");
 									System.out.println();
 									System.out.println("Loop Date = " + dates.get(k));
 									System.out.println();
-									System.out.println("*************************");
+									System.out.println("*************************");*/
 									
 									if(dates.get(k).equals(startDate)){
 										
@@ -389,7 +391,7 @@ public class UserSearchServlet extends HttpServlet {
 										for (int j =0; j < times2.size(); j++){
 											
 											String innerEndTime = TimeConverter.addTime(times2.get(j), Integer.parseInt(hourIncrement));
-											System.out.println("Times 1: Start Date --> Loop Start time = " + times2.get(j) + " Loop END TIME = " + innerEndTime);
+											//System.out.println("Times 1: Start Date --> Loop Start time = " + times2.get(j) + " Loop END TIME = " + innerEndTime);
 											
 											List<String> innerTimes = tc.timeRangeList(times2.get(j), innerEndTime);
 											
@@ -428,7 +430,7 @@ public class UserSearchServlet extends HttpServlet {
 																	/*---------------------------------------------------------*/
 																	
 																	// testing - printing to console
-																	System.out.println("******* NOT AVAILABLE ********");
+																	/*System.out.println("******* NOT AVAILABLE ********");
 																	System.out.println("RESERVE ID = " + check);
 																	System.out.println("DATE " + dates.get(k));
 																	System.out.println("END " + dates.get(k));
@@ -436,7 +438,7 @@ public class UserSearchServlet extends HttpServlet {
 																	System.out.println("ST TIME " + innerTimes.get(l));
 																	System.out.println("END TIME " + innerEndTime);
 																	System.out.println("******* NOT AVAILABLE ********");
-																	System.out.println();
+																	System.out.println();*/
 																	
 																	table += "<tr>";
 																	table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -455,13 +457,13 @@ public class UserSearchServlet extends HttpServlet {
 																	/*----------- Room is available to reserve ------------*/
 																	
 																	// testing - printing to console
-																	System.out.println();
+																	/*System.out.println();
 																	System.out.println("DATE " + dates.get(k));
 																	System.out.println("END " + dates.get(k));
 																	System.out.println("ROOM NUMBER " + roomNumber.get(i));
 																	System.out.println("ST TIME " + innerTimes.get(l));
 																	System.out.println("END TIME " + innerEndTime);
-																	System.out.println();
+																	System.out.println();*/
 																	
 																	table += "<tr>";
 																	table += "<td data-sort='" + h + "'>" + h + "</td>";
@@ -494,7 +496,7 @@ public class UserSearchServlet extends HttpServlet {
 															/*----------- Room is reserved ------------*/
 															
 															// testing - printing to console
-															System.out.println("******* RESERVED ********");
+															/*System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
 															System.out.println("DATE " + dates.get(k));
 															System.out.println("END " + dates.get(k));
@@ -502,7 +504,7 @@ public class UserSearchServlet extends HttpServlet {
 															System.out.println("ST TIME " + innerTimes.get(l));
 															System.out.println("END TIME " + innerEndTime);
 															System.out.println("******* RESERVED ********");
-															System.out.println();
+															System.out.println();*/
 															
 															table += "<tr>";
 															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -534,7 +536,7 @@ public class UserSearchServlet extends HttpServlet {
 										for (int j =0; j < times3.size(); j++){
 											
 											String innerEndTime = TimeConverter.addTime(times3.get(j), Integer.parseInt(hourIncrement));
-											System.out.println("Times 2: Middle Date --> Loop Start time = " + times3.get(j) + " Loop END TIME = " + innerEndTime);
+											//System.out.println("Times 2: Middle Date --> Loop Start time = " + times3.get(j) + " Loop END TIME = " + innerEndTime);
 											
 											List<String> innerTimes = tc.timeRangeList(times3.get(j), innerEndTime);
 											
@@ -564,13 +566,13 @@ public class UserSearchServlet extends HttpServlet {
 																/*----------- Room is available to reserve ------------*/
 																
 																// testing - printing to console
-																System.out.println();
+																/*System.out.println();
 																System.out.println("DATE " + dates.get(k));
 																System.out.println("END " + dates.get(k));
 																System.out.println("ROOM NUMBER " + roomNumber.get(i));
 																System.out.println("ST TIME " + innerTimes.get(l));
 																System.out.println("END TIME " + innerEndTime);
-																System.out.println();
+																System.out.println();*/
 																
 																table += "<tr>";
 																table += "<td data-sort='" + h + "'>" + h + "</td>";
@@ -602,7 +604,7 @@ public class UserSearchServlet extends HttpServlet {
 															/*----------- Room is reserved ------------*/
 															
 															// testing - printing to console
-															System.out.println("******* RESERVED ********");
+															/*System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
 															System.out.println("DATE " + dates.get(k));
 															System.out.println("END " + dates.get(k));
@@ -610,7 +612,7 @@ public class UserSearchServlet extends HttpServlet {
 															System.out.println("ST TIME " + innerTimes.get(l));
 															System.out.println("END TIME " + innerEndTime);
 															System.out.println("******* RESERVED ********");
-															System.out.println();
+															System.out.println();*/
 															
 															table += "<tr>";
 															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";
@@ -641,7 +643,7 @@ public class UserSearchServlet extends HttpServlet {
 										for (int j =0; j < times4.size(); j++){
 											
 											String innerEndTime = TimeConverter.addTime(times4.get(j), Integer.parseInt(hourIncrement));
-											System.out.println("Times 3: End Date --> Loop Start time = " + times4.get(j) + " Loop END TIME = " + innerEndTime);
+											//System.out.println("Times 3: End Date --> Loop Start time = " + times4.get(j) + " Loop END TIME = " + innerEndTime);
 											
 											List<String> innerTimes = tc.timeRangeList(times4.get(j), innerEndTime);
 											
@@ -671,13 +673,13 @@ public class UserSearchServlet extends HttpServlet {
 																/*----------- Room is available to reserve ------------*/
 																
 																// testing - printing to console
-																System.out.println();
+																/*System.out.println();
 																System.out.println("DATE " + dates.get(k));
 																System.out.println("END " + dates.get(k));
 																System.out.println("ROOM NUMBER " + roomNumber.get(i));
 																System.out.println("ST TIME " + innerTimes.get(l));
 																System.out.println("END TIME " + innerEndTime);
-																System.out.println();
+																System.out.println();*/
 																
 																table += "<tr>";
 																table += "<td data-sort='" + h + "'>" + h + "</td>";
@@ -709,7 +711,7 @@ public class UserSearchServlet extends HttpServlet {
 															/*----------- Room is reserved ------------*/
 															
 															// testing - printing to console
-															System.out.println("******* RESERVED ********");
+															/*System.out.println("******* RESERVED ********");
 															System.out.println("RESERVE ID = " + check);
 															System.out.println("DATE " + dates.get(k));
 															System.out.println("END " + dates.get(k));
@@ -717,7 +719,7 @@ public class UserSearchServlet extends HttpServlet {
 															System.out.println("ST TIME " + innerTimes.get(l));
 															System.out.println("END TIME " + innerEndTime);
 															System.out.println("******* RESERVED ********");
-															System.out.println();
+															System.out.println();*/
 															
 															table += "<tr>";
 															table += "<form name='searchReserve' id='searchReserve" + h + "' action='SearchReservation-MakeReservation' method='post'>";

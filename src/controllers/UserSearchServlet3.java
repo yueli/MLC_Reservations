@@ -88,18 +88,14 @@ public class UserSearchServlet3 extends HttpServlet {
 					url = "user/searchConfirm.jsp";
 					
 				} else {
-	
-					System.out.println();
-					System.out.println("USER INFO FROM SEARCH CONFIRM SERVLET: " + primaryUser.getUserRecordID() + ", " + primaryUser.getMyID() + ", " + primaryUser.getLastLogin());
-					System.out.println();
 					
 					// user helper used to get user information
 					UserHelper uh = new UserHelper();
 					
 					// print to console to test IDs
-					System.out.println("Print primary user - search reserve: " + primaryUser.getMyID());
+					/*System.out.println("Print primary user - search reserve: " + primaryUser.getMyID());
 					System.out.println("Print secondary user - search reserve: " + secondaryMyID);
-					System.out.println();
+					System.out.println();*/
 					
 					// secondary user ID check
 					// make sure inputted ID is not their own
@@ -143,9 +139,10 @@ public class UserSearchServlet3 extends HttpServlet {
 						User secondaryUser = uh.getUserInfoFromMyID(secondaryMyID);
 						int secondaryUserID = secondaryUser.getUserRecordID();
 						
-						System.out.println("SECONDARY USER INFO FROM SEARCH CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
+						// Used for testing.  Will print to console.
+						/*System.out.println("SECONDARY USER INFO FROM SEARCH CONFIRM SERVLET: " + secondaryUser.getUserRecordID() + ", " + secondaryUser.getMyID() + ", " + secondaryUser.getLastLogin());
 						System.out.println();
-						System.out.println("PRINT of secondary ID: " + secondaryUserID);
+						System.out.println("PRINT of secondary ID: " + secondaryUserID);*/
 						
 						// check if reservation is available
 						ReservationSelectQuery rsq = new ReservationSelectQuery();
