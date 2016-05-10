@@ -48,6 +48,7 @@ public class CASLogoutServlet extends HttpServlet {
         // CAS logout URL
 		response.sendRedirect("https://cas.dev.uga.edu/cas/logout");
 		//response.sendRedirect("https://cas.stage.uga.edu/cas/logout");
+		//response.sendRedirect("https://cas.uga.edu/cas/logout");
 		
 	}
 	
