@@ -37,6 +37,7 @@ public class AdminScheduleInsertQuery {
 	 * Will return a string of false if there isn't an entry.
 	 * Will return the string scheduleID if there is an entry.
 	 * @param schedule Schedule object
+	 * @return the schedule ID if there is a matching record
 	 */
 	public String scheduleInsertCheck(Schedule schedule){
 		this.schedule = schedule;

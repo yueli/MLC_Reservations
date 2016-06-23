@@ -28,7 +28,7 @@ public class Schedule {
 	 * @param startTime String start time
 	 * @param endTime String end time
 	 * @param summary String summary of the entry
-	 * @param createdBy String --> admin or script
+	 * @param createdBy String admin or script
 	 */
 	public Schedule(int scheduleID, String startDate, String endDate,
 			String startTime, String endTime, String summary, String createdBy){
@@ -47,7 +47,7 @@ public class Schedule {
 	 * @param startTime String start time
 	 * @param endTime String end time
 	 * @param summary String summary of the entry
-	 * @param createdBy String --> admin or script
+	 * @param createdBy String admin or script
 	 */
 	public Schedule(String startDate, String endDate,
 			String startTime, String endTime, String summary, String createdBy){
@@ -66,8 +66,8 @@ public class Schedule {
 	 * @param startTime String start time
 	 * @param endTime String end time
 	 * @param summary String summary of the entry
-	 * @param createdBy String --> admin or script
-	 * @param allDayEvent --> not in use 
+	 * @param createdBy String admin or script
+	 * @param allDayEvent not in use 
 	 * @param buildingID Integer building ID from building table
 	 */
 	public Schedule(String startDate, String endDate,

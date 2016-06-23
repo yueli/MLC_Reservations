@@ -55,7 +55,7 @@ public class UserHelper {
 
 	/**
 	 * This method will take the myID and check to see if this user exists already	
-	 * @param myID
+	 * @param myID of the student/user
 	 * @return true if user is in the user table, false if they are not
 	 */
 	
@@ -93,7 +93,7 @@ public class UserHelper {
 
 	/**
 	 * This method gets the myID of the user and update's their last login time w/ current date
-	 * @param myID
+	 * @param myID of the student/user
 	 */
 	public void updateLastLogin(String myID) {
 		String today = "";
@@ -129,10 +129,10 @@ public class UserHelper {
 	
 	/**
 	 * This method takes the user info and inserts them into the user table
-	 * @param myID
-	 * @param fname
-	 * @param lname
-	 * @param email
+	 * @param myID UGA myID of the student/user
+	 * @param fname first name of the student/user
+	 * @param lname last name of the student/user
+	 * @param email of the student/user
 	 */
 	
 	public void insertUserTable(String myID, String fname, String lname, String email) {
@@ -172,7 +172,7 @@ public class UserHelper {
 
 	/**
 	 * This method gets the user's record id based on their MyID
-	 * @param myID
+	 * @param myID of the student/user
 	 * @return user recd id
 	 */
 	
@@ -207,7 +207,7 @@ public class UserHelper {
 	
 	/**
 	 * This method checks to see if the user is currently banned
-	 * @param userID
+	 * @param userID the user record ID for the student in the user database table
 	 * @return true if the user is banned, false if they are not
 	 */
 	
@@ -247,7 +247,7 @@ public class UserHelper {
 	
 	/**
 	 * This method ges the admin user's MyID and returns an object w/ all the admin's info
-	 * @param myID
+	 * @param myID myID of the admin
 	 * @return admin object w/ admin's info
 	 */
 	
@@ -319,7 +319,7 @@ public class UserHelper {
 	
 	/**
 	 * This method gets a user's info based on the user's recd number
-	 * @param recd ID of the user/student
+	 * @param recdID of the user/student
 	 * @return all of their info in a user object
 	 * @author Ginger Nix
 	 */

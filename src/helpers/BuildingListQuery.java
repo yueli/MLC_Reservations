@@ -69,7 +69,7 @@ public class BuildingListQuery {
 		
 		/**
 		 * Get the name of a building from it's record id
-		 * @param buildingID
+		 * @param buildingID table record ID of the building from the database table
 		 * @return name of the building
 		 */
 		public String getBuildingName(int buildingID){
@@ -94,9 +94,8 @@ public class BuildingListQuery {
 		
 		/**
 		 * This method gets all the rooms in a building.
-		 * @param buildingID
+		 * @param buildingID table record ID of the building from the database table
 		 */
-		
 		public void doReadRooms(int buildingID){
 
 			String query = "SELECT * "
@@ -119,10 +118,9 @@ public class BuildingListQuery {
 		
 		/**
 		 * This method gets the room Number based on the room's record id
-		 * @param roomID
+		 * @param roomID the table record ID from the room table for a room
 		 * @return room number for this record
 		 */
-		
 		public String getRoomName(int roomID){
 			String rNumber = "";
 			try {
@@ -146,10 +144,8 @@ public class BuildingListQuery {
 	
 		/**
 		 * This method gets all the buildings and puts them in a table.
-		 * @param: none
-		 * @return:This method returns a table containing all the buildings
+		 * @return This method returns a table containing all the buildings
 		 */
-		
 		public String getHTMLTable(){ 
 			//Return table of buildings			
 			String table = "";
@@ -216,6 +212,7 @@ public class BuildingListQuery {
 					table += "<td>";
 					table += building.getBuildingQRName();
 					table += "</td>";
+					table += "</div>";
 					
 					// calls BuildingListUpdateServlet
 					table += "<div class='col-md-12' align='center'>";
@@ -246,6 +243,7 @@ public class BuildingListQuery {
 				}
 				table += "</tbody>";
 				table += "</table>";
+				table += "<div class='clearfix'></div>";
 			}
 			catch(SQLException e) {
 				e.printStackTrace();	
@@ -257,45 +255,44 @@ public class BuildingListQuery {
 		/**
 		 * This method creates a form for the admin user to add a building
 		 * @author: Ginger Nix
-		 * @param none
 		 * @return table with form to add a building
 		 */
-		
 		public String createAddBuildingForm() {
 			String table = "";
 		
-			table += "<div align='center'><h2>Add a Building</h2>";
+			table += "<div align='center'><h2>Add a Building</h2></div>";
 			table += "<br />";
 			
+			table += "<div class='col-md-5 col-md-offset-4 col-sm-offset-3'>";
 			table += "<form action='BuildingListAddServlet' method = 'post'>";
 			
-			table += "Name:<br>";
+			table += "Name: ";
 			table +=  "<input type='text' id = 'buildingName' name = 'buildingName' required>";
 			table += "<br />";
 			
-			table += "Status:<br>";
+			table += "Status: ";
 			table += "<select name = 'buildingStatus' required>";
 			table += "<option value='1' selected>Online</option>";
 			table += "<option value='0'>Offline</option>";	
 			table += "</select>";		
 			table += "<br />";
 			
-			table += "Calendar Name:<br>";
+			table += "Calendar Name: ";
 			table +=  "<input type='text' name = 'buildingCalName' required>";
 			table += "<br />";
 			
-			table += "Calendar URL:<br>";
+			table += "Calendar URL: ";
 			table +=  "<input type='text' name = 'buildingCalUrl' required>";
 			table += "<br />";
 			
-			table += "QR Name:<br>";
+			table += "QR Name: ";
 			table +=  "<input type='text' name = 'buildingQRName' required>";
 			table += "<br />";
 			table += "<br />";	
 			table += "<br />";	
 			table += "</div>";
 			
-			table += "<div align='center'>";
+			table += "<div class='col-md-12' align='center'>";
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Add Building'>";
 			table += "</form>";
 			
@@ -304,6 +301,7 @@ public class BuildingListQuery {
 			table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 			table += "</form>";
 			table += "</div>";
+			table += "<div class='clearfix'></div>";
 					
 			return table;
 		}

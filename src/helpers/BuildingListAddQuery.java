@@ -45,16 +45,14 @@ public class BuildingListAddQuery {
 
 		/**
 		 * This method takes the new building's info and stores it in the building table
-		 * @param buildingName
-		 * @param buildingStatus
-		 * @param buildingCalName
-		 * @param buildingCalUrl
-		 * @param adminID
-		 * @param buildingQRName
-		 * @throws SQLException
-		 * @return: nothing
+		 * @param buildingName name of the building
+		 * @param buildingStatus 0 for offline, 1 for online
+		 * @param buildingCalName name of the calendar
+		 * @param buildingCalUrl URL of the google calendar feed
+		 * @param adminID the table record ID of the admin
+		 * @param buildingQRName the QR name of the building
+		 * @throws SQLException exception if no results are found or something is wrong with the query or connection
 		 */
-	
 		public void addBuilding(String buildingName, int buildingStatus, 
 				String buildingCalName, String buildingCalUrl, int adminID, String buildingQRName) throws SQLException{
 
@@ -87,11 +85,10 @@ public class BuildingListAddQuery {
 		 * This method will take the building's name and check to see if a building with this
 		 * name already exists
 		 * @author: Ginger Nix
-		 * @param: bulding name to check
-		 * @return: true if a building w/ this name is in the building table, else
+		 * @param buildingName to check
+		 * @return true if a building w/ this name is in the building table, else
 		 * false if it is not
 		 */
-		
 		public boolean inBuildingTable(String buildingName){
 			
 			String query = "SELECT * from tomcatdb.Building WHERE buildingName = ? LIMIT 1";

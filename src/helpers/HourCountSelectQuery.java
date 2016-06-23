@@ -35,6 +35,7 @@ public class HourCountSelectQuery {
 	 * This query will sum the hours of reservations for a user for the current date. 
 	 * 0 == no reservations made for that day.
 	 * @param userID User ID of the person who wants to reserve room (primary user)
+	 * @param buildingID the table record ID in the building table in the database
 	 */
 	public void doIncrementRead(int userID, int buildingID){
 		DateTimeConverter dtc = new DateTimeConverter();
@@ -68,6 +69,7 @@ public class HourCountSelectQuery {
 	 * 0 == no reservations made for that day.
 	 * @param userID userID User ID of the person who wants to reserve room (primary user)
 	 * @param date String date in SQL format.
+	 * @param buildingID the table record ID in the building table in the database
 	 */
 	public void doIncrementRead(int userID, String date, int buildingID){
 		

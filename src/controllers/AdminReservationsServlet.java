@@ -105,7 +105,8 @@ public class AdminReservationsServlet extends HttpServlet {
 					String startTime = "00:00:00";
 					String endTime = "00:00:00";
 					
-					// forwarding URL
+					String table = "";
+				
 					url = "admin/reservations.jsp";
 					
 					// set session and request variables
@@ -114,6 +115,7 @@ public class AdminReservationsServlet extends HttpServlet {
 					session.setAttribute("adminUser", loggedInAdminUser);
 					session.setAttribute("buildingID", buildingID);
 					session.setAttribute("buildings", buildings);
+					session.setAttribute("table", table);
 				}  else if (role.equalsIgnoreCase("C") && status == 1){ 
 					//------------------------------------------------//
 					/*                VIEW FOR CLERK                  */
@@ -151,7 +153,7 @@ public class AdminReservationsServlet extends HttpServlet {
 			//------------------------------------------------//
 			// if session has timed out, go to home page
 			// the site should log them out.
-			session.invalidate();
+			
 			response.sendRedirect(DbConnect.urlRedirect());
 			return;
 		}

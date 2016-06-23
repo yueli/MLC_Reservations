@@ -29,12 +29,12 @@ public class Admin {
 	}
 	
 	/**
-	 * @param adminMyID
-	 * @param fname
-	 * @param lname
-	 * @param role
-	 * @param adminStatus
-	 * @param cantBeDeleted
+	 * @param adminMyID the UGA myID of the admin
+	 * @param fname first name of the admin
+	 * @param lname last name of the admin
+	 * @param role clerk, admin or super admin
+	 * @param adminStatus 0 for inactive, 1 for active
+	 * @param cantBeDeleted depreciated 
 	 */
 	public Admin(String adminMyID, String fname, String lname, String role, int adminStatus, int cantBeDeleted) {
 		this.adminMyID = adminMyID;
@@ -46,13 +46,13 @@ public class Admin {
 	}
 
 	/**
-	 * @param adminID
-	 * @param adminMyID
-	 * @param fname
-	 * @param lname
-	 * @param role
-	 * @param adminStatus
-	 * @param cantBeDeleted
+	 * @param adminID the table record ID for admin
+	 * @param adminMyID the UGA myID of the admin
+	 * @param fname first name of the admin
+	 * @param lname last name of the admin
+	 * @param role clerk, admin or super admin
+	 * @param adminStatus 0 for inactive, 1 for active
+	 * @param cantBeDeleted depreciated
 	 */
 	public Admin(int adminID, String adminMyID, String fname, String lname, String role, int adminStatus,
 			int cantBeDeleted) {

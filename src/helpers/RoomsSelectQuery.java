@@ -184,6 +184,7 @@ public class RoomsSelectQuery {
 				e.printStackTrace();
 			}
 			table += "</ul>";
+			
 			// Class to convert 24 hour time to 12 hour
 			TimeConverter tc = new TimeConverter();
 			int j = 0; // used for jQuery tabs creation
@@ -336,6 +337,7 @@ public class RoomsSelectQuery {
 							}
 						}
 						
+						table += "</td>";
 					}
 					table += "</tr>";
 					table += "</tbody>";
@@ -367,12 +369,14 @@ public class RoomsSelectQuery {
 					table += "</tbody>";
 					table += "</table>";
 					table += "</div>";
+					
 					j++; // used for jQuery tabs creation
-				}	
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			table += "</div>";
+			table += "<br><br><br><br><br><br><br><br><br><br><br>";
 			return table;
 		}
 		
@@ -381,9 +385,9 @@ public class RoomsSelectQuery {
 		 * This method takes a building record id and lists all the rooms in that building
 		 * @author: Ginger Nix
 		 * @param buildingID, action (where to send it when canceling/going back to previous calling page
+		 * @param cancelAction send Cancel action redirect to buildings or rooms servlet
 		 * @return the html table containing the rooms in the building
 		 */
-		
 		public String ListRoomsInBuilding(int buildingID, String cancelAction){
 			
 			BuildingSelectQuery bsq = new BuildingSelectQuery();
@@ -396,22 +400,26 @@ public class RoomsSelectQuery {
 			String table = "";
 			String roomStatus = "";
 			
-			table += "<div align='center'><h3>Rooms List for: " + buildingName + "</h3>";
+			table += "<div align='center'><h2>Rooms List for: " + buildingName + "</h2>";
 			table += "<br /><br />";
 			
+			table += "<div align='center'>";
 			table += "<form action='RoomAddServlet' method = 'post'>" +
 					"<input type='hidden' name='buildingID' value='" + buildingID + "'>" +
 					"<input type='hidden' name='cancelAction' value='" + cancelAction + "'>" +
 					"<input class='btn btn-lg btn-red' type='submit' value='Add A Room'>" +
 					"</form>";
+			table += "</div>";
 			
 			table += "<br />";			
 			
 			// 'cancelAction' will be 'buildings' if came from list of all buildings 
 			// or 'RoomsServlet' if came from user selecting a building
+			table += "<div class='col-md-12' align='center'>";
 			table += "<form action='" + cancelAction + "' method = 'post	'>" +
 					"<input class='btn btn-lg btn-red' type='submit' value='Go Back'>" +
 					"</form>";
+			table += "</div>";
 			
 			System.out.println("RoomsSelQ: ListRoomsInBuilding - action = " + cancelAction);
 
@@ -497,10 +505,10 @@ public class RoomsSelectQuery {
 		 * This method takes the room ID and creates a form already populated
 		 * with the room info. The form is meant to edit the room data by an amin.	 
 		 * @param roomID ID of the room the user wants to edit
+		 * @param cancelAction send cancellation
 		 * @return String HTML table for the edited room
 		 * @author: Ginger Nix
 		 */
-		
 		public String createEditRoomForm (int roomID, String cancelAction){
 		
 			String table = "";
@@ -529,21 +537,23 @@ public class RoomsSelectQuery {
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room floor= " + roomFloor);
 				System.out.println("RoomsSelectQuery: createEditRoomForm:  room status= " + roomStatus);
 				
-				table += "<div align='center'><h3>Building: " + buildingName + "</h3></div><br />";
-				table += "<div align='center'><h3>Edit Room</h3></div><br />";
+				table += "<div align='center'>";
+				table += "<h2>Building: " + buildingName + "</h2><br />";
+				table += "<h3>Edit Room</h3><br />";
+				table += "</div>";
 				
+				table += "<div align='left' class='col-md-5 col-md-offset-5 col-sm-offset-3'>";
 				table += "<form action='RoomSaveServlet' method = 'post'>";
 				
-		
-				table += "Room Number: &nbsp; &nbsp;";
+				table += "Room Number: ";
 				table +=  "<input type='text' id = 'roomNumber' name = 'roomNumber' value = '" + roomNumber + "' required>";
 				
-				table += "<br /><br />";
-				table += "Room Floor: &nbsp; &nbsp;";
+				table += "<br />";
+				table += "Room Floor: ";
 				table +=  "<input type='text' name = 'roomFloor' value = '" + roomFloor + "' required>";
-
-				table += "<br /><br />";
-				table += "Room Status: &nbsp; &nbsp;";
+				
+				table += "<br />";
+				table += "Room Status: ";
 				table += "<select name = 'roomStatus' required>";
 				
 				if (roomStatus == 1){
@@ -556,7 +566,9 @@ public class RoomsSelectQuery {
 				}		
 				
 				table += "</select>";
+				table += "</div>";
 				
+				table += "<div class='col-md-12' align='center'>";
 				table += "<br /><br />";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";
 				table += "<input type = 'hidden' name = 'roomID' value='" + roomID + "'>";
@@ -566,13 +578,15 @@ public class RoomsSelectQuery {
 				
 				table += "</form>";
 				
-				table += "<br /><br />";
+				table += "<br />";
 				
 				table += "<form action='RoomsListServlet' method = 'post'>";
 				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
 				table += "<input type = 'hidden' name = 'cancelAction' value='" + cancelAction + "'>";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 				table += "</form>";
+				table += "</div>";
+				table += "<div class='clearfix'></div>";
 
 				
 				System.out.println("RoomsSelectQuery: createEditRoomForm: buildingID END = " + buildingID);
@@ -593,11 +607,11 @@ public class RoomsSelectQuery {
 		/**
 		 * This method takes the data about the room and updates the room's record in the Rooms table
 		 * @author Ginger Nix
-		 * @param roomID
-		 * @param roomNumber
-		 * @param roomFloor
-		 * @param roomStatus
-		 * @param adminID
+		 * @param roomID table record ID for room
+		 * @param roomNumber room number
+		 * @param roomFloor the floor of the room in the building
+		 * @param roomStatus 0 for offline, 1 for online
+		 * @param adminID table record ID for the admin in the database
 		 */
 		public void updateRoomTable(int roomID, String roomNumber, int roomFloor, int roomStatus, int adminID) {
 
@@ -626,8 +640,9 @@ public class RoomsSelectQuery {
 
 		/**
 		 * This method creates a blank form to add a new room to the building ID provided
-		 * @param buildingID
-		 * @return
+		 * @param buildingID table record ID in the building database table
+		 * @param cancelAction send cancel action of not adding a room
+		 * @return String HTML table form to add a room
 		 * @author: Ginger Nix
 		 */
 		public String createAddRoomForm(int buildingID, String cancelAction){
@@ -637,39 +652,42 @@ public class RoomsSelectQuery {
 				BuildingSelectQuery bsq = new BuildingSelectQuery();
 				String buildingName = bsq.getBuildingNameFromID(buildingID); //get human readable bldg name
 
-				table += "<div align='center'><h3>Add a Room to: " + buildingName + "</h3></div><br />";
+				table += "<div align='center'><h2>Add a Room to: " + buildingName + "</h2></div><br />";
 
-				
+				table += "<div align='left' class='col-md-5 col-md-offset-5 col-sm-offset-3'>";
 				table += "<form action='RoomAddSaveServlet' method = 'post'>";
 				
-				table += "Room Number: &nbsp;&nbsp;";
+				table += "Room Number: ";
 				table +=  "<input type='text' id = 'roomNumber' name = 'roomNumber' required>";
-				table += "<br /><br />";
+				table += "<br />";
 				
 				table += "Room Floor: &nbsp;&nbsp;";
 				table +=  "<input type='text' name = 'roomFloor' required>";
-				table += "<br /><br />";
+				table += "<br />";
 					
-				table += "Room Status: &nbsp;&nbsp;";
+				table += "Room Status: ";
 				table += "<select name = 'roomStatus' required>";
 				table += "<option value='1' selected>Online</option>";
 				table += "<option value='0'>Offline</option>";							
 				table += "</select>";	
 				
-				table += "<br /><br />";
+				table += "<br />";
+				table += "</div>";
 				
+				table += "<div class='col-md-12' align='center'>";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Save'>";	
 				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
 				table += "<input type = 'hidden' name = 'cancelAction' value='" + cancelAction + "'>";
 				
 				table += "</form>";
 				
-				table += "<br /><br />";
 				table += "<form action='RoomsListServlet' method = 'post'>";
 				table += "<input type = 'hidden' name = 'buildingID' value='" + buildingID + "'>";
 				table += "<input type = 'hidden' name = 'cancelAction' value='" + cancelAction + "'>";
 				table += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
 				table += "</form>";
+				table += "</div>";
+				table +="<div class='clearfix'></div>";
 	
 				System.out.println("RoomsSelectQuery: createAddRoomForm: buildingID END = " + buildingID);
 				System.out.println("RoomsSelectQuery: createAddRoomForm: cancelAction END = " + cancelAction);

@@ -43,10 +43,8 @@ public class BuildingListSelectQuery {
 	
 	/**
 	 * This method get the building record info based on the building record ID
-	 * @param: buildingID
-	 * @return: nothing
+	 * @param buildingID table record ID form the building database table
 	 */
-	
 	public void doRead(int buildingID){
 
 		String query = "SELECT * FROM tomcatdb.Building "
@@ -68,8 +66,8 @@ public class BuildingListSelectQuery {
 	
 	/**
 	 * This method gets all the buildings
+	 * @return Query result set into a Building object.
 	 */
-	
 	public Building getBuilding(){ 
 				
 		Building buildingReturn = new Building();
@@ -103,10 +101,9 @@ public class BuildingListSelectQuery {
 	/**
 	 * This method takes a building record ID and pre-populates a table for the admi
 	 * user to edit the bulding's information
-	 * @param: buildingID
-	 * @return: the pre-populated building edit form
+	 * @param buildingID table record ID from teh building database table
+	 * @return the pre-populated building edit form
 	 */
-	
 	public String buildingEditForm (int buildingID) {
 		String form = "";
 		
@@ -128,16 +125,16 @@ public class BuildingListSelectQuery {
 			String buildingQRName = this.results.getString("buildingQRName");
 			
 			form += "<br />";
-			form += "<div align='center'><h3>Edit Building</h3>";
+			form += "<div align='center'><h2>Edit Building</h2></div>";
 			form += "<br />";
+			form += "<div class='col-md-5 col-md-offset-4 col-sm-offset-4'>";
 			form += "<form action='BuildingListBuildingUpdateServlet' method = 'post'>";
 			
-			form += "<div class='col-md-3 col-md-offset-5 col-sm-offset-5'>";
-			form += "Building Name:<br>";
+			form += "Building Name: ";
 			form +=  "<input type='text' id = 'buildingName' name = 'buildingName' value = '" + buildingName + "' required>";
 			form += "<br />";
 			
-			form += "Building Status:<br>";
+			form += "Building Status: ";
 			
 			form += "<select name = 'status' required>";
 			
@@ -154,17 +151,17 @@ public class BuildingListSelectQuery {
 			form += "</select>";
 			form += "<br />";
 			
-			form += "Building Calendar's Name:<br>";
+			form += "Building Calendar's Name: ";
 			form +=  "<input type='text' name = 'buildingCalName' value = '" + buildingCalName + "' required>";
 			form += "<br />";
 			
-			form += "Building Calendar's URL:<br>";
+			form += "Building Calendar's URL: ";
 			form +=  "<input type='text' name = 'buildingCalUrl' value = '" + buildingCalUrl + "' required>";
 			form += "<br />";
 			
-			form += "Building QR Name:<br>";
+			form += "Building QR Name: ";
 			form +=  "<input type='text' name = 'buildingQRName' value = '" + buildingQRName + "' required>";
-			form += "<br />";
+			form += "<br /><br>";
 			form += "</div>";
 			
 			form += "<div class='col-md-12' align='center'>";
@@ -176,8 +173,10 @@ public class BuildingListSelectQuery {
 			form += "<br />";
 			form += "<form action='BuildingListServlet' method = 'post'>";
 			form += "<input class='btn btn-lg btn-red' type = 'submit' value = 'Cancel'>";
-			form += "</form>";
 			form += "</div>";
+			form += "</form>";
+			form += "<div class='clearfix'></div>";
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();

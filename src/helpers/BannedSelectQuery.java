@@ -78,10 +78,8 @@ public class BannedSelectQuery {
 	
 		/**
 		 * The method getHTMLTable gets all the banned students and puts them into a table
-		 * parameter: none
-		 * return: the table of all the banned users
-		 */
-			
+		 * @return the table of all the banned users
+		 */	
 		public String getHTMLTable(){ 
 			//Return table of banned students
 			

@@ -11,7 +11,8 @@ import model.DbConnect;
 
 /**
  * @author Brian Olaogun
- * Helper for the Student & Admin side of the website.
+ * Helper for the Student and Admin side of the website.  This class contains majority of the methods
+ * for building related select queries.
  *
  * @contributer: Ginger Nix
  *
@@ -102,7 +103,7 @@ public class BuildingSelectQuery {
 		
 	}
 	/**
-	 * Results of doBuildingRead & doAdminBuildingRead
+	 * Results of doBuildingRead and doAdminBuildingRead
 	 * @return a new String HTML drop down list with the selected value listed first
 	 * @author Brian Olaogun
 	 */
@@ -144,7 +145,7 @@ public class BuildingSelectQuery {
 		return select;
 	}
 	/**
-	 * Results of doBuildingRead & doAdminBuildingRead
+	 * Results of doBuildingRead and doAdminBuildingRead
 	 * @param selected value from the HTML building drop down list
 	 * @return a new String HTML drop down list with the selected value listed first
 	 * @author Brian Olaogun
@@ -270,12 +271,10 @@ public class BuildingSelectQuery {
 	 * This method creates page for a person to select a building to view its rooms
 	 * calls on getAllActiveBuildings above to list the select pull down of all active buildings
 	 * 
-	 * @author: Ginger Nix
-	 * @param: none
-	 * @return: pull-down form w/ all online buildings
+	 * @author Ginger Nix
+	 * @return pull-down form w/ all online buildings
 	 * 
 	 */
-	
 	public String selectBuildingToViewRooms() {
 		String table = "";
 		
@@ -300,10 +299,9 @@ public class BuildingSelectQuery {
 	/**
 	 * This method takes just a building record id and returns the human readable name
 	 * @author: Ginger Nix
-	 * @param buildingID
+	 * @param buildingID table record ID for the building in the building database table
 	 * @return the building Name
 	 */
-	
 	public String getBuildingNameFromID (int buildingID){
 		
 		String buildingName = "Unknown Building";
@@ -464,7 +462,8 @@ public class BuildingSelectQuery {
 	
 	/**
 	 *  Gets the start time for the building on the date and building id sent 
-	 * @param building id, date to check
+	 * @param buildingID, date to check
+	 * @param dateToSearch user inputted date used to get the building hours end time for selected date
 	 * @author Ginger Nix 
 	 * @return String the start time of the building on this date
 	 */
@@ -504,7 +503,8 @@ public class BuildingSelectQuery {
 	
 	/**
 	 *  Gets the ending time for the building on the date and building id sent 
-	 * @param building id, date to check
+	 * @param buildingID, date to check
+	 * @param dateToSearch user inputted date used to get the building hours end time for selected date
 	 * @author Ginger Nix 
 	 * @return String the end time of the building on this date
 	 */

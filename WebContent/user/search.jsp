@@ -67,6 +67,8 @@
 				End Date: <input type="text" id="endDate" name="endDate" value="${endDate}"><br>
 				End Time: <input id="endTime" name="endTime" value="${tc.convertTimeTo12(endTime).trim()}"><br>
 				Reservation Length: ${hourIncrementSelect}<br><br>
+		</div>
+		<div class="col-md-12" align="center">
 				<input align="center" class="btn btn-lg btn-red" name="makeReservation" type="submit" value="Search"> 
 			</div>
 			</form>
@@ -75,9 +77,10 @@
 		<div align="center">
 			<p>${table}</p>
 		</div>
+		<div class="clearfix"></div>
 		<!-- End Content -->
 		
 		<!-- Footer -->
-		<div id="footer"></div>
+		<div class="col-md-12" id="footer"></div>
 	</body>
 </html>

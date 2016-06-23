@@ -321,7 +321,6 @@ public class DateTimeConverter {
 	
 	/**
 	 * Converts a yyyy-MM-dd (SQL date) to MM/dd/yyyy format
-	 * @param date String date in yyyy-MM-dd (SQL Format)
 	 * @return date in MM/dd/yyyy format
 	 * @author Brian Olaogun
 	 */
@@ -440,7 +439,7 @@ public class DateTimeConverter {
 	 * If the starting date is greater, true is returned else false.
 	 * @param to String ending date in MM/dd/yyyy format
 	 * @param from String starting date in MM/dd/yyyy format
-	 * @return boolean true if from > to
+	 * @return boolean true if from is greater than to
 	 * @author Brian Olaogun
 	 */
 	public static boolean isAfter (String from, String to){

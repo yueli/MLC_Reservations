@@ -135,6 +135,7 @@ public class AdminReservationsSelectQuery {
 	}
 	/**
 	 * This will be the results of admin reservations for the clerk (read only view)
+	 * @param role role of the administrator (C - clerk, A -admin, S - super admin)
 	 * @return Resultset from doAdminReservationRead method/query.
 	 */
 	public String doAdminReservationResults(String role){

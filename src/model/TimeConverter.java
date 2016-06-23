@@ -467,9 +467,9 @@ public class TimeConverter {
 	/**
 	 * This method will check to see if the start time greater than the end time if
 	 * the start and end time are on the hour.
-	 * @param startTime
-	 * @param endTime
-	 * @return true if the start time is > end time.
+	 * @param startTime start time in 24-hour format
+	 * @param endTime end time in 24-hour format
+	 * @return true if the start time is greater than end time.
 	 * @author Brian Olaogun
 	 */
 	public static boolean isAfter (String startTime, String endTime){

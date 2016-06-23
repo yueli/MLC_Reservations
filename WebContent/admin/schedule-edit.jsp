@@ -69,6 +69,7 @@
 				<input class="btn btn-lg btn-red" type="submit" value="Submit"> <a href="Schedule"><button align="center" class="btn btn-lg btn-red" type="button" value="View Building Hours">View Building Hours</button></a>   
 		</div>
 			</form>
+		<div class="clearfix"></div>
 		
 		<!-- End Content -->
 		
